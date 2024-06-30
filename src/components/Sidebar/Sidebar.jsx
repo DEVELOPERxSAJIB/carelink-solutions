@@ -378,7 +378,7 @@ const Sidebar = () => {
         },
         {
           title: "ADS Location",
-          href: "/add-location",
+          href: "/ads-location",
           icon: (
             <i className="menu-icon tf-icons ti ti-folder d-block d-xl-none ti-md align-middle"></i>
           ),
@@ -464,7 +464,7 @@ const Sidebar = () => {
       subMenu: [
         {
           title: "Payroll",
-          href: "/payroll",
+          href: "/employee-payroll",
           icon: (
             <i className="menu-icon tf-icons ti ti-circle-info d-block d-xl-none ti-md align-middle"></i>
           ),
@@ -478,7 +478,7 @@ const Sidebar = () => {
         },
         {
           title: "Notices",
-          href: "/Notices",
+          href: "/employee-notices",
           icon: (
             <i className="menu-icon tf-icons ti ti-file-description d-block d-xl-none ti-md align-middle"></i>
           ),
@@ -536,7 +536,7 @@ const Sidebar = () => {
         },
         {
           title: "View Log",
-          href: "/view-log",
+          href: "/vehicle-view-log",
           icon: (
             <i className="menu-icon tf-icons ti ti-eye d-block d-xl-none ti-md align-middle"></i>
           ),

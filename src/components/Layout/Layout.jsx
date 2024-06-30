@@ -1,7 +1,8 @@
 import Sidebar from "./../Sidebar/Sidebar";
 import Navbar from "./../Navbar/Navbar";
 import Footer from "./../Footer/Footer";
-const Layout = ({ children }) => {
+import { Outlet } from 'react-router-dom';
+const Layout = () => {
   return (
     <div className="layout-wrapper layout-content-navbar  ">
       <div className="layout-container">
@@ -15,7 +16,7 @@ const Layout = ({ children }) => {
           <div className="content-wrapper">
             {/* Content */}
             <div className="container-xxl flex-grow-1 container-p-y">
-              {children}
+            <Outlet />
             </div>
             {/* / Content */}
             {/* Footer */}
