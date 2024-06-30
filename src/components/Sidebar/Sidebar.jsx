@@ -618,16 +618,19 @@ const Sidebar = () => {
   const handleSubMenuClick = (index) => {
     setActiveMenu(index === activeMenu ? null : index);
   };
+  const handleMobileMenu = () => {
+    document.documentElement.classList.toggle('layout-menu-expanded');
+  }
   return (
     <aside
       id="layout-menu"
-      className={`layout-menu menu-vertical menu bg-menu-theme ${
+      className={`layout-menu layout-menu-expanded menu-vertical menu bg-menu-theme ${
         isActive ? "menu-collapsed" : ""
       }`}
     >
       <div className="app-brand mt-5 demo">
         <a href="/" className="app-brand-link">
-          <span className="app-brand-logo demo">
+          <span  className="app-brand-logo  demo">
             <img style={{ width: "40px", height: "30px"}} src={logo} alt="" />
           </span>
           <span style={{paddingLeft:"5px"}} className="app-brand-text demo menu-text fw-bold">
@@ -640,13 +643,13 @@ const Sidebar = () => {
           onClick={toggleMenu} // Handle click event to toggle menu
         >
           <i className="menu-icon tf-icons ti menu-toggle-icon d-none d-xl-block align-middle"></i>
-          <i className="menu-icon tf-icons ti ti-x d-block d-xl-none ti-md align-middle"></i>
+          <i onClick={handleMobileMenu} className="menu-icon tf-icons ti ti-x d-block d-xl-none ti-md align-middle"></i>
         </a>
       </div>
       <div className="menu-inner-shadow"></div>
       <ul className="menu-inner py-1">
         {sideBarMenu.map((item, index) => (
-          <li
+          <li style={{cursor:"pointer"}}
             key={index}
             className={`menu-item ${
               item.subMenu.length > 0 && activeMenu === index
@@ -656,7 +659,7 @@ const Sidebar = () => {
           >
             {/* Render link with submenu toggle */}
             {item.subMenu.length > 0 ? (
-              <span
+              <span style={{cursor:"pointer"}}
                 className="menu-link menu-toggle"
                 onClick={() => handleSubMenuClick(index)}
               >

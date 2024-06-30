@@ -1,10 +1,14 @@
-import {useState} from 'react'
+import {useState,useEffect,useRef} from 'react'
 import avatar from "../../assets/img/avatars/1.png"
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] = useState(false);
   const [isAppDropdownOpen, SetIsAppDropdownOpen] = useState(false);
-
+  const [isSetSearch, setIsSetSearch] = useState(false);
+  const handleMobileMenu = () => {
+    document.documentElement.classList.toggle('layout-menu-expanded');
+  }
+  const searchRef = useRef()
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -15,20 +19,42 @@ const Navbar = () => {
   const toggleDropdownApp = () => {
     SetIsAppDropdownOpen(!isAppDropdownOpen);
   };
+  const handleToggleSearch = () => {
+    setIsSetSearch(!isSetSearch);
+  };
+
+
+  const handleClose = (e) => {
+    if (searchRef.current && !searchRef.current.contains(e.target)) {
+      setIsSetSearch(false)
+      document.documentElement.classList.toggle('');
+    }
+  };
+
+  useEffect(() => {
+    // Add event listener when the component is mounted
+    document.addEventListener('mousedown', handleClose);
+    
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      document.removeEventListener('mousedown', handleClose);
+    };
+  }, []);
   return <nav
   className="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
   id="layout-navbar"
 >
   <div className="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0   d-xl-none ">
     <a
+    onClick={handleMobileMenu}
       className="nav-item nav-link px-0 me-xl-4"
-      href="javascript:void(0)"
+      href="#"
     >
       <i className="ti ti-menu-2 ti-md" />
     </a>
   </div>
   <div
-    className="navbar-nav-right d-flex align-items-center"
+    className={`navbar-nav-right d-flex align-items-center ${isSetSearch?"d-none":""}`}
     id="navbar-collapse"
   >
     {/* Search */}
@@ -36,7 +62,8 @@ const Navbar = () => {
       <div className="nav-item navbar-search-wrapper mb-0">
         <a
           className="nav-item nav-link search-toggler d-flex align-items-center px-0"
-          href="javascript:void(0);"
+          href="#"
+          onClick={handleToggleSearch}
         >
           <i className="ti ti-search ti-md me-2 me-lg-4 ti-lg" />
           <span className="d-none d-md-inline-block text-muted fw-normal">
@@ -47,60 +74,7 @@ const Navbar = () => {
     </div>
     {/* /Search */}
     <ul className="navbar-nav flex-row align-items-center ms-auto">
-      {/* Language */}
-      <li className="nav-item dropdown-language dropdown ">
-        <a
-          className="nav-link btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow"
-          href="javascript:void(0);"
-          data-bs-toggle="dropdown"
-        >
-          <i className="ti ti-language rounded-circle ti-md" />
-        </a>
-        <ul className="dropdown-menu dropdown-menu-end">
-          <li>
-            <a
-              className="dropdown-item"
-              href="javascript:void(0);"
-              data-language="en"
-              data-text-direction="ltr"
-            >
-              <span>English</span>
-            </a>
-          </li>
-          <li>
-            <a
-              className="dropdown-item"
-              href="javascript:void(0);"
-              data-language="fr"
-              data-text-direction="ltr"
-            >
-              <span>French</span>
-            </a>
-          </li>
-          <li>
-            <a
-              className="dropdown-item"
-              href="javascript:void(0);"
-              data-language="ar"
-              data-text-direction="rtl"
-            >
-              <span>Arabic</span>
-            </a>
-          </li>
-          <li>
-            <a
-              className="dropdown-item"
-              href="javascript:void(0);"
-              data-language="de"
-              data-text-direction="ltr"
-            >
-              <span>German</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      {/*/ Language */}
-      {/* Style Switcher */}
+     
       <li className="nav-item dropdown-style-switcher dropdown">
         <a
           className="nav-link btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow"
@@ -758,14 +732,16 @@ const Navbar = () => {
     </ul>
   </div>
   {/* Search Small Screens */}
-  <div className="navbar-search-wrapper search-input-wrapper">
+  <div ref={searchRef} className={`navbar-search-wrapper search-input-wrapper ${isSetSearch?"":"d-none"}`}>
     <input
       type="text"
       className="form-control search-input container-xxl border-0"
       placeholder="Search..."
       aria-label="Search..."
     />
-    <i className="ti ti-x search-toggler cursor-pointer" />
+
+
+    <i onClick={()=>setIsSetSearch(false)} className={`ti ti-x search-toggler cursor-pointer `} />
   </div>
 </nav>;
 };
