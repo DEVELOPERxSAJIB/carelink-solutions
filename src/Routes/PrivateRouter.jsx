@@ -68,6 +68,8 @@ import AddNewTicket from './../Pages/HelpAndSupport/AddNewTicket';
 import ContactUs from './../Pages/HelpAndSupport/ContactUs';
 import CallUs from './../Pages/HelpAndSupport/CallUs';
 import RecycleBin from './../Pages/RecycleBin';
+import AgencyDashboard from './../Pages/Individual/AgencyDashboard';
+import EmployeeEarning from './../Pages/Settings/EmployeeEarning';
 
 const privateRouter = [
   {
@@ -77,6 +79,10 @@ const privateRouter = [
         element: <PrivateGard />,
         children: [
           
+          {
+            path: "/",
+            element: <AgencyDashboard />,
+          },
           {
             path: "/profile",
             element: <CompanyProfile />,
@@ -272,6 +278,10 @@ const privateRouter = [
           {
             path: "/employee-payroll",
             element: <EmployeePayroll />,
+          },
+          {
+            path: "/employee-earning",
+            element: <EmployeeEarning />,
           },
           {
             path: "/employee-files",
