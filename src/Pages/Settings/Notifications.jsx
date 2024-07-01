@@ -120,7 +120,7 @@ const Notifications = () => {
         <div className="card-header fs-4">
         Notification Settings
         </div>
-      
+      <div className="card-body p-4">
         <div className="accordion mt-4" id="accordionExample">
             {Object.entries(settings).map(([section, items], index) => (
                 <div className={` accordion-item ${activeIndex === index ? 'active' : ''}`} key={index}>
@@ -162,6 +162,8 @@ const Notifications = () => {
             ))}
         </div>
         </div>
+        </div>
+        
     );
 };
 

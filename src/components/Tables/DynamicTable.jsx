@@ -148,7 +148,9 @@ const handleTabMenu=(id)=>{
                         sortDirection === "asc" ? "down" : "up"
                       }`}
                     ></i>
-                  )}</div>
+                    
+                  )}
+                  </div>
                 </th>
               ))}
               {onEdit && <th>Actions</th>}
@@ -159,7 +161,25 @@ const handleTabMenu=(id)=>{
               <tr key={rowIndex}>
                 {columns.map((column, colIndex) => (
                   <td key={colIndex}>
-                    {column.render ? column.render(row) : row[column.field]}
+                    {column.field === "status" ? (
+                      <label className="switch switch-square">
+                        <input
+                          type="radio"
+                          className="switch-input"
+                          name={`status-radio-${rowIndex}`}
+                          defaultChecked={row[column.field] === "Active"}
+                        />
+                        <span className="switch-toggle-slider">
+                          <span className="switch-on" />
+                          <span className="switch-off" />
+                        </span>
+                        <span className="switch-label">
+                          {row[column.field]}
+                        </span>
+                      </label>
+                    ) : (
+                      column.render ? column.render(row) : row[column.field]
+                    )}
                   </td>
                 ))}
                 {onEdit && (
