@@ -13,7 +13,7 @@ const Sidebar = () => {
       title: "Settings",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-settings menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-settings menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -57,7 +57,7 @@ const Sidebar = () => {
       title: "Manage Co-Admins",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-users menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-users menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -71,7 +71,7 @@ const Sidebar = () => {
       title: "Manage Subusers",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-users menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-users menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -85,7 +85,7 @@ const Sidebar = () => {
       title: "Billing Module",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-users menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-users menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -99,7 +99,7 @@ const Sidebar = () => {
       title: "Individual",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-user-plus menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-user-plus menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -123,7 +123,7 @@ const Sidebar = () => {
       title: "Business Community",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-users menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-users menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -157,7 +157,7 @@ const Sidebar = () => {
       title: "Location of Service",
       href: "/location-of-service",
       icon: (
-        <i className="menu-icon tf-icons ti ti-location menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-location menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [],
     },
@@ -165,7 +165,7 @@ const Sidebar = () => {
       title: "Push Notes",
       href: "push-notes",
       icon: (
-        <i className="menu-icon tf-icons ti ti-file-description menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-file-description menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [],
     },
@@ -173,7 +173,7 @@ const Sidebar = () => {
       title: "eMAR Suite",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-settings menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-settings menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -197,7 +197,7 @@ const Sidebar = () => {
       title: "Clock in/out Group",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-bell menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-bell menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -221,7 +221,7 @@ const Sidebar = () => {
       title: "menu-item Timesheet",
       href: "/timesheet",
       icon: (
-        <i className="menu-icon tf-icons ti ti-calendar menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-calendar menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [],
     },
@@ -229,7 +229,7 @@ const Sidebar = () => {
       title: "Mileage Log",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-calendar menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-calendar menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -253,7 +253,7 @@ const Sidebar = () => {
       title: "Folders",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-folder menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-folder menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -267,7 +267,7 @@ const Sidebar = () => {
       title: "Community Integration",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-bell menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-bell menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -301,7 +301,7 @@ const Sidebar = () => {
       title: "Adult Day Service",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-book menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-book menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -370,7 +370,7 @@ const Sidebar = () => {
       title: "Employee Record",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-folder menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-folder menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -404,7 +404,7 @@ const Sidebar = () => {
       title: "No Medical Transportation",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-car menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-car menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -443,7 +443,7 @@ const Sidebar = () => {
       title: "Calendars",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti ti-calendar menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-calendar menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -462,7 +462,7 @@ const Sidebar = () => {
       title: "Help and Support",
       href: "",
       icon: (
-        <i className="menu-icon tf-icons ti-question-mark menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti-question-mark menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [
         {
@@ -486,7 +486,7 @@ const Sidebar = () => {
       title: "Recycle Bin",
       href: "/recycle-bin",
       icon: (
-        <i className="menu-icon tf-icons ti ti-recycle menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i className="menu-icon tf-icons ti ti-recycle menu-toggle-icon  d-xl-block align-middle"></i>
       ),
       subMenu: [],
     },
@@ -521,7 +521,6 @@ const Sidebar = () => {
           className="layout-menu-toggle menu-link text-large ms-auto"
           onClick={toggleMenu} // Handle click event to toggle menu
         >
-          <i className="menu-icon tf-icons ti menu-toggle-icon d-none d-xl-block align-middle"></i>
           <i onClick={handleMobileMenu} className="menu-icon tf-icons ti ti-x d-block d-xl-none ti-md align-middle"></i>
         </a>
       </div>
