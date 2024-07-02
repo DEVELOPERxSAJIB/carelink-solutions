@@ -130,13 +130,13 @@ const handleDeleteSelected = () => {
      {tableName && <h5 className="card-header">{tableName}</h5>}
       <div className="card-datatable table-responsive">
         <div className="flex my-5 row w-100  justify-content-between align-items-center">
-          <div className="col-md-2 col-7">
+          <div className="col-md-1 col-5">
             <label
               className="d-flex gap-1 justify-content-start align-items-center"
               htmlFor=""
             >
               show
-              <select
+              <select style={{minWidth:"55px"}}
                 className="form-control"
                 value={rowsPerPage}
                 onChange={handleRowsPerPageChange}
@@ -152,7 +152,7 @@ const handleDeleteSelected = () => {
             </label>
           </div>
 
-          <div className="col-md-10 col-5">
+          <div className="col-md-11 col-7">
             <input
               type="text"
               placeholder="Search by any..."
