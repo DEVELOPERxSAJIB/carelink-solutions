@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect,useRef } from "react";
 import logo from "../../../public/logo.png";
 import { Link,useLocation  } from "react-router-dom";
 const Sidebar = () => {
@@ -501,10 +501,27 @@ const Sidebar = () => {
   const handleMobileMenu = () => {
     document.documentElement.classList.toggle('layout-menu-expanded');
   }
+  const menuRef=useRef()
+  const handleClose = (e) => {
+    if (menuRef.current && !menuRef.current.contains(e.target)) {
+      document.documentElement.classList.remove('layout-menu-expanded');
+    }
+  };
+
+  useEffect(() => {
+    // Add event listener when the component is mounted
+    document.addEventListener('mousedown', handleClose);
+    
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      document.removeEventListener('mousedown', handleClose);
+    };
+  }, []);
   // .layout-menu-fixed .layout-menu, .layout-menu-fixed-offcanvas .layout-menu 
   return (
 
     <aside
+     ref={menuRef}
       id="layout-menu"
 
       className={`layout-menu layout-menu-expanded layout-menu-fixed layout-menu-fixed-offcanvas menu-vertical menu bg-menu-theme position-sticky top-0 ${

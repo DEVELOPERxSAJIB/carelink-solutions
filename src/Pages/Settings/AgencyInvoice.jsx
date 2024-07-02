@@ -31,8 +31,11 @@ const AgencyInvoice = () => {
   };
 
   return (
-    <div>
+    <div className="card">
+      <div className="card-body">
+
       <DataTable columns={columns} data={data} tableClassName="custom-table" onEdit={handleEdit} onDelete={handleDelete} tableName="Manage Invoices" /> 
+      </div>
     </div>
   );
 };
