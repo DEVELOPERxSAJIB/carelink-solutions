@@ -132,7 +132,7 @@ const handleDeleteSelected = () => {
         <div className="flex my-5 row w-100  justify-content-between align-items-center">
           <div className="col-md-1 col-4">
             <label
-              className="d-flex gap-1 justify-content-start align-items-center"
+              className="d-flex gap-1 form-label justify-content-start align-items-center"
               htmlFor=""
             >
               show

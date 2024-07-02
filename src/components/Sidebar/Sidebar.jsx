@@ -527,11 +527,11 @@ const Sidebar = () => {
         </a>
       </div>
       <div className="menu-inner-shadow"></div>
-      <ul className="menu-inner py-1">
+      <ul className="menu-inner py-1 ">
         {sideBarMenu.map((item, index) => (
-          <li style={{cursor:"pointer",transition:"color 0.5s ease-in-out",transitionDelay: "0.5s"}}
+          <li 
             key={index}
-            className={`menu-item  ${location.pathname === item.href && "active link bg-primary rounded mx-3"} ${
+            className={`menu-item  ${location.pathname === item.href && "active link bg-primary rounded "} ${
               item.subMenu.length > 0 && activeMenu === index
                 ? "open active "
                 : ""

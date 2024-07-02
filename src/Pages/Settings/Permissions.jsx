@@ -30,6 +30,7 @@ const Permissions = () => {
   };
   return (
     <div className="card">
+      <div className="card-body">
       <DataTable
         columns={columns}
         data={data}
@@ -39,6 +40,8 @@ const Permissions = () => {
 "
         onDelete={handleDelete}
       />
+      </div>
+     
     </div>
   );
 };
