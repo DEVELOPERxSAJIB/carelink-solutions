@@ -1,5 +1,6 @@
 import { useState } from "react";
 import logo from "../../../public/logo.png";
+import { Link } from "react-router-dom";
 const Sidebar = () => {
   const [isActive, setIsActive] = useState(false); // State to manage active state
   const location = window.location;
@@ -546,10 +547,10 @@ const Sidebar = () => {
               </span>
             ) : (
               // Render regular link without submenu toggle
-              <a href={item.href} className="menu-link">
+              <Link to={item.href} className="menu-link">
                 {item.icon}
                 <div data-i18n={item.title}>{item.title}</div>
-              </a>
+              </Link>
             )}
             {/* Render submenu if exists */}
             {item.subMenu.length > 0 && (
@@ -561,10 +562,10 @@ const Sidebar = () => {
                       location.pathname === subItem.href && "active"
                     }`}
                   >
-                    <a href={subItem.href} className="menu-link">
+                    <Link to={subItem.href} className="menu-link">
                       {subItem.icon}
                       <div data-i18n={subItem.title}>{subItem.title}</div>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

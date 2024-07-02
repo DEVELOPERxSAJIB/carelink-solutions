@@ -2,6 +2,7 @@ import React from "react";
 import DataTable from "./../../components/Tables/DynamicTable";
 import ExportButton from "./../../components/Buttons/ExportButton";
 import { useNavigate } from "react-router-dom";
+
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
   const now = new Date();

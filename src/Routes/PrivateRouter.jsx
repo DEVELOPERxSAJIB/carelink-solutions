@@ -1,5 +1,3 @@
-
-
 import Layout from './../components/Layout/Layout';
 import PrivateGard from './PrivateGard';
 import NotFound from './../Pages/404/NotFound';
@@ -156,7 +154,7 @@ const privateRouter = [
             element: <Compliance />,
           },
           {
-            path: "/location-fo-service",
+            path: "/location-of-service",
             element: <LocationOfService />,
           },
           {
