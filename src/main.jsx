@@ -6,6 +6,7 @@ import './index.css'
 import {Provider} from "react-redux"
 import { store } from './Redux/Store';
 // Import the libraries
+import "react-datepicker/dist/react-datepicker.css";
 import 'jquery';
 import 'popper.js';
 import 'node-waves';

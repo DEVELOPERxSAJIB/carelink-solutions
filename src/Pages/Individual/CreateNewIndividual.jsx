@@ -1,9 +1,13 @@
+import { useState } from "react";
 import MultiSelect from "../../components/FormElement/MultiSelect";
 import MultiInput from "../../components/FormElement/MultiInput";
+import DatePicker from "react-datepicker";
+
 const CreateNewIndividual = () => {
+  const [startDate, setStartDate] = useState(new Date());
   return (
     <div>
-      <div className="card mb-6">
+      <div className="card ">
         <h5 className="card-header">Add Individual</h5>
         <form className="card-body">
           <div className="row g-6">
@@ -28,84 +32,106 @@ const CreateNewIndividual = () => {
                 <option value="Female">Female</option>
               </select>
             </div>
-            <div className="col-md-6 col-12 mb-6">
-            <label htmlFor="flatpickr-date" className="form-label">Date Picker</label>
-            <input type="date" className="form-control" placeholder="YYYY-MM-DD" id="flatpickr-date" />
-          </div>
-            <div className="col-md-6">
-              <label className="form-label" htmlFor="formValidationLang">
-                Provider Number <span className="text-danger">*</span>
+            <div className="col-md-6 col-12 ">
+              <label htmlFor="flatpickr-date" className="form-label">
+                Date Of Birth <span className="text-danger">*</span>
               </label>
-              <MultiInput />
+              <div className="w-100 ">
+                <DatePicker
+                  className="w-100 form-control"
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                />
+              </div>
             </div>
             <div className="col-md-6">
-              <label className="form-label" htmlFor="formValidationLang">
-                Business Entity Id
-              </label>
-              <input
-                type="text"
-                value=""
-                className="form-control"
-                name="formValidationLang"
-                id="formValidationLang"
-                placeholder="Business Entity Id"
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label" htmlFor="formValidationLang">
-                Business Entity Medicaid Identifier
+              <label className="form-label" htmlFor="first name">
+                First Name<span className="text-danger">*</span>
               </label>
               <input
                 type="text"
-                value=""
+                id="first name"
                 className="form-control"
-                name="formValidationLang"
-                id="formValidationLang"
-                placeholder="Business Entity Medicaid Identifier"
-              />
-            </div>
-
-            <div className="col-md-6">
-              <label className="form-label" htmlFor="formValidationLang">
-                EVV data Username
-              </label>
-              <input
-                type="text"
-                value=""
-                className="form-control"
-                name="formValidationLang"
-                id="formValidationLang"
-                placeholder="EVV data Username"
+                placeholder="first name"
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label" htmlFor="formValidationLang">
-                Medicaid Number
+              <label className="form-label" htmlFor="last name">
+                Last Name<span className="text-danger">*</span>
               </label>
               <input
                 type="text"
-                value=""
+                id="last name"
                 className="form-control"
-                name="formValidationLang"
-                id="formValidationLang"
-                placeholder="Medicaid Number"
+                placeholder="last name"
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label" htmlFor="formValidationLang">
-                EVV data Password
+              <label className="form-label" htmlFor="email address">
+                Email Address<span className="text-danger">*</span>
               </label>
               <input
                 type="text"
-                value=""
+                id="email address"
                 className="form-control"
-                name="formValidationLang"
-                id="formValidationLang"
-                placeholder="EVV data Password"
+                placeholder="email address"
               />
             </div>
-          </div>
-          <div className="row g-6">
+            <div className="col-md-6">
+              <label className="form-label" htmlFor="form-repeater-1-3">
+                County Served In <span className="text-danger">*</span>
+              </label>
+              <select id="form-repeater-1-3" className="form-select">
+                <option value="Ashland county">Ashland county</option>
+                <option value="Ashland county">Ashland county</option>
+              </select>
+            </div>
+            <div className="col-md-6">
+              <label className="form-label" htmlFor="form-repeater-1-3">
+                Patient Address Type <span className="text-danger">*</span>
+              </label>
+              <select id="form-repeater-1-3" className="form-select">
+                <option value="Business">Business</option>
+                <option value="Home">Home</option>
+                <option value="School">School</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div className="col-md-6">
+              <label className="form-label" htmlFor="form-repeater-1-3">
+                Patient Address Is Primary<span className="text-danger">*</span>
+              </label>
+              <div className="col mt-2">
+                <div className="form-check form-check-inline">
+                  <input
+                    name="collapsible-address-type"
+                    className="form-check-input"
+                    type="radio"
+                    defaultValue=""
+                    id="yes"
+                  />
+                  <label className="form-check-label" htmlFor="yes">
+                    Yes
+                  </label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    name="collapsible-address-type"
+                    className="form-check-input"
+                    type="radio"
+                    defaultValue=""
+                    id="No"
+                    defaultChecked=""
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor="collapsible-address-type-home"
+                  >
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
             <div className="col-md-6">
               <label className="form-label" htmlFor="multicol-first-name">
                 Address1 <span className="text-danger">*</span>
@@ -129,6 +155,30 @@ const CreateNewIndividual = () => {
               />
             </div>
             <div className="col-md-6">
+              <label className="form-label" htmlFor="form-repeater-1-3">
+                Country <span className="text-danger">*</span>
+              </label>
+              <select id="form-repeater-1-3" className="form-select">
+                <option value="Business">Select Country</option>
+             
+                <option value="United state">United state</option>
+              
+                
+              </select>
+            </div>
+            <div className="col-md-6">
+              <label className="form-label" htmlFor="form-repeater-1-3">
+                State <span className="text-danger">*</span>
+              </label>
+              <select id="form-repeater-1-3" className="form-select">
+                <option value="Business">Select state</option>
+             
+                <option value="Alaska">Alaska</option>
+              
+                
+              </select>
+            </div>
+            <div className="col-md-6">
               <label className="form-label" htmlFor="city">
                 City <span className="text-danger">*</span>
               </label>
@@ -138,24 +188,6 @@ const CreateNewIndividual = () => {
                 className="form-control"
                 placeholder="Columbus"
               />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label" htmlFor="state">
-                State <span className="text-danger">*</span>
-              </label>
-              <input
-                type="text"
-                id="state"
-                className="form-control"
-                placeholder="Oh"
-              />
-            </div>
-
-            <div className="col-md-6">
-              <label className="form-label" htmlFor="state">
-                Select Country <span className="text-danger">*</span>
-              </label>
-              <MultiSelect />
             </div>
             <div className="col-md-6">
               <label className="form-label" htmlFor="zip">
@@ -168,54 +200,116 @@ const CreateNewIndividual = () => {
                 placeholder="Oh"
               />
             </div>
+
             <div className="col-md-6">
-              <label className="form-label" htmlFor="phone">
-                Phone <span className="text-danger">*</span>
+            <div className="row">
+              <div className="col-md-6">
+              <label className="form-label" htmlFor="formValidationLang">
+                Phone Type
+              </label>
+              <select id="form-repeater-1-3" className="form-select">
+                <option value="Home">Home</option>
+                <option value="Mobile">Mobile</option>
+                <option value="Work">Work</option>
+                <option value="Other">Other</option>
+             
+              </select>
+              </div>
+              <div className="col-md-6">
+              <label className="form-label" htmlFor="formValidationLang">
+                Telephone
               </label>
               <input
                 type="text"
-                id="phone"
+                value=""
                 className="form-control"
+                name="formValidationLang"
+                id="formValidationLang"
                 placeholder="phone"
               />
+              </div>
             </div>
-          </div>
-          <div className="row g-6">
-            <div className="col-md-12">
-              <label className="form-label" htmlFor="multicol-first-name">
-                Email Address <span className="text-danger">*</span>
-              </label>
-              <input
-                type="email"
-                id="multicol-first-name"
-                className="form-control"
-                placeholder="info@gmail.com"
-              />
             </div>
             <div className="col-md-6">
-              <label className="form-label" htmlFor="multicol-first-name">
-                First Name <span className="text-danger">*</span>
+              <label className="form-label" htmlFor="formValidationLang">
+                Cellphone
               </label>
               <input
                 type="text"
-                id="multicol-first-name"
+                value=""
                 className="form-control"
-                placeholder="John"
+                name="formValidationLang"
+                id="formValidationLang"
+                placeholder="phone"
               />
-            </div>
+              </div>
             <div className="col-md-6">
-              <label className="form-label" htmlFor="multicol-last-name">
-                Last Name <span className="text-danger">*</span>
+              <label className="form-label" htmlFor="formValidationLang">
+                Fax
               </label>
               <input
                 type="text"
-                id="multicol-last-name"
+                value=""
                 className="form-control"
-                placeholder="Doe"
+                name="formValidationLang"
+                id="formValidationLang"
+                placeholder="phone"
+              />
+              </div>
+            <div className="col-md-6">
+              <label className="form-label" htmlFor="formValidationLang">
+                Language
+              </label>
+              <input
+                type="text"
+                value=""
+                className="form-control"
+                name="formValidationLang"
+                id="formValidationLang"
+                placeholder="language"
+              />
+              </div>
+            
+            <div className="col-md-6">
+              <label className="form-label" htmlFor="formValidationLang">
+                Medicaid Number
+              </label>
+              <input
+                type="text"
+                value=""
+                className="form-control"
+                name="formValidationLang"
+                id="formValidationLang"
+                placeholder="Medicaid Number"
               />
             </div>
-          </div>
-          <div className="col-12">
+            <div className="col-md-6">
+              <label className="form-label" htmlFor="formValidationLang">
+                Medicare Number
+              </label>
+              <input
+                type="text"
+                value=""
+                className="form-control"
+                name="formValidationLang"
+                id="formValidationLang"
+                placeholder="Medicare Number"
+              />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label" htmlFor="formValidationLang">
+                Memo
+              </label>
+              <textarea
+                type="text"
+                value=""
+                className="form-control"
+                name="formValidationLang"
+                id="formValidationLang"
+                placeholder="memo"
+              ></textarea>
+            </div>
+            <div className="col-6">
             <label className="form-label" htmlFor="formValidationLang">
               Company Logo <span className="text-danger">*</span>
             </label>
@@ -258,6 +352,10 @@ const CreateNewIndividual = () => {
               </div>
             </div>
           </div>
+          </div>
+      
+     
+         
           <div className="pt-6">
             <button type="submit" className="btn btn-primary me-4">
               Save

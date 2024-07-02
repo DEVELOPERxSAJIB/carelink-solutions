@@ -87,3 +87,8 @@
   right: 0px;
   top: 40px;
 }
+
+/* date  */
+.react-datepicker-wrapper{
+  display: block !important;
+}

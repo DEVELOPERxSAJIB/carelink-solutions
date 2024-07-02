@@ -735,7 +735,7 @@ const Navbar = () => {
   <div ref={searchRef} className={`navbar-search-wrapper search-input-wrapper ${isSetSearch?"":"d-none"}`}>
     <input
       type="text"
-      className="form-control search-input container-xxl border-0"
+      className="form-control search-input w-100 container-xxl border-0"
       placeholder="Search..."
       aria-label="Search..."
     />
