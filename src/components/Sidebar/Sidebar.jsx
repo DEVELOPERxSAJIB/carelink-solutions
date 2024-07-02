@@ -1,10 +1,11 @@
 import { useState } from "react";
 import logo from "../../../public/logo.png";
-import { Link } from "react-router-dom";
+import { Link,useLocation  } from "react-router-dom";
 const Sidebar = () => {
   const [isActive, setIsActive] = useState(false); // State to manage active state
   const location = window.location;
-  console.log(location);
+  const history  = useLocation();
+  console.log(history )
   const toggleMenu = () => {
     setIsActive(!isActive); // Toggle the isActive state
   };
@@ -133,7 +134,7 @@ const Sidebar = () => {
         },
         {
           title: "Guardians",
-          href: "guardians",
+          href: "/guardians",
           icon: ""
         },
         {
@@ -163,7 +164,7 @@ const Sidebar = () => {
     },
     {
       title: "Push Notes",
-      href: "push-notes",
+      href: "/push-notes",
       icon: (
         <i className="menu-icon tf-icons ti ti-file-description menu-toggle-icon  d-xl-block align-middle"></i>
       ),
@@ -183,7 +184,7 @@ const Sidebar = () => {
         },
         {
           title: "MAR",
-          href: "mar",
+          href: "/mar",
           icon: ""
         },
         {
@@ -207,7 +208,7 @@ const Sidebar = () => {
         },
         {
           title: "Clock out",
-          href: "clock-out",
+          href: "/clock-out",
           icon: ""
         },
         {
@@ -234,12 +235,12 @@ const Sidebar = () => {
       subMenu: [
         {
           title: "View Assigned Mileage",
-          href: "view-assigned-mileage",
+          href: "/view-assigned-mileage",
           icon:""
         },
         {
           title: "Add New Mileage",
-          href: "add-new-mileage",
+          href: "/add-new-mileage",
           icon:""
         },
         {
@@ -500,6 +501,7 @@ const Sidebar = () => {
   const handleMobileMenu = () => {
     document.documentElement.classList.toggle('layout-menu-expanded');
   }
+
   return (
     <aside
       id="layout-menu"
@@ -527,11 +529,11 @@ const Sidebar = () => {
       <div className="menu-inner-shadow"></div>
       <ul className="menu-inner py-1">
         {sideBarMenu.map((item, index) => (
-          <li style={{cursor:"pointer"}}
+          <li style={{cursor:"pointer",transition:"color 0.5s ease-in-out",transitionDelay: "0.5s"}}
             key={index}
-            className={`menu-item ${
+            className={`menu-item  ${location.pathname === item.href && "active link bg-primary rounded mx-3"} ${
               item.subMenu.length > 0 && activeMenu === index
-                ? "open active"
+                ? "open active "
                 : ""
             }`}
           >
@@ -555,10 +557,10 @@ const Sidebar = () => {
             {item.subMenu.length > 0 && (
               <ul className="menu-sub">
                 {item.subMenu.map((subItem, subIndex) => (
-                  <li
+                  <li style={{cursor:"pointer",transition:"color 0.5s ease-in-out",transitionDelay: "0.5s"}}
                     key={subIndex}
-                    className={`menu-item ${
-                      location.pathname === subItem.href && "active"
+                    className={`menu-item mx-3 ${
+                      location.pathname === subItem.href && "active bg-primary rounded "
                     }`}
                   >
                     <Link to={subItem.href} className="menu-link">

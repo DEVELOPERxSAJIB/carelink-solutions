@@ -92,3 +92,17 @@
 .react-datepicker-wrapper{
   display: block !important;
 }
+
+/* nav link 
+ */
+ @keyframes smoothWalk {
+  from {
+    color: initial;
+    background-color: initial;
+  }
+  to {
+    color: #ff0000; /* Example color */
+    background-color: #f0f0f0; /* Example background color */
+  }
+}
+
