@@ -501,15 +501,17 @@ const Sidebar = () => {
   const handleMobileMenu = () => {
     document.documentElement.classList.toggle('layout-menu-expanded');
   }
-
+  // .layout-menu-fixed .layout-menu, .layout-menu-fixed-offcanvas .layout-menu 
   return (
+
     <aside
       id="layout-menu"
-      className={`layout-menu layout-menu-expanded menu-vertical menu bg-menu-theme ${
+
+      className={`layout-menu layout-menu-expanded layout-menu-fixed layout-menu-fixed-offcanvas menu-vertical menu bg-menu-theme position-sticky top-0 ${
         isActive ? "menu-collapsed" : ""
       }`}
     >
-      <div className="app-brand mt-5 demo">
+      <div className="app-brand ">
         <a href="/" className="app-brand-link">
           <span  className="app-brand-logo  demo">
             <img style={{ width: "40px", height: "30px"}} src={logo} alt="" />
@@ -575,6 +577,7 @@ const Sidebar = () => {
         ))}
       </ul>
     </aside>
+    
   );
 };
 

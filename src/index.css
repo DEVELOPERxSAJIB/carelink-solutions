@@ -93,6 +93,43 @@
   display: block !important;
 }
 
-/* nav link 
- */
+/* General sidebar styling */
+.layout-menu {
+  height: 100vh; /* Full height of the viewport */
+  position: sticky; /* Sticky positioning */
+  top: 0; /* Stick to the top of the viewport */
+  overflow-y: hidden; /* Hide scrollbar initially */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+  background-color: #f4f4f4; /* Example background color */
+  transition: overflow-y 0.3s ease; /* Smooth transition for overflow */
+}
+
+.layout-menu:hover {
+  overflow-y: auto; /* Show scrollbar on hover */
+}
+
+/* Custom scrollbar styles */
+.layout-menu::-webkit-scrollbar {
+  width: 8px; /* Scrollbar width */
+  background-color: transparent; /* Background color of the scrollbar */
+}
+
+.layout-menu::-webkit-scrollbar-thumb {
+  background-color: #c293ff; /* Scrollbar thumb color */
+  border-radius: 10px; /* Rounded scrollbar thumb */
+}
+
+.layout-menu::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Scrollbar thumb color on hover */
+}
+
+/* Sticky app-brand styling */
+.app-brand {
+  position: sticky;
+height: 60px;
+ background: #f80000;
+  top: 0px; /* Stick to the top of the viewport */
+  background-color: inherit; /* Inherit background color */
+  z-index: 1; /* Ensure it stays on top */
+}
 
