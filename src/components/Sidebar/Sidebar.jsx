@@ -18,51 +18,37 @@ const Sidebar = () => {
         {
           title: "Company Profile",
           href: "/profile",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-user d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Agency Invoice",
           href: "/agency-invoice",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-money-bill d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Payroll",
           href: "/payroll",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-circle-info d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Change Password",
           href: "/change-password",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-lock d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Positive Identifications",
           href: "/positive-identifications",
-          icon: (
-            <i className="menu-icon tf-icons ti-question-mark d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Notification s",
           href: "/notification-s",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-wrench d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Permissions",
           href: "/permissions",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-users d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
       ],
     },
@@ -76,9 +62,7 @@ const Sidebar = () => {
         {
           title: "Co-Admins",
           href: "/co-admins",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-users d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
       ],
     },
@@ -92,9 +76,7 @@ const Sidebar = () => {
         {
           title: "Sub Users",
           href: "/sub-users",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-users d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
       ],
     },
@@ -108,9 +90,7 @@ const Sidebar = () => {
         {
           title: "Billing",
           href: "/billing",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-user-plus d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
       ],
     },
@@ -124,23 +104,17 @@ const Sidebar = () => {
         {
           title: "Individual",
           href: "/individual",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-user-plus d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Create New Individual",
           href: "/create-new-individual",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-user-plus d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Individual Audit Review",
           href: "/individual-audit-review",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-user-plus d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
       ],
     },
@@ -154,37 +128,27 @@ const Sidebar = () => {
         {
           title: "Caregiver/Staff",
           href: "/staff",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-user-plus d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Guardians",
           href: "guardians",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-user-plus d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Support Administrators",
           href: "/support-administrators",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-user-plus d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Healthcare Professional",
           href: "/healthcare-professional",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-user-plus d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Compliance",
           href: "/Compliance",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-user-plus d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
       ],
     },
@@ -214,23 +178,17 @@ const Sidebar = () => {
         {
           title: "POS",
           href: "/pos",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-th d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "MAR",
           href: "mar",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-th d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "TAR",
           href: "/tar",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-th d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
       ],
     },
@@ -244,23 +202,17 @@ const Sidebar = () => {
         {
           title: "Clock in",
           href: "/clock-in",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-bell d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Clock out",
           href: "clock-out",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-bell d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "View Log",
           href: "/view-log",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-th d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
       ],
     },
@@ -282,23 +234,17 @@ const Sidebar = () => {
         {
           title: "View Assigned Mileage",
           href: "view-assigned-mileage",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-share d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Add New Mileage",
           href: "add-new-mileage",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-share d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Mileage Log",
           href: "/mileage-log",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-share d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
       ],
     },
@@ -312,9 +258,7 @@ const Sidebar = () => {
         {
           title: "Folders",
           href: "/folders",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-folder d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
       ],
     },
@@ -328,37 +272,27 @@ const Sidebar = () => {
         {
           title: "Set Budget",
           href: "/set-budget",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-plus d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Add Community Integration",
           href: "/add-community-integration",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-plus d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Community Integration Log",
           href: "/community-integration-log",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-list d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Add Category",
           href: "/add-category",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-th d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Add List Of Activity",
           href: "/add-list-of-activity",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-list d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
       ],
     },
@@ -372,86 +306,62 @@ const Sidebar = () => {
         {
           title: "Category",
           href: "/category",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-book d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "ADS Location",
           href: "/ads-location",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-folder d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "List Of Activity Log",
           href: "/list-of-activity-log",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-book d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Add Group Activity Documentation",
           href: "/add-group-activity-documentation",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-book d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "View Group Documentation Log",
           href: "/view-group-documentation-log",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-calendar d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "ADS Configuration",
           href: "/ads-configuration",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-settings d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Attendance Sheet",
           href: "/attendance-sheet",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-calendar d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Reports",
           href: "/reports",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-calendar d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Support Employment",
           href: "/support-employment",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-calendar d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "View Outcome Log",
           href: "/view-outcome-log",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-calendar d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Add Shift Summary",
           href: "/add-shift-summary",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-calendar d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "View Shift Summary",
           href: "/view-shift-summary",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-calendar d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
       ],
     },
@@ -465,37 +375,27 @@ const Sidebar = () => {
         {
           title: "Payroll",
           href: "/employee-payroll",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-circle-info d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Employee Files",
           href: "/employee-files",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-folder d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Notices",
           href: "/employee-notices",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-file-description d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Requested Time Off",
           href: "/requested-time-off",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-calendar d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Scheduler",
           href: "/scheduler",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-calendar d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
       ],
     },
@@ -509,44 +409,32 @@ const Sidebar = () => {
         {
           title: "My Vehicles",
           href: "/my-vehicles",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-car d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "My Routes",
           href: "/my-routes",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-car d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Add Vehicle Inspection",
           href: "/add-vehicle-inspection",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-car d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "View Vehicle Inspection",
           href: "/view-vehicle-inspection",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-eye d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "View Log",
           href: "/vehicle-view-log",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-eye d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "My Briefcase",
           href: "/my-briefcase",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-folder d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
       ],
     },
@@ -560,16 +448,12 @@ const Sidebar = () => {
         {
           title: "Calendars",
           href: "/calendars",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-calendar d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Shared Events",
           href: "/shared-events",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-list d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
       ],
     },
@@ -583,23 +467,17 @@ const Sidebar = () => {
         {
           title: "Add New Ticket",
           href: "/add-new-ticket",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-ticket d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
         {
           title: "Contact Us",
           href: "/contact-us",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-envelope d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon:""
         },
         {
           title: "Call Us",
           href: "/call-us",
-          icon: (
-            <i className="menu-icon tf-icons ti ti-phone d-block d-xl-none ti-md align-middle"></i>
-          ),
+          icon: ""
         },
       ],
     },

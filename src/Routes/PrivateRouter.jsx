@@ -14,7 +14,7 @@ import CoAdmin from './../Pages/ManageCoAdmin/CoAdmin';
 import SubUsers from './../Pages/ManageSubUsers/SubUsers';
 import Billing from './../Pages/BillingModule/Billing';
 import Individual from './../Pages/Individual/Individual';
-import { CreateNewIndividual } from './../Pages/Individual/CreateNewIndividual';
+import  CreateNewIndividual  from './../Pages/Individual/CreateNewIndividual';
 import IndividualAuditReview from './../Pages/Individual/IndividualAuditReview';
 import CaregiverOrStaff from './../Pages/BusinessCommunity/CaregiverOrStaff';
 import Guardians from './../Pages/BusinessCommunity/Guardians';

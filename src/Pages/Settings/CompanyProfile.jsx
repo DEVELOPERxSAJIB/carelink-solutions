@@ -219,7 +219,7 @@ const CompanyProfile = () => {
           <hr className="my-6 mx-n4" />
           <h6>3. Account Details</h6>
           <div className="row g-6">
-            <div className="col-md-12">
+            <div className="col-md-6">
               <label className="form-label" htmlFor="multicol-first-name">
                 Email Address <span className="text-danger">*</span>
               </label>
@@ -230,6 +230,7 @@ const CompanyProfile = () => {
                 placeholder="info@gmail.com"
               />
             </div>
+            <div className="col-md-6"></div>
             <div className="col-md-6">
               <label className="form-label" htmlFor="multicol-first-name">
                 First Name <span className="text-danger">*</span>
