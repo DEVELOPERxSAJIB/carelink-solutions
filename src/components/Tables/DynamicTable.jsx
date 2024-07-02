@@ -8,6 +8,7 @@ const DataTable = ({ columns, data,tableName, tableClassName, onEdit, onDelete }
   const [sortDirection, setSortDirection] = useState("asc");
 const [tableMenu,setTableMenu]= useState(false)
 const [rowId,setRowId]= useState(null)
+const [selectedRows, setSelectedRows] = useState([]);
   // Pagination
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -89,7 +90,32 @@ const handleTabMenu=(id)=>{
       document.documentElement.classList.toggle('');
     }
   };
+ // Handle individual row selection
+ const handleRowSelect = (rowIndex) => {
+  if (selectedRows.includes(rowIndex)) {
+    setSelectedRows(selectedRows.filter(index => index !== rowIndex));
+  } else {
+    setSelectedRows([...selectedRows, rowIndex]);
+  }
+};
 
+// Handle selecting/deselecting all rows
+const handleSelectAll = () => {
+  if (selectedRows.length === currentRows.length) {
+    setSelectedRows([]);
+  } else {
+    setSelectedRows(currentRows.map((_, index) => index));
+  }
+};
+
+// Handle deletion of selected rows
+const handleDeleteSelected = () => {
+  const selectedData = selectedRows.map(index => currentRows[index]);
+  if (onDelete) {
+    selectedData.forEach(row => onDelete(row));
+  }
+  setSelectedRows([]);
+};
   useEffect(() => {
     // Add event listener when the component is mounted
     document.addEventListener('mousedown', handleClose);
@@ -122,7 +148,7 @@ const handleTabMenu=(id)=>{
                 <option value="50">50</option>
                 <option value="100">100</option>
               </select>
-              entries
+              
             </label>
           </div>
 
@@ -139,6 +165,14 @@ const handleTabMenu=(id)=>{
         <table className={`card-datatable table-responsive w-100 table ${tableClassName}`}>
           <thead>
             <tr>
+            <th>
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  checked={selectedRows.length === currentRows.length}
+                  onChange={handleSelectAll}
+                />
+              </th>
               {columns?.map((column, index) => (
                 <th  key={index} onClick={() => handleSort(column.field)}>
                   <div className="d-flex">{column.header}
@@ -159,6 +193,14 @@ const handleTabMenu=(id)=>{
           <tbody>
             {filteredRows.map((row, rowIndex) => (
               <tr key={rowIndex}>
+                <td>
+                  <input
+                   className="form-check-input"
+                    type="checkbox"
+                    checked={selectedRows.includes(rowIndex)}
+                    onChange={() => handleRowSelect(rowIndex)}
+                  />
+                </td>
                 {columns.map((column, colIndex) => (
                   <td key={colIndex}>
                     {column.field === "status" ? (
