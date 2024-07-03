@@ -119,6 +119,7 @@
 
 .layout-menu {
   scrollbar-width: 1px;
+  transition: all 0.3s ease-in-out;
 }
 
 .app-brand {
@@ -139,7 +140,7 @@
 }
 
 .table-responsive::-webkit-scrollbar-thumb {
-  background-color: rgb(168, 131, 255);
+  background-color: rgb(255, 255, 255);
   border-radius: 10px;
   transition: all 0.3s ease-in-out;
 }
@@ -151,13 +152,14 @@
 @-moz-document url-prefix() {
   .layout-menu {
     scrollbar-width: thin; /* Set the width of the scrollbar */
-    scrollbar-color: #cda5fa #ac99ff;  /* Set the color of the scrollbar thumb and track */
+    scrollbar-color: #ebebeb #ffffff; 
+    transition: all .3s ease-in-out; /* Set the color of the scrollbar thumb and track */
   }
 }
 
 /* For other browsers (including newer versions of Firefox) */
-.layout-menu {
+.layout-menu:hover {
   overflow-y: auto; /* Ensure vertical scrollbar is shown when needed */
   scrollbar-width: thin; /* Set the width of the scrollbar */
-  scrollbar-color:#cda5fa #ac99ff; /* Set the color of the scrollbar thumb and track */
+  scrollbar-color:#ebebeb #ffffff; /* Set the color of the scrollbar thumb and track */
 }
