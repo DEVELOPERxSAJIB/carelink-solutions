@@ -153,12 +153,14 @@
   .layout-menu {
     scrollbar-width: thin; /* Set the width of the scrollbar */
     scrollbar-color: #ebebeb #ffffff; 
+    border-radius: 10px;
     transition: all .3s ease-in-out; /* Set the color of the scrollbar thumb and track */
   }
 }
 
 /* For other browsers (including newer versions of Firefox) */
 .layout-menu:hover {
+  border-radius: 10px;
   overflow-y: auto; /* Ensure vertical scrollbar is shown when needed */
   scrollbar-width: thin; /* Set the width of the scrollbar */
   scrollbar-color:#ebebeb #ffffff; /* Set the color of the scrollbar thumb and track */
