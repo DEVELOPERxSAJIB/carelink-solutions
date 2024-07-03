@@ -68,6 +68,7 @@ import CallUs from './../Pages/HelpAndSupport/CallUs';
 import RecycleBin from './../Pages/RecycleBin';
 import AgencyDashboard from './../Pages/Individual/AgencyDashboard';
 import EmployeeEarning from './../Pages/Settings/EmployeeEarning';
+import AddAdultListOfActivity from './../Pages/AdultDayService/AddListOfActivity';
 
 const privateRouter = [
   {
@@ -260,6 +261,10 @@ const privateRouter = [
           {
             path: "/support-employment",
             element: <SupportEmployment />,
+          },
+          {
+            path: "/add-daily-activity",
+            element: <AddAdultListOfActivity />,
           },
           {
             path: "/view-outcome-log",

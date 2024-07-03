@@ -326,6 +326,11 @@ const Sidebar = () => {
           icon: ""
         },
         {
+          title: "Add List Of Activity",
+          href: "/add-daily-activity",
+          icon: ""
+        },
+        {
           title: "View Group Documentation Log",
           href: "/view-group-documentation-log",
           icon:""
