@@ -57,7 +57,7 @@ const navigate = useNavigate()
       </div>
       <div className="card-body">
       <ExportButton/>
-      <button onClick={()=>navigate("/employee-earning")} type="button" className="btn btn-primary waves-effect waves-light">
+      <button onClick={()=>navigate("/employee-earning")} type="button" className="btn btn-primary ">
   <span className="ti-xs ti ti-file-dollar me-2" />
   Earning
 </button>

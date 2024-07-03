@@ -88,7 +88,7 @@ const CaregiverOrStaff = () => {
     <div className="card">
       <div className="card-header py-3 pt-5 fs-3">Caregiver/Staff</div>
       <div className="card-body">
-        <div className="gap-3 d-flex">
+        <div className="gap-3 d-flex flex-wrap">
           <button
             style={{ fontSize: "12px" }}
             className="btn btn-sm btn-primary waves-effect waves-light"
@@ -98,7 +98,7 @@ const CaregiverOrStaff = () => {
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
+              <span className=" d-sm-inline-block">Add New</span>
             </span>
           </button>
           <button
@@ -110,7 +110,7 @@ const CaregiverOrStaff = () => {
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-upload me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Import CSV</span>
+              <span className=" d-sm-inline-block">Import CSV</span>
             </span>
           </button>
           <button
@@ -122,7 +122,7 @@ const CaregiverOrStaff = () => {
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-download me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Export Selected</span>
+              <span className=" d-sm-inline-block">Export Selected</span>
             </span>
           </button>
           <button
@@ -134,7 +134,7 @@ const CaregiverOrStaff = () => {
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-trash me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Delete Selected</span>
+              <span className=" d-sm-inline-block">Delete Selected</span>
             </span>
           </button>
           <button
@@ -146,7 +146,7 @@ const CaregiverOrStaff = () => {
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Payroll</span>
+              <span className=" d-sm-inline-block">Payroll</span>
             </span>
           </button>
           <button
@@ -158,7 +158,7 @@ const CaregiverOrStaff = () => {
           >
             <span className="d-flex align-items-center">
               <FaRegFolder size={22} className="me-1" />{" "}
-              <span className="d-none d-sm-inline-block">Archive</span>
+              <span className=" d-sm-inline-block">Archive</span>
             </span>
           </button>
           <button
@@ -170,7 +170,7 @@ const CaregiverOrStaff = () => {
           >
             <span className="d-flex align-items-center">
               <FaRegFolderOpen size={22} className="me-1" />{" "}
-              <span className="d-none d-sm-inline-block">Inactive</span>
+              <span className=" d-sm-inline-block">Inactive</span>
             </span>
           </button>
           <button
@@ -182,7 +182,7 @@ const CaregiverOrStaff = () => {
           >
             <span className="d-flex align-items-center">
               <FaRegMoneyBillAlt size={22} className="me-1" />{" "}
-              <span className="d-none d-sm-inline-block">Earning</span>
+              <span className=" d-sm-inline-block">Earning</span>
             </span>
           </button>
           <button
@@ -194,7 +194,7 @@ const CaregiverOrStaff = () => {
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-plus" />
-              <span className="d-none d-sm-inline-block">Assign All Individual </span>
+              <span className=" d-sm-inline-block">Assign All Individual </span>
             </span>
           </button>
         </div>
