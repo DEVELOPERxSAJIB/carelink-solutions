@@ -7,6 +7,7 @@ const AttendanceSheet = () => {
 
   // Example data for attendance (can be replaced with actual data)
   const [attendanceData, setAttendanceData] = useState([
+    { date: '2024-07-01', status: 'A', individual: 'John Doe', code: '123', county: 'County A', location: 'Location X' },
     { date: '2024-07-02', status: 'P', individual: 'John Doe', code: '123', county: 'County A', location: 'Location X' },
     { date: '2024-07-03', status: 'A', individual: 'Jane Smith', code: '456', county: 'County B', location: 'Location Y' },
     // Add more data for other months as needed
@@ -75,8 +76,12 @@ const AttendanceSheet = () => {
 
     const { colorClass, text } = statusData[status] || { colorClass: 'bg-light', text: '-' };
 
+    // Check if the current day is today
+    const today = new Date();
+    const isToday = today.getFullYear() === currentYear && today.getMonth() + 1 === currentMonth && today.getDate() === day;
+
     return (
-      <td key={day} className={`text-center ${colorClass}`} title={text}>
+      <td key={day} className={`text-center ${colorClass} ${isToday ? 'bg-danger text-white' : 'text-white'}`} title={text}>
         {status}
       </td>
     );
@@ -182,7 +187,7 @@ const AttendanceSheet = () => {
       const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
 
       headers.push(
-        <th key={`day-${day}`} className="text-center">
+        <th key={`day-${day}`} className="text-center ">
           {day}
         </th>
       );
@@ -216,7 +221,7 @@ const AttendanceSheet = () => {
               <table className="table card-datatable table-sm mt-3">
                 <thead>
                   <tr>
-                    <th>status</th>
+                    <th>Status</th>
                     {renderTableHeaders().weekNames}
                   </tr>
                   <tr>
