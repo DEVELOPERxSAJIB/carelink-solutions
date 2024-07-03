@@ -140,3 +140,6 @@
   border-radius: 10px; /* Rounded scrollbar thumb */
   transition: all 0.3s ease-in-out;
 }
+.ql-container{
+  min-height: 300px;
+}

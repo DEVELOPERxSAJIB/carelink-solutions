@@ -23,30 +23,42 @@ const getCurrentWeekDateRange = () => {
   };
 };
 
-const Scheduler = () => {
-  const columns = [
-    { header: "S.No", field: "serialNumber" },
-    { header: "Site Name", field: "siteName" },
-    { header: "Created By", field: "createdBy" },
-    { header: "Created On", field: "createdOn" },
-];
-
-const data = [
-    {
-        serialNumber: 1,
-        siteName: "Site A",
-        createdBy: "Admin",
-        createdOn: "2024-07-03",
-    },
-    {
-        serialNumber: 2,
-        siteName: "Site B",
-        createdBy: "Manager",
-        createdOn: "2024-07-02",
-    },
-    // Add more entries as needed
-];
-
+const ManageShift = () => {
+    const columns = [
+        { header: "S.No", field: "serialNumber" },
+        { header: "Employee Name", field: "employeeName" },
+        { header: "Multiple Staff Required", field: "status" },
+        { header: "Selected Site", field: "selectedSite" },
+        { header: "Code", field: "code" },
+        { header: "Is Published?", field: "isPublished" },
+        { header: "Created By", field: "createdBy" },
+        { header: "Created On", field: "createdOn" },
+    ];
+    
+    const data = [
+        {
+            serialNumber: 1,
+            employeeName: "John Doe",
+            multipleStaffRequired: true,
+            selectedSite: "Site A",
+            code: "EMP001",
+            isPublished: true,
+            createdBy: "Admin",
+            createdOn: "2024-07-03",
+        },
+        {
+            serialNumber: 2,
+            employeeName: "Jane Smith",
+            multipleStaffRequired: false,
+            selectedSite: "Site B",
+            code: "EMP002",
+            isPublished: false,
+            createdBy: "Manager",
+            createdOn: "2024-07-02",
+        },
+        // Add more entries as needed
+    ];
+    
 
   const handleEdit = (rowData) => {
     alert(`Editing ${rowData.firstName} ${rowData.lastName}`);
@@ -59,7 +71,7 @@ const data = [
   return (
     <div className="card">
       <div className="card-header"></div>
-      <div className="card-header py-3 pt-5 fs-3">List Category</div>
+      <div className="card-header py-3 pt-5 fs-3">Manage Shift</div>
       <div className="card-body">
         <div className="gap-3 d-flex">
           <button
@@ -149,5 +161,6 @@ const data = [
   );
 };
 
-export default Scheduler;
+export default ManageShift;
+
 

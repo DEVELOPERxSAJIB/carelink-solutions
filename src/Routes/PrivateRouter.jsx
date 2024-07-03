@@ -69,6 +69,7 @@ import RecycleBin from './../Pages/RecycleBin';
 import AgencyDashboard from './../Pages/Individual/AgencyDashboard';
 import EmployeeEarning from './../Pages/Settings/EmployeeEarning';
 import AddAdultListOfActivity from './../Pages/AdultDayService/AddListOfActivity';
+import ManageShift from './../Pages/EmployeeRecord/ManageShift';
 
 const privateRouter = [
   {
@@ -293,6 +294,10 @@ const privateRouter = [
           {
             path: "/employee-notices",
             element: <Notices />,
+          },
+          {
+            path: "/manage-shift",
+            element: <ManageShift />,
           },
           {
             path: "/requested-time-off",

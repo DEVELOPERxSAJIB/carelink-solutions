@@ -404,6 +404,11 @@ const Sidebar = () => {
           href: "/scheduler",
           icon: ""
         },
+        {
+          title: "Manage Shift",
+          href: "/manage-shift",
+          icon: ""
+        },
       ],
     },
     {

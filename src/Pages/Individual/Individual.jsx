@@ -38,7 +38,7 @@ const Individual = () => {
       header: 'Stakeholders(s)',
       field: 'stakeholders',
       render: (rowData) => (
-        <Accordion stakeholders={rowData.stakeholders} />
+        <Accordion tableHead={"Stakeholders Details"} data={rowData.stakeholders} />
       ),
     },
     {
@@ -193,15 +193,7 @@ const Individual = () => {
     },
   ];
 
-  const handleEdit = (rowData) => {
-    alert(`Editing ${rowData.firstName} ${rowData.lastName}`);
-    // Implement edit logic here
-  };
 
-  const handleDelete = (rowData) => {
-    alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
-    // Implement delete logic here
-  };
 
   return (
     <div className="card">

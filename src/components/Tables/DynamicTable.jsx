@@ -126,7 +126,7 @@ const handleDeleteSelected = () => {
     };
   }, []);
   return (
-    <div className="">
+    <div className="position-relative">
      {tableName && <h5 className="card-header">{tableName}</h5>}
       <div className="card-datatable table-responsive">
         <div className="flex my-5 row w-100  justify-content-between align-items-center">
