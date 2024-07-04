@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../components/Tables/DynamicTable";
+import PopupModal from './../components/Models/PopupModel';
+import useFormFields from './../hook/useFormHook';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -81,23 +83,98 @@ const LocationOfService = () => {
     alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
     // Implement delete logic here
   };
+  const initialState = {
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    zipCode: ''
+  };
 
+  const [formData, handleChange, resetForm] = useFormFields(initialState);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    // onSave(formData); // Pass formData to parent component or handle saving logic
+    resetForm(); // Reset form fields after submission
+  };
   return (
     <div className="card">
       <div className="card-header py-3 pt-5 fs-3">Manage Locations</div>
       <div className="card-body">
         <div className="gap-3 d-flex">
-          <button
-            className="btn btn-secondary create-new btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span>
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
-            </span>
-          </button>
+        <PopupModal title="Add Service Location" id="manageLocations">
+        <form onSubmit={handleSubmit}>
+      <div className="mb-3">
+        <label htmlFor="address1" className="form-label">Address1</label>
+        <input
+          type="text"
+          id="address1"
+          name="address1"
+          className="form-control"
+          value={formData.address1}
+          onChange={handleChange}
+          placeholder="Enter Address1"
+          required
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="address2" className="form-label">Address2</label>
+        <input
+          type="text"
+          id="address2"
+          name="address2"
+          className="form-control"
+          value={formData.address2}
+          onChange={handleChange}
+          placeholder="Enter Address2"
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="city" className="form-label">City</label>
+        <input
+          type="text"
+          id="city"
+          name="city"
+          className="form-control"
+          value={formData.city}
+          onChange={handleChange}
+          placeholder="Enter City"
+          required
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="state" className="form-label">State</label>
+        <input
+          type="text"
+          id="state"
+          name="state"
+          className="form-control"
+          value={formData.state}
+          onChange={handleChange}
+          placeholder="Enter State"
+          required
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="zipCode" className="form-label">Zip Code</label>
+        <input
+          type="text"
+          id="zipCode"
+          name="zipCode"
+          className="form-control"
+          value={formData.zipCode}
+          onChange={handleChange}
+          placeholder="Enter Zip Code"
+          required
+        />
+      </div>
+      <div className="d-grid">
+        <button type="submit" className="btn btn-primary">Add Service Location</button>
+      </div>
+    </form>
+        </PopupModal>
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}

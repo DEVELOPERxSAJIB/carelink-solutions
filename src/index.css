@@ -168,7 +168,17 @@
 }
 
 /* For screens smaller than 480px (common mobile breakpoint) */
+.from-scrollbar {
+  max-height:80vh;
+  overflow-y:scroll;
+  overflow-x:hidden; 
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
 
+.from-scrollbar::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for WebKit */
+}
 
 @media (max-width: 480px) {
   .export_button {

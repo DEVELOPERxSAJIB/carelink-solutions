@@ -1,32 +1,29 @@
-import React from "react";
+
 import DataTable from "./../../components/Tables/DynamicTable";
-import ExportButton from "./../../components/Buttons/ExportButton";
 import { useNavigate } from "react-router-dom";
-// Function to get the start and end dates of the current week
-const getCurrentWeekDateRange = () => {
-  const now = new Date();
-  const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-  const endOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
+import useFormFields from './../../hook/useFormHook';
+import FullscreenModal from './../../components/Models/FullScreenModel';
 
-  const formatDate = (date) => {
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      weekday: "short",
-    };
-    return date.toLocaleDateString("en-US", options);
-  };
-
-  return {
-    start: formatDate(startOfWeek),
-    end: formatDate(endOfWeek),
-  };
-};
 
 const SubUsers = () => {
-  const { start, end } = getCurrentWeekDateRange();
+
   const navigate = useNavigate();
+  const initialState = {
+    gender: "Male",
+    firstName: "",
+    lastName: "",
+    email: "",
+    medAdministration: "Yes",
+  };
+
+  const [formData, handleChange, resetForm] = useFormFields(initialState);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // handleSave(formData);
+    resetForm();
+  };
+
   const columns = [
     { header: "S.No", field: "serialNumber" },
     { header: "First Name", field: "firstName" },
@@ -74,17 +71,90 @@ const SubUsers = () => {
       <div className="card-header py-3 pt-5 fs-3">Manage Sub Users</div>
       <div className="card-body">
         <div className="gap-3 d-flex">
-          <button
-            className="btn btn-secondary create-new btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
+        <FullscreenModal id="addnewsubuser" title="Add New Sub-User" onSave={handleSubmit}>
+      <form className="w-100">
+        <div className="mb-3 w-100">
+          <label htmlFor="gender" className="form-label">
+            Gender <span className="text-danger">*</span>
+          </label>
+          <select
+            id="gender"
+            name="gender"
+            className="form-select"
+            value={formData.gender}
+            onChange={handleChange}
+            required
           >
-            <span>
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
-            </span>
-          </button>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div className="mb-3">
+          <label htmlFor="firstName" className="form-label">
+            First Name <span className="text-danger">*</span>
+          </label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            className="form-control"
+            value={formData.firstName}
+            onChange={handleChange}
+            placeholder="First Name"
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="lastName" className="form-label">
+            Last Name <span className="text-danger">*</span>
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            className="form-control"
+            placeholder="Last Name"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Email Address <span className="text-danger">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email Address"
+            className="form-control"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="medAdministration" className="form-label">
+            Med-Administration
+          </label>
+          <select
+            id="medAdministration"
+            name="medAdministration"
+            className="form-select"
+            value={formData.medAdministration}
+            onChange={handleChange}
+          >
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <button type="submit" className="btn btn-primary me-4">
+        Add New Sub-User
+        </button>
+      </form>
+    </FullscreenModal>
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}

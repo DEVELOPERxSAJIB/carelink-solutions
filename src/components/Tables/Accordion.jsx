@@ -1,38 +1,45 @@
-// components/Tables/Accordion.jsx
 import React, { useState } from "react";
 
 const Accordion = ({ data, tableHead }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenFirstModal, setIsOpenFirstModal] = useState(false);
+  const [isOpenSecondModal, setIsOpenSecondModal] = useState(false);
 
-  const togglePopup = () => {
-    setIsOpen(!isOpen);
+  const toggleFirstModal = () => {
+    setIsOpenFirstModal(!isOpenFirstModal);
+    if (isOpenSecondModal) setIsOpenSecondModal(false);
+  };
+
+  const toggleSecondModal = () => {
+    setIsOpenSecondModal(!isOpenSecondModal);
+    if (isOpenFirstModal) setIsOpenFirstModal(false);
   };
 
   return (
     <div className="position-relative">
-      <button className="btn btn-primary" onClick={togglePopup}>
-        {isOpen ? <i className="ti ti-eye"></i> : <i className="ti ti-eye"></i>}
+      <button className="btn btn-primary" onClick={toggleFirstModal}>
+        {isOpenFirstModal ? <i className="ti ti-eye"></i> : <i className="ti ti-eye"></i>}
       </button>
 
-      {isOpen && (
+      {/* First Modal */}
+      {isOpenFirstModal && (
         <div
           className="modal fade show"
-          id="smallModal"
+          id="modalToggle"
           tabIndex="-1"
           aria-modal="true"
           role="dialog"
           style={{ display: "block", padding: "0px" }}
         >
-          <div className="modal-dialog modal-sm" role="document">
+          <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel2">
+                <h5 className="modal-title" id="exampleModalLabel1">
                   {tableHead}
                 </h5>
                 <button
                   type="button"
                   className="btn-close"
-                  onClick={togglePopup}
+                  onClick={toggleFirstModal}
                   aria-label="Close"
                 ></button>
               </div>
@@ -45,10 +52,13 @@ const Accordion = ({ data, tableHead }) => {
                   </div>
                 ))}
               </div>
+              
             </div>
           </div>
         </div>
       )}
+
+     
     </div>
   );
 };

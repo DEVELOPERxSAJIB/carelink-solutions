@@ -70,6 +70,7 @@ import AgencyDashboard from './../Pages/Individual/AgencyDashboard';
 import EmployeeEarning from './../Pages/Settings/EmployeeEarning';
 import AddAdultListOfActivity from './../Pages/AdultDayService/AddListOfActivity';
 import ManageShift from './../Pages/EmployeeRecord/ManageShift';
+import ReviewEmailLog from './../Pages/Individual/ReviewEmailLog';
 
 const privateRouter = [
   {
@@ -126,6 +127,10 @@ const privateRouter = [
           {
             path: "/individual",
             element: <Individual />,
+          },
+          {
+            path: "/review-email-log",
+            element: <ReviewEmailLog />,
           },
           {
             path: "/create-new-individual",
