@@ -46,11 +46,11 @@ const ExportButton = () => {
       >
         <span>
           <i className="ti ti-file-export ti-xs me-sm-1" />{" "}
-          <span className="d-none d-sm-inline-block">Export</span>
+          <span className="d-sm-inline-block">Export</span>
         </span>
       </button>
       {dropdownOpen && (
-        <div className="dropdown-menu right-0 show dt-button-collection" aria-modal="true" role="dialog">
+        <div className="dropdown-menu export_button right-0 show dt-button-collection" aria-modal="true" role="dialog">
           <a className="dropdown-item" href="#" onClick={() => handleExport('print')}>
             <i className="ti ti-printer me-1" />
             Print

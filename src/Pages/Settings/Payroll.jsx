@@ -55,7 +55,7 @@ const navigate = useNavigate()
       <div className="card-header py-3 pt-5 fs-3">
         Employees Payroll Report: {start} To {end}
       </div>
-      <div className="card-body">
+      <div className="card-body"> 
       <ExportButton/>
       <button onClick={()=>navigate("/employee-earning")} type="button" className="btn btn-primary ">
   <span className="ti-xs ti ti-file-dollar me-2" />

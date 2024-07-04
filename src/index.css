@@ -3,11 +3,6 @@
   padding: 0;
 }
 
-@media (min-width: 1200px) {
-  .navbar-expand-xl .navbar-nav .dropdown-menu {
-    right: 0 !important;
-  }
-}
 
 .custom-scroll {
   overflow-y: hidden;
@@ -170,4 +165,26 @@
   overflow-y: auto; /* Ensure vertical scrollbar is shown when needed */
   scrollbar-width: thin; /* Set the width of the scrollbar */
   scrollbar-color:#ebebeb #ffffff; /* Set the color of the scrollbar thumb and track */
+}
+
+/* For screens smaller than 480px (common mobile breakpoint) */
+
+
+@media (max-width: 480px) {
+  .export_button {
+    position: absolute !important;
+    right: -10px !important;
+    
+  }
+  .table_drop_menu {
+    position: absolute !important;
+    right: 10px !important;
+    
+  }
+}
+
+@media (min-width: 1200px) {
+  .navbar-expand-xl .navbar-nav .dropdown-menu {
+    right: 0 !important;
+  }
 }
