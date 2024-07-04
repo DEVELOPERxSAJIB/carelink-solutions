@@ -1,7 +1,6 @@
-import illustration_light from "/src/assets/img/illustrations/auth-login-illustration-light.png";
 import image_light from "/src/assets/img/illustrations/bg-shape-image-light.png";
 import {Link} from "react-router-dom"
-import logo from '../../../public/LOGO.jpeg'
+import logo from '../../../public/LOGO1.jpeg'
 const Login = () => {
   return (
     <div className="authentication-wrapper authentication-cover">
