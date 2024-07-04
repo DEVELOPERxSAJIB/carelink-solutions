@@ -102,6 +102,7 @@ const ViewLog = () => {
             tabIndex={0}
             aria-controls="DataTables_Table_0"
             type="button"
+            onClick={()=>navigate("/clock-in")}
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-plus me-sm-1" />{" "}

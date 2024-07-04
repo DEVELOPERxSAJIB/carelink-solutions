@@ -535,7 +535,7 @@ const Pos = () => {
         </select>
       </div>
 
-      <div className="form-check mb-3">
+      <div className="form-check mb-3 col-md-12 ">
         <input
           type="checkbox"
           id="addBloodPressure"
@@ -547,7 +547,7 @@ const Pos = () => {
         <label htmlFor="addBloodPressure" className="form-check-label">Add Blood Pressure</label>
       </div>
 
-      <div className="form-check mb-3">
+      <div className="form-check mb-3 col-md-12 ">
         <input
           type="checkbox"
           id="addBloodSugar"
@@ -559,7 +559,7 @@ const Pos = () => {
         <label htmlFor="addBloodSugar" className="form-check-label">Add Blood Sugar</label>
       </div>
 
-      <div className="form-check mb-3">
+      <div className="form-check mb-3 col-md-12 ">
         <input
           type="checkbox"
           id="addBowelMovement"
@@ -596,7 +596,7 @@ const Pos = () => {
         />
       </div>
 
-      <div className="form-check mb-3">
+      <div className="form-check mb-3 col-md-12 ">
         <input
           type="checkbox"
           id="routineMedication"
@@ -608,7 +608,7 @@ const Pos = () => {
         <label htmlFor="routineMedication" className="form-check-label">Is this prescription a routine medication?</label>
       </div>
 
-      <div className="form-check mb-3">
+      <div className="form-check mb-3 col-md-12 ">
         <input
           type="checkbox"
           id="controlledMedication"
@@ -620,7 +620,7 @@ const Pos = () => {
         <label htmlFor="controlledMedication" className="form-check-label">Is this a controlled medication?</label>
       </div>
 
-      <div className="form-check mb-3">
+      <div className="form-check mb-3 col-md-12 ">
         <input
           type="checkbox"
           id="prnMedication"
@@ -632,7 +632,7 @@ const Pos = () => {
         <label htmlFor="prnMedication" className="form-check-label">Is this medication a PRN?</label>
       </div>
 
-      <div className="form-check mb-3">
+      <div className="form-check mb-3 col-md-12 ">
         <input
           type="checkbox"
           id="treatmentPrescription"
