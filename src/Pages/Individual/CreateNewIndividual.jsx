@@ -228,7 +228,7 @@ const CreateNewIndividual = () => {
               />
             </div>
 
-            <div className="mb-3 col-md-12">
+            <div className="mb-3 col-md-6">
               <label htmlFor="significantPhoneNumbers" className="form-label">
                 Significant Phone Numbers
               </label>
@@ -243,7 +243,7 @@ const CreateNewIndividual = () => {
               />
             </div>
 
-            <div className="mb-3 col-md-6">
+            <div className="mb-3 col-md-6 flex align-items-center">
               <label htmlFor="advanceDirectives" className="form-label">
                 Advance Directives
               </label>
@@ -258,7 +258,7 @@ const CreateNewIndividual = () => {
               />
             </div>
 
-            <div className="mb-3 form-check col-md-6">
+            <div className="mb-3 form-check col-md-12 ">
               <input
                 type="checkbox"
                 id="medicalPowerOfAttorney"
