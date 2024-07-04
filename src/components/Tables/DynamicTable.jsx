@@ -17,7 +17,7 @@ const DataTable = ({
   const [rowId, setRowId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const [visibleColumns, setVisibleColumns] = useState(
-    columns.map((column) => column.field)
+    columns?.map((column) => column.field)
   );
 
   const tableRef = useRef();
@@ -178,25 +178,14 @@ const DataTable = ({
               <option value="100">100</option>
             </select>
           </div>
-
-          <div className="col-md-7 col-4">
-            <input
-              type="text"
-              placeholder="Search by any..."
-              value={searchTerm}
-              className="form-control"
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-
           <div className="col-md-4 col-4">
-            <label className="form-label">Show/Hide Columns:</label>
+            <label className="form-label">Show/Hide</label>
             <select
               className="form-select"
               value={visibleColumns}
               onChange={(e) => handleColumnVisibilityChange(e.target.value)}
             >
-              {columns.map((column) => (
+              {columns?.map((column) => (
                 <option key={column.field} value={column.field}>
                   <div className="form-check">
                     <input
@@ -225,7 +214,7 @@ const DataTable = ({
                           fontSize: "12px",
                         }}
                       >
-                        {visibleColumns.includes(column.field) ? "✔ " : ""}
+                        {visibleColumns.includes(column.field) ? "✔ " : "◻ "}
                       </span>
                       {column.header}
                     </label>
@@ -233,6 +222,15 @@ const DataTable = ({
                 </option>
               ))}
             </select>
+          </div>
+          <div className="col-md-7 col-4">
+            <input
+              type="text"
+              placeholder="Search by any..."
+              value={searchTerm}
+              className="form-control"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
         </div>
 
@@ -362,33 +360,33 @@ const DataTable = ({
             <ul className="pagination form-control border-none d-flex justify-content-end mr-auto">
               <li className="page-item paginate_button">
                 <button
-                  className="page-link"
+                  className="page-link w-25 h-25"
                   onClick={goToFirstPage}
                   disabled={currentPage === 1}
                 >
                   <i className="ti ti-chevron-left ti-sm"></i>
                 </button>
               </li>
-              {Array.from({ length: Math.ceil(data?.length / rowsPerPage) }).map(
-                (item, index) => (
-                  <li
-                    key={index}
-                    className={`page-item ${
-                      currentPage === index + 1 ? "active" : ""
-                    }`}
+              {Array.from({
+                length: Math.ceil(data?.length / rowsPerPage),
+              }).map((item, index) => (
+                <li
+                  key={index}
+                  className={`page-item ${
+                    currentPage === index + 1 ? "active" : ""
+                  }`}
+                >
+                  <button
+                    className="page-link w-25 h-25"
+                    onClick={() => paginate(index + 1)}
                   >
-                    <button
-                      className="page-link"
-                      onClick={() => paginate(index + 1)}
-                    >
-                      {index + 1}
-                    </button>
-                  </li>
-                )
-              )}
+                    {index + 1}
+                  </button>
+                </li>
+              ))}
               <li className="page-item">
                 <button
-                  className="page-link"
+                  className="page-link w-25 h-25"
                   onClick={goToLastPage}
                   disabled={
                     currentPage === Math.ceil(data?.length / rowsPerPage)

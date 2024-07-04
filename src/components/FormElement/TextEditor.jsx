@@ -25,7 +25,7 @@ const TextEditor = () => {
       value={value} 
       onChange={setValue} 
       modules={modules} 
-      placeholder="Write notes...." 
+      placeholder="Write now...." 
     />
   );
 }

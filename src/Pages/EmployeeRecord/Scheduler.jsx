@@ -58,7 +58,7 @@ const data = [
 
   return (
     <div className="card">
-      <div className="card-header"></div>
+      
       <div className="card-header py-3 pt-5 fs-3">List Category</div>
       <div className="card-body">
         <div className="gap-3 d-flex">

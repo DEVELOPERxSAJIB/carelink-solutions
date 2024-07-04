@@ -69,8 +69,7 @@ const ManageShift = () => {
   };
 
   return (
-    <div className="card">
-      <div className="card-header"></div>
+    <div className="card">     
       <div className="card-header py-3 pt-5 fs-3">Manage Shift</div>
       <div className="card-body">
         <div className="gap-3 d-flex">
