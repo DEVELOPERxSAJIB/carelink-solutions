@@ -95,19 +95,20 @@ const CreateNewIndividual = () => {
             </div>
 
             <div className="mb-3 col-md-2">
-              <label htmlFor="gender" className="form-label">
-                Gender
-              </label>
-              <input
-                type="text"
-                id="gender"
-                placeholder="asdfd"
-                name="gender"
-                className="form-control"
-                value={formData.gender}
-                onChange={handleChange}
-              />
-            </div>
+                  <label htmlFor="medAdministration" className="form-label">
+                    Gender
+                  </label>
+                  <select
+                    id="medAdministration"
+                    name="medAdministration"
+                    className="form-select"
+                    value={formData.medAdministration}
+                    onChange={handleChange}
+                  >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
 
             <div className="mb-3 col-md-2">
               <label htmlFor="race" className="form-label">
@@ -125,19 +126,20 @@ const CreateNewIndividual = () => {
             </div>
 
             <div className="mb-3 col-md-2">
-              <label htmlFor="maritalStatus" className="form-label">
-                Marital Status
-              </label>
-              <input
-                type="text"
-                id="maritalStatus"
-                placeholder="Marital Status"
-                name="maritalStatus"
-                className="form-control"
-                value={formData.maritalStatus}
-                onChange={handleChange}
-              />
-            </div>
+                  <label htmlFor="medAdministration" className="form-label">
+                    Maritual status
+                  </label>
+                  <select
+                    id="medAdministration"
+                    name="medAdministration"
+                    className="form-select"
+                    value={formData.medAdministration}
+                    onChange={handleChange}
+                  >
+                    <option value="Married">Married</option>
+                    <option value="Unmarred">Unmarred</option>
+                  </select>
+                </div>
 
             <div className="mb-3 col-md-6">
               <label htmlFor="medicaidIdentification" className="form-label">
