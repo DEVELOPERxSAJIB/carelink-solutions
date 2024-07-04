@@ -136,7 +136,7 @@ const Pos = () => {
           <form onSubmit={handleSubmit} className="from-scrollbar px-4">
      <div className="row">
      <div className="mb-3 col-md-6">
-        <label htmlFor="individual" className="form-label fs-4">Choose Individual</label>
+        <label htmlFor="individual" className="form-label ">Choose Individual</label>
         <select
           id="individual"
           name="individual"
