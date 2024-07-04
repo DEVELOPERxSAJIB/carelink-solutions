@@ -72,7 +72,7 @@ const CreateNewIndividual = () => {
               />
             </div>
 
-            <div className="mb-3 col-md-3">
+            <div className="mb-3 col-md-4">
               <label htmlFor="dateOfBirth" className="form-label">
                 Date of Birth
               </label>
