@@ -1,5 +1,6 @@
 import { useState } from "react";
-
+import logo from "../../../public/favicon.ico"
+import {Link} from "react-router-dom"
 const Register = () => {
   const [formData, setFormData] = useState({
     userType: "",
@@ -199,11 +200,11 @@ const Register = () => {
   };
 
   return (
-    <div className="container card">
+    <div className="container card my-10 d-flex justify-content-center align-items-center">
       <div className="row justify-content-center">
         <div className="col-lg-8">
-          <div className="card-header fs-3">
-            Sign Up
+          <div className="card-header fs-3 p-0 mt-10 mb-5 text-center fw-bolder text-primary">
+            Sign Up in <img src={logo} alt="" /> <span className="text-success  fw-bold">CareLink Solutions</span>
           </div>
           <hr />
           <div className="card-body">
@@ -618,6 +619,7 @@ const Register = () => {
                 Sign Up
               </button>
             </form>
+            <p className="d-flex mt-5">Already have an account?  <Link className="d-inline-block" to="/login">Login</Link></p> 
           </div>
         </div>
       </div>

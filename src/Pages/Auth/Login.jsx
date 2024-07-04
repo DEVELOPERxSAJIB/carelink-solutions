@@ -1,5 +1,7 @@
 import illustration_light from "/src/assets/img/illustrations/auth-login-illustration-light.png";
 import image_light from "/src/assets/img/illustrations/bg-shape-image-light.png";
+import {Link} from "react-router-dom"
+import logo from '../../../public/LOGO.jpeg'
 const Login = () => {
   return (
     <div className="authentication-wrapper authentication-cover">
@@ -8,16 +10,16 @@ const Login = () => {
       <div className="d-none d-lg-flex col-lg-8 p-0">
         <div className="auth-cover-bg auth-cover-bg-color d-flex justify-content-center align-items-center">
           <img
-            src={illustration_light}
+            src={logo}
             alt="auth-login-cover"
-            className="my-5 auth-illustration w-50"
+            className="my-5 auth-illustration w-100 h-100 "
             data-app-light-img="illustrations/auth-login-illustration-light.png"
             data-app-dark-img="illustrations/auth-login-illustration-dark.html"
           />
           <img
             src={image_light}
             alt="auth-login-cover"
-            className="platform-bg w-75 position-absolute bottom-0"
+            className="platform-bg  position-absolute bottom-0"
             data-app-light-img="illustrations/bg-shape-image-light.png"
             data-app-dark-img="illustrations/bg-shape-image-dark.html"
           />
@@ -83,7 +85,7 @@ const Login = () => {
                   </label>
                 </div>
                 <a href="auth-forgot-password-cover.html">
-                  <p className="mb-0">Forgot Password?</p>
+                  <Link to="/forget-password" className="mb-0">Forgot Password?</Link>
                 </a>
               </div>
             </div>
@@ -93,7 +95,7 @@ const Login = () => {
           <p className="text-center">
             <span>New on our platform?</span>
             <a href="auth-register-cover.html">
-              <span>Create an account</span>
+              <Link to="/register">Create an account</Link>
             </a>
           </p>
 
