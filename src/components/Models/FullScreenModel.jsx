@@ -1,6 +1,6 @@
 import React from "react";
 
-const FullscreenModal = ({ title, children,  id, className }) => {
+const FullscreenModal = ({ title, children, id, className }) => {
   return (
     <>
       <button
@@ -13,12 +13,7 @@ const FullscreenModal = ({ title, children,  id, className }) => {
       </button>
 
       {/* Modal */}
-      <div
-        className="modal fade"
-        id={`${id}`}
-        tabIndex="-1"
-        aria-hidden="true"
-      >
+      <div className="modal fade" id={`${id}`} tabIndex="-1" aria-hidden="true">
         <div className="modal-dialog modal-fullscreen " role="document">
           <div className="modal-content">
             <div
@@ -37,7 +32,7 @@ const FullscreenModal = ({ title, children,  id, className }) => {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div className="modal-body d-flex justify-content-center align-items-center">
+                <div className="modal-body card m-3 d-flex justify-content-center align-items-center">
                   {children}
                 </div>
                 <div className="modal-footer">

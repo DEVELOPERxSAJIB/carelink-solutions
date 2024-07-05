@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FaRegFolder } from "react-icons/fa";
 import DataTable from "../../components/Tables/DynamicTable";
+import TableHeader from './../../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -105,7 +106,8 @@ const SetBudget = () => {
 
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Add Community Budget</div>
+
+      <TableHeader title="Add Community Budget" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
         <form action="">
         <div className="row">

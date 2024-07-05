@@ -198,3 +198,11 @@
     right: 0 !important;
   }
 }
+#layout-navbar{
+  position: sticky;
+  top: 0px;
+  transition: all 0.5s ease-in-out;
+}
+.react-calendar{
+  width: 100% !important;
+}

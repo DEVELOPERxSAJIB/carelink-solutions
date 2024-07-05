@@ -3,6 +3,7 @@ import DataTable from "./../../components/Tables/DynamicTable";
 import { useNavigate } from "react-router-dom";
 import useFormFields from './../../hook/useFormHook';
 import FullscreenModal from './../../components/Models/FullScreenModel';
+import TableHeader from './../../components/Tables/TableHeader';
 
 
 const SubUsers = () => {
@@ -68,9 +69,10 @@ const SubUsers = () => {
 
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Manage Sub Users</div>
+
+      <TableHeader title="Manage Sub Users" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
+        <div className="gap-3 d-flex flex-wrap">
         <FullscreenModal id="addnewsubuser" title="Add New Sub-User" onSave={handleSubmit}>
       <form className="w-100">
         <div className="mb-3 w-100">

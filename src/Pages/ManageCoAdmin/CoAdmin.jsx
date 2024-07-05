@@ -3,6 +3,7 @@ import DataTable from "./../../components/Tables/DynamicTable";
 import ExportButton from "./../../components/Buttons/ExportButton";
 import { useNavigate } from "react-router-dom";
 import FullscreenModal from "./../../components/Models/FullScreenModel";
+import TableHeader from './../../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -93,9 +94,10 @@ const CoAdmin = () => {
   return (
     <>
       <div className="card">
-        <div className="card-header py-3 pt-5 fs-3">Manage Co-Admins</div>
+
+        <TableHeader title="Manage Co-Admins" className="py-3 pt-5 fs-3 card-header"/>
         <div className="card-body">
-          <div className="gap-3 d-flex">
+          <div className="gap-3 d-flex flex-wrap">
             <FullscreenModal id="addnewcoadmin" title="Add New Co-Admin" onSave={handleSave}>
               <form className="w-100">
                 <div className="mb-3 w-100">

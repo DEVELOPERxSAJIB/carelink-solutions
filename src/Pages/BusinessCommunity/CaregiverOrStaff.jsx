@@ -8,6 +8,7 @@ import { FaRegFolder } from "react-icons/fa";
 import { FaRegFolderOpen } from "react-icons/fa";
 import useFormFields from "./../../hook/useFormHook";
 import FullscreenModal from "./../../components/Models/FullScreenModel";
+import TableHeader from "./../../components/Tables/TableHeader";
 
 const CaregiverOrStaff = () => {
   const navigate = useNavigate();
@@ -79,19 +80,7 @@ const CaregiverOrStaff = () => {
       ),
     },
   ];
-  const columns3 = [
-    { field: "id", header: "S.No" },
-    { field: "name", header: "Individual" },
-    { field: "role", header: "Agency" },
-  ];
-  const data3 = [
-    { id: 1, name: "Abdirahman Mohamed", role: "Agency" },
-    { id: 2, name: "Adnan Sidirijal", role: "Agency" },
-    { id: 3, name: "Ellott Verrilli", role: "Agency" },
-    { id: 4, name: "James Masters", role: "Agency" },
-    { id: 5, name: "Keetrah Chandler", role: "Agency" },
-    { id: 6, name: "Omer Mohamed", role: "Agency" },
-  ];
+
 
   const handlePermissionChange = (id, permission) => {
     setTableData((prevData) =>
@@ -141,7 +130,10 @@ const CaregiverOrStaff = () => {
   };
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Caregiver/Staff</div>
+      <TableHeader
+        title="Caregiver/Staff"
+        className="py-3 pt-5 fs-3 card-header"
+      />
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
           <FullscreenModal
@@ -479,20 +471,21 @@ const CaregiverOrStaff = () => {
               <span className=" d-sm-inline-block">Earning</span>
             </span>
           </button>
-          <FullscreenModal
-            className="col-md-8 "
-            title="Assign All Individual "
-            // onSave={handleSubmit}
-            id="assignAllIndividual"
+          <button
+          onClick={()=>navigate("/assign-all-individual")}
+            className="btn btn-primary waves-effect waves-light"
+            tabIndex={0}
+            aria-controls="DataTables_Table_0"
+            type="button"
           >
-            <DataTable
-              columns={columns3}
-              data={data3}
-              tableClassName="custom-table"
-            />
-          </FullscreenModal>
+            <span className="d-flex align-items-center">
+              <i className='ti ti-plus'></i>
+              <span className=" d-sm-inline-block">Assign All Individual</span>
+            </span>
+          </button>
+          
         </div>
-        <div className="mt-5">
+        <div className="mt-5 w-100">
           <DataTable
             columns={columns}
             data={data}

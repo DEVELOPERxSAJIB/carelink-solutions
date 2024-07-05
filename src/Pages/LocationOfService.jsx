@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import DataTable from "../components/Tables/DynamicTable";
 import PopupModal from './../components/Models/PopupModel';
 import useFormFields from './../hook/useFormHook';
+import TableHeader from './../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -101,9 +102,10 @@ const LocationOfService = () => {
   };
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Manage Locations</div>
+      
+      <TableHeader title="Manage Locations" className="card-header py-3 pt-5 fs-3"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
+        <div className="gap-3 d-flex flex-wrap">
         <PopupModal title="Add Service Location" id="manageLocations">
         <form onSubmit={handleSubmit}>
       <div className="mb-3">

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FaRegFolder, FaRegFolderOpen } from "react-icons/fa";
 import useFormFields from './../../hook/useFormHook';
 import FullscreenModal from './../../components/Models/FullScreenModel';
+import TableHeader from './../../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -129,9 +130,10 @@ const Pos = () => {
   };
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Physician Order Sheets</div>
+
+      <TableHeader title="Physician Order Sheets" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
+        <div className="gap-3 d-flex flex-wrap">
           <FullscreenModal title="Add Physician Order Sheet" id="Add_Physician_Order_Sheet" className="col-md-8">
           <form onSubmit={handleSubmit} className="from-scrollbar px-4">
      <div className="row">

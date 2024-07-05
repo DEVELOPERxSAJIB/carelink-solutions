@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DataTable from "./../../components/Tables/DynamicTable";
 import { useNavigate } from "react-router-dom";
 import FullscreenModal from "./../../components/Models/FullScreenModel";
+import TableHeader from './../../components/Tables/TableHeader';
 
 
 const ReviewEmailLog = () => {
@@ -66,9 +67,9 @@ const ReviewEmailLog = () => {
   return (
     <>
       <div className="card">
-        <div className="card-header py-3 pt-5 fs-3">Review Email Log</div>
+        <TableHeader title="Review Email Log" className="py-3 pt-5 fs-3 card-header"/>
         <div className="card-body">
-          <div className="gap-3 d-flex">
+          <div className="gap-3 d-flex flex-wrap">
             <button
               className="btn btn-secondary ml-auto create-new btn-danger waves-effect waves-light"
               tabIndex={0}

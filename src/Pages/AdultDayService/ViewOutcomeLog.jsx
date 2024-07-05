@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
+import TableHeader from './../../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -99,13 +100,15 @@ const data = [
     alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
     // Implement delete logic here
   };
-
+const navigate = useNavigate()
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Support Employment/Community Employment</div>
+
+      <TableHeader title="Outcomes" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-      <div className="gap-3 d-flex">
+      <div className="gap-3 d-flex flex-wrap">
           <button
+          onClick={()=>navigate("/view-outcomes")}
             className="btn btn-sm btn-primary waves-effect waves-light"
             tabIndex={0}
             aria-controls="DataTables_Table_0"
@@ -113,7 +116,7 @@ const data = [
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
+              <span className="d-none d-sm-inline-block">Record Outcome</span>
             </span>
           </button>
           <button

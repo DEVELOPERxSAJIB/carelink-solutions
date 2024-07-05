@@ -6,6 +6,7 @@ import useFormFields from "./../../hook/useFormHook";
 import FullscreenModal from "./../../components/Models/FullScreenModel";
 import PickDate from './../../components/FormElement/DatePicker';
 import {Link} from "react-router-dom"
+import TableHeader from './../../components/Tables/TableHeader';
 
 
 const IndividualAuditReview = () => {
@@ -72,9 +73,10 @@ const IndividualAuditReview = () => {
 
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Review Module</div>
+
+      <TableHeader title="Review Module" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
+        <div className="gap-3 d-flex flex-wrap">
           <FullscreenModal
             className="col-md-7"
             title="Add Review"

@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { FaRegFolder } from "react-icons/fa";
 import DataTable from "../../components/Tables/DynamicTable";
+import FullscreenModal from './../../components/Models/FullScreenModel';
+import useFormFields from './../../hook/useFormHook';
+import TableHeader from './../../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -76,23 +79,132 @@ const ViewAssignedMileage = () => {
   const handleDelete = (rowData) => {
     alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
   };
+  const initialState = {
+    date: "07/04/2024",
+    mileageType: "",
+    individual: "",
+    mileagePeriod: "",
+    totalMiles: "",
+    comment: "",
+  };
 
+  const [formData, handleChange, resetForm] = useFormFields(initialState);
+ 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Implement your form submission logic here
+    console.log("Form Data:", formData);
+    resetForm();
+   
+  };
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Assigned Miles</div>
+
+      <TableHeader title="Assigned Miles" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
-          <button
-            className="btn btn-sm btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
-            </span>
-          </button>
+        <div className="gap-3 d-flex flex-wrap">
+          <FullscreenModal title="Add Mileage" id="addmileage">
+          <form onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <label htmlFor="date" className="form-label">
+                Date
+              </label>
+              <input
+                type="text"
+                id="date"
+                name="date"
+                className="form-control"
+                value={formData.date}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label htmlFor="mileageType" className="form-label">
+                Mileage Type
+              </label>
+              <select
+                id="mileageType"
+                name="mileageType"
+                className="form-select"
+                value={formData.mileageType}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Mileage Type</option>
+                <option value="Individual Mileage">Individual Mileage</option>
+                <option value="Share Mileage">Share Mileage</option>
+              </select>
+            </div>
+            <div className="col-md-6 mb-3">
+              <label htmlFor="individual" className="form-label">
+                Select Individual
+              </label>
+              <select
+                id="individual"
+                name="individual"
+                className="form-select"
+                value={formData.individual}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Individual</option>
+                {/* Add options dynamically here */}
+              </select>
+            </div>
+            <div className="col-md-6 mb-3">
+              <label htmlFor="mileagePeriod" className="form-label">
+                Select Mileage Period
+              </label>
+              <select
+                id="mileagePeriod"
+                name="mileagePeriod"
+                className="form-select"
+                value={formData.mileagePeriod}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Mileage Period</option>
+                <option value="Monthly">Monthly</option>
+                <option value="Yearly">Yearly</option>
+              </select>
+            </div>
+            <div className="col-md-6 mb-3">
+              <label htmlFor="totalMiles" className="form-label">
+                Total Miles
+              </label>
+              <input
+                type="text"
+                id="totalMiles"
+                name="totalMiles"
+                className="form-control"
+                value={formData.totalMiles}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="col-md-12 mb-3">
+              <label htmlFor="comment" className="form-label">
+                Comment
+              </label>
+              <textarea
+                id="comment"
+                name="comment"
+                className="form-control"
+                value={formData.comment}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="d-flex justify-content-end">
+            <button type="submit" className="btn btn-primary">
+              Add Mileage
+            </button>
+          </div>
+        </form>
+      
+          </FullscreenModal>
           <button
             className="btn btn-secondary waves-effect waves-light"
             tabIndex={0}

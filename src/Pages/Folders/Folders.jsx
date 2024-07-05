@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { FaRegFolder } from "react-icons/fa";
 import DataTable from "../../components/Tables/DynamicTable";
+import PopupModal from './../../components/Models/PopupModel';
+import TableHeader from './../../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -69,20 +71,15 @@ const Folders = () => {
 
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Manage Folders</div>
+      <TableHeader title="Manage Folders" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
-          <button
-            className="btn btn-sm btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
-            </span>
-          </button>
+        <div className="gap-3 d-flex flex-wrap">
+          <PopupModal title="Add Folder" id="addFolder">
+            <form action="">
+              <input type="text" placeholder="folder name" className="form-control" />
+              <button className="mt-4 btn btn-primary">Save</button>
+            </form>
+          </PopupModal>
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}

@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
 import Accordion from './../../components/Tables/Accordion';
+import TableHeader from './../../components/Tables/TableHeader';
+import FullscreenModal from './../../components/Models/FullScreenModel';
+import useFormFields from './../../hook/useFormHook';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -77,24 +80,66 @@ const Calendars = () => {
   const handleDelete = (rowData) => {
     alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
   };
+  const initialState = {
+    calendarName: "",
+    calendarDescription: "",
+  };
+  
+  const [formData, handleChange, resetForm, isValid] = useFormFields(initialState);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // handleSave(formData);
+    resetForm();
+  };
   return (
     <div className="card">
-      
-      <div className="card-header py-3 pt-5 fs-3">Manage Calendars</div>
+      <TableHeader title="Manage Calendars" className="py-3 pt-5 fs-3 card-header"/>
+
       <div className="card-body">
-        <div className="gap-3 d-flex">
-          <button
-            className="btn btn-sm btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
-            </span>
+        <div className="gap-3 d-flex flex-wrap">
+        <FullscreenModal className="col-md-7" id="addCalendar" title="Add Calendar" onSave={handleSubmit}>
+      <form className="w-100 from-scrollbar px-3" onSubmit={handleSubmit}>
+        <div className="row">
+          {/* Calendar Name */}
+          <div className="col-md-12 mb-3">
+            <label htmlFor="calendarName" className="form-label">
+              Calendar Name <span className="text-danger">*</span>
+            </label>
+            <input
+              type="text"
+              id="calendarName"
+              name="calendarName"
+              className="form-control"
+              value={formData.calendarName}
+              onChange={handleChange}
+              placeholder="Calendar Name"
+              required
+            />
+          </div>
+
+          {/* Calendar Description */}
+          <div className="col-md-12 mb-3">
+            <label htmlFor="calendarDescription" className="form-label">
+              Calendar Description
+            </label>
+            <textarea
+              id="calendarDescription"
+              name="calendarDescription"
+              className="form-control"
+              value={formData.calendarDescription}
+              onChange={handleChange}
+              placeholder="Calendar Description"
+            />
+          </div>
+        </div>
+        <div className="d-flex justify-content-end">
+          <button type="submit" className="btn btn-primary" disabled={!isValid}>
+            Add Calendar
           </button>
+        </div>
+      </form>
+    </FullscreenModal>
           <button
             className="btn btn-sm btn-primary waves-effect waves-light"
             tabIndex={0}

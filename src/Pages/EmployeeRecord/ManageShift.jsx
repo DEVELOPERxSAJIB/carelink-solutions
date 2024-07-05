@@ -1,5 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
+import TableHeader from './../../components/Tables/TableHeader';
+import FullscreenModal from './../../components/Models/FullScreenModel';
+import useFormFields from './../../hook/useFormHook';
+import MultiSelect from './../../components/FormElement/MultiSelect';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -67,23 +71,63 @@ const ManageShift = () => {
   const handleDelete = (rowData) => {
     alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
   };
+  const initialState = {
+    category: "Male",
+    siteName: "",
+    individual: "",
+  };
+  const [formData, handleChange, resetForm, isValid] =
+    useFormFields(initialState);
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    resetForm();
+  };
 
   return (
     <div className="card">     
-      <div className="card-header py-3 pt-5 fs-3">Manage Shift</div>
+      <TableHeader title="Manage Shift" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
-          <button
-            className="btn btn-sm btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
+        <div className="gap-3 d-flex flex-wrap">
+        <FullscreenModal
+            id="addShift"
+            className="col-md-4 "
+            title="Add shift"
+            onSave={handleSubmit}
           >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
-            </span>
-          </button>
+            <form
+              className="w-100 px-3 from-scrollbar h-75"
+              onSubmit={handleSubmit}
+            >
+              <div className="row">
+              <div className="col-md-12">
+                <label htmlFor="" className="form-label">
+                  Select Site
+                  <span className="text-danger">*</span>
+                </label>
+                <input type="text" name="" id="" className="form-control mb-3" />
+              </div>
+               
+                <div className="col-md-12 mb-3">
+                  <label htmlFor="individual" className="form-label">
+                    Select Staff <span className="text-danger">*</span>
+                  </label>
+                  <MultiSelect />
+                </div>
+                <label htmlFor="" className="form-check d-flex gap-2">
+                  <input type="checkbox" className="form-check" />
+                  Check if this schedule repeats
+                </label>
+              </div>
+              
+              <div className="d-flex justify-content-start mt-2">
+                <button type="submit" className="btn btn-primary">
+                  Save
+                </button>
+              </div>
+            </form>
+          </FullscreenModal>
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -132,19 +176,7 @@ const ManageShift = () => {
               </span>
             </span>
           </button>
-          <button
-            className="btn btn-info waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-1" />
-              <span className="d-none d-sm-inline-block">
-                Add shift
-              </span>
-            </span>
-          </button>
+         
         </div>
         <div className="mt-5">
           <DataTable

@@ -5,6 +5,7 @@ import { FaRegFolder } from "react-icons/fa";
 import { FaRegFolderOpen } from "react-icons/fa";
 import FullscreenModal from './../../components/Models/FullScreenModel';
 import useFormFields from './../../hook/useFormHook';
+import TableHeader from './../../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -163,9 +164,10 @@ const initialState = {
   ];
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Compliance</div>
+
+      <TableHeader title="Compliance" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
+        <div className="gap-3 d-flex flex-wrap">
         <FullscreenModal
             className="col-md-7 "
             title="Add New Compliance"

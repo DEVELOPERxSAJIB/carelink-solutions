@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
 import Accordion from './../../components/Tables/Accordion';
+import TableHeader from './../../components/Tables/TableHeader';
+import PopupModal from './../../components/Models/PopupModel';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -80,20 +82,21 @@ const MyBriefcase = () => {
   return (
     <div className="card">
       
-      <div className="card-header py-3 pt-5 fs-3">Manage My Briefcase</div>
+      <TableHeader title="Mange My Briefcase" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
-          <button
-            className="btn btn-sm btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
-            </span>
-          </button>
+        <div className="gap-3 d-flex flex-wrap">
+          <PopupModal id="addNewBriefcase" title="Add new ">
+            <form action="">
+              <div className="card">
+                <div className="card-header bg-primary text-center text-white fs-5">Add Folder Category</div>
+                <div className="card-body">
+                  <label htmlFor="" className="form-label mt-4">My Folder Category Name</label>
+                  <input type="text" placeholder="folder category name" className="form-control" />
+                  <button className="btn btn-primary mt-4">save</button>
+                </div>
+              </div>
+            </form>
+          </PopupModal>
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}

@@ -8,6 +8,7 @@ import { FaRegFolder } from "react-icons/fa";
 import { FaRegFolderOpen } from "react-icons/fa";
 import FullscreenModal from "./../../components/Models/FullScreenModel";
 import useFormFields from "./../../hook/useFormHook";
+import TableHeader from './../../components/Tables/TableHeader';
 
 const SupportAdministrators = () => {
   const navigate = useNavigate();
@@ -127,9 +128,10 @@ const SupportAdministrators = () => {
   ];
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Support Administrators</div>
+
+      <TableHeader title="Timesheet" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
+        <div className="gap-3 d-flex flex-wrap">
           <FullscreenModal
             id="Add_support_administrator"
             className="col-md-7 "

@@ -1,6 +1,7 @@
 
-import FullscreenModal from './../../components/Models/FullScreenModel';
+
 import useFormFields from './../../hook/useFormHook';
+import PopupModal from './../../components/Models/PopupModel';
 const validateAccessKey = (formData) => {
   return formData.accessKey.trim() !== "";
 };
@@ -17,8 +18,8 @@ const Billing = () => {
     resetForm();
   };
 
-  return <div>
-     <FullscreenModal id="billingPermission" title="Billing Permission" onSave={handleSubmit}>
+  return <div className="d-flex justify-content-center">
+     <PopupModal id="billingPermission" title="Billing Permission" onSave={handleSubmit}>
       <form className="w-100">
         <div className="mb-3 w-100">
           <label htmlFor="accessKey" className="form-label">
@@ -39,7 +40,7 @@ const Billing = () => {
           Activate Billing Module
         </button>
       </form>
-    </FullscreenModal>
+    </PopupModal>
   </div>;
 };
 

@@ -2,6 +2,7 @@ import React from 'react';
 import DataTable from './../../components/Tables/DynamicTable';
 import ExportButton from './../../components/Buttons/ExportButton';
 import {useNavigate} from "react-router-dom"
+import TableHeader from './../../components/Tables/TableHeader';
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
   const now = new Date();
@@ -52,9 +53,8 @@ const navigate = useNavigate()
 
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">
-        Employees Payroll Report: {start} To {end}
-      </div>
+ 
+      <TableHeader title={`Employees Payroll Report: ${start} To ${end}`} className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body"> 
       <ExportButton/>
       <button onClick={()=>navigate("/employee-earning")} type="button" className="btn btn-primary ">

@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
+import TableHeader from './../../components/Tables/TableHeader';
+import FullscreenModal from './../../components/Models/FullScreenModel';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -64,20 +66,36 @@ const data = [
 
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Support Employment/Community Employment</div>
+      <TableHeader title="Notice" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-      <div className="gap-3 d-flex">
-          <button
-            className="btn btn-sm btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
-            </span>
-          </button>
+      <div className="gap-3 d-flex flex-wrap">
+          <FullscreenModal className="col-md-4" title="Add Notice" id="addNewNotice">
+            <form action="" className="w-100">
+              <div className="">
+                <div className="card-header">
+                  Notice
+                </div>
+                <div className="card-body">
+                  <label htmlFor="" className="form-label ">Notice Title</label>
+                  <input type="text" className="form-control mb-4" placeholder="title" />
+                  <label htmlFor="" className="form-label">Upload Notice <span className="text-danger">(only pdf is allowed)</span></label>
+                  <input type="file" className="form-control mb-4" />
+                  <label htmlFor="" className="form-label">Share Notice With</label>
+                 <div>
+                 <label htmlFor="" className="form-label d-flex">
+                 <input type="radio" name="share_notice" className="form-radio" />
+                  All Caregivers
+                 </label>
+                 <label htmlFor="" className="form-label">
+                 <input type="radio" name="share_notice" className="form-radio" />
+                  Select Caregivers form the given list
+                 </label>
+                 </div>
+                 <button className="btn btn-primary mt-3">save</button>
+                </div>
+              </div>
+            </form>
+          </FullscreenModal>
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}

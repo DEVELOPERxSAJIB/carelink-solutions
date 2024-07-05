@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
+import TableHeader from './../../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -71,9 +72,10 @@ const AddCategory = () => {
 
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Community Category</div>
+
+      <TableHeader title="Community Category" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
+        <div className="gap-3 d-flex flex-wrap">
           <button
             className="btn btn-sm btn-primary waves-effect waves-light"
             tabIndex={0}

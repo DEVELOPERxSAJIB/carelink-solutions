@@ -409,6 +409,11 @@ const Sidebar = () => {
           href: "/manage-shift",
           icon: ""
         },
+        {
+          title: "Manage Unassigned Shift",
+          href: "/manage-unassigned-shift",
+          icon: ""
+        },
       ],
     },
     {

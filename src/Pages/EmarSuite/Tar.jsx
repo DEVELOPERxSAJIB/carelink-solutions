@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FaRegFolder, FaRegFolderOpen } from "react-icons/fa";
 import useFormFields from './../../hook/useFormHook';
 import FullscreenModal from './../../components/Models/FullScreenModel';
+import TableHeader from './../../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -130,9 +131,9 @@ const Tar = () => {
  
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Treatment Administration Records</div>
+      <TableHeader title="Treatment Administration Records" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
+        <div className="gap-3 d-flex flex-wrap">
         <FullscreenModal
             title="Add New TAR"
             id="Add_medical_TAR"

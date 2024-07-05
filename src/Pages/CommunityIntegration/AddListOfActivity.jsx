@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
+import PopupModal from './../../components/Models/PopupModel';
+import TableHeader from './../../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -66,23 +68,22 @@ const AddListOfActivity = () => {
   const handleDelete = (rowData) => {
     alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
   };
-
+const handleSubmit=()=>{}
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">List of Activity</div>
+      <TableHeader title="List of activity" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
-          <button
-            className="btn btn-sm btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
-            </span>
-          </button>
+        <div className="gap-3 d-flex flex-wrap">
+          <PopupModal title="Add List of Activity" id="addlistofactivity">
+              <form onSubmit={handleSubmit} action="">
+              <label className="form-label" htmlFor="">Category</label>
+               <select name="" id="" className="form-select">
+                <option value="">--Select Category--</option>
+                
+               </select>
+               <button className="btn btn-primary mt-4">Save</button>
+              </form>
+          </PopupModal>
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}

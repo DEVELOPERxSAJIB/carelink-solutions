@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Accordion from "./../../components/Tables/Accordion";
 import FullscreenModal from './../../components/Models/FullScreenModel';
 import useFormFields from './../../hook/useFormHook';
+import ExportButton from './../../components/Buttons/ExportButton';
+import TableHeader from './../../components/Tables/TableHeader';
 
 const Individual = () => {
   const columns = [
@@ -212,9 +214,10 @@ const Individual = () => {
 
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Manage Sub Users</div>
+
+      <TableHeader title="Mange Sub Users" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
+        <div className="gap-3 d-flex flex-wrap">
           <FullscreenModal className="col-md-7  " id="managesubusers" title="Add Individual" onSave={handleSubmit}>
             <form className="w-100 from-scrollbar px-3">
               <div className="row">
@@ -583,20 +586,32 @@ const Individual = () => {
               </div>
             </form>
           </FullscreenModal>
-
+          <ExportButton/>
           <button
-            className="btn btn-sm btn-secondary create-new btn-danger waves-effect waves-light"
+            className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
             aria-controls="DataTables_Table_0"
             type="button"
           >
-            <span>
+            <span className="d-flex align-items-center">
               <i className="ti ti-trash me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">
-                Delete all selected
-              </span>
+              <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
           </button>
+        
+          <button
+            className="btn btn-info waves-effect waves-light"
+            tabIndex={0}
+            aria-controls="DataTables_Table_0"
+            type="button"
+          >
+            <span className="d-flex align-items-center">
+              <i className="ti ti-archive me-1" />
+              <span className="d-none d-sm-inline-block">
+                Archive{" "}
+              </span>
+            </span>
+            </button>
         </div>
         <div className="mt-5">
           <DataTable

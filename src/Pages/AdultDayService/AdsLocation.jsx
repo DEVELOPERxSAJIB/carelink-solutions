@@ -1,5 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
+import FullscreenModal from './../../components/Models/FullScreenModel';
+import useFormFields from './../../hook/useFormHook';
+import PopupModal from './../../components/Models/PopupModel';
+import TableHeader from './../../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -79,23 +83,124 @@ const AdsLocation = () => {
   const handleDelete = (rowData) => {
     alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
   };
+  const initialState = {
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    zipCode: "",
+  };
 
+  const [formData, handleChange, resetForm] = useFormFields(initialState);
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Implement your form submission logic here
+    console.log("Form Data:", formData);
+    resetForm();
+   
+  };
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Manage Locations</div>
+      <TableHeader title="Manage Locations" className="py-3 pt-5 fs-3 card-header"/>
+  
       <div className="card-body">
-        <div className="gap-3 d-flex">
-          <button
-            className="btn btn-sm btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
-            </span>
-          </button>
+        <div className="gap-3 d-flex flex-wrap">
+        
+    
+      
+
+      <PopupModal
+        
+        title="Add Location"
+        id="enterlocationdetails"
+        className="col-md-4"
+      >
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col-md-12 mb-3">
+              <label className="form-label" htmlFor="address1">
+                Address1 <span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                name="address1"
+                placeholder="Enter address1"
+                className="form-control w-100"
+                id="address1"
+                value={formData.address1}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="col-md-12 mb-3">
+              <label className="form-label" htmlFor="address2">
+                Address2
+              </label>
+              <input
+                type="text"
+                name="address2"
+                placeholder="Enter address2"
+                className="form-control w-100"
+                id="address2"
+                value={formData.address2}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-md-12 mb-3">
+              <label className="form-label" htmlFor="city">
+                City <span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                name="city"
+                placeholder="Enter city"
+                className="form-control w-100"
+                id="city"
+                value={formData.city}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="col-md-12 mb-3">
+              <label className="form-label" htmlFor="state">
+                State <span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                name="state"
+                placeholder="Enter state"
+                className="form-control w-100"
+                id="state"
+                value={formData.state}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="col-md-12 mb-3">
+              <label className="form-label" htmlFor="zipCode">
+                Zip Code <span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                name="zipCode"
+                placeholder="Enter zip code"
+                className="form-control w-100"
+                id="zipCode"
+                value={formData.zipCode}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="d-flex justify-content-end mt-3">
+            <button type="submit" className="btn btn-primary">
+              Save Location
+            </button>
+          </div>
+        </form>
+      </PopupModal>
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}

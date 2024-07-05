@@ -71,6 +71,9 @@ import EmployeeEarning from './../Pages/Settings/EmployeeEarning';
 import AddAdultListOfActivity from './../Pages/AdultDayService/AddListOfActivity';
 import ManageShift from './../Pages/EmployeeRecord/ManageShift';
 import ReviewEmailLog from './../Pages/Individual/ReviewEmailLog';
+import ViewOutcomes from './../Pages/AdultDayService/ViewOutcomes';
+import ManageUnassignedShift from './../Pages/EmployeeRecord/ManageUnassignedShift';
+import AssignAllIndividual from './../Pages/BusinessCommunity/AssignAllIndividual';
 
 const privateRouter = [
   {
@@ -137,6 +140,10 @@ const privateRouter = [
             element: <CreateNewIndividual />,
           },
           {
+            path: "/assign-all-individual",
+            element: <AssignAllIndividual />,
+          },
+          {
             path: "/individual-audit-review",
             element: <IndividualAuditReview />,
           },
@@ -147,6 +154,10 @@ const privateRouter = [
           {
             path: "/guardians",
             element: <Guardians />,
+          },
+          {
+            path: "/view-outcomes",
+            element: <ViewOutcomes />,
           },
           {
             path: "/support-administrators",
@@ -275,6 +286,10 @@ const privateRouter = [
           {
             path: "/view-outcome-log",
             element: <ViewOutcomeLog />,
+          },
+          {
+            path: "/manage-unassigned-shift",
+            element: <ManageUnassignedShift />,
           },
           {
             path: "/add-shift-summary",

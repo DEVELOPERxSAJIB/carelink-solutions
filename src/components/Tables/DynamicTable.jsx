@@ -6,7 +6,7 @@ const DataTable = ({
   tableName,
   tableClassName,
   onEdit,
-  onDelete,
+  onDelete,setSelectedEvent
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(20); // Default rows per page
@@ -151,7 +151,11 @@ const DataTable = ({
         : [...prevVisibleColumns, column]
     );
   };
-
+  const handleRowClick = (rowData) => {
+    setSelectedEvent(rowData)
+    console.log('Row clicked:', rowData);
+  };
+  
   return (
     <div className="position-relative">
       {tableName && <h5 className="card-header">{tableName}</h5>}
@@ -268,7 +272,7 @@ const DataTable = ({
           </thead>
           <tbody>
             {filteredRows.map((row, rowIndex) => (
-              <tr key={rowIndex}>
+              <tr key={rowIndex} onClick={() => handleRowClick(row)}>
                 <td>
                   <input
                     className="form-check-input"

@@ -4,6 +4,7 @@ import { FaRegFolder } from "react-icons/fa";
 import DataTable from "../components/Tables/DynamicTable";
 import useFormFields from "./../hook/useFormHook";
 import PopupModal from "./../components/Models/PopupModel";
+import TableHeader from './../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -125,9 +126,10 @@ const MenuItemTimeSheet = () => {
   };
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Timesheet</div>
+     
+      <TableHeader title="Timesheet" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
+        <div className="gap-3 d-flex flex-wrap">
           <PopupModal id="addWebTimesheetModal" title="Add Web Timesheet">
             <form onSubmit={handleSubmit} className="w-100">
               <div className="row">

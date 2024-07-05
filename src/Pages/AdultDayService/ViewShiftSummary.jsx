@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
+import TableHeader from './../../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -51,13 +52,15 @@ const data = [
   const handleDelete = (rowData) => {
     alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
   };
-
+const navigate= useNavigate()
   return (
     <div className="card">
-      <div className="card-header py-3 pt-5 fs-3">Shift Summary</div>
+      <TableHeader title="Shift Summary" className="py-3 pt-5 fs-3 card-header"/>
+
       <div className="card-body">
-        <div className="gap-3 d-flex">
+        <div className="gap-3 d-flex flex-wrap">
           <button
+          onClick={()=>navigate("/add-shift-summary")}
             className="btn btn-sm btn-primary waves-effect waves-light"
             tabIndex={0}
             aria-controls="DataTables_Table_0"

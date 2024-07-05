@@ -1,78 +1,158 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
+import TableHeader from "./../../components/Tables/TableHeader";
+import FullscreenModal from "./../../components/Models/FullScreenModel";
+import useFormFields from "./../../hook/useFormHook";
+import MultiSelect from "./../../components/FormElement/MultiSelect";
 
-// Function to get the start and end dates of the current week
-const getCurrentWeekDateRange = () => {
-  const now = new Date();
-  const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-  const endOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
-
-  const formatDate = (date) => {
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      weekday: "short",
-    };
-    return date.toLocaleDateString("en-US", options);
-  };
-
-  return {
-    start: formatDate(startOfWeek),
-    end: formatDate(endOfWeek),
-  };
+const initialState = {
+  category: "Male",
+  siteName: "",
+  individual: "",
 };
-
 const Scheduler = () => {
   const columns = [
     { header: "S.No", field: "serialNumber" },
     { header: "Site Name", field: "siteName" },
     { header: "Created By", field: "createdBy" },
     { header: "Created On", field: "createdOn" },
-];
+  ];
 
-const data = [
+  const data = [
     {
-        serialNumber: 1,
-        siteName: "Site A",
-        createdBy: "Admin",
-        createdOn: "2024-07-03",
+      serialNumber: 1,
+      siteName: "Site A",
+      createdBy: "Admin",
+      createdOn: "2024-07-03",
     },
     {
-        serialNumber: 2,
-        siteName: "Site B",
-        createdBy: "Manager",
-        createdOn: "2024-07-02",
+      serialNumber: 2,
+      siteName: "Site B",
+      createdBy: "Manager",
+      createdOn: "2024-07-02",
     },
     // Add more entries as needed
-];
-
+  ];
 
   const handleEdit = (rowData) => {
-    alert(`Editing ${rowData.firstName} ${rowData.lastName}`);
+    alert(`Editing ${rowData.siteName} ${rowData.lastName}`);
   };
 
   const handleDelete = (rowData) => {
-    alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
+    alert(`Deleting ${rowData.siteName} ${rowData.lastName}`);
+  };
+  const [formData, handleChange, resetForm, isValid] =
+    useFormFields(initialState);
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    resetForm();
   };
 
   return (
     <div className="card">
-      
-      <div className="card-header py-3 pt-5 fs-3">List Category</div>
+      <TableHeader
+        title="Manage Sites"
+        className="py-3 pt-5 fs-3 card-header"
+      />
       <div className="card-body">
-        <div className="gap-3 d-flex">
-          <button
-            className="btn btn-sm btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
+        <div className="gap-3 d-flex flex-wrap">
+          <FullscreenModal
+            id="addSite"
+            className="col-md-4 "
+            title="Add Site"
+            onSave={handleSubmit}
           >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
-            </span>
-          </button>
+            <form
+              className="w-100 px-3 from-scrollbar h-75"
+              onSubmit={handleSubmit}
+            >
+              <div className="row">
+                <div className="col-md-12">
+                  <label htmlFor="" className="form-label">
+                    Select Category <span className="text-danger">*</span>
+                  </label>
+                  <div className="d-flex gap-3">
+                    <label htmlFor="" className="form-label d-flex gap-2">
+                      <input
+                        name="category"
+                        type="radio"
+                        className="form-radio"
+                      />
+                      Individual
+                    </label>
+                    <label htmlFor="" className="form-label d-flex gap-2">
+                      <input
+                        name="category"
+                        type="radio"
+                        className="form-radio"
+                      />
+                      Group Home
+                    </label>
+                  </div>
+                </div>
+                <div className="col-md-12 mb-3">
+                  <label htmlFor="siteName" className="form-label">
+                    Site Name <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="siteName"
+                    name="siteName"
+                    className="form-control"
+                    value={formData.siteName}
+                    onChange={handleChange}
+                    placeholder="Site name"
+                    required
+                  />
+                </div>
+                <div className="col-md-12 mb-3">
+                  <label htmlFor="individual" className="form-label">
+                    Select Individual <span className="text-danger">*</span>
+                  </label>
+                  <MultiSelect />
+                </div>
+              </div>
+              <div className="col-md-12">
+                <label htmlFor="" className="form-label">
+                  Maximum hour(s) per day/per week{" "}
+                  <span className="text-danger">*</span>
+                </label>
+                <div className="d-flex gap-3">
+                  <label htmlFor="" className="form-label d-flex gap-2">
+                    <input
+                      name="maximumHours"
+                      type="radio"
+                      className="form-radio"
+                    />
+                    Per Day
+                  </label>
+                  <label htmlFor="" className="form-label d-flex gap-2">
+                    <input
+                      name="maximumHours"
+                      type="radio"
+                      className="form-radio"
+                    />
+                    Per Week
+                  </label>
+                  <label htmlFor="" className="form-label d-flex gap-2">
+                    <input
+                      name="maximumHours"
+                      type="radio"
+                      className="form-radio"
+                    />
+                    Custom
+                  </label>
+                </div>
+              </div>
+              <div className="d-flex justify-content-end mt-5">
+                <button type="submit" className="btn btn-primary">
+                  Save
+                </button>
+              </div>
+            </form>
+          </FullscreenModal>
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -91,7 +171,7 @@ const data = [
             type="button"
           >
             <span className="d-flex align-items-center">
-            <i className="ti ti-history me-1"></i>{" "}
+              <i className="ti ti-history me-1"></i>{" "}
               <span className="d-none d-sm-inline-block">History</span>
             </span>
           </button>
@@ -103,9 +183,7 @@ const data = [
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-archive me-1" />
-              <span className="d-none d-sm-inline-block">
-                Archive{" "}
-              </span>
+              <span className="d-none d-sm-inline-block">Archive </span>
             </span>
           </button>
           <button
@@ -116,9 +194,7 @@ const data = [
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-notes me-1" />
-              <span className="d-none d-sm-inline-block">
-                Reports{" "}
-              </span>
+              <span className="d-none d-sm-inline-block">Reports </span>
             </span>
           </button>
           <button
@@ -129,9 +205,7 @@ const data = [
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-plus me-1" />
-              <span className="d-none d-sm-inline-block">
-                Add shift
-              </span>
+              <span className="d-none d-sm-inline-block">Add shift</span>
             </span>
           </button>
         </div>
@@ -150,4 +224,3 @@ const data = [
 };
 
 export default Scheduler;
-

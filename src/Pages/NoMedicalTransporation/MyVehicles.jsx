@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
 import Accordion from './../../components/Tables/Accordion';
+import TableHeader from './../../components/Tables/TableHeader';
+import useFormFields from './../../hook/useFormHook';
+import FullscreenModal from './../../components/Models/FullScreenModel';
+import PickDate from './../../components/FormElement/DatePicker';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -70,24 +74,157 @@ const data = [
   const handleDelete = (rowData) => {
     alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
   };
+  const initialState = {
+    vehicleBusNumber: "",
+    yearMake: "",
+    model: "",
+    vinNumber: "",
+    licensePlateNumber: "",
+    numberOfPassengers: "",
+    platesExpDate: "",
+    insuranceExp: "",
+    dotInspectionDate: "",
+    wheelchairAccessible: false,
+    vehicleDescription: ""
+  };
 
+  const [formData, handleChange, resetForm, isValid] = useFormFields(initialState);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData); // handleSave(formData);
+    resetForm();
+  }
   return (
     <div className="card">
-      
-      <div className="card-header py-3 pt-5 fs-3">Vehicles</div>
+      <TableHeader title="Vehicles" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-        <div className="gap-3 d-flex">
-          <button
-            className="btn btn-sm btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Add New</span>
-            </span>
+        <div className="gap-3 d-flex flex-wrap">
+        <FullscreenModal className="col-md-7" id="addVehicle" title="Add Vehicle" onSave={handleSubmit}>
+      <form className="w-100 from-scrollbar px-3" onSubmit={handleSubmit}>
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <label htmlFor="vehicleBusNumber" className="form-label">Vehicle/Bus Number</label>
+            <input
+              type="text"
+              id="vehicleBusNumber"
+              name="vehicleBusNumber"
+              className="form-control"
+              value={formData.vehicleBusNumber}
+              onChange={handleChange}
+              placeholder="Vehicle/Bus Number"
+              required
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="yearMake" className="form-label">Year/Make</label>
+            <input
+              type="text"
+              id="yearMake"
+              name="yearMake"
+              className="form-control"
+              value={formData.yearMake}
+              onChange={handleChange}
+              placeholder="Year/Make"
+              required
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="model" className="form-label">Model</label>
+            <input
+              type="text"
+              id="model"
+              name="model"
+              className="form-control"
+              value={formData.model}
+              onChange={handleChange}
+              placeholder="Model"
+              required
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="vinNumber" className="form-label">VIN Number</label>
+            <input
+              type="text"
+              id="vinNumber"
+              name="vinNumber"
+              className="form-control"
+              value={formData.vinNumber}
+              onChange={handleChange}
+              placeholder="VIN Number"
+              required
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="licensePlateNumber" className="form-label">License Plate Number</label>
+            <input
+              type="text"
+              id="licensePlateNumber"
+              name="licensePlateNumber"
+              className="form-control"
+              value={formData.licensePlateNumber}
+              onChange={handleChange}
+              placeholder="License Plate Number"
+              required
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="numberOfPassengers" className="form-label">Number of Passengers</label>
+            <input
+              type="text"
+              id="numberOfPassengers"
+              name="numberOfPassengers"
+              className="form-control"
+              value={formData.numberOfPassengers}
+              onChange={handleChange}
+              placeholder="Number of Passengers"
+              required
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="platesExpDate" className="form-label">Plates Exp Date</label>
+            <PickDate/>
+          </div>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="insuranceExp" className="form-label">Insurance Exp</label>
+            <PickDate/>
+          </div>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="dotInspectionDate" className="form-label">DOT Inspection Date</label>
+            <PickDate/>
+          </div>
+          <div className="col-md-6 mb-3 form-check">
+            <input
+              type="checkbox"
+              id="wheelchairAccessible"
+              name="wheelchairAccessible"
+              className="form-check-input"
+              checked={formData.wheelchairAccessible}
+              onChange={handleChange}
+            />
+            <label htmlFor="wheelchairAccessible" className="form-check-label">
+              Is this Vehicle wheelchair accessible?
+            </label>
+          </div>
+          <div className="col-md-12 mb-3">
+            <label htmlFor="vehicleDescription" className="form-label">Vehicle Description</label>
+            <textarea
+              id="vehicleDescription"
+              name="vehicleDescription"
+              className="form-control"
+              value={formData.vehicleDescription}
+              onChange={handleChange}
+              placeholder="Vehicle Description"
+            />
+          </div>
+        </div>
+        <div className="d-flex justify-content-end">
+          <button type="submit" className="btn btn-primary" disabled={!isValid}>
+            Add Vehicle
           </button>
+        </div>
+      </form>
+    </FullscreenModal>
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
