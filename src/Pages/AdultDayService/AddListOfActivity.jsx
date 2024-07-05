@@ -1,7 +1,8 @@
+import PageHeader from './../../components/FormElement/PageHeader';
 const AddAdultListOfActivity = () => {
   return (
     <div className="card">
-      <div className="card-header fs-3">Add List of Activity</div>
+      <PageHeader title="Add List of Activity" className="card-header fs-3"/>
       <div className="card-body">
         <div className="col-md-12">
           <form action="">

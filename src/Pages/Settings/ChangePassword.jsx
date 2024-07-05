@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageHeader from './../../components/FormElement/PageHeader';
 
 const ChangePassword = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -14,9 +15,8 @@ const ChangePassword = () => {
       <form>
         {/* Account Details */}
         <div id="account-details" className="content">
-          <div className="card-header mb-4">
-            <h6 className="mb-0 fs-4">Change Password</h6>
-          </div>
+
+          <PageHeader title="Change Password" className="card-header fs-3"/>
           <div className="row g-6 card-body">
             <div className="col-sm-6 form-password-toggle">
               <label className="form-label" htmlFor="password">

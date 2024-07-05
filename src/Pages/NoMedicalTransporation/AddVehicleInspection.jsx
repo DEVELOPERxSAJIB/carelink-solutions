@@ -1,6 +1,7 @@
 import  { useState } from "react";
 import SingleSearchSelect from './../../components/FormElement/SingleSearchSelect';
 import PickDate from './../../components/FormElement/DatePicker';
+import PageHeader from './../../components/FormElement/PageHeader';
 
 const AddVehicleInspection = () => {
   const [formData, setFormData] = useState({
@@ -47,9 +48,8 @@ const AddVehicleInspection = () => {
  ]
   return (
     <div className="card mt-5">
-     <div className="card-header">
-     Vehicle Inspection Log
-     </div>
+
+     <PageHeader title="Vehicle Inspection Log" className="card-header fs-3"/>
       <div className="card-body">
       <form onSubmit={handleSubmit}>
         <div className="mb-3">

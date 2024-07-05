@@ -4,6 +4,7 @@ import MultiInput from "../../components/FormElement/MultiInput";
 import DatePicker from "react-datepicker";
 import useFormFields from "./../../hook/useFormHook";
 import PickDate from "./../../components/FormElement/DatePicker";
+import PageHeader from './../../components/FormElement/PageHeader';
 
 const CreateNewIndividual = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -37,7 +38,7 @@ const CreateNewIndividual = () => {
   return (
     <div>
       <div className="card ">
-        <h5 className="card-header pb-0"> CareLink Aide facesheet</h5>
+        <PageHeader title="CareLink Aide facesheet" className="card-header fs-3"/>
         <h6 className="fs-6 card-header">Per OAC 5160-46-04</h6>
         <div className="card-body">
         <form onSubmit={handleSubmit} className="w-100  px-3">

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PageHeader from './../../components/FormElement/PageHeader';
 
 const AdsConfiguration = () => {
   // State for configuration items
@@ -60,7 +61,7 @@ const AdsConfiguration = () => {
 
   return (
     <div className="card">
-      <div className="card-header fs-3">Manage Configuration</div>
+      <PageHeader title="Manage Configuration" className="card-header fs-3"/>
       <div className="card-body">
         {renderConfigurations()}
         <button className="btn btn-primary">Save</button>

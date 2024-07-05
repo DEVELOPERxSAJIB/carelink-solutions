@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageHeader from './../../components/FormElement/PageHeader';
 
 const AttendanceSheet = () => {
   const currentDate = new Date(); // Get current date
@@ -214,7 +215,7 @@ const AttendanceSheet = () => {
 
         <div className="mt-4">
           <div className="card-header">
-            <h4>{`${currentMonthName(currentMonth)} ${currentYear}`}</h4>
+            <PageHeader title={`${currentMonthName(currentMonth)} ${currentYear}`} className="card-header fs-3"/>
           </div>
           <div className="card-body">
             <div className="table-responsive">

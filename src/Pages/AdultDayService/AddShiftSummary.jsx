@@ -3,13 +3,14 @@ import MultiSelect from "../../components/FormElement/MultiSelect";
 import MultiInput from "../../components/FormElement/MultiInput";
 import DatePicker from "react-datepicker";
 import TextEditor from './../../components/FormElement/TextEditor';
+import PageHeader from './../../components/FormElement/PageHeader';
 
 const AddShiftSummary = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
     <div>
       <div className="card ">
-        <h5 className="card-header">Add Shift Summary</h5>
+        <PageHeader title="Add Shift Summary" className="card-header fs-3"/>
         <form className="card-body">
           <div className="row g-6">
           <div className="col-md-6">

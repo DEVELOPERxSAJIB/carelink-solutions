@@ -1,7 +1,9 @@
+import PageHeader from './../../components/FormElement/PageHeader';
 const CallUs = () => {
   return (
     <div className="card p-4">
-      <div className="card-header fs-4 text-center">Call Us</div>
+
+      <PageHeader title="Call us" className="card-header fs-3"/>
       <div className="card-body border p-3 rounded bg-primary">
         <p>
           <strong className="text-white">Address</strong>

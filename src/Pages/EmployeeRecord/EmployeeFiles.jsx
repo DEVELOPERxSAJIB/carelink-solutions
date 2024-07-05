@@ -1,12 +1,13 @@
 
 import PopupModal from './../../components/Models/PopupModel';
+import PageHeader from './../../components/FormElement/PageHeader';
 const EmployeeFiles = () => {
   return <div>
     <PopupModal title="Employee files" id="employeefiles">
       <form action="">
         <div className="card">
           <div className="card-header pb-0">
-            <h4>HR Permissions</h4>
+            <PageHeader title="HR Permissions" className="card-header fs-3"/>
           Enter Access Key below to activate the access of HR Module.
 
           </div>

@@ -3,6 +3,7 @@ import DataTable from "../../components/Tables/DynamicTable";
 import Accordion from './../../components/Tables/Accordion';
 import TableHeader from './../../components/Tables/TableHeader';
 import PopupModal from './../../components/Models/PopupModel';
+import PageHeader from './../../components/FormElement/PageHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -88,7 +89,8 @@ const MyBriefcase = () => {
           <PopupModal id="addNewBriefcase" title="Add new ">
             <form action="">
               <div className="card">
-                <div className="card-header bg-primary text-center text-white fs-5">Add Folder Category</div>
+              <PageHeader title="Add Folder Category" className="card-header fs-3"/>
+
                 <div className="card-body">
                   <label htmlFor="" className="form-label mt-4">My Folder Category Name</label>
                   <input type="text" placeholder="folder category name" className="form-control" />

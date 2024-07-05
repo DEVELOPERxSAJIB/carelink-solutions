@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
 import TableHeader from './../../components/Tables/TableHeader';
 import FullscreenModal from './../../components/Models/FullScreenModel';
+import PageHeader from './../../components/FormElement/PageHeader';
 
 // Function to get the start and end dates of the current week
 const getCurrentWeekDateRange = () => {
@@ -72,9 +73,8 @@ const data = [
           <FullscreenModal className="col-md-4" title="Add Notice" id="addNewNotice">
             <form action="" className="w-100">
               <div className="">
-                <div className="card-header">
-                  Notice
-                </div>
+               
+                <PageHeader title="Notice" className="card-header fs-3"/>
                 <div className="card-body">
                   <label htmlFor="" className="form-label ">Notice Title</label>
                   <input type="text" className="form-control mb-4" placeholder="title" />

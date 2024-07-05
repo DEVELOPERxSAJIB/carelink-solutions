@@ -3,13 +3,15 @@ import MultiSelect from "../../components/FormElement/MultiSelect";
 
 import DatePicker from "react-datepicker";
 import SingleSearchSelect from './../../components/FormElement/SingleSearchSelect';
+import PageHeader from './../../components/FormElement/PageHeader';
 
 const AddNewMileage = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
     <div>
       <div className="card mb-6">
-        <h5 className="card-header">Add Mileage Log</h5>
+
+        <PageHeader title="Add Mileage Log" className="card-header fs-3"/>
         <form className="card-body">
           <div className="row g-6">
             <div className="col-md-12">

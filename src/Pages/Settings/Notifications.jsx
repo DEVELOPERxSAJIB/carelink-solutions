@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageHeader from './../../components/FormElement/PageHeader';
 
 const Notifications = () => {
     const [activeIndex, setActiveIndex] = useState(null); // State to track active accordion item
@@ -117,9 +118,8 @@ const Notifications = () => {
 
     return (
       <div className="card">
-        <div className="card-header fs-4">
-        Notification Settings
-        </div>
+
+        <PageHeader title="Notification" className="card-header fs-3"/>
       <div className="card-body p-4">
         <div className="accordion mt-4" id="accordionExample">
             {Object.entries(settings).map(([section, items], index) => (

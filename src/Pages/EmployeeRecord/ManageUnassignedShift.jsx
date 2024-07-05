@@ -1,5 +1,6 @@
 import { useState } from "react";
 import DataTable from "./../../components/Tables/DynamicTable";
+import PageHeader from './../../components/FormElement/PageHeader';
 const ManageUnassignedShift = () => {
   const [individual, setIndividual] = useState("");
   const data = [
@@ -49,7 +50,8 @@ const ManageUnassignedShift = () => {
 
   return (
     <div className="card">
-      <div className="card-header">Manage Unassigned Shift</div>
+
+      <PageHeader title="Manage Unassigned Shift" className="card-header fs-3"/>
       <div className="card-body">
         <div>
          <div className="row">

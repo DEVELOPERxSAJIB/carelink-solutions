@@ -2,13 +2,14 @@ import { useState } from "react";
 import MultiSelect from "../../components/FormElement/MultiSelect";
 
 import DatePicker from "react-datepicker";
+import PageHeader from './../../components/FormElement/PageHeader';
 
 const ClockIn = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
     <div>
       <div className="card mb-6">
-        <h5 className="card-header">Add Group Clock In Sheet</h5>
+        <PageHeader title="Add Group Clock In Sheet" className="card-header fs-3"/>
         <form className="card-body">
           <div className="row g-6">
             <div className="col-md-6">

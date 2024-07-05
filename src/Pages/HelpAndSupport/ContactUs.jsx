@@ -3,13 +3,14 @@ import MultiSelect from "../../components/FormElement/MultiSelect";
 
 import DatePicker from "react-datepicker";
 import TextEditor from './../../components/FormElement/TextEditor';
+import PageHeader from './../../components/FormElement/PageHeader';
 
 const ContactUs = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
     <div>
       <div className="card mb-6">
-        <h5 className="card-header">Contact Us</h5>
+        <PageHeader title="Contact Us" className="card-header fs-3"/>
         <form className="card-body">
           <div className="row g-6">
            

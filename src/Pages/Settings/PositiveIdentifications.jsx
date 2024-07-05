@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageHeader from './../../components/FormElement/PageHeader';
 
 const PositiveIdentifications = () => {
   const [formData, setFormData] = useState([]);
@@ -89,9 +90,8 @@ const PositiveIdentifications = () => {
   return (
     <div className="container py-4">
       <div className="card shadow">
-        <div className="card-header mb-5  bg-primary text-white">
-          <h5 className="card-title mb-0 fs-4 text-white">Positive Identifications</h5>
-        </div>
+
+        <PageHeader title="Positive Identification" className="card-header fs-3"/>
         <div className="card-body">
           {questions.splice(0,15).map((question, index) => (
             <div key={index} className="mb-4">
