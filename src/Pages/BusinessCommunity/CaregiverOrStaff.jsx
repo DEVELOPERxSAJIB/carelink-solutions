@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import DataTable from "./../../components/Tables/DynamicTable";
-import ExportButton from "./../../components/Buttons/ExportButton";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineMail } from "react-icons/md";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
@@ -9,10 +8,11 @@ import { FaRegFolderOpen } from "react-icons/fa";
 import useFormFields from "./../../hook/useFormHook";
 import FullscreenModal from "./../../components/Models/FullScreenModel";
 import TableHeader from "./../../components/Tables/TableHeader";
+import useTableExport from './../../hook/useExportData';
 
 const CaregiverOrStaff = () => {
   const navigate = useNavigate();
-
+  const { handleExportExcel, handleExportPDF, handleCopy, handlePrint}= useTableExport()
   const columns = [
     { header: "S.No", field: "serialNumber" },
     { header: "First Name", field: "firstName" },
@@ -125,8 +125,7 @@ const CaregiverOrStaff = () => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // onSave(formData); // Pass form data to parent component for handling (e.g., saving to API)
-    resetForm(); // Reset the form after submission
+    resetForm();
   };
   return (
     <div className="card">
@@ -388,6 +387,7 @@ const CaregiverOrStaff = () => {
             tabIndex={0}
             aria-controls="DataTables_Table_0"
             type="button"
+            onClick={()=>handleExportExcel(data)}
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-upload me-sm-1" />{" "}
