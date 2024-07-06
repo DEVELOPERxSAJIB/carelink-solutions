@@ -5,9 +5,16 @@ import useFormValidation from "../../hook/useFormValidation";
 import { registrationSchema } from "../../utils/validationSchemas";
 import generateRandomId from "../../utils/RandomIdGenerator";
 import { useRegisterUserMutation } from "../../Redux/api/UserApi";
+import { countries } from "countries-list";
 
 const Register = () => {
-  const [registerUser, { data, isError,error,message, isSuccess, isLoading }] = useRegisterUserMutation();
+  const countriesList = Object.values(countries);
+
+  const [
+    registerUser,
+    { data, isError, error, message, isSuccess, isLoading },
+  ] = useRegisterUserMutation();
+
   const [selectedRole, setSelectedRole] = useState("caregiver");
 
   const initialValues = {
@@ -31,7 +38,8 @@ const Register = () => {
   const onSubmit = (data) => {
     const updatedData = {
       ...data,
-      caregiverID: data.role === "caregiver" ? generateRandomId("caregiver") : "",
+      caregiverID:
+        data.role === "caregiver" ? generateRandomId("caregiver") : "",
       patientID: data.role === "patient" ? generateRandomId("patient") : "",
     };
     registerUser(updatedData);
@@ -42,9 +50,7 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useFormValidation(initialValues, registrationSchema, onSubmit);
-
-  const counties = ["Adams County", "Allen County", "Wyandot County", "Montgomery County"];
-
+  
   const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
   };
@@ -77,7 +83,9 @@ const Register = () => {
                   <option value="caregiver">Caregiver</option>
                   <option value="patient">Patient</option>
                 </select>
-                {errors.role && <p className="text-danger">{errors.role.message}</p>}
+                {errors.role && (
+                  <p className="text-danger">{errors.role.message}</p>
+                )}
               </div>
 
               {/* Conditional rendering of caregiver details */}
@@ -129,7 +137,9 @@ const Register = () => {
                   {...register("phone")}
                   required
                 />
-                {errors.phone && <p className="text-danger">{errors.phone.message}</p>}
+                {errors.phone && (
+                  <p className="text-danger">{errors.phone.message}</p>
+                )}
               </div>
 
               {/* Address Line 1 input field */}
@@ -145,7 +155,9 @@ const Register = () => {
                   {...register("address1")}
                   required
                 />
-                {errors.address1 && <p className="text-danger">{errors.address1.message}</p>}
+                {errors.address1 && (
+                  <p className="text-danger">{errors.address1.message}</p>
+                )}
               </div>
 
               {/* Address Line 2 input field */}
@@ -176,7 +188,9 @@ const Register = () => {
                     {...register("city")}
                     required
                   />
-                  {errors.city && <p className="text-danger">{errors.city.message}</p>}
+                  {errors.city && (
+                    <p className="text-danger">{errors.city.message}</p>
+                  )}
                 </div>
                 <div className="col-sm-3 mb-3">
                   <label htmlFor="state" className="form-label">
@@ -190,7 +204,9 @@ const Register = () => {
                     {...register("state")}
                     required
                   />
-                  {errors.state && <p className="text-danger">{errors.state.message}</p>}
+                  {errors.state && (
+                    <p className="text-danger">{errors.state.message}</p>
+                  )}
                 </div>
                 <div className="col-sm-3 mb-3">
                   <label htmlFor="county" className="form-label">
@@ -204,13 +220,17 @@ const Register = () => {
                     required
                   >
                     <option value="">Select County</option>
-                    {counties.map((county, index) => (
-                      <option key={index} value={county}>
-                        {county}
-                      </option>
+                    {countriesList.map((country) => (
+                      <>
+                        <option key={country.name} value={country.name}>
+                          {country.name}
+                        </option>
+                      </>
                     ))}
                   </select>
-                  {errors.county && <p className="text-danger">{errors.county.message}</p>}
+                  {errors.county && (
+                    <p className="text-danger">{errors.county.message}</p>
+                  )}
                 </div>
                 <div className="col-sm-3 mb-3">
                   <label htmlFor="zip" className="form-label">
@@ -224,7 +244,9 @@ const Register = () => {
                     {...register("zip")}
                     required
                   />
-                  {errors.zip && <p className="text-danger">{errors.zip.message}</p>}
+                  {errors.zip && (
+                    <p className="text-danger">{errors.zip.message}</p>
+                  )}
                 </div>
               </div>
 
@@ -241,7 +263,9 @@ const Register = () => {
                   {...register("email")}
                   required
                 />
-                {errors.email && <p className="text-danger">{errors.email.message}</p>}
+                {errors.email && (
+                  <p className="text-danger">{errors.email.message}</p>
+                )}
               </div>
 
               {/* First Name and Last Name input fields */}
@@ -258,7 +282,9 @@ const Register = () => {
                     {...register("firstName")}
                     required
                   />
-                  {errors.firstName && <p className="text-danger">{errors.firstName.message}</p>}
+                  {errors.firstName && (
+                    <p className="text-danger">{errors.firstName.message}</p>
+                  )}
                 </div>
                 <div className="col-sm-6 mb-3">
                   <label htmlFor="lastName" className="form-label">
@@ -272,7 +298,9 @@ const Register = () => {
                     {...register("lastName")}
                     required
                   />
-                  {errors.lastName && <p className="text-danger">{errors.lastName.message}</p>}
+                  {errors.lastName && (
+                    <p className="text-danger">{errors.lastName.message}</p>
+                  )}
                 </div>
               </div>
 
@@ -290,7 +318,9 @@ const Register = () => {
                     {...register("password")}
                     required
                   />
-                  {errors.password && <p className="text-danger">{errors.password.message}</p>}
+                  {errors.password && (
+                    <p className="text-danger">{errors.password.message}</p>
+                  )}
                 </div>
                 <div className="col-sm-6 mb-3">
                   <label htmlFor="confirmPassword" className="form-label">
@@ -304,7 +334,11 @@ const Register = () => {
                     {...register("confirmPassword")}
                     required
                   />
-                  {errors.confirmPassword && <p className="text-danger">{errors.confirmPassword.message}</p>}
+                  {errors.confirmPassword && (
+                    <p className="text-danger">
+                      {errors.confirmPassword.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -318,9 +352,14 @@ const Register = () => {
                   {...register("agreeTerms")}
                 />
                 <label className="form-check-label" htmlFor="agreeTerms">
-                  I agree to the <Link to="/terms" className="text-decoration-none">terms and conditions</Link>
+                  I agree to the{" "}
+                  <Link to="/terms" className="text-decoration-none">
+                    terms and conditions
+                  </Link>
                 </label>
-                {errors.agreeTerms && <p className="text-danger">{errors.agreeTerms.message}</p>}
+                {errors.agreeTerms && (
+                  <p className="text-danger">{errors.agreeTerms.message}</p>
+                )}
               </div>
               <div className="form-check mb-2">
                 <input
@@ -330,10 +369,20 @@ const Register = () => {
                   name="agreePrivacyPolicy"
                   {...register("agreePrivacyPolicy")}
                 />
-                <label className="form-check-label" htmlFor="agreePrivacyPolicy">
-                  I agree to the <Link to="/privacy" className="text-decoration-none">privacy policy</Link>
+                <label
+                  className="form-check-label"
+                  htmlFor="agreePrivacyPolicy"
+                >
+                  I agree to the{" "}
+                  <Link to="/privacy" className="text-decoration-none">
+                    privacy policy
+                  </Link>
                 </label>
-                {errors.agreePrivacyPolicy && <p className="text-danger">{errors.agreePrivacyPolicy.message}</p>}
+                {errors.agreePrivacyPolicy && (
+                  <p className="text-danger">
+                    {errors.agreePrivacyPolicy.message}
+                  </p>
+                )}
               </div>
 
               {/* Form submit button */}
@@ -342,12 +391,24 @@ const Register = () => {
                   {isLoading ? "Loading..." : "Register"}
                 </button>
               </div>
-              <div className="text-center mt-2">Already have an account?<Link to="/login" className="">Sign In</Link>
+              <div className="text-center mt-2">
+                Already have an account?
+                <Link to="/login" className="">
+                  Sign In
+                </Link>
               </div>
 
               {/* Conditional rendering for form submission status */}
-              {isError && <div className="alert alert-danger text-center mt-1">{error.data.message}</div>}
-              {isSuccess && <div className="alert alert-success text-center">Registration successful! Please log in.</div>}
+              {isError && (
+                <div className="alert alert-danger text-center mt-1">
+                  {error.data.message}
+                </div>
+              )}
+              {isSuccess && (
+                <div className="alert alert-success text-center">
+                  Registration successful! Please log in.
+                </div>
+              )}
             </form>
           </div>
         </div>

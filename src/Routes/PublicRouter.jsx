@@ -3,6 +3,7 @@ import Login from './../Pages/Auth/Login';
 import Register from './../Pages/Auth/Register';
 import ForgetPassword from './../Pages/Auth/ForgetPassword';
 import NotFound from './../Pages/404/NotFound';
+import Verifying from "../Pages/VerifyingEmail";
 
 
 const PublicRouter = [
@@ -20,6 +21,10 @@ const PublicRouter = [
     {
       path: "/forget-password",
       element: <ForgetPassword />,
+    },
+    {
+      path: "/api/v1/user/activation/:token",
+      element: <Verifying />,
     },
     {
       path: "/*",
