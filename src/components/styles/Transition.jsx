@@ -1,30 +1,24 @@
-// components/Transition.js
-import { CSSTransition } from "react-transition-group";
-import styled, { css } from "styled-components";
+// PageTransition.jsx
 
-const Fade = styled.div`
-  &.fade-enter {
-    opacity: 0;
-  }
-  &.fade-enter-active {
-    opacity: 1;
-    transition: opacity 300ms;
-  }
-  &.fade-exit {
-    opacity: 1;
-  }
-  &.fade-exit-active {
-    opacity: 0;
-    transition: opacity 300ms;
-  }
-`;
+import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
-const Transition = ({ children, inProp }) => {
+const PageTransition = ({ children }) => {
+  const location = useLocation();
+
   return (
-    <CSSTransition in={inProp} timeout={300} classNames="fade" unmountOnExit>
-      <Fade>{children}</Fade>
-    </CSSTransition>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1}}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
-export default Transition;
+export default PageTransition;

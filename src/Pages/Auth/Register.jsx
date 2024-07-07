@@ -458,6 +458,10 @@ const Register = () => {
                     </div>
 
                   )}
+                   <p className="text-center">
+                <span>Already have an account?</span>{" "}
+                <Link to="/login">Login</Link>
+              </p>
                 </div>
               </form>
             </div>

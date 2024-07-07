@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useMeQuery } from "../Redux/api/UserApi";
 import AuthLoader from "../utils/Loaders/AuthLoader";
-
+import PageTransition from "../components/styles/Transition"
 const PublicGard = () => {
   const { data, isLoading, isSuccess } = useMeQuery();
 
@@ -13,7 +13,12 @@ const PublicGard = () => {
     return <Navigate to="/" />;
   }
 
-  return <Outlet />;
+  return (
+  <PageTransition>
+      <Outlet />
+  </PageTransition>
+    
+  );
 };
 
 export default PublicGard;
