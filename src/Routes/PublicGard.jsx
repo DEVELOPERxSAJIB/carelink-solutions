@@ -1,26 +1,19 @@
-import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useMeQuery } from "../Redux/api/UserApi";
-import Loader from './../components/Loader/Loader';
+import AuthLoader from "../utils/Loaders/AuthLoader";
 
 const PublicGard = () => {
-  const { data, isLoading, isSuccess, isError } = useMeQuery();
-
-  useEffect(() => {
-    if (isSuccess && data?.user) {
-      localStorage.setItem("LoginUser", JSON.stringify(data.user));
-    } else if (isError) {
-      localStorage.removeItem("LoginUser");
-    }
-  }, [isSuccess, isError, data]);
+  const { data, isLoading, isSuccess } = useMeQuery();
 
   if (isLoading) {
-    return <p><Loader/></p>;
+    return <AuthLoader />;
   }
 
-  const isUserLoggedIn = localStorage.getItem("LoginUser");
+  if (isSuccess && data?.payload?.user) {
+    return <Navigate to="/" />;
+  }
 
-  return isUserLoggedIn ? <Navigate to="/" /> : <Outlet />;
+  return <Outlet />;
 };
 
 export default PublicGard;

@@ -2,10 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import avatar from "../../assets/img/avatars/1.png";
 import { useLogOutUserMutation } from "../../Redux/api/UserApi";
 import { useNavigate } from "react-router-dom";
-import Loader from "./../Loader/Loader";
+import AuthLoader from "../../utils/Loaders/AuthLoader";
+import { useMeQuery } from "../../Redux/api/UserApi";
 const Navbar = () => {
-  const [logOutUser, { isSuccess, isLoading, isError, error }] =
-    useLogOutUserMutation();
+  const navigate = useNavigate();
+  const [logOutUser,isSuccess,isLoading] = useLogOutUserMutation();
+const { data,refetch } = useMeQuery();
+ console.log(data)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] =
     useState(false);
@@ -31,7 +34,7 @@ const Navbar = () => {
   };
   const handleLogout = () => {
     logOutUser();
-    localStorage.removeItem("LoginUser");
+    refetch()
   };
 
   const handleClose = (e) => {
@@ -40,26 +43,30 @@ const Navbar = () => {
       document.documentElement.classList.toggle("");
     }
   };
-  const navigate = useNavigate();
-  useEffect(() => {
-    // Add event listener when the component is mounted
-    document.addEventListener("mousedown", handleClose);
 
-    // Clean up the event listener when the component is unmounted
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClose);
     return () => {
       document.removeEventListener("mousedown", handleClose);
     };
   }, []);
+
   useEffect(() => {
     if (isSuccess) {
-      navigate("/login");
+      refetch().then(() => {
+        if (!data) {
+          setTimeout(() => {
+            navigate("/login");
+          }, 1000);
+        }
+      });
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess, data, navigate, refetch]);
 
   if (isLoading) {
     return (
       <p className="">
-        <Loader />
+        <AuthLoader />
       </p>
     );
   }

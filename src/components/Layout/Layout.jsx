@@ -1,10 +1,17 @@
 import Sidebar from "./../Sidebar/Sidebar";
 import Navbar from "./../Navbar/Navbar";
 import Footer from "./../Footer/Footer";
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
+import motion from "framer-motion";
 const Layout = () => {
   return (
-    <div className="layout-wrapper layout-content-navbar  ">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
+      className="layout-wrapper layout-content-navbar  "
+    >
       <div className="layout-container">
         <Sidebar />
         {/* Layout container */}
@@ -16,7 +23,7 @@ const Layout = () => {
           <div className="content-wrapper">
             {/* Content */}
             <div className="container-xxl flex-grow-1 container-p-y">
-            <Outlet />
+              <Outlet />
             </div>
             {/* / Content */}
             {/* Footer */}
@@ -27,7 +34,7 @@ const Layout = () => {
           {/* Content wrapper */}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

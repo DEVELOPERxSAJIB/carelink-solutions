@@ -6,11 +6,19 @@ export const UserApi = rootApi.injectEndpoints({
       query: (userId) => `auth/${userId}`,
       providesTags: (result, error, userId) => [{ type: "User", id: userId }],
     }),
-    registerUser: builder.mutation({
+    processRegister: builder.mutation({
       query: (userData) => ({
-        url: "auth/register",
+        url: "auth/process-register",
         method: "POST",
         body: userData,
+      }),
+      invalidatesTags: [{ type: "User" }],
+    }),
+    verifyRegister: builder.mutation({
+      query: (token) => ({
+        url: `auth/verify-register`,
+        method: "POST",
+        body: { token },
       }),
       invalidatesTags: [{ type: "User" }],
     }),
@@ -36,6 +44,7 @@ export const UserApi = rootApi.injectEndpoints({
         method: "GET",
       }),
       invalidatesTags: [{ type: "User" }],
+      keepUnusedDataFor: 5,
     }),
     updateUser: builder.mutation({
       query: ({ userId, userData }) => ({
@@ -47,7 +56,7 @@ export const UserApi = rootApi.injectEndpoints({
         { type: "User", id: userId },
       ],
     }),
-  
+
     deleteUser: builder.mutation({
       query: (userId) => ({
         url: `auth/${userId}`,
@@ -64,9 +73,10 @@ export const UserApi = rootApi.injectEndpoints({
 export const {
   useGetUserByIdQuery,
   useMeQuery,
-  useRegisterUserMutation,
+  useProcessRegisterMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
   useLoginUserMutation,
   useLogOutUserMutation,
+  useVerifyRegisterMutation,
 } = UserApi;

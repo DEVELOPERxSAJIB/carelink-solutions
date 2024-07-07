@@ -1,21 +1,29 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Hourglass } from "react-loader-spinner";
 import { useEffect } from "react";
+import { useVerifyRegisterMutation } from "../Redux/api/UserApi";
 
 const Verifying = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  setTimeout(() => {}, 1000);
+  const [verifyRegister, { data, isLoading, isError, isSuccess }] =
+    useVerifyRegisterMutation();
+
+  console.log(data);
+
+  // setTimeout(() => {}, 1000);
+
   useEffect(() => {
     if (params.token) {
+      verifyRegister(params.token);
       const timer = setTimeout(() => {
         navigate(`/login/${params.token}`);
       }, 1000 * 5);
 
       return () => clearTimeout(timer);
     }
-  }, [navigate, params.token]);
+  }, [navigate, params.token, verifyRegister]);
 
   return (
     <>
