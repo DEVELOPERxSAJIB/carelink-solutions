@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
 import PopupModal from "./../../components/Models/PopupModel";
 import TableHeader from "./../../components/Tables/TableHeader";
 
 const AddGroupActivityDocumentation = () => {
-  const navigation = useNavigate();
+  // const navigation = useNavigate();
   const columns = [
     { header: "S.No", field: "serialNumber" },
     { header: "Category Name", field: "categoryName" },
