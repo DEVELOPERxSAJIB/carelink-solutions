@@ -50,13 +50,22 @@ const navigate = useNavigate()
     alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
     // Implement delete logic here
   };
-
+  const column = [
+    { label: 'S.No', key: 'sNo' },
+    { label: 'First Name', key: 'firstName' },
+    { label: 'Last Name', key: 'lastName' },
+    { label: 'Hours', key: 'hours' },
+    { label: 'Units', key: 'units' },
+    { label: 'Miles', key: 'miles' },
+    { label: 'Regular Hours', key: 'regularHours' },
+    { label: 'Overtime Hours', key: 'overtimeHours' },
+  ];
   return (
     <div className="card">
  
       <TableHeader title={`Employees Payroll Report: ${start} To ${end}`} className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body"> 
-      <ExportButton/>
+      <ExportButton data={data} columns={column} fileName="payroll"/>
       <button onClick={()=>navigate("/employee-earning")} type="button" className="btn btn-primary ">
   <span className="ti-xs ti ti-file-dollar me-2" />
   Earning

@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import DataTable from "./../../components/Tables/DynamicTable";
 import { useNavigate } from "react-router-dom";
-import { MdOutlineMail } from "react-icons/md";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { FaRegFolder } from "react-icons/fa";
 import { FaRegFolderOpen } from "react-icons/fa";
 import useFormFields from "./../../hook/useFormHook";
 import FullscreenModal from "./../../components/Models/FullScreenModel";
 import TableHeader from "./../../components/Tables/TableHeader";
-import useTableExport from './../../hook/useExportData';
-
+import useCSVOperations from "../../hook/useExportData"
 const CaregiverOrStaff = () => {
+  
   const navigate = useNavigate();
-  const { handleExportExcel, handleExportPDF, handleCopy, handlePrint}= useTableExport()
+
   const columns = [
     { header: "S.No", field: "serialNumber" },
     { header: "First Name", field: "firstName" },
@@ -127,6 +126,13 @@ const CaregiverOrStaff = () => {
     e.preventDefault();
     resetForm();
   };
+
+  const {
+    handleCSVFileUpload,
+    handleExportSelected,
+    handleDeleteSelected,
+    handleInputChange, // Include additional functions as needed
+  }=useCSVOperations(data,columns)
   return (
     <div className="card">
       <TableHeader
@@ -142,7 +148,7 @@ const CaregiverOrStaff = () => {
             onSave={handleSubmit}
           >
             <form
-              className="w-100 px-3 from-scrollbar h-75"
+              className="w-100 px-3 from-scrollbar"
               onSubmit={handleSubmit}
             >
               <div className="row">
@@ -381,25 +387,34 @@ const CaregiverOrStaff = () => {
               </div>
             </form>
           </FullscreenModal>
-          <button
+          {/* <button
             style={{ fontSize: "12px" }}
             className="btn btn-info create-new btn-danger waves-effect waves-light"
             tabIndex={0}
             aria-controls="DataTables_Table_0"
             type="button"
-            onClick={()=>handleExportExcel(data)}
+           
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-upload me-sm-1" />{" "}
               <span className=" d-sm-inline-block">Import CSV</span>
             </span>
-          </button>
+          </button> */}
+          
+          <label htmlFor="importcsv" className="btn btn-success">
+          <span className="d-flex align-items-center">
+              <i className="ti ti-upload me-sm-1" />{" "}
+              <span className=" d-sm-inline-block">Import CSV</span>
+            </span>
+          </label>
+          <input onChange={(e)=>handleCSVFileUpload(e.target.files[0])} className="d-none" type="file" id="importcsv"/>
           <button
             style={{ fontSize: "12px" }}
             className="btn btn-warning waves-effect waves-light"
             tabIndex={0}
             aria-controls="DataTables_Table_0"
             type="button"
+            onClick={handleExportSelected}
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-download me-sm-1" />{" "}
@@ -412,6 +427,7 @@ const CaregiverOrStaff = () => {
             tabIndex={0}
             aria-controls="DataTables_Table_0"
             type="button"
+            onClick={handleDeleteSelected}
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-trash me-sm-1" />{" "}

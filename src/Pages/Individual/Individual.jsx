@@ -67,7 +67,64 @@ const Individual = () => {
       ),
     },
   ];
-
+  const column = [
+    { label: "S.No", key: "serialNumber" },
+    { label: "Individual ID", key: "individualId" },
+    { label: "First Name", key: "firstName" },
+    { label: "Last Name", key: "lastName" },
+    { label: "Created By", key: "createdBy" },
+    { label: "Status", key: "status" },
+    {
+      label: "Stakeholders(s)",
+      key: "stakeholders",
+      render: (rowData) => (
+        <Accordion tableHead={"Stakeholders Details"} data={rowData.stakeholders} />
+      ),
+    },
+    {
+      label: "Actions",
+      key: "actions",
+      render: (rowData) => (
+        <div className="d-flex gap-3 flex-wrap">
+          <button
+            className="btn btn-sm btn-secondary create-new btn-warning waves-effect waves-light"
+            tabIndex={0}
+            aria-controls="DataTables_Table_0"
+            type="button"
+          >
+            <span>
+              <i className="ti ti-edit me-sm-1" />{" "}
+              <span className="d-none d-sm-inline-block">Edit</span>
+            </span>
+          </button>
+  
+          <button
+            className="btn btn-sm btn-secondary create-new btn-danger waves-effect waves-light"
+            tabIndex={0}
+            aria-controls="DataTables_Table_0"
+            type="button"
+          >
+            <span>
+              <i className="ti ti-user me-sm-1" />{" "}
+              <span className="d-none d-sm-inline-block">View user</span>
+            </span>
+          </button>
+          <button
+            className="btn btn-sm btn-secondary create-new btn-primary waves-effect waves-light"
+            tabIndex={0}
+            aria-controls="DataTables_Table_0"
+            type="button"
+          >
+            <span>
+              <i className="ti ti-notes me-sm-1" />{" "}
+              <span className="d-none d-sm-inline-block">Assign Form</span>
+            </span>
+          </button>
+        </div>
+      ),
+    },
+  ];
+  
   const data = [
     {
       serialNumber: 1,
@@ -586,7 +643,7 @@ const Individual = () => {
               </div>
             </form>
           </FullscreenModal>
-          <ExportButton/>
+          <ExportButton data={data} columns={column} fileName="individual"/>
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}

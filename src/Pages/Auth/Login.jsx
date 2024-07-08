@@ -9,6 +9,12 @@ import { useNavigate } from "react-router-dom";
 import AuthLoader from "../../utils/Loaders/AuthLoader";
 
 const Login = () => {
+  const [showNewPassword, setShowNewPassword] = useState(false);
+const togglePasswordVisibility = (setPasswordVisibility) => {
+    setPasswordVisibility((prevState) => !prevState);
+  };
+
+ 
   const navigate = useNavigate();
   const [loginUser, { data, isSuccess, isError, isLoading, error }] =
     useLoginUserMutation();
@@ -108,7 +114,7 @@ console.log(data,error)
                   </label>
                   <div className="input-group input-group-merge">
                     <input
-                      type="password"
+                      type={showNewPassword ? 'text' : 'password'}
                       id="password"
                       className={`form-control ${
                         errors.password ? "is-invalid" : ""
@@ -118,7 +124,7 @@ console.log(data,error)
                       aria-describedby="password"
                     />
                     <span className="input-group-text cursor-pointer">
-                      <i className="ti ti-eye-off"></i>
+                      <i onClick={() => togglePasswordVisibility(setShowNewPassword)} className={showNewPassword ? 'ti ti-eye' : 'ti ti-eye-off'}></i>
                     </span>
                     {errors.password && (
                       <div className="invalid-feedback">

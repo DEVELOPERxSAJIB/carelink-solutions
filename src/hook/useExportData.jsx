@@ -1,69 +1,75 @@
-import { useRef } from "react";
-import * as XLSX from "xlsx";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-import copy from "copy-to-clipboard";
-const useTableExport = () => {
-  const handleExportExcel = (data) => {
-    const worksheet = XLSX.utils.aoa_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    XLSX.writeFile(workbook, "data.xlsx");
+import { useState } from "react";
+import { CSVLink } from "react-csv";
+import Papa from "papaparse";
+
+// Custom hook for handling CSV import, export, and delete operations
+const useCSVOperations = (initialData = [], columns) => {
+  const [tableData, setTableData] = useState(initialData);
+
+  // Function to handle CSV file upload
+  const handleCSVFileUpload = (file) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const csv = e.target.result;
+      const parsedCSV = Papa.parse(csv, { header: true });
+      if (parsedCSV && parsedCSV.data) {
+        setTableData(parsedCSV.data);
+      }
+    };
+    reader.readAsText(file);
   };
 
-  const handleExportPDF = (tableRef) => {
-    html2canvas(tableRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, "JPEG", 0, 0);
-      pdf.save("data.pdf");
+  // Function to handle exporting selected rows to CSV
+  const handleExportSelected = () => {
+    const selectedRows = tableData.filter((row) => row.selected);
+    const exportData = selectedRows.map((row) => {
+      const data = {};
+      columns.forEach((col) => {
+        data[col.field] = row[col.field];
+      });
+      return data;
     });
+
+    return (
+      <CSVLink
+        data={exportData}
+        filename={"selected_data.csv"}
+        className="btn btn-warning waves-effect waves-light"
+        target="_blank"
+      >
+        Export Selected
+      </CSVLink>
+    );
   };
 
-  const handleCopy = (data) => {
-    const text = data.map((row) => row.join("\t")).join("\n");
-    copy(text);
-    alert("Data copied to clipboard!");
+  // Function to handle deleting selected rows
+  const handleDeleteSelected = () => {
+    const updatedData = tableData.filter((row) => !row.selected);
+    setTableData(updatedData);
   };
 
-  const handlePrint = (tableRef) => {
-    const content = tableRef.current;
-    const pri = content.cloneNode(true);
-    const popup = window.open("", "_blank");
-    popup.document.open();
-    popup.document.write(`
-      <html>
-        <head>
-          <title>Print</title>
-          <style>
-            @media print {
-              body {
-                visibility: visible;
-              }
-            }
-          </style>
-        </head>
-        <body>
-          ${pri.outerHTML}
-          <script>
-            window.onload = function() {
-              setTimeout(function() {
-                window.print();
-              }, 200); // Delay print to ensure content is fully loaded
-            };
-          </script>
-        </body>
-      </html>
-    `);
-    popup.document.close();
+  // Example function to handle input tag changes (can be expanded as needed)
+  const handleInputChange = (event) => {
+    // Example: Update tableData based on input changes
+    const { name, value } = event.target;
+    // Example logic: Update only the first row's 'firstName' field
+    const updatedTableData = tableData.map((row, index) => {
+      if (index === 0) {
+        return { ...row, [name]: value };
+      }
+      return row;
+    });
+    setTableData(updatedTableData);
   };
 
   return {
-    handleExportExcel,
-    handleExportPDF,
-    handleCopy,
-    handlePrint,
+    tableData,
+    setTableData,
+    handleCSVFileUpload,
+    handleExportSelected,
+    handleDeleteSelected,
+    handleInputChange, // Include additional functions as needed
   };
 };
 
-export default useTableExport;
+export default useCSVOperations;

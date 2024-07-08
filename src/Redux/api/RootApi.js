@@ -10,6 +10,6 @@ export const rootApi = createApi({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(rootApi.middleware),
   devTools: true,
-  tagTypes: ["User"],
+  tagTypes: ["User","Setting"],
   endpoints: () => ({}),
 });

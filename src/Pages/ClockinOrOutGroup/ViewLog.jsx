@@ -1,8 +1,6 @@
-import React from "react";
+
 import DataTable from "./../../components/Tables/DynamicTable";
-import ExportButton from "./../../components/Buttons/ExportButton";
 import { useNavigate } from "react-router-dom";
-import { FaRegFolder, FaRegFolderOpen } from "react-icons/fa";
 import TableHeader from './../../components/Tables/TableHeader';
 
 // Function to get the start and end dates of the current week

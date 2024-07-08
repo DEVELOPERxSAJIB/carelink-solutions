@@ -75,6 +75,15 @@ export const UserApi = rootApi.injectEndpoints({
       invalidatesTags:  [{ type: "User",  }]
       
     }),
+    updatePasswordLogged: builder.mutation({
+      query: (userData) => ({
+        url: `auth//update-password-logged`,
+        method: "PATCH",
+        body: userData,
+      }),
+      invalidatesTags:  [{ type: "User",  }]
+      
+    }),
     deleteUser: builder.mutation({
       query: (userId) => ({
         url: `auth/${userId}`,
@@ -99,4 +108,5 @@ export const {
   useVerifyRegisterMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useUpdatePasswordLoggedMutation
 } = UserApi;

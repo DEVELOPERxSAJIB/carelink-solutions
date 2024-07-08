@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import PageHeader from './../../components/FormElement/PageHeader';
+import { useCreateQuestionMutation, useGetQuestionsQuery } from "../../Redux/api/SettingApi";
+import AuthLoader from './../../utils/Loaders/AuthLoader';
 
 const PositiveIdentifications = () => {
-  const [formData, setFormData] = useState([]);
+  const [createQuestion, { isLoading, isSuccess, error }] = useCreateQuestionMutation();
+  const { data: serverQuestions } = useGetQuestionsQuery();
 
-  const questions = [
+  const defaultQuestions = [
     "Which family member do you like the most?",
     "Which family members do you like the least?",
     "What did you want be when you grew up?",
@@ -75,61 +78,92 @@ const PositiveIdentifications = () => {
     "Where did you spend your summer in 2015"
   ];
 
+  // Initialize formData with default values from serverQuestions?.questions if available
+  const initialFormData = Array(15).fill({ questionNumber: "", questionText: "", answer: "" }).map((_, index) => {
+    const foundQuestion = serverQuestions?.questions?.find(q => q.questionNumber === index + 1);
+    return {
+      questionNumber: index + 1,
+      questionText: foundQuestion ? foundQuestion.question : defaultQuestions[index % defaultQuestions.length],
+      answer: foundQuestion ? foundQuestion.answer : ""
+    };
+  });
+
+  const [formData, setFormData] = useState(initialFormData);
+
   const handleChange = (index, e) => {
     const { name, value } = e.target;
     const updatedFormData = [...formData];
-    updatedFormData[index] = { ...updatedFormData[index], [name]: value };
+    
+    if (name === 'questionNumber') {
+      updatedFormData[index] = { 
+        ...updatedFormData[index], 
+        questionNumber: index + 1,
+        questionText: defaultQuestions[parseInt(value) - 1] // Set questionText based on selected value
+      };
+    } else {
+      updatedFormData[index] = { ...updatedFormData[index], [name]: value };
+    }
+
     setFormData(updatedFormData);
   };
 
   const handleSubmit = () => {
-    // Implement your submit logic here
-    console.log(formData); // Just for example, replace with actual submission logic
+    console.log(formData);
+    createQuestion({formData}); // Assuming createQuestion handles submission correctly
   };
-
+if(isLoading) return <AuthLoader/>
   return (
     <div className="container py-4">
       <div className="card shadow">
-
-        <PageHeader title="Positive Identification" className="card-header fs-3"/>
+        <PageHeader title="Positive Identification" className="card-header fs-3" />
         <div className="card-body">
-          {questions.splice(0,15).map((question, index) => (
+        <div className="text-end">
+            <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+          </div>
+        {isLoading && <div className="alert alert-info text-center mt-3">Submitting...</div>}
+          {isSuccess && <div className="alert alert-success text-center mt-3">Questions submitted successfully!</div>}
+          {error && <div className="alert alert-danger text-center mt-3">{error.message}</div>}
+          {formData.map((entry, index) => (
             <div key={index} className="mb-4">
               <div className="row">
                 <div className="col-md-6">
-                <h6 className="mb-3">Question {index + 1}</h6>
+                  <h6 className="mb-3">Question {index + 1}</h6>
                   <select
                     id={`question-${index}`}
+                    name={`questionNumber`}
                     className="form-select"
                     onChange={(e) => handleChange(index, e)}
+                    value={entry.questionNumber}
                   >
                     <option value="">Select a question</option>
-                    {questions.map((q, idx) => (
-                      <option key={idx} value={q}>{q}</option>
+                    {defaultQuestions.map((q, idx) => (
+                      <option key={idx + 1} value={idx + 1}>{q}</option>
                     ))}
                   </select>
                 </div>
                 <div className="col-md-6">
-                <h6 className="mb-3">Answer {index + 1}</h6>
+                  <h6 className="mb-3">Answer {index + 1}</h6>
                   <input
                     type="text"
                     id={`answer-${index}`}
-                    name={`answer-${index}`}
+                    name={`answer`}
                     className="form-control"
                     placeholder={`Answer ${index + 1}`}
                     onChange={(e) => handleChange(index, e)}
+                    value={entry.answer}
                   />
                 </div>
               </div>
             </div>
           ))}
-          <div className="text-center">
-            <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+          <div className="text-end">
+            <button className="btn btn-primary" onClick={handleSubmit}>Save answer</button>
           </div>
+          
         </div>
       </div>
     </div>
   );
 };
 
-export default PositiveIdentifications
+export default PositiveIdentifications;

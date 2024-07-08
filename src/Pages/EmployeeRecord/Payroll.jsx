@@ -40,7 +40,16 @@ const navigate = useNavigate()
     { serialNumber: 3, firstName: 'Jim', lastName: 'Brown', hours: 42, units: 12, miles: 60, regularHours: 37, overtimeHours: 5 },
     // Add more data as needed
   ];
-
+  const column = [
+    { label: 'S.No', key: 'sNo' },
+    { label: 'First Name', key: 'firstName' },
+    { label: 'Last Name', key: 'lastName' },
+    { label: 'Hours', key: 'hours' },
+    { label: 'Units', key: 'units' },
+    { label: 'Miles', key: 'miles' },
+    { label: 'Regular Hours', key: 'regularHours' },
+    { label: 'Overtime Hours', key: 'overtimeHours' },
+  ];
   const handleEdit = (rowData) => {
     alert(`Editing ${rowData.firstName} ${rowData.lastName}`);
     // Implement edit logic here
@@ -55,7 +64,7 @@ const navigate = useNavigate()
     <div className="card">
       <TableHeader title={`Employees Payroll Report: ${start} to ${end}`} className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
-      <ExportButton/>
+      <ExportButton data={data} columns={column} fileName="payroll"/>
       <button onClick={()=>navigate("/employee-earning")} type="button" className="btn btn-primary waves-effect waves-light">
   <span className="ti-xs ti ti-file-dollar me-2" />
   Earning

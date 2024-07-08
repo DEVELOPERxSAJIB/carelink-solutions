@@ -1,33 +1,71 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { CSVLink } from 'react-csv';
+import * as XLSX from 'xlsx';
 
-const ExportButton = () => {
+const ExportButton = ({ data, columns, fileName }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
+  const handlePrint = () => {
+    const printContent = document.getElementById('print-content');
+    if (printContent) {
+      const doc = new jsPDF();
+  
+      // Calculate the center position
+      const pageWidth = doc.internal.pageSize.width;
+      const textWidth = doc.getStringUnitWidth('CareLink Solutions') * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      const startX = (pageWidth - textWidth) / 2;
+  
+      // Set up document header
+      doc.setFontSize(18);
+      doc.text('CareLink Solutions', startX, 15);
+      doc.setFontSize(12);
+      const titleText = `Employee Salary Sheet - ${fileName}`;
+      const titleWidth = doc.getStringUnitWidth(titleText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      const titleStartX = (pageWidth - titleWidth) / 2;
+      doc.text(titleText, titleStartX, 25);
+  
+      // Add table content
+      doc.autoTable({
+        head: [columns.map(col => col.label)],
+        body: data.map(row => columns.map(col => row[col.key])),
+        startY: 35, // Adjust starting position if needed
+      });
+  
+      doc.save(`${fileName}.pdf`);
+    }
+  };
+  
+  
+
   const handleExport = (type) => {
     switch (type) {
       case 'print':
-        // Implement print logic here
-        console.log('Print selected');
+        handlePrint();
         break;
       case 'csv':
-        // Implement CSV export logic here
-        console.log('CSV selected');
+        // CSV export handled by react-csv
         break;
       case 'excel':
-        // Implement Excel export logic here
-        console.log('Excel selected');
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+        XLSX.writeFile(workbook, `${fileName}.xlsx`);
         break;
       case 'pdf':
-        // Implement PDF export logic here
-        console.log('PDF selected');
+        handlePrint();
         break;
       case 'copy':
-        // Implement copy logic here
-        console.log('Copy selected');
+        const textToCopy = data.map(row => columns.map(col => row[col.key]).join('\t')).join('\n');
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          alert('Data copied to clipboard');
+        });
         break;
       default:
         break;
@@ -55,10 +93,10 @@ const ExportButton = () => {
             <i className="ti ti-printer me-1" />
             Print
           </a>
-          <a className="dropdown-item" href="#" onClick={() => handleExport('csv')}>
+          <CSVLink data={data} headers={columns.map(col => col.label)} filename={`${fileName}.csv`} className="dropdown-item" onClick={() => setDropdownOpen(false)}>
             <i className="ti ti-file-text me-1" />
             CSV
-          </a>
+          </CSVLink>
           <a className="dropdown-item" href="#" onClick={() => handleExport('excel')}>
             <i className="ti ti-file-spreadsheet me-1" />
             Excel
@@ -73,7 +111,7 @@ const ExportButton = () => {
           </a>
         </div>
       )}
-      <div className="dt-button-background" style={{}} />
+      <div id="print-content" className="dt-button-background" style={{}} />
     </div>
   );
 };
