@@ -715,10 +715,9 @@ const { data,refetch } = useMeQuery();
                   <span className="align-middle">FAQ</span>
                 </a>
               </li>
-              <li>
+              <li onClick={handleLogout}>
                 <div className="d-grid px-2 pt-2 pb-1">
                   <button
-                    onClick={handleLogout}
                     className="btn btn-sm btn-danger d-flex"
                   >
                     <small className="align-middle">Logout</small>
