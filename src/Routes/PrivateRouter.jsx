@@ -74,6 +74,8 @@ import ReviewEmailLog from './../Pages/Individual/ReviewEmailLog';
 import ViewOutcomes from './../Pages/AdultDayService/ViewOutcomes';
 import ManageUnassignedShift from './../Pages/EmployeeRecord/ManageUnassignedShift';
 import AssignAllIndividual from './../Pages/BusinessCommunity/AssignAllIndividual';
+import Patients from './../Pages/Patient/Patients';
+import CreatePatient from './../Pages/Patient/CreatePatient';
 
 const privateRouter = [
   {
@@ -132,12 +134,16 @@ const privateRouter = [
             element: <Individual />,
           },
           {
+            path: "/patient",
+            element: <Patients />,
+          },
+          {
             path: "/review-email-log",
             element: <ReviewEmailLog />,
           },
           {
-            path: "/create-new-individual",
-            element: <CreateNewIndividual />,
+            path: "/create-new-patient",
+            element: <CreatePatient/>,
           },
           {
             path: "/assign-all-individual",

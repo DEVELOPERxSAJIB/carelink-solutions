@@ -121,6 +121,26 @@ const Sidebar = () => {
       ],
     },
     {
+      title: "Patient",
+      href: "",
+      icon: (
+        <i className="menu-icon tf-icons ti ti-user-plus menu-toggle-icon  d-xl-block align-middle"></i>
+      ),
+      subMenu: [
+        {
+          title: "Patient",
+          href: "/patient",
+          icon: ""
+        },
+        {
+          title: "Create New Patient",
+          href: "/create-new-patient",
+          icon:""
+        },
+       
+      ],
+    },
+    {
       title: "Business Community",
       href: "",
       icon: (
