@@ -6,6 +6,15 @@ import { useCreatePatientMutation } from "../../Redux/api/PatientApi";
 const PatientProfile = () => {
   const [createPatient, { data, isLoading, isSuccess, error }] =
     useCreatePatientMutation();
+    const [primaryCounty,setPrimaryCounty]= useState("")
+  const [mailingCounty,setMailingCounty]= useState("")
+  const [visitCounty,setVisitCounty]= useState("")
+  const [primaryState,setPrimaryState]= useState("")
+  const [mailingState,setMailingState]= useState("")
+  const [visitState,setVisitState]= useState("")
+  const [primaryCity,setPrimaryCity]= useState("")
+  const [mailingCity,setMailingCity]= useState("")
+  const [visitCity,setVisitCity]= useState("")
   const [formData, setFormData] = useState({
     firstName: "",
     middleInitial: "",
@@ -139,8 +148,18 @@ const PatientProfile = () => {
   
 console.log(formData)
   const handleAdmit = () => {
-    createPatient(formData);
     console.log(formData);
+    formData.primaryCounty=primaryCounty;
+    formData.primaryCity=primaryCity;
+    formData.primaryState=primaryState
+    
+    formData.mailingCounty=mailingCounty
+    formData.mailingCity=mailingCity
+    formData.mailingState=mailingState
+    formData.visitCounty=visitCounty
+    formData.visitCity=visitCity
+    formData.visitState=visitState
+    createPatient(formData);
   };
   const handleSaveAndContinue = () => {};
   const handleSaveAndExit = () => {};
@@ -564,17 +583,10 @@ console.log(formData)
                 <label htmlFor="primaryCounty" className="form-label">
                   County: <span className="text-danger">*</span>
                 </label>
-                <select
-                  className="form-select"
-                  id="primaryCounty"
-                  name="primaryCounty"
-                  value={formData.primaryCounty}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="">Select County</option>
-                  {/* Add options for counties */}
-                </select>
+               {/* Assuming SelectCounty component or similar for county selection */}
+               <CountySelect
+                    selectedState={primaryState} selectedCounty={primaryCounty} setSelectedCounty={setPrimaryCounty}
+                  />
               </div>
 
               {/* City */}
@@ -582,7 +594,7 @@ console.log(formData)
                 <label htmlFor="primaryCity" className="form-label">
                   City: <span className="text-danger">*</span>
                 </label>
-                <CitySelect />
+                <CitySelect stateCode={primaryState} selectedCity={primaryCity} setSelectedCity={setPrimaryCity} />
               </div>
 
               {/* State */}
@@ -590,17 +602,7 @@ console.log(formData)
                 <label htmlFor="primaryState" className="form-label">
                   State: <span className="text-danger">*</span>
                 </label>
-                <select
-                  className="form-select"
-                  id="primaryState"
-                  name="primaryState"
-                  value={formData.primaryState}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="">Select State</option>
-                  {/* Add options for states */}
-                </select>
+                <SelectState selectedState={primaryState} setSelectedState={setPrimaryState}/>
               </div>
             </div>
           </div>
@@ -708,17 +710,14 @@ console.log(formData)
                       </label>
                       {/* Assuming SelectCounty component or similar for county selection */}
                       <CountySelect
-                        selectedCounty={formData.mailingCounty}
-                        setSelectedCounty={(county) =>
-                          setFormData({ ...formData, mailingCounty: county })
-                        }
+                        selectedState={mailingState} selectedCounty={mailingCounty} setSelectedCounty={setMailingCounty}
                       />
                     </div>
                     <div className="col-md-6">
                       <label htmlFor="mailingCity" className="form-label">
                         City: <span className="text-danger">*</span>
                       </label>
-                      <CitySelect />
+                      <CitySelect stateCode={mailingState} selectedCity={mailingCity} setSelectedCity={setMailingCity}/>
                     </div>
                   </div>
                   <div className="row mb-3">
@@ -728,10 +727,7 @@ console.log(formData)
                       </label>
                       {/* Assuming SelectState component or similar for state selection */}
                       <SelectState
-                        selectedState={formData.mailingState}
-                        setSelectedState={(state) =>
-                          setFormData({ ...formData, mailingState: state })
-                        }
+                        selectedState={mailingState} setSelectedState={setMailingState}
                       />
                     </div>
                   </div>
@@ -793,7 +789,7 @@ console.log(formData)
                   <label htmlFor="visitCity" className="form-label">
                     City:
                   </label>
-                  <CitySelect />
+                  <CitySelect stateCode={visitState} selectedCity={visitCity} setSelectedCity={setVisitCity}/>
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="visitState" className="form-label">
@@ -801,10 +797,7 @@ console.log(formData)
                   </label>
                   {/* Assuming SelectState component or similar for state selection */}
                   <SelectState
-                    selectedState={formData.visitState}
-                    setSelectedState={(state) =>
-                      setFormData({ ...formData, visitState: state })
-                    }
+                    selectedState={visitState} setSelectedState={setVisitState}
                   />
                 </div>
               </div>
@@ -843,10 +836,7 @@ console.log(formData)
                   </label>
                   {/* Assuming SelectCounty component or similar for county selection */}
                   <CountySelect
-                    selectedCounty={formData.visitCounty}
-                    setSelectedCounty={(county) =>
-                      setFormData({ ...formData, visitCounty: county })
-                    }
+                    selectedState={visitState} selectedCounty={visitCounty} setSelectedCounty={setVisitCounty}
                   />
                 </div>
               </div>
