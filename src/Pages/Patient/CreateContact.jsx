@@ -4,8 +4,9 @@ import StateSelect from "./../../components/FormElement/StateSelect";
 import { useCreateContactMutation } from "../../Redux/api/Contact";
 import CountySelect from "./../../components/FormElement/CountySelect";
 import PageHeader from './../../components/FormElement/PageHeader';
+import AuthLoader from './../../utils/Loaders/AuthLoader';
 const ContactForm = () => {
-  const [createContact, { data, isLoading, isSuccess }] =
+  const [createContact, { data, isLoading, isSuccess ,error}] =
     useCreateContactMutation();
   const [formData, setFormData] = useState({
     representativeContacted: "",
@@ -241,10 +242,12 @@ const ContactForm = () => {
       console.error("Error creating contact:", error);
     }
   };
-
+ if(isLoading) return <AuthLoader/>
   return (
     <form onSubmit={handleSubmit} className="card">
         <PageHeader title="Contact" className="card-header fs-3"/>
+        {data?.message&& <div>{data?.message}</div>}
+        {error?.data?.message&& <div>{error?.data?.message}</div>}
       <div className="card-body">
         <div className="accordion" id="emergencyContactsAccordion">
           {/* Primary Emergency Contact */}
