@@ -1,11 +1,11 @@
-import { useState,useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import logo from "../../../public/logo.png";
-import { Link,useLocation  } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const Sidebar = () => {
   const [isActive, setIsActive] = useState(false); // State to manage active state
   const location = window.location;
-  const history  = useLocation();
-  console.log(history )
+  const history = useLocation();
+  console.log(history);
   const toggleMenu = () => {
     setIsActive(!isActive); // Toggle the isActive state
   };
@@ -20,37 +20,37 @@ const Sidebar = () => {
         {
           title: "Company Profile",
           href: "/profile",
-          icon:""
+          icon: "",
         },
         {
           title: "Agency Invoice",
           href: "/agency-invoice",
-          icon:""
+          icon: "",
         },
         {
           title: "Payroll",
           href: "/payroll",
-          icon:""
+          icon: "",
         },
         {
           title: "Change Password",
           href: "/change-password",
-          icon: ""
+          icon: "",
         },
         {
           title: "Positive Identifications",
           href: "/positive-identifications",
-          icon:""
+          icon: "",
         },
         {
           title: "Notification s",
           href: "/notification-s",
-          icon:""
+          icon: "",
         },
         {
           title: "Permissions",
           href: "/permissions",
-          icon: ""
+          icon: "",
         },
       ],
     },
@@ -64,7 +64,7 @@ const Sidebar = () => {
         {
           title: "Co-Admins",
           href: "/co-admins",
-          icon:""
+          icon: "",
         },
       ],
     },
@@ -78,7 +78,7 @@ const Sidebar = () => {
         {
           title: "Sub Users",
           href: "/sub-users",
-          icon:""
+          icon: "",
         },
       ],
     },
@@ -92,7 +92,7 @@ const Sidebar = () => {
         {
           title: "Billing",
           href: "/billing",
-          icon:""
+          icon: "",
         },
       ],
     },
@@ -106,17 +106,17 @@ const Sidebar = () => {
         {
           title: "Individual",
           href: "/individual",
-          icon: ""
+          icon: "",
         },
         {
           title: "Create New Individual",
           href: "/create-new-individual",
-          icon:""
+          icon: "",
         },
         {
           title: "Individual Audit Review",
           href: "/individual-audit-review",
-          icon:""
+          icon: "",
         },
       ],
     },
@@ -130,14 +130,78 @@ const Sidebar = () => {
         {
           title: "Patient",
           href: "/patient",
-          icon: ""
+          icon: "",
         },
         {
           title: "Create New Patient",
           href: "/create-new-patient",
-          icon:""
+          icon: "",
         },
-       
+        {
+          title: "Payers",
+          href: "/payers",
+          icon: "",
+        },
+        {
+          title: "Create payers",
+          href: "/create-payers",
+          icon: "",
+        },
+        {
+          title: "Clinical/Diagnoses",
+          href: "/clinical-diagnoses",
+          icon: "",
+        },
+        {
+          title: "Pharmacy",
+          href: "/pharmacy",
+          icon: "",
+        },
+        {
+          title: "Create Pharmacy",
+          href: "/create-pharmacy",
+          icon: "",
+        },
+        {
+          title: "Create contacts",
+          href: "/create-contacts",
+          icon: "",
+        },
+        {
+          title: "Contract",
+          href: "/contacts",
+          icon: "",
+        },
+        {
+          title: "Emergency preparedness",
+          href: "/emergency-preparedness",
+          icon: "",
+        },
+        {
+          title: "Create Emergency Preparedness",
+          href: "/create-emergency-preparedness",
+          icon: "",
+        },
+        {
+          title: "Advance Directives",
+          href: "/advance-directives",
+          icon: "",
+        },
+        {
+          title: "Create Advance Directives",
+          href: "/create-advance-directives",
+          icon: "",
+        },
+        {
+          title: "Referral information",
+          href: "/referral-information",
+          icon: "",
+        },
+        {
+          title: "Create Referral information",
+          href: "/create-referral-information",
+          icon: "",
+        },
       ],
     },
     {
@@ -150,27 +214,27 @@ const Sidebar = () => {
         {
           title: "Caregiver/Staff",
           href: "/staff",
-          icon:""
+          icon: "",
         },
         {
           title: "Guardians",
           href: "/guardians",
-          icon: ""
+          icon: "",
         },
         {
           title: "Support Administrators",
           href: "/support-administrators",
-          icon: ""
+          icon: "",
         },
         {
           title: "Healthcare Professional",
           href: "/healthcare-professional",
-          icon: ""
+          icon: "",
         },
         {
           title: "Compliance",
           href: "/Compliance",
-          icon:""
+          icon: "",
         },
       ],
     },
@@ -200,17 +264,17 @@ const Sidebar = () => {
         {
           title: "POS",
           href: "/pos",
-          icon:""
+          icon: "",
         },
         {
           title: "MAR",
           href: "/mar",
-          icon: ""
+          icon: "",
         },
         {
           title: "TAR",
           href: "/tar",
-          icon: ""
+          icon: "",
         },
       ],
     },
@@ -224,17 +288,17 @@ const Sidebar = () => {
         {
           title: "Clock in",
           href: "/clock-in",
-          icon: ""
+          icon: "",
         },
         {
           title: "Clock out",
           href: "/clock-out",
-          icon: ""
+          icon: "",
         },
         {
           title: "View Log",
           href: "/view-log",
-          icon: ""
+          icon: "",
         },
       ],
     },
@@ -256,17 +320,17 @@ const Sidebar = () => {
         {
           title: "View Assigned Mileage",
           href: "/view-assigned-mileage",
-          icon:""
+          icon: "",
         },
         {
           title: "Add New Mileage",
           href: "/add-new-mileage",
-          icon:""
+          icon: "",
         },
         {
           title: "Mileage Log",
           href: "/mileage-log",
-          icon: ""
+          icon: "",
         },
       ],
     },
@@ -280,7 +344,7 @@ const Sidebar = () => {
         {
           title: "Folders",
           href: "/folders",
-          icon: ""
+          icon: "",
         },
       ],
     },
@@ -294,27 +358,27 @@ const Sidebar = () => {
         {
           title: "Set Budget",
           href: "/set-budget",
-          icon:""
+          icon: "",
         },
         {
           title: "Add Community Integration",
           href: "/add-community-integration",
-          icon: ""
+          icon: "",
         },
         {
           title: "Community Integration Log",
           href: "/community-integration-log",
-          icon: ""
+          icon: "",
         },
         {
           title: "Add Category",
           href: "/add-category",
-          icon:""
+          icon: "",
         },
         {
           title: "Add List Of Activity",
           href: "/add-list-of-activity",
-          icon: ""
+          icon: "",
         },
       ],
     },
@@ -328,67 +392,67 @@ const Sidebar = () => {
         {
           title: "Category",
           href: "/category",
-          icon:""
+          icon: "",
         },
         {
           title: "ADS Location",
           href: "/ads-location",
-          icon: ""
+          icon: "",
         },
         {
           title: "List Of Activity Log",
           href: "/list-of-activity-log",
-          icon: ""
+          icon: "",
         },
         {
           title: "Add Group Activity Documentation",
           href: "/add-group-activity-documentation",
-          icon: ""
+          icon: "",
         },
         {
           title: "Add List Of Activity",
           href: "/add-daily-activity",
-          icon: ""
+          icon: "",
         },
         {
           title: "View Group Documentation Log",
           href: "/view-group-documentation-log",
-          icon:""
+          icon: "",
         },
         {
           title: "ADS Configuration",
           href: "/ads-configuration",
-          icon: ""
+          icon: "",
         },
         {
           title: "Attendance Sheet",
           href: "/attendance-sheet",
-          icon: ""
+          icon: "",
         },
         {
           title: "Reports",
           href: "/reports",
-          icon:""
+          icon: "",
         },
         {
           title: "Support Employment",
           href: "/support-employment",
-          icon: ""
+          icon: "",
         },
         {
           title: "View Outcome Log",
           href: "/view-outcome-log",
-          icon: ""
+          icon: "",
         },
         {
           title: "Add Shift Summary",
           href: "/add-shift-summary",
-          icon:""
+          icon: "",
         },
         {
           title: "View Shift Summary",
           href: "/view-shift-summary",
-          icon: ""
+          icon: "",
         },
       ],
     },
@@ -402,37 +466,37 @@ const Sidebar = () => {
         {
           title: "Payroll",
           href: "/employee-payroll",
-          icon:""
+          icon: "",
         },
         {
           title: "Employee Files",
           href: "/employee-files",
-          icon: ""
+          icon: "",
         },
         {
           title: "Notices",
           href: "/employee-notices",
-          icon: ""
+          icon: "",
         },
         {
           title: "Requested Time Off",
           href: "/requested-time-off",
-          icon: ""
+          icon: "",
         },
         {
           title: "Scheduler",
           href: "/scheduler",
-          icon: ""
+          icon: "",
         },
         {
           title: "Manage Shift",
           href: "/manage-shift",
-          icon: ""
+          icon: "",
         },
         {
           title: "Manage Unassigned Shift",
           href: "/manage-unassigned-shift",
-          icon: ""
+          icon: "",
         },
       ],
     },
@@ -446,32 +510,32 @@ const Sidebar = () => {
         {
           title: "My Vehicles",
           href: "/my-vehicles",
-          icon: ""
+          icon: "",
         },
         {
           title: "My Routes",
           href: "/my-routes",
-          icon: ""
+          icon: "",
         },
         {
           title: "Add Vehicle Inspection",
           href: "/add-vehicle-inspection",
-          icon: ""
+          icon: "",
         },
         {
           title: "View Vehicle Inspection",
           href: "/view-vehicle-inspection",
-          icon: ""
+          icon: "",
         },
         {
           title: "View Log",
           href: "/vehicle-view-log",
-          icon: ""
+          icon: "",
         },
         {
           title: "My Briefcase",
           href: "/my-briefcase",
-          icon:""
+          icon: "",
         },
       ],
     },
@@ -485,12 +549,12 @@ const Sidebar = () => {
         {
           title: "Calendars",
           href: "/calendars",
-          icon: ""
+          icon: "",
         },
         {
           title: "Shared Events",
           href: "/shared-events",
-          icon: ""
+          icon: "",
         },
       ],
     },
@@ -504,17 +568,17 @@ const Sidebar = () => {
         {
           title: "Add New Ticket",
           href: "/add-new-ticket",
-          icon: ""
+          icon: "",
         },
         {
           title: "Contact Us",
           href: "/contact-us",
-          icon:""
+          icon: "",
         },
         {
           title: "Call Us",
           href: "/call-us",
-          icon: ""
+          icon: "",
         },
       ],
     },
@@ -534,41 +598,42 @@ const Sidebar = () => {
     setActiveMenu(index === activeMenu ? null : index);
   };
   const handleMobileMenu = () => {
-    document.documentElement.classList.toggle('layout-menu-expanded');
-  }
-  const menuRef=useRef()
+    document.documentElement.classList.toggle("layout-menu-expanded");
+  };
+  const menuRef = useRef();
   const handleClose = (e) => {
     if (menuRef.current && !menuRef.current.contains(e.target)) {
-      document.documentElement.classList.remove('layout-menu-expanded');
+      document.documentElement.classList.remove("layout-menu-expanded");
     }
   };
 
   useEffect(() => {
     // Add event listener when the component is mounted
-    document.addEventListener('mousedown', handleClose);
-    
+    document.addEventListener("mousedown", handleClose);
+
     // Clean up the event listener when the component is unmounted
     return () => {
-      document.removeEventListener('mousedown', handleClose);
+      document.removeEventListener("mousedown", handleClose);
     };
   }, []);
-  // .layout-menu-fixed .layout-menu, .layout-menu-fixed-offcanvas .layout-menu 
+  // .layout-menu-fixed .layout-menu, .layout-menu-fixed-offcanvas .layout-menu
   return (
-
     <aside
-     ref={menuRef}
+      ref={menuRef}
       id="layout-menu"
-
       className={`layout-menu layout-menu-expanded layout-menu-fixed layout-menu-fixed-offcanvas menu-vertical menu bg-menu-theme position-sticky top-0 ${
         isActive ? "menu-collapsed" : ""
       }`}
     >
       <div className="app-brand ">
         <a href="/" className="app-brand-link">
-          <span  className="app-brand-logo  demo">
-            <img style={{ width: "40px", height: "30px"}} src={logo} alt="" />
+          <span className="app-brand-logo  demo">
+            <img style={{ width: "40px", height: "30px" }} src={logo} alt="" />
           </span>
-          <span style={{paddingLeft:"5px"}} className="app-brand-text demo menu-text fw-bold">
+          <span
+            style={{ paddingLeft: "5px" }}
+            className="app-brand-text demo menu-text fw-bold"
+          >
             CareLink
           </span>
         </a>
@@ -577,15 +642,21 @@ const Sidebar = () => {
           className="layout-menu-toggle menu-link text-large ms-auto"
           onClick={toggleMenu} // Handle click event to toggle menu
         >
-          <i onClick={handleMobileMenu} className="menu-icon tf-icons ti ti-x d-block d-xl-none ti-md align-middle"></i>
+          <i
+            onClick={handleMobileMenu}
+            className="menu-icon tf-icons ti ti-x d-block d-xl-none ti-md align-middle"
+          ></i>
         </a>
       </div>
       <div className="menu-inner-shadow"></div>
       <ul className="menu-inner py-1 ">
         {sideBarMenu.map((item, index) => (
-          <li 
+          <li
             key={index}
-            className={`menu-item  ${location.pathname === item.href && "active link bg-primary rounded "} ${
+            className={`menu-item  ${
+              location.pathname === item.href &&
+              "active link bg-primary rounded "
+            } ${
               item.subMenu.length > 0 && activeMenu === index
                 ? "open active "
                 : ""
@@ -593,7 +664,8 @@ const Sidebar = () => {
           >
             {/* Render link with submenu toggle */}
             {item.subMenu.length > 0 ? (
-              <span style={{cursor:"pointer"}}
+              <span
+                style={{ cursor: "pointer" }}
                 className="menu-link menu-toggle"
                 onClick={() => handleSubMenuClick(index)}
               >
@@ -611,10 +683,16 @@ const Sidebar = () => {
             {item.subMenu.length > 0 && (
               <ul className="menu-sub">
                 {item.subMenu.map((subItem, subIndex) => (
-                  <li style={{cursor:"pointer",transition:"color 0.5s ease-in-out",transitionDelay: "0.5s"}}
+                  <li
+                    style={{
+                      cursor: "pointer",
+                      transition: "color 0.5s ease-in-out",
+                      transitionDelay: "0.5s",
+                    }}
                     key={subIndex}
                     className={`menu-item mx-3 ${
-                      location.pathname === subItem.href && "active bg-primary rounded "
+                      location.pathname === subItem.href &&
+                      "active bg-primary rounded "
                     }`}
                   >
                     <Link to={subItem.href} className="menu-link">
@@ -629,7 +707,6 @@ const Sidebar = () => {
         ))}
       </ul>
     </aside>
-    
   );
 };
 

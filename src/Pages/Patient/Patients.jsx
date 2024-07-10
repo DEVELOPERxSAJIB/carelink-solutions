@@ -1,113 +1,23 @@
 import DataTable from "./../../components/Tables/DynamicTable";
-import { useNavigate } from "react-router-dom";
-import Accordion from "./../../components/Tables/Accordion";
-import FullscreenModal from './../../components/Models/FullScreenModel';
-import useFormFields from './../../hook/useFormHook';
+
 import ExportButton from './../../components/Buttons/ExportButton';
 import TableHeader from './../../components/Tables/TableHeader';
 import {useGetAllPatientsQuery} from "../../Redux/api/PatientApi"
 import AuthLoader from './../../utils/Loaders/AuthLoader';
 const Patients = () => {
-  const {data,isLoading,isSuccess} = useGetAllPatientsQuery();
-  console.log(data)
+  const {data,isLoading} = useGetAllPatientsQuery();
   const columns = [
-    { field: "id", header: "S.No" },
+    { field: "patientIdMrn", header: "patientIdMrn" },
     { field: "firstName", header: "First Name" },
-    { field: "middleInitial", header: "Middle Initial" },
     { field: "lastName", header: "Last Name" },
     { field: "gender", header: "Gender" },
     { field: "dateOfBirth", header: "Date of Birth" },
-    { field: "socialSecurityNumber", header: "Social Security Number" },
-    { field: "maritalStatus", header: "Marital Status" },
-    { field: "mobilePhone", header: "Mobile Phone" },
-    { field: "alternatePhone", header: "Alternate Phone" },
-    { field: "emailAddress", header: "Email Address" },
-    { field: "clinicalManager", header: "Clinical Manager" },
-    { field: "caseManager", header: "Case Manager" },
-    { field: "clinician", header: "Clinician" },
-    { field: "branch", header: "Branch" },
-    { field: "patientIdMrn", header: "Patient ID/MRN" },
-    { field: "defaultServiceLocation", header: "Default Service Location" },
-    { field: "primaryAddress1", header: "Address 1" },
-    { field: "primaryAddress2", header: "Address 2" },
-    { field: "primaryZip", header: "ZIP Code" },
-    { field: "primaryZip4", header: "ZIP+4" },
-    { field: "primaryCounty", header: "County" },
+    { field: "primaryAddress1", header: "Address1" },
+    { field: "primaryAddress2", header: "Address2" },
     { field: "primaryCity", header: "City" },
     { field: "primaryState", header: "State" },
-    { field: "mailingSameAsPrimary", header: "Same as Primary" },
-    { field: "mailingAddress1", header: "Mailing Address 1" },
-    { field: "mailingAddress2", header: "Mailing Address 2" },
-    { field: "mailingZip", header: "Mailing ZIP Code" },
-    { field: "mailingZip4", header: "Mailing ZIP+4" },
-    { field: "mailingCounty", header: "Mailing County" },
-    { field: "mailingCity", header: "Mailing City" },
-    { field: "mailingState", header: "Mailing State" },
-    { field: "visitAddress1", header: "Visit Address 1" },
-    { field: "visitAddress2", header: "Visit Address 2" },
-    { field: "visitZip", header: "Visit ZIP Code" },
-    { field: "visitZip4", header: "Visit ZIP+4" },
-    { field: "visitCounty", header: "Visit County" },
-    { field: "visitCity", header: "Visit City" },
-    { field: "visitState", header: "Visit State" },
-    { field: "hispanicLatino", header: "Hispanic/Latino" },
-    { field: "mexican", header: "Mexican" },
-    { field: "puertoRican", header: "Puerto Rican" },
-    { field: "cuban", header: "Cuban" },
-    { field: "anotherHispanic", header: "Another Hispanic" },
-    { field: "unableToRespondEthnicity", header: "Unable to Respond (Ethnicity)" },
-    { field: "declineToRespondEthnicity", header: "Decline to Respond (Ethnicity)" },
-    { field: "white", header: "White" },
-    { field: "blackAfricanAmerican", header: "Black or African American" },
-    { field: "americanIndian", header: "American Indian or Alaska Native" },
-    { field: "asianIndian", header: "Asian Indian" },
-    { field: "chinese", header: "Chinese" },
-    { field: "filipino", header: "Filipino" },
-    { field: "japanese", header: "Japanese" },
-    { field: "korean", header: "Korean" },
-    { field: "vietnamese", header: "Vietnamese" },
-    { field: "otherAsian", header: "Other Asian" },
-    { field: "nativeHawaiian", header: "Native Hawaiian" },
-    { field: "guamanianChamorro", header: "Guamanian or Chamorro" },
-    { field: "samoan", header: "Samoan" },
-    { field: "otherPacificIslander", header: "Other Pacific Islander" },
-    { field: "unableToRespondRace", header: "Unable to Respond (Race)" },
-    { field: "declineToRespondRace", header: "Decline to Respond (Race)" },
-    { field: "noneOfTheAbove", header: "None of the Above" },
-    { field: "preferredLanguage", header: "Preferred Language" },
-    { field: "additionalLanguages", header: "Additional Languages" },
-    { field: "needInterpreter", header: "Need Interpreter" },
-    { field: "nonePaymentSource", header: "None" },
-    { field: "medicareTraditional", header: "Medicare (Traditional)" },
-    { field: "medicareManagedCare", header: "Medicare (Managed Care)" },
-    { field: "medicaidTraditional", header: "Medicaid (Traditional)" },
-    { field: "medicaidManagedCare", header: "Medicaid (Managed Care)" },
-    { field: "workersCompensation", header: "Workers' Compensation" },
-    { field: "titlePrograms", header: "Title Programs" },
-    { field: "otherGovernment", header: "Other Government" },
-    { field: "privateInsurance", header: "Private Insurance" },
-    { field: "privateManagedCare", header: "Private Managed Care" },
-    { field: "selfPay", header: "Self Pay" },
-    { field: "unknownPaymentSource", header: "Unknown" },
-    { field: "otherSpecify", header: "Other Specify" },
-    { field: "longTermNursingFacility", header: "Long Term Nursing Facility" },
-    { field: "skilledNursingFacility", header: "Skilled Nursing Facility" },
-    { field: "shortStayAcuteHospital", header: "Short Stay Acute Hospital" },
-    { field: "longTermCareHospital", header: "Long Term Care Hospital" },
-    { field: "inpatientRehabilitation", header: "Inpatient Rehabilitation" },
-    { field: "psychiatricHospital", header: "Psychiatric Hospital" },
-    { field: "otherInpatientFacility", header: "Other Inpatient Facility" },
-    { field: "otherInpatientFacilityText", header: "Other Inpatient Facility Text" },
-    { field: "episodeTiming", header: "Episode Timing" },
-    { field: "startOfCareDate", header: "Start of Care Date" },
-    { field: "episodeStartDate", header: "Episode Start Date" },
-    { field: "createEpisodeScheduleVisit", header: "Create Episode Schedule (Visit)" },
-    { field: "createEpisodeScheduleOasisStartCare", header: "Create Episode Schedule (OASIS Start of Care)" },
-    { field: "createEpisodeScheduleTherapyEvaluation", header: "Create Episode Schedule (Therapy Evaluation)" },
-    { field: "createEpisodeScheduleNonOasisStartCare", header: "Create Episode Schedule (Non-OASIS Start of Care)" },
-    { field: "createEpisodeScheduleInitialOasisRecert", header: "Create Episode Schedule (Initial OASIS Recert)" },
-    { field: "createEpisodeScheduleInitialNonOasisRecert", header: "Create Episode Schedule (Initial Non-OASIS Recert)" },
-    { field: "trackF2FDocumentation", header: "Track F2F Documentation" },
+    { field: "primaryZip", header: "Zip" },
+    { field: "primaryZip4", header: "Zip4" },
   ];
   
   const column = [
@@ -135,7 +45,6 @@ const Patients = () => {
     { label: "Primary Zip Code", key: "primaryZip" },
     { label: "Primary Zip Code (4 digit)", key: "primaryZip4" },
     { label: "Primary County", key: "primaryCounty" },
-    { label: "Mailing Same as Primary", key: "mailingSameAsPrimary" },
     { label: "Mailing Address", key: "mailingAddress1" },
     { label: "Mailing Address (Contd.)", key: "mailingAddress2" },
     { label: "Mailing City", key: "mailingCity" },
@@ -208,30 +117,13 @@ const Patients = () => {
     { label: "Create Episode Schedule (Initial Oasis Recert)", key: "createEpisodeScheduleInitialOasisRecert" },
     { label: "Create Episode Schedule (Initial Non-Oasis Recert)", key: "createEpisodeScheduleInitialNonOasisRecert" },
     { label: "Track F2F Documentation", key: "trackF2FDocumentation" },
-    { label: "Stakeholders(s)", key: "stakeholders", render: rowData => <Accordion tableHead={"Stakeholders Details"} data={rowData.stakeholders} /> },
-    {
-      label: "Actions",
-      key: "actions",
-      render: rowData => (
-        <div className="d-flex gap-3 flex-wrap">
-          <button className="btn btn-sm btn-warning waves-effect waves-light" tabIndex={0} aria-controls="DataTables_Table_0" type="button">
-            <i className="ti ti-edit me-sm-1" /> Edit
-          </button>
-          <button className="btn btn-sm btn-danger waves-effect waves-light" tabIndex={0} aria-controls="DataTables_Table_0" type="button">
-            <i className="ti ti-user me-sm-1" /> View User
-          </button>
-          <button className="btn btn-sm btn-primary waves-effect waves-light" tabIndex={0} aria-controls="DataTables_Table_0" type="button">
-            <i className="ti ti-notes me-sm-1" /> Assign Form
-          </button>
-        </div>
-      )
-    }
+    
   ];
   
 
 if(isLoading) return <AuthLoader/>
   
-
+console.log(isLoading)
   return (
     <div className="card">
 

@@ -17,10 +17,16 @@ const DataTable = ({
   const [rowId, setRowId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const [visibleColumns, setVisibleColumns] = useState(
-    columns?.map((column) => column.field)
+    columns.slice(0, 5).map((column) => column.field) // Show only first 5 columns by default
   );
+  const [truncate, setTruncate] = useState(true); // State to track truncation
 
   const tableRef = useRef();
+
+  // Toggle truncation based on checkbox change
+  const handleTruncate = (e) => {
+    setTruncate(e.target.checked);
+  };
 
   // Pagination
   const indexOfLastRow = currentPage * rowsPerPage;
@@ -111,7 +117,9 @@ const DataTable = ({
     if (selectedRows.includes(rowIndex)) {
       setSelectedRows(selectedRows.filter((index) => index !== rowIndex));
     } else {
-      setSelectedRows([...selectedRows, rowIndex]);
+      if (selectedRows.length < 5) {
+        setSelectedRows([...selectedRows, rowIndex]);
+      }
     }
   };
 
@@ -120,7 +128,9 @@ const DataTable = ({
     if (selectedRows.length === currentRows.length) {
       setSelectedRows([]);
     } else {
-      setSelectedRows(currentRows.map((_, index) => index));
+      if (selectedRows.length < 5) {
+        setSelectedRows(currentRows.map((_, index) => index));
+      }
     }
   };
 
@@ -151,10 +161,12 @@ const DataTable = ({
         : [...prevVisibleColumns, column]
     );
   };
+
   const handleRowClick = (rowData) => {
-    setSelectedEvent(rowData)
+    setSelectedEvent(rowData);
     console.log('Row clicked:', rowData);
   };
+
   
   return (
     <div className="position-relative">
@@ -237,12 +249,16 @@ const DataTable = ({
             />
           </div>
         </div>
+        <label className="w-100 text-primary font-bold d-flex align-items-center justify-content-start gap-2 my-2" htmlFor="">
+          Expend table row
+          <input type="checkbox" className="form-check-input" value={truncate} checked={truncate?true:false} onChange={handleTruncate} />
+        </label>
 
         <table
           className={`card-datatable table-responsive w-100 table ${tableClassName}`}
         >
           <thead>
-            <tr>
+            <tr className={`${truncate?"truncate":"notruncate"}`}>
               <th>
                 <input
                   type="checkbox"
@@ -272,7 +288,7 @@ const DataTable = ({
           </thead>
           <tbody>
             {filteredRows.map((row, rowIndex) => (
-              <tr key={rowIndex} onClick={() => handleRowClick(row)}>
+              <tr className={`${truncate?"truncate":"notruncate"}`} key={rowIndex} onClick={() => handleRowClick(row)}>
                 <td>
                   <input
                     className="form-check-input"
@@ -284,7 +300,7 @@ const DataTable = ({
                 {columns
                   .filter((column) => visibleColumns.includes(column.field))
                   .map((column, colIndex) => (
-                    <td key={colIndex}>
+                    <td key={colIndex} className="">
                       {column.field === "status" ? (
                         <label className="switch switch-square">
                           <input

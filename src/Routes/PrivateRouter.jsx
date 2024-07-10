@@ -76,6 +76,22 @@ import ManageUnassignedShift from './../Pages/EmployeeRecord/ManageUnassignedShi
 import AssignAllIndividual from './../Pages/BusinessCommunity/AssignAllIndividual';
 import Patients from './../Pages/Patient/Patients';
 import CreatePatient from './../Pages/Patient/CreatePatient';
+import Payers from './../Pages/Patient/Payers';
+import CreatePayers from './../Pages/Patient/CreatePayers';
+import CreatePhysicians from './../Pages/Patient/CreatePhysicians';
+import Physicians from './../Pages/Patient/Physicians';
+import CliniCalAndDiagnoses from './../Pages/Patient/CliniCalAndDiagnoses';
+import CreateClinicalAndDiagnoses from './../Pages/Patient/CreateClinicalAndDiagnoses';
+import CreatePharmacy from './../Pages/Patient/CreatePharmacy';
+import Pharmacy from './../Pages/Patient/Pharmacy';
+import Contact from './../Pages/Patient/Contact';
+import CreateContact from './../Pages/Patient/CreateContact';
+import CreateEmergencyPreparedness from './../Pages/Patient/CreateEmergencyPreparedness';
+import EmergencyPreparedness from './../Pages/Patient/EmergencyPreparedness';
+import AdvanceDirectives from './../Pages/Patient/AdvanceDirectives';
+import CreateAdvanceDirectives from './../Pages/Patient/CreateAdvanceDirectives';
+import CreateReferralInformation from './../Pages/Patient/CreateReferralInformation';
+import ReferralInformation from './../Pages/Patient/ReferralInformation';
 
 const privateRouter = [
   {
@@ -380,6 +396,70 @@ const privateRouter = [
           {
             path: "/recycle-bin",
             element: <RecycleBin />,
+          },
+          {
+            path: "/payers",
+            element: <Payers />,
+          },
+          {
+            path: "/create-payers",
+            element: <CreatePayers/>,
+          },
+          {
+            path: "/create-physicians",
+            element: <CreatePhysicians/>,
+          },
+          {
+            path: "/physicians",
+            element: <Physicians/>,
+          },
+          {
+            path: "/clinical-diagnoses",
+            element: <CliniCalAndDiagnoses/>,
+          },
+          {
+            path: "/create-clinical-diagnoses",
+            element: <CreateClinicalAndDiagnoses/>,
+          },
+          {
+            path: "/create-pharmacy",
+            element: <CreatePharmacy/>,
+          },
+          {
+            path: "/pharmacy",
+            element: <Pharmacy/>,
+          },
+          {
+            path: "/contacts",
+            element: <Contact/>,
+          },
+          {
+            path: "/create-contacts",
+            element: <CreateContact/>,
+          },
+          {
+            path: "/create-emergency-preparedness",
+            element: <CreateEmergencyPreparedness/>,
+          },
+          {
+            path: "/emergency-preparedness",
+            element: <EmergencyPreparedness/>,
+          },
+          {
+            path: "/advance-directives",
+            element: <AdvanceDirectives/>,
+          },
+          {
+            path: "/create-advance-directives",
+            element: <CreateAdvanceDirectives/>,
+          },
+          {
+            path: "/create-referral-information",
+            element: <CreateReferralInformation/>,
+          },
+          {
+            path: "/referral-information",
+            element: <ReferralInformation/>,
           },
           {
             path: "/*",

@@ -164,7 +164,7 @@ console.log(formData)
   const handleSaveAndContinue = () => {};
   const handleSaveAndExit = () => {};
   return (
-    <form className="container mt-5">
+    <form className=" mt-5">
       <div className="accordion" id="patientInfoAccordion">
         <div className="row">
           {data?.message&&<div className="alert alert-success text-center">{data?.message}</div>}
