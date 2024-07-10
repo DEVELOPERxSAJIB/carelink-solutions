@@ -244,7 +244,7 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="card">
-        <PageHeader title="CareLink Aide facesheet" className="card-header fs-3"/>
+        <PageHeader title="Contact" className="card-header fs-3"/>
       <div className="card-body">
         <div className="accordion" id="emergencyContactsAccordion">
           {/* Primary Emergency Contact */}
@@ -263,7 +263,7 @@ const ContactForm = () => {
             </h2>
             <div
               id="collapsePrimary"
-              className="accordion-collapse collapse "
+              className="accordion-collapse collapse show"
               aria-labelledby="headingPrimary"
               data-bs-parent="#emergencyContactsAccordion"
             >
