@@ -101,8 +101,8 @@ const ContactForm = () => {
         [type]: {
           ...emergencyContacts[type],
           [field]: value,
-          city: primaryCity, // Assign primaryCity for primary contact
-          state: primaryState, // Assign primaryState for primary contact
+          city: primaryCity, 
+          state: primaryState, 
         },
       });
     }
@@ -246,8 +246,8 @@ const ContactForm = () => {
   return (
     <form onSubmit={handleSubmit} className="card">
         <PageHeader title="Contact" className="card-header fs-3"/>
-        {data?.message&& <div>{data?.message}</div>}
-        {error?.data?.message&& <div>{error?.data?.message}</div>}
+        {data?.message&& <div className="alert alert-success text-center">{data?.message}</div>}
+        {error?.data?.message&& <div className="alert alert-danger text-center">{error?.data?.message}</div>}
       <div className="card-body">
         <div className="accordion" id="emergencyContactsAccordion">
           {/* Primary Emergency Contact */}
