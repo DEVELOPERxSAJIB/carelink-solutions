@@ -1,5 +1,4 @@
 import { InfinitySpin } from "react-loader-spinner";
-import { motion } from "framer-motion";
 const AuthLoader = () => {
   return (
     <div

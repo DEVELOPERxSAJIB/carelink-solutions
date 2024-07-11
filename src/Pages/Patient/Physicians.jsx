@@ -90,7 +90,6 @@ const Physicians = () => {
 const navigate= useNavigate()
   if (isLoading) return <AuthLoader />;
 
-  console.log(isLoading);
   return (
     <div className="card">
       <TableHeader

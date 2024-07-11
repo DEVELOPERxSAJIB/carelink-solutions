@@ -165,7 +165,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="mi"
                 name="mi"
-                 placeholder="Enter 1 Mi number"
+                 placeholder="Enter One Mi Charecter"
                 value={formData.mi}
                 onChange={handleChange}
               />
