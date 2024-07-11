@@ -209,6 +209,7 @@
   inset: 0 !important;
   top: 0 !important;
   left: 0 !important;
+  padding-left: 220px !important;
   background-color: #ffffffe2;
   min-height: 100vh !important;
   display: flex !important;
@@ -281,3 +282,7 @@
 .truncate th{
   border: 1px solid rgb(255, 245, 245);
 }
+
+
+
+

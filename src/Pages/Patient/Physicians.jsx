@@ -138,7 +138,7 @@ const navigate= useNavigate()
             <span className="d-flex align-items-center">
               <i className="ti ti-archive me-1" />
               <span className="d-none d-sm-inline-block">
-                Add New Payer
+                Add New Physician
               </span>
             </span>
             </button>

@@ -142,18 +142,19 @@ const CreatePayers = () => {
         <div className="accordion" id="payerAccordion">
           {/* Primary Emergency Contact */}
           {data?.message && (
-            <div className="alert alert-success text-center">
+            <div className="alert alert-close alert-success text-center">
               {data?.message}
             </div>
           )}
           {error?.data?.message && (
-            <div className="alert alert-danger text-center">
+            <div className="alert alert-close alert-danger text-center">
               {error?.data?.message}
             </div>
           )}
           {formError && (
-            <div className="alert alert-danger text-center">{formError}</div>
+            <div className="alert alert-close alert-danger text-center">{formError}</div>
           )}
+         
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingPrimary">
               <button
