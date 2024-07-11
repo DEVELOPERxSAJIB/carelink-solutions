@@ -101,6 +101,9 @@ const CreatePhysicians = () => {
   return (
     <div className="card mt-4">
       <PageHeader title="Search Physician" className="card-header fs-3" />
+      
+
+      <div className="card-body">
       {data?.message && (
         <div className="alert alert-success text-center">{data?.message}</div>
       )}
@@ -114,8 +117,6 @@ const CreatePhysicians = () => {
           {formError}
         </div>
       )}
-
-      <div className="card-body">
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className=" col-md-6">
@@ -127,6 +128,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="npiNumber"
                 name="npiNumber"
+                placeholder="Enter NPI Number"
                 value={formData.npiNumber}
                 onChange={handleChange}
               />
@@ -143,6 +145,7 @@ const CreatePhysicians = () => {
                 type="text"
                 className="form-control"
                 id="firstName"
+                 placeholder="Enter first name"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
@@ -157,6 +160,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="mi"
                 name="mi"
+                 placeholder="Enter 1 Mi number"
                 value={formData.mi}
                 onChange={handleChange}
               />
@@ -170,6 +174,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="lastName"
                 name="lastName"
+                 placeholder="Enter last name"
                 value={formData.lastName}
                 onChange={handleChange}
               />
@@ -183,6 +188,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="taxonomyCode"
                 name="taxonomyCode"
+                 placeholder="Enter Taxonomy code"
                 value={formData.taxonomyCode}
                 onChange={handleChange}
               />
@@ -195,6 +201,7 @@ const CreatePhysicians = () => {
                 type="text"
                 className="form-control"
                 id="credentials"
+                 placeholder="Enter Credentials"
                 name="credentials"
                 value={formData.credentials}
                 onChange={handleChange}
@@ -208,6 +215,7 @@ const CreatePhysicians = () => {
                 type="number"
                 className="form-control"
                 id="npiNo"
+                 placeholder="Enter NPI Number"
                 name="npiNo"
                 value={formData.npiNo}
                 onChange={handleChange}
@@ -227,6 +235,7 @@ const CreatePhysicians = () => {
                 name="medicaidProviderIdentifier"
                 value={formData.medicaidProviderIdentifier}
                 onChange={handleChange}
+                 placeholder="Enter Medicaid Provider Identifier"
               />
             </div>
           </div>
@@ -242,6 +251,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="addressLine1"
                 name="addressLine1"
+                 placeholder="Enter address line1"
                 value={formData.addressLine1}
                 onChange={handleChange}
               />
@@ -255,6 +265,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="addressLine2"
                 name="addressLine2"
+                 placeholder="Enter address line2"
                 value={formData.addressLine2}
                 onChange={handleChange}
               />
@@ -288,6 +299,7 @@ const CreatePhysicians = () => {
                 name="zip"
                 value={formData.zip}
                 onChange={handleChange}
+                 placeholder="Enter zip"
               />
             </div>
 
@@ -300,6 +312,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="primaryPhone"
                 name="primaryPhone"
+                 placeholder="Enter Primary phone"
                 value={formData.primaryPhone}
                 onChange={handleChange}
               />
@@ -313,6 +326,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="alternatePhone"
                 name="alternatePhone"
+                 placeholder="Enter Alternate Phone"
                 value={formData.alternatePhone}
                 onChange={handleChange}
               />
@@ -349,6 +363,7 @@ const CreatePhysicians = () => {
                 id="fax"
                 name="fax"
                 value={formData.fax}
+                 placeholder="Enter Fax number"
                 onChange={handleChange}
               />
             </div>
@@ -361,6 +376,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="email"
                 name="email"
+                 placeholder="Enter email"
                 value={formData.email}
                 onChange={handleChange}
               />
