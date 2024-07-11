@@ -125,7 +125,7 @@ const CreatePhysicians = () => {
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className=" col-md-6">
-              <label className="form-label" htmlFor="npiNumber">
+              <label className="form-label my-2" htmlFor="npiNumber">
                 NPI Number:
               </label>
               <input
@@ -143,7 +143,7 @@ const CreatePhysicians = () => {
           <h6 className="mt-3">Physician Information</h6>
           <div className="row">
             <div className=" col-md-6">
-              <label className="form-label" htmlFor="firstName">
+              <label className="form-label my-2" htmlFor="firstName">
                 First Name:
               </label>
               <input
@@ -157,7 +157,7 @@ const CreatePhysicians = () => {
               />
             </div>
             <div className=" col-md-6">
-              <label className="form-label" htmlFor="mi">
+              <label className="form-label my-2" htmlFor="mi">
                 MI:
               </label>
               <input
@@ -171,7 +171,7 @@ const CreatePhysicians = () => {
               />
             </div>
             <div className=" col-md-6">
-              <label className="form-label" htmlFor="lastName">
+              <label className="form-label my-2" htmlFor="lastName">
                 Last Name:
               </label>
               <input
@@ -185,7 +185,7 @@ const CreatePhysicians = () => {
               />
             </div>
             <div className=" col-md-6">
-              <label className="form-label" htmlFor="taxonomyCode">
+              <label className="form-label my-2" htmlFor="taxonomyCode">
                 Taxonomy Code:
               </label>
               <input
@@ -199,7 +199,7 @@ const CreatePhysicians = () => {
               />
             </div>
             <div className=" col-md-6">
-              <label className="form-label" htmlFor="credentials">
+              <label className="form-label my-2" htmlFor="credentials">
                 Credentials:
               </label>
               <input
@@ -213,7 +213,7 @@ const CreatePhysicians = () => {
               />
             </div>
             <div className=" col-md-6">
-              <label className="form-label" htmlFor="npiNo">
+              <label className="form-label my-2" htmlFor="npiNo">
                 NPI No:
               </label>
               <input
@@ -248,7 +248,7 @@ const CreatePhysicians = () => {
           <h6 className="mt-3">Physician Address</h6>
           <div className="row">
             <div className="col-md-6">
-              <label className="form-label" htmlFor="addressLine1">
+              <label className="form-label my-2" htmlFor="addressLine1">
                 Address Line 1:
               </label>
               <input
@@ -262,7 +262,7 @@ const CreatePhysicians = () => {
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label" htmlFor="addressLine2">
+              <label className="form-label my-2" htmlFor="addressLine2">
                 Address Line 2:
               </label>
               <input
@@ -278,7 +278,7 @@ const CreatePhysicians = () => {
 
             {/* const [county,setCounty]=useState("") */}
             <div className="col-md-6">
-              <label className="form-label" htmlFor="city">
+              <label className="form-label my-2" htmlFor="city">
                 City:
               </label>
               <CitySelect
@@ -288,13 +288,13 @@ const CreatePhysicians = () => {
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label" htmlFor="state">
+              <label className="form-label my-2" htmlFor="state">
                 State:
               </label>
               <StateSelect selectedState={state} setSelectedState={setState} />
             </div>
             <div className="col-md-6">
-              <label className="form-label" htmlFor="zip">
+              <label className="form-label my-2" htmlFor="zip">
                 Zip:
               </label>
               <input
@@ -309,7 +309,7 @@ const CreatePhysicians = () => {
             </div>
 
             <div className="col-md-6">
-              <label className="form-label" htmlFor="primaryPhone">
+              <label className="form-label my-2" htmlFor="primaryPhone">
                 Primary Phone:
               </label>
               <input
@@ -323,7 +323,7 @@ const CreatePhysicians = () => {
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label" htmlFor="alternatePhone">
+              <label className="form-label my-2" htmlFor="alternatePhone">
                 Alternate Phone:
               </label>
               <input
@@ -337,7 +337,7 @@ const CreatePhysicians = () => {
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label" htmlFor="deliveryMethod">
+              <label className="form-label my-2" htmlFor="deliveryMethod">
                 Order Delivery Method:
               </label>
               <select
@@ -359,7 +359,7 @@ const CreatePhysicians = () => {
               </select>
             </div>
             <div className="col-md-6">
-              <label className="form-label" htmlFor="fax">
+              <label className="form-label my-2" htmlFor="fax">
                 Fax:
               </label>
               <input
@@ -373,7 +373,7 @@ const CreatePhysicians = () => {
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label" htmlFor="email">
+              <label className="form-label my-2" htmlFor="email">
                 E-mail:
               </label>
               <input
