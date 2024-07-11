@@ -3,7 +3,6 @@
   padding: 0;
 }
 
-
 .custom-scroll {
   overflow-y: hidden;
 }
@@ -147,15 +146,15 @@
 @-moz-document url-prefix() {
   .layout-menu {
     scrollbar-width: thin; /* Set the width of the scrollbar */
-    scrollbar-color: #ebebeb #ffffff; 
+    scrollbar-color: #ebebeb #ffffff;
     border-radius: 10px;
-    transition: all .3s ease-in-out; /* Set the color of the scrollbar thumb and track */
+    transition: all 0.3s ease-in-out; /* Set the color of the scrollbar thumb and track */
   }
-  .custom-scroll{
+  .custom-scroll {
     scrollbar-width: thin; /* Set the width of the scrollbar */
-    scrollbar-color: #ebebeb #ffffff; 
+    scrollbar-color: #ebebeb #ffffff;
     border-radius: 10px;
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
 }
 
@@ -164,14 +163,14 @@
   border-radius: 10px;
   overflow-y: auto; /* Ensure vertical scrollbar is shown when needed */
   scrollbar-width: thin; /* Set the width of the scrollbar */
-  scrollbar-color:#ebebeb #ffffff; /* Set the color of the scrollbar thumb and track */
+  scrollbar-color: #ebebeb #ffffff; /* Set the color of the scrollbar thumb and track */
 }
 
 /* For screens smaller than 480px (common mobile breakpoint) */
 .from-scrollbar {
-  max-height:80vh ;
-  overflow-y:scroll;
-  overflow-x:hidden; 
+  max-height: 80vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
@@ -184,12 +183,10 @@
   .export_button {
     position: absolute !important;
     right: -10px !important;
-    
   }
   .table_drop_menu {
     position: absolute !important;
     right: 10px !important;
-    
   }
 }
 
@@ -198,12 +195,12 @@
     right: 0 !important;
   }
 }
-#layout-navbar{
+#layout-navbar {
   position: sticky;
   top: 0px;
   transition: all 0.5s ease-in-out;
 }
-.react-calendar{
+.react-calendar {
   width: 100% !important;
 }
 
@@ -220,7 +217,7 @@
   align-items: center !important;
   z-index: 9999999 !important;
 }
-.main-loader svg  {
+.main-loader svg {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
@@ -233,7 +230,7 @@
 
 .loader {
   display: block !important;
- margin: 0 auto !important;
+  margin: 0 auto !important;
   width: 120px !important;
   height: 120px !important;
   padding-left: 0 !important;
@@ -258,26 +255,29 @@
 
 @keyframes l1 {
   to {
-    opacity: .2;
+    opacity: 0.2;
   }
 }
 
-.truncate td{
+.truncate td {
   max-width: 80px !important; /* Adjust the width as needed */
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis;
-  transition: all .5s ease-in-out !important;
+  transition: all 0.5s ease-in-out !important;
   border: 1px solid rgb(255, 245, 245);
 }
-.truncate th {
+.truncate th div {
   max-width: 80px !important; /* Adjust the width as needed */
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis;
-  transition: all .5s ease-in-out !important;
+  transition: all 0.5s ease-in-out !important;
+  
+}
+.notruncate {
   border: 1px solid rgb(255, 245, 245);
 }
-.notruncate{
+.truncate th{
   border: 1px solid rgb(255, 245, 245);
 }

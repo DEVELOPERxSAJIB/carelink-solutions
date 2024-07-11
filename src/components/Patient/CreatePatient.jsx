@@ -1,122 +1,298 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import SelectState from "../FormElement/StateSelect";
 import CountySelect from "./../FormElement/CountySelect";
 import CitySelect from "./../FormElement/CitySelect";
 import { useCreatePatientMutation } from "../../Redux/api/PatientApi";
+import AuthLoader from "./../../utils/Loaders/AuthLoader";
 const PatientProfile = () => {
-  const [createPatient, { data, isLoading, isSuccess, error }] =
+  const [createPatient, { data, isLoading, error }] =
     useCreatePatientMutation();
-    const [primaryCounty,setPrimaryCounty]= useState("")
-  const [mailingCounty,setMailingCounty]= useState("")
-  const [visitCounty,setVisitCounty]= useState("")
-  const [primaryState,setPrimaryState]= useState("")
-  const [mailingState,setMailingState]= useState("")
-  const [visitState,setVisitState]= useState("")
-  const [primaryCity,setPrimaryCity]= useState("")
-  const [mailingCity,setMailingCity]= useState("")
-  const [visitCity,setVisitCity]= useState("")
+  const [primaryCounty, setPrimaryCounty] = useState("");
+  const [mailingCounty, setMailingCounty] = useState("");
+  const [visitCounty, setVisitCounty] = useState("");
+  const [primaryState, setPrimaryState] = useState("");
+  const [mailingState, setMailingState] = useState("");
+  const [visitState, setVisitState] = useState("");
+  const [primaryCity, setPrimaryCity] = useState("");
+  const [mailingCity, setMailingCity] = useState("");
+  const [visitCity, setVisitCity] = useState("");
+  const localStoragePatient = JSON.parse(localStorage.getItem("Patient"));
   const [formData, setFormData] = useState({
-    firstName: "",
-    middleInitial: "",
-    lastName: "",
-    gender: "",
-    dateOfBirth: "",
-    socialSecurityNumber: "",
-    maritalStatus: "",
-    mobilePhone: "",
-    alternatePhone: "",
-    emailAddress: "",
-    clinicalManager: "",
-    caseManager: "",
-    clinician: "",
-    branch: "",
-    patientIdMrn: "",
-    defaultServiceLocation: "",
-    primaryAddress1: "",
-    primaryAddress2: "",
-    primaryZip: "",
-    primaryZip4: "",
-    primaryCounty: "",
-    primaryCity: "",
-    primaryState: "",
+    firstName: localStoragePatient?.firstName
+      ? localStoragePatient?.firstName
+      : "",
+    middleInitial: localStoragePatient?.middleInitial
+      ? localStoragePatient?.middleInitial
+      : "",
+    lastName: localStoragePatient?.lastName
+      ? localStoragePatient?.lastName
+      : "",
+    gender: localStoragePatient?.gender ? localStoragePatient?.gender : "",
+    dateOfBirth: localStoragePatient?.dateOfBirth
+      ? localStoragePatient?.dateOfBirth
+      : "",
+    socialSecurityNumber: localStoragePatient?.socialSecurityNumber
+      ? localStoragePatient?.socialSecurityNumber
+      : "",
+    maritalStatus: localStoragePatient?.maritalStatus
+      ? localStoragePatient?.maritalStatus
+      : "",
+    mobilePhone: localStoragePatient?.mobilePhone
+      ? localStoragePatient?.mobilePhone
+      : "",
+    alternatePhone: localStoragePatient?.alternatePhone
+      ? localStoragePatient?.alternatePhone
+      : "",
+    emailAddress: localStoragePatient?.emailAddress
+      ? localStoragePatient?.emailAddress
+      : "",
+    clinicalManager: localStoragePatient?.clinicalManager
+      ? localStoragePatient?.clinicalManager
+      : "",
+    caseManager: localStoragePatient?.caseManager
+      ? localStoragePatient?.caseManager
+      : "",
+    clinician: localStoragePatient?.clinician
+      ? localStoragePatient?.clinician
+      : "",
+    branch: localStoragePatient?.branch ? localStoragePatient?.branch : "",
+    patientIdMrn: localStoragePatient?.patientIdMrn
+      ? localStoragePatient?.patientIdMrn
+      : "",
+    defaultServiceLocation: localStoragePatient?.defaultServiceLocation
+      ? localStoragePatient?.defaultServiceLocation
+      : "",
+    primaryAddress1: localStoragePatient?.primaryAddress1
+      ? localStoragePatient?.primaryAddress1
+      : "",
+    primaryAddress2: localStoragePatient?.primaryAddress2
+      ? localStoragePatient?.primaryAddress2
+      : "",
+    primaryZip: localStoragePatient?.primaryZip
+      ? localStoragePatient?.primaryZip
+      : "",
+    primaryZip4: localStoragePatient?.primaryZip
+      ? localStoragePatient?.clinicalManager
+      : "",
+    primaryCounty: localStoragePatient?.primaryCounty
+      ? localStoragePatient?.primaryCounty
+      : "",
+    primaryCity: localStoragePatient?.primaryCity
+      ? localStoragePatient?.primaryCity
+      : "",
+    primaryState: localStoragePatient?.primaryState
+      ? localStoragePatient?.primaryState
+      : "",
     mailingSameAsPrimary: false,
-    mailingAddress1: "",
-    mailingAddress2: "",
-    mailingZip: "",
-    mailingZip4: "",
-    mailingCounty: "",
-    mailingCity: "",
-    mailingState: "",
-    visitAddress1: "",
-    visitAddress2: "",
-    visitZip: "",
-    visitZip4: "",
-    visitCounty: "",
-    visitCity: "",
-    visitState: "",
-    hispanicLatino: "",
-    mexican: "",
-    puertoRican: "",
-    cuban: "",
-    anotherHispanic: "",
-    unableToRespondEthnicity: "",
-    declineToRespondEthnicity: "",
-    white: "",
-    blackAfricanAmerican: "",
-    americanIndian: "",
-    asianIndian: "",
-    chinese: "",
-    filipino: "",
-    japanese: "",
-    korean: "",
-    vietnamese: "",
-    otherAsian: "",
-    nativeHawaiian: "",
-    guamanianChamorro: "",
-    samoan: "",
-    otherPacificIslander: "",
-    unableToRespondRace: "",
-    declineToRespondRace: "",
-    noneOfTheAbove: "",
-    preferredLanguage: "",
+    mailingAddress1: localStoragePatient?.mailingAddress1
+      ? localStoragePatient?.mailingAddress1
+      : "",
+    mailingAddress2: localStoragePatient?.mailingAddress2
+      ? localStoragePatient?.mailingAddress2
+      : "",
+    mailingZip: localStoragePatient?.mailingZip
+      ? localStoragePatient?.mailingZip
+      : "",
+    mailingZip4: localStoragePatient?.mailingZip4
+      ? localStoragePatient?.mailingZip4
+      : "",
+    mailingCounty: localStoragePatient?.mailingCounty
+      ? localStoragePatient?.mailingCounty
+      : "",
+    mailingCity: localStoragePatient?.mailingCity
+      ? localStoragePatient?.mailingCity
+      : "",
+    mailingState: localStoragePatient?.mailingState
+      ? localStoragePatient?.mailingState
+      : "",
+    visitAddress1: localStoragePatient?.visitAddress1
+      ? localStoragePatient?.visitAddress1
+      : "",
+    visitAddress2: localStoragePatient?.visitAddress2
+      ? localStoragePatient?.visitAddress2
+      : "",
+    visitZip: localStoragePatient?.visitZip
+      ? localStoragePatient?.visitZip
+      : "",
+    visitZip4: localStoragePatient?.visitZip4
+      ? localStoragePatient?.visitZip4
+      : "",
+    visitCounty: localStoragePatient?.visitCounty
+      ? localStoragePatient?.visitCounty
+      : "",
+    visitCity: localStoragePatient?.visitCity
+      ? localStoragePatient?.visitCity
+      : "",
+    visitState: localStoragePatient?.visitState
+      ? localStoragePatient?.visitState
+      : "",
+    hispanicLatino: localStoragePatient?.hispanicLatino
+      ? localStoragePatient?.hispanicLatino
+      : "",
+    mexican: localStoragePatient?.mexican ? localStoragePatient?.mexican : "",
+    puertoRican: localStoragePatient?.puertoRican
+      ? localStoragePatient?.puertoRican
+      : "",
+    cuban: localStoragePatient?.cuban ? localStoragePatient?.cuban : "",
+    anotherHispanic: localStoragePatient?.anotherHispanic
+      ? localStoragePatient?.anotherHispanic
+      : "",
+    unableToRespondEthnicity: localStoragePatient?.unableToRespondEthnicity
+      ? localStoragePatient?.unableToRespondEthnicity
+      : "",
+    declineToRespondEthnicity: localStoragePatient?.declineToRespondEthnicity
+      ? localStoragePatient?.declineToRespondEthnicity
+      : "",
+    white: localStoragePatient?.white ? localStoragePatient?.white : "",
+    blackAfricanAmerican: localStoragePatient?.blackAfricanAmerican
+      ? localStoragePatient?.blackAfricanAmerican
+      : "",
+    americanIndian: localStoragePatient?.americanIndian
+      ? localStoragePatient?.americanIndian
+      : "",
+    asianIndian: localStoragePatient?.asianIndian
+      ? localStoragePatient?.asianIndian
+      : "",
+    chinese: localStoragePatient?.chinese ? localStoragePatient?.chinese : "",
+    filipino: localStoragePatient?.filipino
+      ? localStoragePatient?.filipino
+      : "",
+    japanese: localStoragePatient?.japanese
+      ? localStoragePatient?.japanese
+      : "",
+    korean: localStoragePatient?.korean ? localStoragePatient?.korean : "",
+    vietnamese: localStoragePatient?.vietnamese
+      ? localStoragePatient?.vietnamese
+      : "",
+    otherAsian: localStoragePatient?.otherAsian
+      ? localStoragePatient?.otherAsian
+      : "",
+    nativeHawaiian: localStoragePatient?.nativeHawaiian
+      ? localStoragePatient?.nativeHawaiian
+      : "",
+    guamanianChamorro: localStoragePatient?.guamanianChamorro
+      ? localStoragePatient?.guamanianChamorro
+      : "",
+    samoan: localStoragePatient?.samoan ? localStoragePatient?.samoan : "",
+    otherPacificIslander: localStoragePatient?.otherPacificIslander
+      ? localStoragePatient?.otherPacificIslander
+      : "",
+    unableToRespondRace: localStoragePatient?.unableToRespondRace
+      ? localStoragePatient?.unableToRespondRace
+      : "",
+    declineToRespondRace: localStoragePatient?.declineToRespondRace
+      ? localStoragePatient?.declineToRespondRace
+      : "",
+    noneOfTheAbove: localStoragePatient?.noneOfTheAbove
+      ? localStoragePatient?.noneOfTheAbove
+      : "",
+    preferredLanguage: localStoragePatient?.preferredLanguage
+      ? localStoragePatient?.preferredLanguage
+      : "",
     additionalLanguages: ["", "", ""],
-    needInterpreter: "",
-    nonePaymentSource: "",
-    medicareTraditional: "",
-    medicareManagedCare: "",
-    medicaidTraditional: "",
-    medicaidManagedCare: "",
-    workersCompensation: "",
-    titlePrograms: "",
-    otherGovernment: "",
-    privateInsurance: "",
-    privateManagedCare: "",
-    selfPay: "",
-    unknownPaymentSource: "",
-    otherSpecify: "",
-    longTermNursingFacility: "",
-    skilledNursingFacility: "",
-    shortStayAcuteHospital: "",
-    longTermCareHospital: "",
-    inpatientRehabilitation: "",
-    psychiatricHospital: "",
-    otherInpatientFacility: "",
-    otherInpatientFacilityText: "",
-    episodeTiming: "",
-    startOfCareDate: "",
-    episodeStartDate: "",
-    createEpisodeScheduleVisit: "",
-    createEpisodeScheduleOasisStartCare: "",
-    createEpisodeScheduleTherapyEvaluation: "",
-    createEpisodeScheduleNonOasisStartCare: "",
-    createEpisodeScheduleInitialOasisRecert: "",
-    createEpisodeScheduleInitialNonOasisRecert: "",
-    trackF2FDocumentation: "",
+    needInterpreter: localStoragePatient?.needInterpreter
+      ? localStoragePatient?.needInterpreter
+      : "",
+    nonePaymentSource: localStoragePatient?.nonePaymentSource
+      ? localStoragePatient?.nonePaymentSource
+      : "",
+    medicareTraditional: localStoragePatient?.medicareTraditional
+      ? localStoragePatient?.medicareTraditional
+      : "",
+    medicareManagedCare: localStoragePatient?.medicareManagedCare
+      ? localStoragePatient?.medicareManagedCare
+      : "",
+    medicaidTraditional: localStoragePatient?.medicaidTraditional
+      ? localStoragePatient?.medicaidTraditional
+      : "",
+    medicaidManagedCare: localStoragePatient?.medicaidManagedCare
+      ? localStoragePatient?.medicaidManagedCare
+      : "",
+    workersCompensation: localStoragePatient?.workersCompensation
+      ? localStoragePatient?.workersCompensation
+      : "",
+    titlePrograms: localStoragePatient?.titlePrograms
+      ? localStoragePatient?.titlePrograms
+      : "",
+    otherGovernment: localStoragePatient?.otherGovernment
+      ? localStoragePatient?.otherGovernment
+      : "",
+    privateInsurance: localStoragePatient?.privateInsurance
+      ? localStoragePatient?.privateInsurance
+      : "",
+    privateManagedCare: localStoragePatient?.privateManagedCare
+      ? localStoragePatient?.privateManagedCare
+      : "",
+    selfPay: localStoragePatient?.selfPay ? localStoragePatient?.selfPay : "",
+    unknownPaymentSource: localStoragePatient?.unknownPaymentSource
+      ? localStoragePatient?.unknownPaymentSource
+      : "",
+    otherSpecify: localStoragePatient?.otherSpecify
+      ? localStoragePatient?.otherSpecify
+      : "",
+    longTermNursingFacility: localStoragePatient?.longTermNursingFacility
+      ? localStoragePatient?.longTermNursingFacility
+      : "",
+    skilledNursingFacility: localStoragePatient?.skilledNursingFacility
+      ? localStoragePatient?.skilledNursingFacility
+      : "",
+    shortStayAcuteHospital: localStoragePatient?.shortStayAcuteHospital
+      ? localStoragePatient?.shortStayAcuteHospital
+      : "",
+    longTermCareHospital: localStoragePatient?.longTermCareHospital
+      ? localStoragePatient?.longTermCareHospital
+      : "",
+    inpatientRehabilitation: localStoragePatient?.inpatientRehabilitation
+      ? localStoragePatient?.inpatientRehabilitation
+      : "",
+    psychiatricHospital: localStoragePatient?.psychiatricHospital
+      ? localStoragePatient?.psychiatricHospital
+      : "",
+    otherInpatientFacility: localStoragePatient?.otherInpatientFacility
+      ? localStoragePatient?.otherInpatientFacility
+      : "",
+    otherInpatientFacilityText: localStoragePatient?.otherInpatientFacilityText
+      ? localStoragePatient?.otherInpatientFacilityText
+      : "",
+    episodeTiming: localStoragePatient?.episodeTiming
+      ? localStoragePatient?.episodeTiming
+      : "",
+    startOfCareDate: localStoragePatient?.startOfCareDate
+      ? localStoragePatient?.startOfCareDate
+      : "",
+    episodeStartDate: localStoragePatient?.episodeStartDate
+      ? localStoragePatient?.episodeStartDate
+      : "",
+    createEpisodeScheduleVisit: localStoragePatient?.createEpisodeScheduleVisit
+      ? localStoragePatient?.createEpisodeScheduleVisit
+      : "",
+    createEpisodeScheduleOasisStartCare:
+      localStoragePatient?.createEpisodeScheduleOasisStartCare
+        ? localStoragePatient?.createEpisodeScheduleOasisStartCare
+        : "",
+    createEpisodeScheduleTherapyEvaluation:
+      localStoragePatient?.createEpisodeScheduleTherapyEvaluation
+        ? localStoragePatient?.createEpisodeScheduleTherapyEvaluation
+        : "",
+    createEpisodeScheduleNonOasisStartCare: localStoragePatient?.clinicalManager
+      ? localStoragePatient?.clinicalManager
+      : "",
+    createEpisodeScheduleInitialOasisRecert:
+      localStoragePatient?.createEpisodeScheduleNonOasisStartCare
+        ? localStoragePatient?.createEpisodeScheduleNonOasisStartCare
+        : "",
+    createEpisodeScheduleInitialNonOasisRecert:
+      localStoragePatient?.createEpisodeScheduleInitialNonOasisRecert
+        ? localStoragePatient?.createEpisodeScheduleInitialNonOasisRecert
+        : "",
+    trackF2FDocumentation: localStoragePatient?.trackF2FDocumentation
+      ? localStoragePatient?.trackF2FDocumentation
+      : "",
   });
-
-  const handleInputChange = (e,index) => {
+  const [fromError, setFormError] = useState("");
+  const handleInputChange = (e, index) => {
     const { name, value, type, checked } = e.target;
-  
+
     if (type === "checkbox") {
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -128,15 +304,14 @@ const PatientProfile = () => {
         [name]: value,
       }));
     } else if (name === "additionalLanguages") {
-
-    setFormData((prevFormData) => {
-      const updatedLanguages = [...prevFormData.additionalLanguages];
-      updatedLanguages[index] = value; // Update the value at the specified index
-      return {
-        ...prevFormData,
-        additionalLanguages: updatedLanguages,
-      };
-    });
+      setFormData((prevFormData) => {
+        const updatedLanguages = [...prevFormData.additionalLanguages];
+        updatedLanguages[index] = value; // Update the value at the specified index
+        return {
+          ...prevFormData,
+          additionalLanguages: updatedLanguages,
+        };
+      });
     } else {
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -144,31 +319,307 @@ const PatientProfile = () => {
       }));
     }
   };
-  
-  
-console.log(formData)
-  const handleAdmit = () => {
-    console.log(formData);
-    formData.primaryCounty=primaryCounty;
-    formData.primaryCity=primaryCity;
-    formData.primaryState=primaryState
-    
-    formData.mailingCounty=mailingCounty
-    formData.mailingCity=mailingCity
-    formData.mailingState=mailingState
-    formData.visitCounty=visitCounty
-    formData.visitCity=visitCity
-    formData.visitState=visitState
+
+  const handleAdmit = async () => {
+    if (!formData.firstName) {
+      setFormError("Patient First name is required");
+      return;
+    }
+    if (!formData.lastName) {
+      setFormError("Patient Last name is required");
+      return;
+    }
+    if (!formData.gender) {
+      setFormError("Patient Gender is required");
+      return;
+    }
+    if (!formData.dateOfBirth) {
+      setFormError("Patient Date of birth is required");
+      return;
+    }
+    if (!formData.socialSecurityNumber) {
+      setFormError("SocialSecurity Number is required");
+      return;
+    }
+    if (!formData.mobilePhone) {
+      setFormError("Mobile Phone is required");
+      return;
+    }
+    if (!formData.emailAddress) {
+      setFormError("Email Address is required");
+      return;
+    }
+
+    if (!formData.clinicalManager) {
+      setFormError("Clinical Manager is required");
+      return;
+    }
+    if (!formData.caseManager) {
+      setFormError("Case Manager is required");
+      return;
+    }
+    if (!formData.clinician) {
+      setFormError("Clinician is required");
+      return;
+    }
+    if (!formData.branch) {
+      setFormError("Branch is required");
+      return;
+    }
+    if (!formData.patientIdMrn) {
+      setFormError("Patient Id/Mrn is required");
+      return;
+    }
+    if (!formData.defaultServiceLocation) {
+      setFormError("Default Service Location is required");
+      return;
+    }
+    if (!formData.primaryAddress1) {
+      setFormError("Primary Address1 is required");
+      return;
+    }
+    if (!formData.primaryZip) {
+      setFormError("Primary Zip is required");
+      return;
+    }
+    if (!primaryCounty) {
+      setFormError("Primary County is required");
+      return;
+    }
+    if (!primaryCity) {
+      error.data.message = "Primary city Required";
+      return;
+    }
+    if (!primaryState) {
+      setFormError("Primary State is required");
+      return;
+    }
+    if (!formData.mailingZip) {
+      setFormError("Mailing Zip 1 is required");
+      return;
+    }
+
+    if (!mailingCity) {
+      setFormError("Mailing city is required");
+      return;
+    }
+
+    if (!mailingState) {
+      setFormError("Mailing state 1 is required");
+      return;
+    }
+    if (!formData.visitAddress1) {
+      setFormError("Visit Address1  is required");
+      return;
+    }
+    if (!formData.visitAddress1) {
+      setFormError("Visit Address1  is required");
+      return;
+    }
+    if (!formData.preferredLanguage) {
+      setFormError("Preferred Language is required");
+      return;
+    }
+    if (!formData.episodeTiming) {
+      setFormError("Episode Timing is required");
+      return;
+    }
+    if (!formData.startOfCareDate) {
+      setFormError("Start Of Care Date is required");
+      return;
+    }
+    if (!formData.episodeStartDate) {
+      setFormError("Episode Start Date is required");
+      return;
+    }
+
+    setFormError("");
+    formData.primaryCounty = primaryCounty;
+    formData.primaryCity = primaryCity;
+    formData.primaryState = primaryState;
+
+    formData.mailingCounty = mailingCounty;
+    formData.mailingCity = mailingCity;
+    formData.mailingState = mailingState;
+    formData.visitCounty = visitCounty;
+    formData.visitCity = visitCity;
+    formData.visitState = visitState;
     createPatient(formData);
   };
-  const handleSaveAndContinue = () => {};
-  const handleSaveAndExit = () => {};
+  const handleSaveAndContinue = () => {
+    if (!formData.firstName) {
+      setFormError("Patient First name is required");
+      return;
+    }
+    if (!formData.lastName) {
+      setFormError("Patient Last name is required");
+      return;
+    }
+    if (!formData.gender) {
+      setFormError("Patient Gender is required");
+      return;
+    }
+    if (!formData.dateOfBirth) {
+      setFormError("Patient Date of birth is required");
+      return;
+    }
+    if (!formData.socialSecurityNumber) {
+      setFormError("SocialSecurity Number is required");
+      return;
+    }
+    if (!formData.mobilePhone) {
+      setFormError("Mobile Phone is required");
+      return;
+    }
+    if (!formData.emailAddress) {
+      setFormError("Email Address is required");
+      return;
+    }
+
+    if (!formData.clinicalManager) {
+      setFormError("Clinical Manager is required");
+      return;
+    }
+    if (!formData.caseManager) {
+      setFormError("Case Manager is required");
+      return;
+    }
+    if (!formData.clinician) {
+      setFormError("Clinician is required");
+      return;
+    }
+    if (!formData.branch) {
+      setFormError("Branch is required");
+      return;
+    }
+    if (!formData.patientIdMrn) {
+      setFormError("Patient Id/Mrn is required");
+      return;
+    }
+    if (!formData.defaultServiceLocation) {
+      setFormError("Default Service Location is required");
+      return;
+    }
+    if (!formData.primaryAddress1) {
+      setFormError("Primary Address1 is required");
+      return;
+    }
+    if (!formData.primaryZip) {
+      setFormError("Primary Zip is required");
+      return;
+    }
+    if (!primaryCounty) {
+      setFormError("Primary County is required");
+      return;
+    }
+    if (!primaryCity) {
+      error.data.message = "Primary city Required";
+      return;
+    }
+    if (!primaryState) {
+      setFormError("Primary State is required");
+      return;
+    }
+    if (!formData.mailingZip) {
+      setFormError("Mailing Zip 1 is required");
+      return;
+    }
+
+    if (!mailingCity) {
+      setFormError("Mailing city is required");
+      return;
+    }
+
+    if (!mailingState) {
+      setFormError("Mailing state 1 is required");
+      return;
+    }
+    if (!formData.visitAddress1) {
+      setFormError("Visit Address1  is required");
+      return;
+    }
+    if (!formData.visitAddress1) {
+      setFormError("Visit Address1  is required");
+      return;
+    }
+    if (!formData.preferredLanguage) {
+      setFormError("Preferred Language is required");
+      return;
+    }
+    if (!formData.episodeTiming) {
+      setFormError("Episode Timing is required");
+      return;
+    }
+    if (!formData.startOfCareDate) {
+      setFormError("Start Of Care Date is required");
+      return;
+    }
+    if (!formData.episodeStartDate) {
+      setFormError("Episode Start Date is required");
+      return;
+    }
+
+    setFormError("");
+    formData.primaryCounty = primaryCounty;
+    formData.primaryCity = primaryCity;
+    formData.primaryState = primaryState;
+
+    formData.mailingCounty = mailingCounty;
+    formData.mailingCity = mailingCity;
+    formData.mailingState = mailingState;
+    formData.visitCounty = visitCounty;
+    formData.visitCity = visitCity;
+    formData.visitState = visitState;
+    console.log(formData);
+    localStorage.setItem("Patient", JSON.stringify(formData));
+    // createPatient(formData);
+  };
+  const handleSaveAndExit = () => {
+    setFormError("");
+    formData.primaryCounty = primaryCounty;
+    formData.primaryCity = primaryCity;
+    formData.primaryState = primaryState;
+
+    formData.mailingCounty = mailingCounty;
+    formData.mailingCity = mailingCity;
+    formData.mailingState = mailingState;
+    formData.visitCounty = visitCounty;
+    formData.visitCity = visitCity;
+    formData.visitState = visitState;
+    localStorage.setItem("Patient", JSON.stringify(formData));
+  };
+  useEffect(() => {
+    if (localStoragePatient) {
+        setPrimaryCounty(localStoragePatient.primaryCounty || "");
+        setMailingCounty(localStoragePatient.mailingCounty || "");
+        setVisitCounty(localStoragePatient.visitCounty || "");
+        setPrimaryState(localStoragePatient.primaryState || "");
+        setMailingState(localStoragePatient.mailingState || "");
+        setVisitState(localStoragePatient.visitState || "");
+        setPrimaryCity(localStoragePatient.primaryCity || "");
+        setMailingCity(localStoragePatient.mailingCity || "");
+        setVisitCity(localStoragePatient.visitCity || "");
+    }
+}, [localStoragePatient]);
+
+  if (isLoading) return <AuthLoader />;
   return (
     <form className=" mt-5">
       <div className="accordion" id="patientInfoAccordion">
         <div className="row">
-          {data?.message&&<div className="alert alert-success text-center">{data?.message}</div>}
-          {error?.data?.message&&<div className="alert alert-danger text-center">{error?.data?.message}</div>}
+          {data?.message && (
+            <div className="alert alert-success text-center">
+              {data?.message}
+            </div>
+          )}
+          {error?.data?.message && (
+            <div className="alert alert-danger text-center">
+              {error?.data?.message}
+            </div>
+          )}
+          {fromError && (
+            <div className="alert alert-danger text-center">{fromError}</div>
+          )}
         </div>
         <div className="accordion-item">
           <h2 className="accordion-header" id="headingOne">
@@ -190,309 +641,305 @@ console.log(formData)
             data-bs-parent="#patientInfoAccordion"
           >
             <div className="accordion-body">
-
-                <div className="row mb-3">
-                  <div className="col-md-6">
-                    <label htmlFor="firstName" className="form-label">
-                      (M0040) First Name: <span className="text-danger">*</span>
-                    </label>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label htmlFor="firstName" className="form-label">
+                    (M0040) First Name: <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="firstName"
+                    name="firstName"
+                    placeholder="Enter First Name"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="middleInitial" className="form-label">
+                    MI:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="middleInitial"
+                    name="middleInitial"
+                    placeholder="Enter MI"
+                    value={formData.middleInitial}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label htmlFor="lastName" className="form-label">
+                    (M0040) Last Name: <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="lastName"
+                    name="lastName"
+                    placeholder="Enter Last Name"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="gender" className="form-label">
+                    (M0069) Gender: <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    className="form-select"
+                    id="gender"
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                    <option value="Unknown">Unknown</option>
+                  </select>
+                </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label htmlFor="dateOfBirth" className="form-label">
+                    (M0066) Date of Birth:{" "}
+                    <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    value={formData.dateOfBirth}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="socialSecurityNumber" className="form-label">
+                    (M0064) Social Security Number:{" "}
+                    <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="socialSecurityNumber"
+                    name="socialSecurityNumber"
+                    placeholder="Enter Social Security Number"
+                    value={formData.socialSecurityNumber}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <div className="form-check">
                     <input
-                      type="text"
-                      className="form-control"
-                      id="firstName"
-                      name="firstName"
-                      placeholder="Enter First Name"
-                      value={formData.firstName}
+                      className="form-check-input"
+                      type="checkbox"
+                      id="unknownSSN"
+                      name="unknownSSN"
+                      value="unknown"
                       onChange={handleInputChange}
-                      required
                     />
-                  </div>
-                  <div className="col-md-6">
-                    <label htmlFor="middleInitial" className="form-label">
-                      MI:
+                    <label className="form-check-label" htmlFor="unknownSSN">
+                      Unknown
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="middleInitial"
-                      name="middleInitial"
-                      placeholder="Enter MI"
-                      value={formData.middleInitial}
-                      onChange={handleInputChange}
-                    />
                   </div>
                 </div>
-                <div className="row mb-3">
-                  <div className="col-md-6">
-                    <label htmlFor="lastName" className="form-label">
-                      (M0040) Last Name: <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="lastName"
-                      name="lastName"
-                      placeholder="Enter Last Name"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label htmlFor="gender" className="form-label">
-                      (M0069) Gender: <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      className="form-select"
-                      id="gender"
-                      name="gender"
-                      value={formData.gender}
-                      onChange={handleInputChange}
-                      required
-                    >
-                      <option value="">Select Gender</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </select>
-                  </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label htmlFor="maritalStatus" className="form-label">
+                    Marital Status:
+                  </label>
+                  <select
+                    className="form-select"
+                    id="maritalStatus"
+                    name="maritalStatus"
+                    value={formData.maritalStatus}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Select Marital Status</option>
+                    <option value="single">Single</option>
+                    <option value="married">Married</option>
+                    <option value="divorced">Divorced</option>
+                    <option value="widowed">Widowed</option>
+                  </select>
                 </div>
-                <div className="row mb-3">
-                  <div className="col-md-6">
-                    <label htmlFor="dateOfBirth" className="form-label">
-                      (M0066) Date of Birth:{" "}
-                      <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      id="dateOfBirth"
-                      name="dateOfBirth"
-                      value={formData.dateOfBirth}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label
-                      htmlFor="socialSecurityNumber"
-                      className="form-label"
-                    >
-                      (M0064) Social Security Number:{" "}
-                      <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="socialSecurityNumber"
-                      name="socialSecurityNumber"
-                      placeholder="Enter Social Security Number"
-                      value={formData.socialSecurityNumber}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="unknownSSN"
-                        name="unknownSSN"
-                        value="unknown"
-                        onChange={handleInputChange}
-                      />
-                      <label className="form-check-label" htmlFor="unknownSSN">
-                        Unknown
-                      </label>
-                    </div>
-                  </div>
+                <div className="col-md-6">
+                  <label htmlFor="mobilePhone" className="form-label">
+                    Mobile Phone: <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="mobilePhone"
+                    name="mobilePhone"
+                    placeholder="Enter Number"
+                    value={formData.mobilePhone}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <small className="form-text text-muted">
+                    For emergency preparedness, the patient will be contacted at
+                    this number. This will also populate to the Emergency
+                    Preparedness Report.
+                  </small>
                 </div>
-                <div className="row mb-3">
-                  <div className="col-md-6">
-                    <label htmlFor="maritalStatus" className="form-label">
-                      Marital Status:
-                    </label>
-                    <select
-                      className="form-select"
-                      id="maritalStatus"
-                      name="maritalStatus"
-                      value={formData.maritalStatus}
-                      onChange={handleInputChange}
-                    >
-                      <option value="">Select Marital Status</option>
-                      <option value="single">Single</option>
-                      <option value="married">Married</option>
-                      <option value="divorced">Divorced</option>
-                      <option value="widowed">Widowed</option>
-                    </select>
-                  </div>
-                  <div className="col-md-6">
-                    <label htmlFor="mobilePhone" className="form-label">
-                      Mobile Phone: <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="mobilePhone"
-                      name="mobilePhone"
-                      placeholder="Enter Number"
-                      value={formData.mobilePhone}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    <small className="form-text text-muted">
-                      For emergency preparedness, the patient will be contacted
-                      at this number. This will also populate to the Emergency
-                      Preparedness Report.
-                    </small>
-                  </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label htmlFor="alternatePhone" className="form-label">
+                    Alternate Phone:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="alternatePhone"
+                    name="alternatePhone"
+                    placeholder="Enter Number"
+                    value={formData.alternatePhone}
+                    onChange={handleInputChange}
+                  />
                 </div>
-                <div className="row mb-3">
-                  <div className="col-md-6">
-                    <label htmlFor="alternatePhone" className="form-label">
-                      Alternate Phone:
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="alternatePhone"
-                      name="alternatePhone"
-                      placeholder="Enter Number"
-                      value={formData.alternatePhone}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label htmlFor="emailAddress" className="form-label">
-                      Email Address:
-                    </label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="emailAddress"
-                      name="emailAddress"
-                      placeholder="Enter Email Address"
-                      value={formData.emailAddress}
-                      onChange={handleInputChange}
-                    />
-                  </div>
+                <div className="col-md-6">
+                  <label htmlFor="emailAddress" className="form-label">
+                    Email Address:
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="emailAddress"
+                    name="emailAddress"
+                    placeholder="Enter Email Address"
+                    value={formData.emailAddress}
+                    onChange={handleInputChange}
+                  />
                 </div>
-                <div className="row mb-3">
-                  <div className="col-md-6">
-                    <label htmlFor="clinicalManager" className="form-label">
-                      Clinical Manager: <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      className="form-select"
-                      id="clinicalManager"
-                      name="clinicalManager"
-                      value={formData.clinicalManager}
-                      onChange={handleInputChange}
-                      required
-                    >
-                      <option value="">Select Clinical Manager</option>
-                      <option value="manager1">Manager 1</option>
-                      <option value="manager2">Manager 2</option>
-                    </select>
-                  </div>
-                  <div className="col-md-6">
-                    <label htmlFor="caseManager" className="form-label">
-                      Case Manager: <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      className="form-select"
-                      id="caseManager"
-                      name="caseManager"
-                      value={formData.caseManager}
-                      onChange={handleInputChange}
-                      required
-                    >
-                      <option value="">Select Case Manager</option>
-                      <option value="caseManager1">Case Manager 1</option>
-                      <option value="caseManager2">Case Manager 2</option>
-                    </select>
-                  </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label htmlFor="clinicalManager" className="form-label">
+                    Clinical Manager: <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    className="form-select"
+                    id="clinicalManager"
+                    name="clinicalManager"
+                    value={formData.clinicalManager}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select Clinical Manager</option>
+                    <option value="manager1">Manager 1</option>
+                    <option value="manager2">Manager 2</option>
+                  </select>
                 </div>
-                <div className="row mb-3">
-                  <div className="col-md-6">
-                    <label htmlFor="clinician" className="form-label">
-                      Assign to Clinician:{" "}
-                      <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      className="form-select"
-                      id="clinician"
-                      name="clinician"
-                      value={formData.clinician}
-                      onChange={handleInputChange}
-                      required
-                    >
-                      <option value="">Select Clinician</option>
-                      <option value="clinician1">Clinician 1</option>
-                      <option value="clinician2">Clinician 2</option>
-                    </select>
-                  </div>
-                  <div className="col-md-6">
-                    <label htmlFor="branch" className="form-label">
-                      Branch: <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      className="form-select"
-                      id="branch"
-                      name="branch"
-                      value={formData.branch}
-                      onChange={handleInputChange}
-                      required
-                    >
-                      <option value="">Select Agency Branch</option>
-                      <option value="branch1">Branch 1</option>
-                      <option value="branch2">Branch 2</option>
-                    </select>
-                  </div>
+                <div className="col-md-6">
+                  <label htmlFor="caseManager" className="form-label">
+                    Case Manager: <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    className="form-select"
+                    id="caseManager"
+                    name="caseManager"
+                    value={formData.caseManager}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select Case Manager</option>
+                    <option value="caseManager1">Case Manager 1</option>
+                    <option value="caseManager2">Case Manager 2</option>
+                  </select>
                 </div>
-                <div className="row mb-3">
-                  <div className="col-md-6">
-                    <label htmlFor="patientIdMrn" className="form-label">
-                      (M0020) Patient ID/MRN:{" "}
-                      <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="patientIdMrn"
-                      name="patientIdMrn"
-                      placeholder="Enter ID/MRN"
-                      value={formData.patientIdMrn}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    <small className="form-text text-muted">
-                      Last MRN Used: PA1328
-                    </small>
-                  </div>
-                  <div className="col-md-6">
-                    <label
-                      htmlFor="defaultServiceLocation"
-                      className="form-label"
-                    >
-                      Default Service Location:{" "}
-                      <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      className="form-select"
-                      id="defaultServiceLocation"
-                      name="defaultServiceLocation"
-                      value={formData.defaultServiceLocation}
-                      onChange={handleInputChange}
-                      required
-                    >
-                      <option value="">Select Service Location</option>
-                      <option value="home">
-                        Patient &apos;s Home/Residence (Q5001)
-                      </option>
-                      <option value="clinic">Clinic</option>
-                    </select>
-                  </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label htmlFor="clinician" className="form-label">
+                    Assign to Clinician: <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    className="form-select"
+                    id="clinician"
+                    name="clinician"
+                    value={formData.clinician}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select Clinician</option>
+                    <option value="clinician1">Clinician 1</option>
+                    <option value="clinician2">Clinician 2</option>
+                  </select>
                 </div>
-               
+                <div className="col-md-6">
+                  <label htmlFor="branch" className="form-label">
+                    Branch: <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    className="form-select"
+                    id="branch"
+                    name="branch"
+                    value={formData.branch}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select Agency Branch</option>
+                    <option value="branch1">Branch 1</option>
+                    <option value="branch2">Branch 2</option>
+                  </select>
+                </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label htmlFor="patientIdMrn" className="form-label">
+                    (M0020) Patient ID/MRN:{" "}
+                    <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="patientIdMrn"
+                    name="patientIdMrn"
+                    placeholder="Enter ID/MRN"
+                    value={formData.patientIdMrn}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <small className="form-text text-muted">
+                    Last MRN Used: PA1328
+                  </small>
+                </div>
+                <div className="col-md-6">
+                  <label
+                    htmlFor="defaultServiceLocation"
+                    className="form-label"
+                  >
+                    Default Service Location:{" "}
+                    <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    className="form-select"
+                    id="defaultServiceLocation"
+                    name="defaultServiceLocation"
+                    value={formData.defaultServiceLocation}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select Service Location</option>
+                    <option value="home">
+                      Patient &apos;s Home/Residence (Q5001)
+                    </option>
+                    <option value="clinic">Clinic</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -583,10 +1030,12 @@ console.log(formData)
                 <label htmlFor="primaryCounty" className="form-label">
                   County: <span className="text-danger">*</span>
                 </label>
-               {/* Assuming SelectCounty component or similar for county selection */}
-               <CountySelect
-                    selectedState={primaryState} selectedCounty={primaryCounty} setSelectedCounty={setPrimaryCounty}
-                  />
+                {/* Assuming SelectCounty component or similar for county selection */}
+                <CountySelect
+                  selectedState={primaryState}
+                  selectedCounty={primaryCounty}
+                  setSelectedCounty={setPrimaryCounty}
+                />
               </div>
 
               {/* City */}
@@ -594,7 +1043,11 @@ console.log(formData)
                 <label htmlFor="primaryCity" className="form-label">
                   City: <span className="text-danger">*</span>
                 </label>
-                <CitySelect stateCode={primaryState} selectedCity={primaryCity} setSelectedCity={setPrimaryCity} />
+                <CitySelect
+                  stateCode={primaryState}
+                  selectedCity={primaryCity}
+                  setSelectedCity={setPrimaryCity}
+                />
               </div>
 
               {/* State */}
@@ -602,7 +1055,10 @@ console.log(formData)
                 <label htmlFor="primaryState" className="form-label">
                   State: <span className="text-danger">*</span>
                 </label>
-                <SelectState selectedState={primaryState} setSelectedState={setPrimaryState}/>
+                <SelectState
+                  selectedState={primaryState}
+                  setSelectedState={setPrimaryState}
+                />
               </div>
             </div>
           </div>
@@ -710,14 +1166,20 @@ console.log(formData)
                       </label>
                       {/* Assuming SelectCounty component or similar for county selection */}
                       <CountySelect
-                        selectedState={mailingState} selectedCounty={mailingCounty} setSelectedCounty={setMailingCounty}
+                        selectedState={mailingState}
+                        selectedCounty={mailingCounty}
+                        setSelectedCounty={setMailingCounty}
                       />
                     </div>
                     <div className="col-md-6">
                       <label htmlFor="mailingCity" className="form-label">
                         City: <span className="text-danger">*</span>
                       </label>
-                      <CitySelect stateCode={mailingState} selectedCity={mailingCity} setSelectedCity={setMailingCity}/>
+                      <CitySelect
+                        stateCode={mailingState}
+                        selectedCity={mailingCity}
+                        setSelectedCity={setMailingCity}
+                      />
                     </div>
                   </div>
                   <div className="row mb-3">
@@ -727,7 +1189,8 @@ console.log(formData)
                       </label>
                       {/* Assuming SelectState component or similar for state selection */}
                       <SelectState
-                        selectedState={mailingState} setSelectedState={setMailingState}
+                        selectedState={mailingState}
+                        setSelectedState={setMailingState}
                       />
                     </div>
                   </div>
@@ -789,7 +1252,11 @@ console.log(formData)
                   <label htmlFor="visitCity" className="form-label">
                     City:
                   </label>
-                  <CitySelect stateCode={visitState} selectedCity={visitCity} setSelectedCity={setVisitCity}/>
+                  <CitySelect
+                    stateCode={visitState}
+                    selectedCity={visitCity}
+                    setSelectedCity={setVisitCity}
+                  />
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="visitState" className="form-label">
@@ -797,7 +1264,8 @@ console.log(formData)
                   </label>
                   {/* Assuming SelectState component or similar for state selection */}
                   <SelectState
-                    selectedState={visitState} setSelectedState={setVisitState}
+                    selectedState={visitState}
+                    setSelectedState={setVisitState}
                   />
                 </div>
               </div>
@@ -836,7 +1304,9 @@ console.log(formData)
                   </label>
                   {/* Assuming SelectCounty component or similar for county selection */}
                   <CountySelect
-                    selectedState={visitState} selectedCounty={visitCounty} setSelectedCounty={setVisitCounty}
+                    selectedState={visitState}
+                    selectedCounty={visitCounty}
+                    setSelectedCounty={setVisitCounty}
                   />
                 </div>
               </div>
@@ -1405,9 +1875,7 @@ console.log(formData)
                   id="additionalLanguage1"
                   name="additionalLanguages"
                   value={formData.additionalLanguages[0]}
-                  onChange={(e) =>
-                    handleInputChange(e, 0)
-                  }
+                  onChange={(e) => handleInputChange(e, 0)}
                 />
               </div>
               <div className="mb-3">
@@ -1420,9 +1888,7 @@ console.log(formData)
                   id="additionalLanguage2"
                   name="additionalLanguages"
                   value={formData.additionalLanguages[1]}
-                  onChange={(e) =>
-                    handleInputChange(e,  1)
-                  }
+                  onChange={(e) => handleInputChange(e, 1)}
                 />
               </div>
               <div className="mb-3">
@@ -1435,9 +1901,7 @@ console.log(formData)
                   id="additionalLanguage3"
                   name="additionalLanguages"
                   value={formData.additionalLanguages[2]}
-                  onChange={(e) =>
-                    handleInputChange(e,  2)
-                  }
+                  onChange={(e) => handleInputChange(e, 2)}
                 />
               </div>
 

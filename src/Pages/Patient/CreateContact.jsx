@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CitySelect from "../../components/FormElement/CitySelect";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import { useCreateContactMutation } from "../../Redux/api/Contact";
 import CountySelect from "./../../components/FormElement/CountySelect";
-import PageHeader from './../../components/FormElement/PageHeader';
-import AuthLoader from './../../utils/Loaders/AuthLoader';
+import PageHeader from "./../../components/FormElement/PageHeader";
+import AuthLoader from "./../../utils/Loaders/AuthLoader";
+import Template from "./../../components/FormElement/Template";
+
 const ContactForm = () => {
-  const [createContact, { data, isLoading, isSuccess ,error}] =
+  const [createContact, { data, isLoading, isSuccess, error }] =
     useCreateContactMutation();
+
   const [formData, setFormData] = useState({
     representativeContacted: "",
     legalRepresentativeOption: "",
@@ -71,6 +74,7 @@ const ContactForm = () => {
       },
     ],
   });
+
   const [primaryCity, setPrimaryCity] = useState("");
   const [primaryState, setPrimaryState] = useState("");
   const [additionalCity, setAdditionalCity] = useState("");
@@ -101,8 +105,8 @@ const ContactForm = () => {
         [type]: {
           ...emergencyContacts[type],
           [field]: value,
-          city: primaryCity, 
-          state: primaryState, 
+          city: primaryCity,
+          state: primaryState,
         },
       });
     }
@@ -174,10 +178,6 @@ const ContactForm = () => {
     }));
   };
 
-  const handleTemplateChange = (e) => {
-    setSelectedTemplate(e.target.value);
-  };
-
   const handleCommentsChange = (e) => {
     const text = e.target.value;
     setComments(text);
@@ -242,12 +242,24 @@ const ContactForm = () => {
       console.error("Error creating contact:", error);
     }
   };
- if(isLoading) return <AuthLoader/>
+  useEffect(() => {
+    setComments((prev) =>
+      prev ? prev + (selectedTemplate?.value || "<br/> <br/> <br/> <br/> ") : selectedTemplate?.value || "<br/>"
+    );
+  }, [selectedTemplate]);
+  
+if (isLoading) return <AuthLoader />;
   return (
     <form onSubmit={handleSubmit} className="card">
-        <PageHeader title="Contact" className="card-header fs-3"/>
-        {data?.message&& <div className="alert alert-success text-center">{data?.message}</div>}
-        {error?.data?.message&& <div className="alert alert-danger text-center">{error?.data?.message}</div>}
+      <PageHeader title="Contact" className="card-header fs-3" />
+      {data?.message && (
+        <div className="alert alert-success text-center">{data?.message}</div>
+      )}
+      {error?.data?.message && (
+        <div className="alert alert-danger text-center">
+          {error?.data?.message}
+        </div>
+      )}
       <div className="card-body">
         <div className="accordion" id="emergencyContactsAccordion">
           {/* Primary Emergency Contact */}
@@ -1534,16 +1546,10 @@ const ContactForm = () => {
             <div className="templates-section">
               {/* Templates dropdown */}
               <label className="form-label my-2">Select Templates</label>
-              <select
-                value={selectedTemplate}
-                onChange={handleTemplateChange}
-                className="form-control"
-              >
-                <option value="">Choose a template...</option>
-                <option value="template1">Template 1</option>
-                <option value="template2">Template 2</option>
-                {/* Add more options as needed */}
-              </select>
+              <Template
+                selectedTemplate={selectedTemplate}
+                setSelectedTemplate={setSelectedTemplate}
+              />
             </div>
 
             <div className="comments-section">

@@ -143,6 +143,16 @@ const Sidebar = () => {
           icon: "",
         },
         {
+          title: "Create New physician",
+          href: "/create-physicians",
+          icon: "",
+        },
+        {
+          title: "Physicians",
+          href: "/physicians",
+          icon: "",
+        },
+        {
           title: "Create payers",
           href: "/create-payers",
           icon: "",

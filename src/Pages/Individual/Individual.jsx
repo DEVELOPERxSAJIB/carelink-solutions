@@ -1,10 +1,10 @@
 import DataTable from "./../../components/Tables/DynamicTable";
 import { useNavigate } from "react-router-dom";
 import Accordion from "./../../components/Tables/Accordion";
-import FullscreenModal from './../../components/Models/FullScreenModel';
-import useFormFields from './../../hook/useFormHook';
-import ExportButton from './../../components/Buttons/ExportButton';
-import TableHeader from './../../components/Tables/TableHeader';
+import FullscreenModal from "./../../components/Models/FullScreenModel";
+import useFormFields from "./../../hook/useFormHook";
+import ExportButton from "./../../components/Buttons/ExportButton";
+import TableHeader from "./../../components/Tables/TableHeader";
 
 const Individual = () => {
   const columns = [
@@ -67,64 +67,7 @@ const Individual = () => {
       ),
     },
   ];
-  const column = [
-    { label: "S.No", key: "serialNumber" },
-    { label: "Individual ID", key: "individualId" },
-    { label: "First Name", key: "firstName" },
-    { label: "Last Name", key: "lastName" },
-    { label: "Created By", key: "createdBy" },
-    { label: "Status", key: "status" },
-    {
-      label: "Stakeholders(s)",
-      key: "stakeholders",
-      render: (rowData) => (
-        <Accordion tableHead={"Stakeholders Details"} data={rowData.stakeholders} />
-      ),
-    },
-    {
-      label: "Actions",
-      key: "actions",
-      render: (rowData) => (
-        <div className="d-flex gap-3 flex-wrap">
-          <button
-            className="btn btn-sm btn-secondary create-new btn-warning waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span>
-              <i className="ti ti-edit me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Edit</span>
-            </span>
-          </button>
-  
-          <button
-            className="btn btn-sm btn-secondary create-new btn-danger waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span>
-              <i className="ti ti-user me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">View user</span>
-            </span>
-          </button>
-          <button
-            className="btn btn-sm btn-secondary create-new btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span>
-              <i className="ti ti-notes me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Assign Form</span>
-            </span>
-          </button>
-        </div>
-      ),
-    },
-  ];
-  
+
   const data = [
     {
       serialNumber: 1,
@@ -259,9 +202,8 @@ const Individual = () => {
     patientAddressType: "",
   };
 
-  const [formData, handleChange, resetForm, isValid] = useFormFields(
-    initialState
-  );
+  const [formData, handleChange, resetForm, isValid] =
+    useFormFields(initialState);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -271,11 +213,18 @@ const Individual = () => {
 
   return (
     <div className="card">
-
-      <TableHeader title="Mange Sub Users" className="py-3 pt-5 fs-3 card-header"/>
+      <TableHeader
+        title="Mange Sub Users"
+        className="py-3 pt-5 fs-3 card-header"
+      />
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
-          <FullscreenModal className="col-md-7  " id="managesubusers" title="Add Individual" onSave={handleSubmit}>
+          <FullscreenModal
+            className="col-md-7  "
+            id="managesubusers"
+            title="Add Individual"
+            onSave={handleSubmit}
+          >
             <form className="w-100 from-scrollbar px-3">
               <div className="row">
                 <div className="col-md-6 mb-3">
@@ -643,7 +592,7 @@ const Individual = () => {
               </div>
             </form>
           </FullscreenModal>
-          <ExportButton data={data} columns={column} fileName="individual"/>
+          <ExportButton data={data} columns={columns} fileName="individual" />
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -655,7 +604,7 @@ const Individual = () => {
               <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
           </button>
-        
+
           <button
             className="btn btn-info waves-effect waves-light"
             tabIndex={0}
@@ -664,11 +613,9 @@ const Individual = () => {
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-archive me-1" />
-              <span className="d-none d-sm-inline-block">
-                Archive{" "}
-              </span>
+              <span className="d-none d-sm-inline-block">Archive </span>
             </span>
-            </button>
+          </button>
         </div>
         <div className="mt-5">
           <DataTable
