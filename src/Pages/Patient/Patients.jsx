@@ -4,6 +4,7 @@ import ExportButton from './../../components/Buttons/ExportButton';
 import TableHeader from './../../components/Tables/TableHeader';
 import {useGetAllPatientsQuery} from "../../Redux/api/PatientApi"
 import AuthLoader from './../../utils/Loaders/AuthLoader';
+import { useNavigate } from 'react-router-dom';
 const Patients = () => {
   const {data,isLoading} = useGetAllPatientsQuery();
   const columns = [
@@ -107,7 +108,7 @@ const Patients = () => {
   
   
   
-
+const navigate = useNavigate()
 if(isLoading) return <AuthLoader/>
   
 console.log(isLoading)
@@ -140,6 +141,20 @@ console.log(isLoading)
               <i className="ti ti-archive me-1" />
               <span className="d-none d-sm-inline-block">
                 Archive{" "}
+              </span>
+            </span>
+            </button>
+            <button
+            className="btn btn-success waves-effect waves-light"
+            tabIndex={0}
+            aria-controls="DataTables_Table_0"
+            type="button"
+            onClick={()=>navigate("/create-new-patient")}
+          >
+            <span className="d-flex align-items-center">
+              <i className="ti ti-archive me-1" />
+              <span className="d-none d-sm-inline-block">
+                Add New Payer
               </span>
             </span>
             </button>

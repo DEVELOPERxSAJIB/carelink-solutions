@@ -59,6 +59,7 @@ import ExportButton from "./../../components/Buttons/ExportButton";
 import TableHeader from "./../../components/Tables/TableHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import { useGetAllPhysiciansQuery } from "../../Redux/api/PhysicianApi";
+import { useNavigate } from 'react-router-dom';
 const Physicians = () => {
   const { data, isLoading, error } = useGetAllPhysiciansQuery();
   const columns = [
@@ -86,7 +87,7 @@ const Physicians = () => {
     { header: "Created At", field: "createdAt" },
     { header: "Updated At", field: "updatedAt" },
   ];
-
+const navigate= useNavigate()
   if (isLoading) return <AuthLoader />;
 
   console.log(isLoading);
@@ -127,6 +128,20 @@ const Physicians = () => {
               <span className="d-none d-sm-inline-block">Archive </span>
             </span>
           </button>
+          <button
+            className="btn btn-success waves-effect waves-light"
+            tabIndex={0}
+            aria-controls="DataTables_Table_0"
+            type="button"
+            onClick={()=>navigate("/create-physicians")}
+          >
+            <span className="d-flex align-items-center">
+              <i className="ti ti-archive me-1" />
+              <span className="d-none d-sm-inline-block">
+                Add New Payer
+              </span>
+            </span>
+            </button>
         </div>
         <div className="mt-5">
           <DataTable

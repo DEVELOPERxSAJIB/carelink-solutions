@@ -4,7 +4,9 @@ import ExportButton from './../../components/Buttons/ExportButton';
 import TableHeader from './../../components/Tables/TableHeader';
 import {useGetAllPayersQuery} from "../../Redux/api/PayerApi"
 import AuthLoader from './../../utils/Loaders/AuthLoader';
+import { useNavigate } from 'react-router-dom';
 const Payers = () => {
+  const navigate = useNavigate()
   const {data,isLoading} = useGetAllPayersQuery();
   const columns = [
     { field: "_id", header: "Payer ID/MRN" },
@@ -163,6 +165,20 @@ console.log(isLoading)
               <i className="ti ti-archive me-1" />
               <span className="d-none d-sm-inline-block">
                 Archive{" "}
+              </span>
+            </span>
+            </button>
+          <button
+            className="btn btn-success waves-effect waves-light"
+            tabIndex={0}
+            aria-controls="DataTables_Table_0"
+            type="button"
+            onClick={()=>navigate("/create-payers")}
+          >
+            <span className="d-flex align-items-center">
+              <i className="ti ti-archive me-1" />
+              <span className="d-none d-sm-inline-block">
+                Add New Payer
               </span>
             </span>
             </button>
