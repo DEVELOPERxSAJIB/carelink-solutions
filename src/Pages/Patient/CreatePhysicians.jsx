@@ -100,10 +100,15 @@ const CreatePhysicians = () => {
   if (isLoading) return <AuthLoader />;
   return (
     <div className="card mt-4">
-      <PageHeader title="Search Physician" className="card-header fs-3" />
-      
+      <PageHeader title="New Physician" className="card-header fs-3" />
+   
 
       <div className="card-body">
+      <div className="row">
+        <div className="col-md-12">
+        <h6>Search Physician</h6>
+        </div>
+      </div>
       {data?.message && (
         <div className="alert alert-success text-center">{data?.message}</div>
       )}
