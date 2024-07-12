@@ -3,8 +3,8 @@ import DataTable from "./../../components/Tables/DynamicTable";
 import ExportButton from './../../components/Buttons/ExportButton';
 import TableHeader from './../../components/Tables/TableHeader';
 import {useGetAllPayersQuery} from "../../Redux/api/PayerApi"
-import AuthLoader from './../../utils/Loaders/AuthLoader';
 import { useNavigate } from 'react-router-dom';
+import MainLoader from './../../utils/Loaders/MainLoader';
 const Payers = () => {
   const navigate = useNavigate()
   const {data,isLoading} = useGetAllPayersQuery();
@@ -28,10 +28,6 @@ const Payers = () => {
     { field: "emergencyTreatmentIndicator", header: "Emergency Treatment Indicator" },
 
 ];
-
-
-
-  
   const column = [
     { label: "Payer ID/MRN", key: "PayerIdMrn" },
     { label: "First Name", key: "firstName" },
@@ -132,7 +128,7 @@ const Payers = () => {
   ];
   
 
-if(isLoading) return <AuthLoader/>
+if(isLoading) return <MainLoader/>
   
 console.log(isLoading)
   return (
@@ -142,7 +138,7 @@ console.log(isLoading)
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
          
-          <ExportButton orientation="landscape" data={data?.data} columns={column} fileName="Payer"/>
+          <ExportButton orientation="landscape" data={data?.data??[]} columns={column} fileName="Payer"/>
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}

@@ -1,15 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const rootApi = createApi({
   reducerPath: "Api",
   baseQuery: fetchBaseQuery({
     // baseUrl: `http://localhost:5050/api/v1/`,
     baseUrl: `https://carelinks-server.onrender.com/api/v1/`,
-    credentials: 'include',
+    credentials: "include",
   }),
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(rootApi.middleware),
   devTools: true,
-  tagTypes: ["User","Setting"],
+  tagTypes: ["User", "Setting"],
   endpoints: () => ({}),
 });

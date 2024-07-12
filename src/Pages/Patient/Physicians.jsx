@@ -57,9 +57,9 @@ const flattenData = (data) => {
 
 import ExportButton from "./../../components/Buttons/ExportButton";
 import TableHeader from "./../../components/Tables/TableHeader";
-import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import { useGetAllPhysiciansQuery } from "../../Redux/api/PhysicianApi";
 import { useNavigate } from 'react-router-dom';
+import MainLoader from './../../utils/Loaders/MainLoader';
 const Physicians = () => {
   const { data, isLoading, error } = useGetAllPhysiciansQuery();
   const columns = [
@@ -88,7 +88,7 @@ const Physicians = () => {
     { header: "Updated At", field: "updatedAt" },
   ];
 const navigate= useNavigate()
-  if (isLoading) return <AuthLoader />;
+  if (isLoading) return <MainLoader />;
 
   return (
     <div className="card">

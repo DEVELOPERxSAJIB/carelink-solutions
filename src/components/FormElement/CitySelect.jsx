@@ -84,7 +84,6 @@ const CitySelect = ({ stateCode, selectedCity, setSelectedCity }) => {
         options={cityOptions}
         placeholder="Select..."
         isClearable={true}
-        required
         isDisabled={cityOptions.length === 0} // Disable if no cities available
       />
   

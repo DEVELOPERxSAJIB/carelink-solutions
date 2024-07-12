@@ -1,5 +1,4 @@
 import Select from "react-select";
-import { useState } from "react";
 
 const Template = ({ selectedTemplate, setSelectedTemplate }) => {
   const options = [

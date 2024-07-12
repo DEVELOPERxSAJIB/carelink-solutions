@@ -1,12 +1,12 @@
 import DataTable from "./../../components/Tables/DynamicTable";
 
-import ExportButton from './../../components/Buttons/ExportButton';
-import TableHeader from './../../components/Tables/TableHeader';
-import {useGetAllPatientsQuery} from "../../Redux/api/PatientApi"
-import AuthLoader from './../../utils/Loaders/AuthLoader';
-import { useNavigate } from 'react-router-dom';
+import ExportButton from "./../../components/Buttons/ExportButton";
+import TableHeader from "./../../components/Tables/TableHeader";
+import { useGetAllPatientsQuery } from "../../Redux/api/PatientApi";
+import { useNavigate } from "react-router-dom";
+import MainLoader from "./../../utils/Loaders/MainLoader";
 const Patients = () => {
-  const {data,isLoading} = useGetAllPatientsQuery();
+  const { data, isLoading } = useGetAllPatientsQuery();
   const columns = [
     { field: "patientIdMrn", header: "Patient ID/MRN" },
     { field: "firstName", header: "First Name" },
@@ -50,8 +50,14 @@ const Patients = () => {
     { field: "puertoRican", header: "Puerto Rican" },
     { field: "cuban", header: "Cuban" },
     { field: "anotherHispanic", header: "Another Hispanic/Latino" },
-    { field: "unableToRespondEthnicity", header: "Unable to Respond (Ethnicity)" },
-    { field: "declineToRespondEthnicity", header: "Decline to Respond (Ethnicity)" },
+    {
+      field: "unableToRespondEthnicity",
+      header: "Unable to Respond (Ethnicity)",
+    },
+    {
+      field: "declineToRespondEthnicity",
+      header: "Decline to Respond (Ethnicity)",
+    },
     { field: "white", header: "White" },
     { field: "blackAfricanAmerican", header: "Black/African American" },
     { field: "americanIndian", header: "American Indian" },
@@ -92,85 +98,112 @@ const Patients = () => {
     { field: "inpatientRehabilitation", header: "Inpatient Rehabilitation" },
     { field: "psychiatricHospital", header: "Psychiatric Hospital" },
     { field: "otherInpatientFacility", header: "Other Inpatient Facility" },
-    { field: "otherInpatientFacilityText", header: "Other Inpatient Facility Text" },
+    {
+      field: "otherInpatientFacilityText",
+      header: "Other Inpatient Facility Text",
+    },
     { field: "episodeTiming", header: "Episode Timing" },
     { field: "startOfCareDate", header: "Start of Care Date" },
     { field: "episodeStartDate", header: "Episode Start Date" },
-    { field: "createEpisodeScheduleVisit", header: "Create Episode Schedule (Visit)" },
-    { field: "createEpisodeScheduleOasisStartCare", header: "Create Episode Schedule (Oasis Start Care)" },
-    { field: "createEpisodeScheduleTherapyEvaluation", header: "Create Episode Schedule (Therapy Evaluation)" },
-    { field: "createEpisodeScheduleNonOasisStartCare", header: "Create Episode Schedule (Non-Oasis Start Care)" },
-    { field: "createEpisodeScheduleInitialOasisRecert", header: "Create Episode Schedule (Initial Oasis Recert)" },
-    { field: "createEpisodeScheduleInitialNonOasisRecert", header: "Create Episode Schedule (Initial Non-Oasis Recert)" },
-    { field: "trackF2FDocumentation", header: "Track F2F Documentation" }
-];
+    {
+      field: "createEpisodeScheduleVisit",
+      header: "Create Episode Schedule (Visit)",
+    },
+    {
+      field: "createEpisodeScheduleOasisStartCare",
+      header: "Create Episode Schedule (Oasis Start Care)",
+    },
+    {
+      field: "createEpisodeScheduleTherapyEvaluation",
+      header: "Create Episode Schedule (Therapy Evaluation)",
+    },
+    {
+      field: "createEpisodeScheduleNonOasisStartCare",
+      header: "Create Episode Schedule (Non-Oasis Start Care)",
+    },
+    {
+      field: "createEpisodeScheduleInitialOasisRecert",
+      header: "Create Episode Schedule (Initial Oasis Recert)",
+    },
+    {
+      field: "createEpisodeScheduleInitialNonOasisRecert",
+      header: "Create Episode Schedule (Initial Non-Oasis Recert)",
+    },
+    { field: "trackF2FDocumentation", header: "Track F2F Documentation" },
+  ];
 
-  
-  
-  
-const navigate = useNavigate()
-if(isLoading) return <AuthLoader/>
-  
-console.log(isLoading)
+  const navigate = useNavigate();
+
   return (
-    <div className="card">
-
-      <TableHeader title="Patient List" className="py-3 pt-5 fs-3 card-header"/>
-      <div className="card-body">
-        <div className="gap-3 d-flex flex-wrap">
-          <ExportButton orientation="landscape" data={data?.payload??[]} columns={columns} fileName="Patient"/>
-          <button
-            className="btn btn-secondary create-new btn-danger waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-trash me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Delete selected</span>
-            </span>
-          </button>
-        
-          <button
-            className="btn btn-info waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-archive me-1" />
-              <span className="d-none d-sm-inline-block">
-                Archive{" "}
-              </span>
-            </span>
-            </button>
-            <button
-            className="btn btn-success waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-            onClick={()=>navigate("/create-new-patient")}
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-archive me-1" />
-              <span className="d-none d-sm-inline-block">
-                Add New Patient
-              </span>
-            </span>
-            </button>
-        </div>
-        <div className="mt-5">
-          <DataTable
-            columns={columns}
-            data={data?.payload??[]}
-            tableClassName="custom-table"
+    <>
+      {isLoading ? (
+        <MainLoader />
+      ) : (
+        <div className="card">
+          <TableHeader
+            title="Patient List"
+            className="py-3 pt-5 fs-3 card-header"
           />
+          <div className="card-body">
+            <div className="gap-3 d-flex flex-wrap">
+              <ExportButton
+                orientation="landscape"
+                data={data?.payload ?? []}
+                columns={columns}
+                fileName="Patient"
+              />
+              <button
+                className="btn btn-secondary create-new btn-danger waves-effect waves-light"
+                tabIndex={0}
+                aria-controls="DataTables_Table_0"
+                type="button"
+              >
+                <span className="d-flex align-items-center">
+                  <i className="ti ti-trash me-sm-1" />{" "}
+                  <span className="d-none d-sm-inline-block">
+                    Delete selected
+                  </span>
+                </span>
+              </button>
+
+              <button
+                className="btn btn-info waves-effect waves-light"
+                tabIndex={0}
+                aria-controls="DataTables_Table_0"
+                type="button"
+              >
+                <span className="d-flex align-items-center">
+                  <i className="ti ti-archive me-1" />
+                  <span className="d-none d-sm-inline-block">Archive </span>
+                </span>
+              </button>
+              <button
+                className="btn btn-success waves-effect waves-light"
+                tabIndex={0}
+                aria-controls="DataTables_Table_0"
+                type="button"
+                onClick={() => navigate("/create-new-patient")}
+              >
+                <span className="d-flex align-items-center">
+                  <i className="ti ti-archive me-1" />
+                  <span className="d-none d-sm-inline-block">
+                    Add New Patient
+                  </span>
+                </span>
+              </button>
+            </div>
+            <div className="mt-5">
+              <DataTable
+                columns={columns}
+                data={data?.payload ?? []}
+                tableClassName="custom-table"
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
 export default Patients;
-
-

@@ -215,7 +215,6 @@ const CountySelect = ({ selectedState, selectedCounty, setSelectedCounty }) => {
         options={countyOptions}
         placeholder="Select..."
         isClearable={true}
-        required
         isDisabled={countyOptions.length === 0} // Disable if no counties available
       />
    

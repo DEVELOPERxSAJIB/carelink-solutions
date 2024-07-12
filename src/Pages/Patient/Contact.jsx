@@ -58,8 +58,9 @@ const flattenData = (data) => {
 import ExportButton from "./../../components/Buttons/ExportButton";
 import TableHeader from "./../../components/Tables/TableHeader";
 import { useGetAllContactsQuery } from "../../Redux/api/Contact";
-import AuthLoader from "./../../utils/Loaders/AuthLoader";
+
 import { useNavigate } from 'react-router-dom';
+import MainLoader from './../../utils/Loaders/MainLoader';
 
 const Contact = () => {
   const { data, isLoading } = useGetAllContactsQuery();
@@ -81,7 +82,7 @@ const Contact = () => {
 
  
 const navigate = useNavigate()
-  if (isLoading) return <AuthLoader />;
+  if (isLoading) return <MainLoader />;
 
   console.log(isLoading);
   return (
@@ -92,7 +93,7 @@ const navigate = useNavigate()
       />
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
-          <ExportButton data={data} orientation="landscape" columns={columns} fileName="Patient" />
+          <ExportButton data={flattenedData??[]} orientation="landscape" columns={columns} fileName="Patient" />
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}

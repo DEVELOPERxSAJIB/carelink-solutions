@@ -132,31 +132,19 @@ const Sidebar = () => {
           href: "/patient",
           icon: "",
         },
-        {
-          title: "Create New Patient",
-          href: "/create-new-patient",
-          icon: "",
-        },
+       
         {
           title: "Payers",
           href: "/payers",
           icon: "",
         },
-        {
-          title: "Create New physician",
-          href: "/create-physicians",
-          icon: "",
-        },
+        
         {
           title: "Physicians",
           href: "/physicians",
           icon: "",
         },
-        {
-          title: "Create payers",
-          href: "/create-payers",
-          icon: "",
-        },
+       
         {
           title: "Clinical/Diagnoses",
           href: "/clinical-diagnoses",
@@ -167,11 +155,7 @@ const Sidebar = () => {
           href: "/pharmacy",
           icon: "",
         },
-        {
-          title: "Create Pharmacy",
-          href: "/create-pharmacy",
-          icon: "",
-        },
+        
         {
           title: "Create contacts",
           href: "/create-contacts",
@@ -187,31 +171,19 @@ const Sidebar = () => {
           href: "/emergency-preparedness",
           icon: "",
         },
-        {
-          title: "Create Emergency Preparedness",
-          href: "/create-emergency-preparedness",
-          icon: "",
-        },
+        
         {
           title: "Advance Directives",
           href: "/advance-directives",
           icon: "",
         },
-        {
-          title: "Create Advance Directives",
-          href: "/create-advance-directives",
-          icon: "",
-        },
+        
         {
           title: "Referral information",
           href: "/referral-information",
           icon: "",
         },
-        {
-          title: "Create Referral information",
-          href: "/create-referral-information",
-          icon: "",
-        },
+        
       ],
     },
     {

@@ -4,9 +4,15 @@ import "jspdf-autotable";
 import { CSVLink } from "react-csv";
 import * as XLSX from "xlsx";
 
-const ExportButton = ({ data, columns, fileName, orientation = "portrait" }) => {
+const ExportButton = ({
+  data,
+  columns,
+  fileName,
+  orientation = "portrait",
+}) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  console.log(data);
+  console.log(columns);
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -19,31 +25,37 @@ const ExportButton = ({ data, columns, fileName, orientation = "portrait" }) => 
 
     // Set document header
     doc.setFontSize(18);
-    doc.text(
-      "CareLink Solutions",
-      (pageWidth -
-        (doc.getStringUnitWidth("CareLink Solutions") *
-          doc.internal.getFontSize()) /
-          2) /
-        2,
-      15
-    );
-    doc.setFontSize(12);
-    doc.text(
-      `Employee Salary Sheet - ${fileName}`,
-      (pageWidth -
-        (doc.getStringUnitWidth(`Employee Salary Sheet - ${fileName}`) *
-          doc.internal.getFontSize()) /
-          2) /
-        2,
-      25
-    );
+    const headerText = "CareLink Solutions";
+    const headerWidth =
+      (doc.getStringUnitWidth(headerText) * doc.internal.getFontSize()) /
+      doc.internal.scaleFactor;
+    doc.text(headerText, (pageWidth - headerWidth) / 2, 15);
 
+    doc.setFontSize(12);
+    const subHeaderText = `Employee Salary Sheet - ${fileName}`;
+    const subHeaderWidth =
+      (doc.getStringUnitWidth(subHeaderText) * doc.internal.getFontSize()) /
+      doc.internal.scaleFactor;
+    doc.text(subHeaderText, (pageWidth - subHeaderWidth) / 2, 25);
+
+    // Prepare table data
+    const tableHead = columns.map((col) => col.header);
+    const tableBody = data.map((row) =>
+      columns.map((col) => (row[col.field] !== undefined ? row[col.field] : ""))
+    );
+    console.log(tableHead, tableBody);
     // Add table content
     doc.autoTable({
-      head: [columns.map((col) => col.header)],
-      body: data.map((row) => columns.map((col) => row[col.field])),
+      head: [tableHead],
+      body: tableBody,
       startY: 35, // Adjust starting position if needed
+      margin: { top: 10, bottom: 10 },
+      didDrawPage: (data) => {
+        // Ensure that the content fits within the page limits to prevent infinite loops
+        if (data.cursor.y > doc.internal.pageSize.height - 10) {
+          doc.addPage();
+        }
+      },
     });
 
     // Open PDF in new tab for printing
@@ -63,7 +75,7 @@ const ExportButton = ({ data, columns, fileName, orientation = "portrait" }) => 
         // Prepare CSV data
         const csvData = data.map((item) =>
           columns.reduce((acc, col) => {
-            acc[col.header] = item[col.field]; // Adjust this if necessary
+            acc[col.header] = item[col.field];
             return acc;
           }, {})
         );
@@ -74,7 +86,7 @@ const ExportButton = ({ data, columns, fileName, orientation = "portrait" }) => 
           key: column.field,
         }));
 
-        return (
+        const csvLink = (
           <CSVLink
             data={csvData}
             headers={csvHeaders}
@@ -86,6 +98,9 @@ const ExportButton = ({ data, columns, fileName, orientation = "portrait" }) => 
             CSV
           </CSVLink>
         );
+
+        csvLink.click();
+        break;
 
       case "excel":
         // Example for Excel export using XLSX library
@@ -101,7 +116,13 @@ const ExportButton = ({ data, columns, fileName, orientation = "portrait" }) => 
 
       case "copy":
         const textToCopy = data
-          .map((row) => columns.map((col) => row[col.field]).join("\t"))
+          .map((row) =>
+            columns
+              .map((col) =>
+                row[col.field] !== undefined ? row[col.field] : ""
+              )
+              .join("\t")
+          )
           .join("\n");
         navigator.clipboard.writeText(textToCopy).then(() => {
           alert("Data copied to clipboard");
