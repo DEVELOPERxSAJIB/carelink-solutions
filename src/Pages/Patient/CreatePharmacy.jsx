@@ -66,65 +66,25 @@ const CreatePharmacy = () => {
       additionalPharmacies: newAdditionalPharmacies,
     });
   };
-  const [formError, setFormError] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    if (!formData.pharmacyName) {
-      setFormError("Pharmacy Name required!");
-      return;
-    }
-    if (!formData.contactFirstName) {
-      setFormError("First Name required!");
-      return;
-    }
-    if (!formData.contactLastName) {
-      setFormError("Last Name required!");
-      return;
-    }
-    if (!formData.email) {
-      setFormError("Last Name required!");
-      return;
-    }
-    if (!formData.addressLine1) {
-      setFormError("Address Line 1 is required!");
-      return;
-    }
-    if (!city) {
-      setFormError("City is required!");
-      return;
-    }
-    if (!state) {
-      setFormError("state is required!");
-      return;
-    }
-    if (!formData.zip) {
-      setFormError("zip is required!");
-      return;
-    }
-    if (!formData.primaryPhone) {
-      setFormError("Primary Phone is required!");
-      return;
-    }else{
       console.log(formData);
-      setFormError("")
       formData.city = city;
       formData.state = state;
       createPharmacy(formData);
       localStorage.removeItem("Pharmacy")
-    }
+    
     
   };
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
     localStorage.setItem("Pharmacy", JSON.stringify(formData));
-    setFormError("");
     createPharmacy(formData);
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
     localStorage.setItem("Pharmacy", JSON.stringify(formData));
-    setFormError("");
   };
   useEffect(()=>{
  setCity(localStorageData?.city?localStorageData?.city:"")
@@ -132,7 +92,7 @@ const CreatePharmacy = () => {
   },[localStorageData])
   if (isLoading) return <AuthLoader />;
   return (
-    <form onSubmit={handleSubmit} className="card">
+    <form  onSubmit={handleSubmit} className="card">
       <div className="card-body">
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <PageHeader title="Pharmacy" className="card-header fs-3" />
@@ -146,9 +106,7 @@ const CreatePharmacy = () => {
               {error?.data?.message}
             </div>
           )}
-          {formError && (
-            <div className="alert alert-danger text-center">{formError}</div>
-          )}
+         
           {/* Pharmacy Information */}
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingPharmacyInfo">
@@ -169,7 +127,7 @@ const CreatePharmacy = () => {
               aria-labelledby="headingPharmacyInfo"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="mb-3">
                   <label htmlFor="pharmacyName" className="form-label">
                     Pharmacy Name:
@@ -357,7 +315,7 @@ const CreatePharmacy = () => {
               aria-labelledby="headingAdditionalPharmacies"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="row mb-3">
                   {formData.additionalPharmacies.map((pharmacy, index) => (
                     <div key={index} className="col-md-6">
@@ -403,7 +361,7 @@ const CreatePharmacy = () => {
             save
           </button>
           <button
-            onClick={handleSaveAndContinue}
+            onSubmit={handleSaveAndContinue}
             type="submit"
             className="btn btn-warning me-2"
           >

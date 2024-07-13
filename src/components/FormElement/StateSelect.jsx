@@ -73,7 +73,7 @@ const StateSelect = ({ selectedState, setSelectedState }) => {
         options={stateOptions}
         placeholder="Select..."
         isClearable={true}
-        required
+        required={false}
       />
     
   );

@@ -6,6 +6,7 @@ import Template from "./../../components/FormElement/Template";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import CountySelect from "./../../components/FormElement/CountySelect";
 import CitySelect from "../../components/FormElement/CitySelect";
+
 const CreateEmergencyPreparedness = () => {
   const [createEmergency, { data, isLoading, error }] =
     useCreateEmergencyMutation();
@@ -13,17 +14,12 @@ const CreateEmergencyPreparedness = () => {
   const [state, setState] = useState("");
   const [county, setCounty] = useState("");
   const [template, setTemplate] = useState("");
+  const [addTemplate, setAddTemplate] = useState("");
   const localStorageData = JSON.parse(localStorage.getItem("Emergency"));
 
   const initialFormData = {
     emergencyTriage: localStorageData?.emergencyTriage ?? "",
-    additionalInfo: {
-      needsAssistance:
-        localStorageData?.additionalInfo?.needsAssistance ?? false,
-      contactWithOfficials:
-        localStorageData?.additionalInfo?.contactWithOfficials ?? false,
-      medicalNeeds: localStorageData?.additionalInfo?.medicalNeeds ?? false,
-    },
+    emergencyPrepInfo: [],
     medicalNeedsInfo: localStorageData?.medicalNeedsInfo ?? "",
     evacuationZone: localStorageData?.evacuationZone ?? "",
     evacuationAddress: localStorageData?.evacuationAddress ?? false,
@@ -31,106 +27,91 @@ const CreateEmergencyPreparedness = () => {
     additionalComments: localStorageData?.additionalComments ?? "",
     visitLocation: localStorageData?.visitLocation ?? false,
     comments: localStorageData?.comments ?? "",
+    mobilePhone: localStorageData?.mobilePhone ?? "",
+    altMobilePhone: localStorageData?.altMobilePhone ?? "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [formError, setFormError] = useState("");
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    if (name === "additionalInfo") {
-      // Handle checkboxes inside additionalInfo object
-      setFormData({
-        ...formData,
-        additionalInfo: {
-          ...formData.additionalInfo,
-          [value]: !formData.additionalInfo[value], // Toggle the checkbox value
-        },
-      });
+    if (name === "emergencyPrepInfo") {
+      setFormData((prevState) => ({
+        ...prevState,
+        emergencyPrepInfo: checked
+          ? [...prevState.emergencyPrepInfo, value]
+          : prevState.emergencyPrepInfo.filter((item) => item !== value),
+      }));
     } else if (type === "checkbox") {
-      // Handle regular checkboxes
       setFormData({
         ...formData,
-        [name]: checked, // Update the state with the checkbox value
+        [name]: checked,
       });
     } else if (type === "radio") {
       // Handle radio inputs
       setFormData({
         ...formData,
-        [name]: value, // Update the state with the radio button value
+        [name]: value,
       });
     } else {
-      // Handle regular input fields and textareas
       setFormData({
         ...formData,
-        [name]: value, // Update the state with the input value
+        [name]: value,
       });
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.emergencyTriage) {
-      setFormError("Emergency Triage is required");
-      return;
-    }
-
-    if (!formData.evacuationAddress) {
-      setFormError("Evacuation Address is required");
-      return;
-    }
-    if (!city) {
-      setFormError("City is required");
-      return;
-    }
-    if (!state) {
-      setFormError("State is required");
-      return;
-    }
-    if (!county) {
-      setFormError("County is required");
-      return;
-    }
-    if (formData.mobilePhone) {
-      setFormError("Mobile Phone is required");
-      return;
-    } else {
-      createEmergency(formData);
-      console.log(formData);
-    }
+    formData.city = city;
+    formData.state = state;
+    formData.county = county;
+    createEmergency(formData);
+    console.log(formData);
   };
 
-  const handleSaveAndContinue = () => {
+  const handleSaveAndContinue = (e) => {
+    e.preventDefault();
+    formData.city = city;
+    formData.state = state;
+    formData.county = county;
     createEmergency(formData);
     localStorage.setItem("Emergency", JSON.stringify(formData));
   };
 
   const handleSaveAndExit = (e) => {
     e.preventDefault();
+    formData.city = city;
+    formData.state = state;
+    formData.county = county;
     localStorage.setItem("Emergency", JSON.stringify(formData));
-    setFormError("");
   };
-  useEffect(() => {
-    setFormData((prev) => ({
-      ...prev,
-      comments:
-        (prev.comments + "\n" || "") +
-        (template?.value ? template?.value + "\n" : ""),
-    }));
-  }, [template?.value]);
-  // additionalComments: localStorageData?.additionalComments ?? "",
 
   useEffect(() => {
-    setFormData((prev) => ({
-      ...prev,
-      additionalComments:
-        (prev.additionalComments + "\n" || "") +
-        (template?.value ? template?.value + "\n" : ""),
-    }));
+    if (template?.value) {
+      setFormData((prev) => ({
+        ...prev,
+        additionalComments:
+          prev.additionalComments +
+          (prev.additionalComments ? "\n" : "") +
+          template.value,
+      }));
+    }
+  }, [template?.value]);
+  useEffect(() => {
+    if (template?.value) {
+      setFormData((prev) => ({
+        ...prev,
+        comments:
+          prev.comments +
+          (prev.comments ? "\n" : "") +
+          template.value,
+      }));
+    }
   }, [template?.value]);
 
   if (isLoading) return <AuthLoader />;
-
   return (
     <form onSubmit={handleSubmit} className="card">
       <div className="card-body">
@@ -148,9 +129,6 @@ const CreateEmergencyPreparedness = () => {
             <div className="alert alert-danger text-center">
               {error.data.message}
             </div>
-          )}
-          {formError && (
-            <div className="alert alert-danger text-center">{formError}</div>
           )}
 
           {/* Emergency Triage Information */}
@@ -173,7 +151,7 @@ const CreateEmergencyPreparedness = () => {
               aria-labelledby="headingEmergencyTriage"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="mb-3">
                   <label htmlFor="emergencyTriage" className="form-label">
                     Emergency Triage
@@ -225,28 +203,32 @@ const CreateEmergencyPreparedness = () => {
                   </div>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="additionalInfo" className="form-label">
+                  <label htmlFor="emergencyPrepInfo" className="form-label">
                     Additional Emergency Preparedness Information
                   </label>
                   <div>
                     <input
                       type="checkbox"
-                      name="additionalInfo"
+                      name="emergencyPrepInfo"
                       id="needsAssistance"
                       value="needsAssistance"
                       onChange={handleInputChange}
-                      checked={formData.additionalInfo.needsAssistance}
+                      checked={formData.emergencyPrepInfo.includes(
+                        "needsAssistance"
+                      )}
                     />{" "}
                     Needs assistance during an emergency
                   </div>
                   <div>
                     <input
                       type="checkbox"
-                      name="additionalInfo"
+                      name="emergencyPrepInfo"
                       id="contactWithOfficials"
                       value="contactWithOfficials"
                       onChange={handleInputChange}
-                      checked={formData.additionalInfo.contactWithOfficials}
+                      checked={formData.emergencyPrepInfo.includes(
+                        "contactWithOfficials"
+                      )}
                     />{" "}
                     Contact made with local/state emergency preparedness
                     officials regarding patient in need of help during an
@@ -255,16 +237,18 @@ const CreateEmergencyPreparedness = () => {
                   <div>
                     <input
                       type="checkbox"
-                      name="additionalInfo"
+                      name="emergencyPrepInfo"
                       id="medicalNeeds"
                       value="medicalNeeds"
                       onChange={handleInputChange}
-                      checked={formData.additionalInfo.medicalNeeds}
+                      checked={formData.emergencyPrepInfo.includes(
+                        "medicalNeeds"
+                      )}
                     />{" "}
                     Medical Needs/Equipment (i.e., bedbound, oxygen, vent, IV
                     cardiac meds other DME)
                   </div>
-                  {formData.additionalInfo.medicalNeeds && (
+                  {formData.emergencyPrepInfo.medicalNeeds && (
                     <div>
                       <label htmlFor="medicalNeedsInfo" className="form-label">
                         Medical Needs/Equipment Details
@@ -303,11 +287,11 @@ const CreateEmergencyPreparedness = () => {
               aria-labelledby="headingAdditionalInfo"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="row mb-3">
                   <div className="col-md-12">
                     <label htmlFor="additionalComments">Select Templates</label>
-                    <Template />
+                    <Template addTemplate={addTemplate} setSelectedTemplate={setAddTemplate}/>
                     <span>You have 2000 characters remaining</span>
                     <textarea
                       name="additionalComments"
@@ -342,7 +326,7 @@ const CreateEmergencyPreparedness = () => {
               aria-labelledby="headingEvacuation"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="row mb-3">
                   <div className="col-md-12">
                     <label htmlFor="evacuationZone" className="form-label">
@@ -432,6 +416,30 @@ const CreateEmergencyPreparedness = () => {
                         placeholder="Enter ZIP Code"
                       />
                     </div>
+                    <div className="col-md-6 mb-3">
+                      <label htmlFor="zip">Mobile Phone</label>
+                      <input
+                        type="text"
+                        name="mobilePhone"
+                        id="mobilePhone"
+                        className="form-control"
+                        value={formData.mobilePhone}
+                        onChange={handleInputChange}
+                        placeholder="Enter Mobile phone number"
+                      />
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <label htmlFor="zip">Alternative MobilePhone</label>
+                      <input
+                        type="text"
+                        name="altMobilePhone"
+                        id="altMobilePhone"
+                        className="form-control"
+                        value={formData.altMobilePhone}
+                        onChange={handleInputChange}
+                        placeholder="Enter alternative phone number"
+                      />
+                    </div>
                     <div className="col-md-12">
                       <div className="col-md-12 my-2">
                         <input
@@ -470,7 +478,7 @@ const CreateEmergencyPreparedness = () => {
               aria-labelledby="headingComments"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <label htmlFor="">Template</label>
                 <Template
                   selectedTemplate={template}
@@ -508,7 +516,7 @@ const CreateEmergencyPreparedness = () => {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={handleSaveAndContinue}
+                onSubmit={handleSaveAndContinue}
               >
                 Save & Continue
               </button>

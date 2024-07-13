@@ -3,6 +3,7 @@ import Template from "./../../components/FormElement/Template";
 import { useCreateClinicalDiagnosisMutation } from "../../Redux/api/ClinicalDiagnosis";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
+
 const CreateClinicalAndDiagnoses = () => {
   const [createClinicalDiagnosis, { data, error, isLoading }] =
     useCreateClinicalDiagnosisMutation();
@@ -10,35 +11,18 @@ const CreateClinicalAndDiagnoses = () => {
     localStorage.getItem("ClinicalDiagnosis")
   );
   const [template, setTemplate] = useState("");
+
   const initialFormData = {
-    serviceRequired: {
-      SN: localStorageClinicalDiagnosis?.serviceRequired?.SN || "",
-      HHA: localStorageClinicalDiagnosis?.serviceRequired?.HHA || "",
-      PT: localStorageClinicalDiagnosis?.serviceRequired?.PT || "",
-      OT: localStorageClinicalDiagnosis?.serviceRequired?.OT || "",
-      ST: localStorageClinicalDiagnosis?.serviceRequired?.ST || "",
-      MSW: localStorageClinicalDiagnosis?.serviceRequired?.MSW || "",
-      heightIn: localStorageClinicalDiagnosis?.serviceRequired?.heightIn || "",
-      heightCm: localStorageClinicalDiagnosis?.serviceRequired?.heightCm || "",
-      weightLb: localStorageClinicalDiagnosis?.serviceRequired?.weightLb || "",
-      weightKg: localStorageClinicalDiagnosis?.serviceRequired?.weightKg || "",
+    serviceRequired: [],
+    height: {
+      value: "",
+      unit: "",
     },
-    dmeNeeded: {
-      bedsideCommode:
-        localStorageClinicalDiagnosis?.dmeNeeded?.bedsideCommode || "",
-      cane: localStorageClinicalDiagnosis?.dmeNeeded?.cane || "",
-      elevatedToiletSeat:
-        localStorageClinicalDiagnosis?.dmeNeeded?.elevatedToiletSeat || "",
-      grabBars: localStorageClinicalDiagnosis?.dmeNeeded?.grabBars || "",
-      hospitalBed: localStorageClinicalDiagnosis?.dmeNeeded?.hospitalBed || "",
-      nebulizer: localStorageClinicalDiagnosis?.dmeNeeded?.nebulizer || "",
-      oxygen: localStorageClinicalDiagnosis?.dmeNeeded?.oxygen || "",
-      tubShowerBench:
-        localStorageClinicalDiagnosis?.dmeNeeded?.tubShowerBench || "",
-      walker: localStorageClinicalDiagnosis?.dmeNeeded?.walker || "",
-      wheelchair: localStorageClinicalDiagnosis?.dmeNeeded?.wheelchair || "",
-      other: localStorageClinicalDiagnosis?.dmeNeeded?.other || "",
+    weight: {
+      value: "",
+      unit: "",
     },
+    dmeNeeded: [],
     primaryDiagnosis: localStorageClinicalDiagnosis?.primaryDiagnosis || "",
     primaryDiagnosisCode:
       localStorageClinicalDiagnosis?.primaryDiagnosisCode || "",
@@ -48,41 +32,51 @@ const CreateClinicalAndDiagnoses = () => {
     clinicalComments: localStorageClinicalDiagnosis?.clinicalComments || "",
   };
 
-  // State to hold formData, initializing with localStorage data if available
   const [formData, setFormData] = useState(
     localStorageClinicalDiagnosis || initialFormData
   );
-
+  console.log(formData)
   const handleInputChange = (e, index) => {
     const { name, value, type, checked } = e.target;
     const isCheckbox = type === "checkbox";
 
     if (name.startsWith("serviceRequired")) {
-      const key = name.split(".")[1];
+
       setFormData((prevData) => ({
         ...prevData,
-        serviceRequired: {
-          ...prevData.serviceRequired,
-          [key]: isCheckbox ? (checked ? "true" : "false") : value,
-        },
+        serviceRequired: isCheckbox
+          ? checked
+            ? [...prevData.serviceRequired, value]
+            : prevData.serviceRequired.filter((item) => item !== value)
+          : prevData.serviceRequired,
       }));
     } else if (name.startsWith("dmeNeeded")) {
-      const key = name.split(".")[1];
+
       setFormData((prevData) => ({
         ...prevData,
-        dmeNeeded: {
-          ...prevData.dmeNeeded,
-          [key]: isCheckbox ? (checked ? "true" : "false") : value,
-        },
+        dmeNeeded: isCheckbox
+          ? checked
+            ? [...prevData.dmeNeeded, value]
+            : prevData.dmeNeeded.filter((item) => item !== value)
+          : prevData.dmeNeeded,
       }));
     } else if (name.startsWith("otherDiagnoses")) {
-      const fieldName = name.split(".")[2]; // Extracting 'diagnosis' or 'code'
+      const fieldName = name.split(".")[2];
       const updatedDiagnoses = [...formData.otherDiagnoses];
       updatedDiagnoses[index][fieldName] = value;
       setFormData({
         ...formData,
         otherDiagnoses: updatedDiagnoses,
       });
+    } else if (name.includes(".")) {
+      const [outerKey, innerKey] = name.split(".");
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [outerKey]: {
+          ...prevFormData[outerKey],
+          [innerKey]: value,
+        },
+      }));
     } else {
       setFormData({
         ...formData,
@@ -112,6 +106,7 @@ const CreateClinicalAndDiagnoses = () => {
     e.preventDefault();
     console.log(formData);
     createClinicalDiagnosis(formData);
+    localStorage.removeItem("ClinicalDiagnosis");
   };
 
   const handleSaveAndExit = (e) => {
@@ -121,12 +116,10 @@ const CreateClinicalAndDiagnoses = () => {
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    localStorage.setItem(
-      "ClinicalDiagnosis",
-      JSON.stringify(createClinicalDiagnosis)
-    );
+    localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
     createClinicalDiagnosis(formData);
   };
+
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
@@ -135,11 +128,13 @@ const CreateClinicalAndDiagnoses = () => {
         (template?.value ? template.value + "\n\n" : ""),
     }));
   }, [template]);
+
   if (isLoading) return <AuthLoader />;
+
   return (
-    <form className="card" onSubmit={handleAdmit}>
+    <form onSubmit={handleAdmit} className="card">
       <div className="card-body">
-        <PageHeader title="Pharmacy" className="card-header fs-3" />
+        <PageHeader title="Clinical/Diagnosis" className="card-header fs-3" />
         {data?.message && (
           <div className="alert alert-success text-center">{data?.message}</div>
         )}
@@ -168,15 +163,16 @@ const CreateClinicalAndDiagnoses = () => {
               aria-labelledby="headingServiceRequired"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 {["SN", "HHA", "PT", "OT", "ST", "MSW"].map((service) => (
                   <div className="form-check" key={service}>
                     <input
                       className="form-check-input"
                       type="checkbox"
                       id={service}
-                      name={`serviceRequired.${service}`}
-                      checked={formData.serviceRequired[service] === "true"}
+                      name="serviceRequired"
+                      value={service}
+                      checked={formData.serviceRequired.includes(service)}
                       onChange={handleInputChange}
                     />
                     <label className="form-check-label" htmlFor={service}>
@@ -186,66 +182,65 @@ const CreateClinicalAndDiagnoses = () => {
                 ))}
                 <div className="row mb-3">
                   <div className="col-md-6">
-                    <label htmlFor="heightIn" className="form-label">
-                      Height (in)
+                    <label htmlFor="heightValue" className="form-label">
+                      Height
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      id="heightIn"
-                      name="serviceRequired.heightIn"
-                      value={formData.serviceRequired.heightIn}
+                      id="heightValue"
+                      name="height.value"
+                      value={formData.height.value}
                       onChange={handleInputChange}
-                      placeholder="Enter height in inches"
-                      required
+                      placeholder="Enter height"
                     />
                   </div>
                   <div className="col-md-6">
-                    <label htmlFor="heightCm" className="form-label">
-                      Height (cm)
+                    <label htmlFor="heightUnit" className="form-label">
+                      Unit
                     </label>
-                    <input
-                      type="text"
+                    <select
                       className="form-control"
-                      id="heightCm"
-                      name="serviceRequired.heightCm"
-                      value={formData.serviceRequired.heightCm}
+                      id="heightUnit"
+                      name="height.unit"
+                      value={formData.height.unit}
                       onChange={handleInputChange}
-                      placeholder="Enter height in centimeters"
-                      required
-                    />
+                    >
+                      <option value="in">IN</option>
+                      <option value="cm">CM</option>
+                    </select>
                   </div>
                 </div>
+
                 <div className="row mb-3">
                   <div className="col-md-6">
-                    <label htmlFor="weightLb" className="form-label">
-                      Weight (lb)
+                    <label htmlFor="weightValue" className="form-label">
+                      Weight
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      id="weightLb"
-                      name="serviceRequired.weightLb"
-                      value={formData.serviceRequired.weightLb}
+                      id="weightValue"
+                      name="weight.value"
+                      value={formData.weight.value}
                       onChange={handleInputChange}
-                      placeholder="Enter weight in pounds"
-                      required
+                      placeholder="Enter weight"
                     />
                   </div>
                   <div className="col-md-6">
-                    <label htmlFor="weightKg" className="form-label">
-                      Weight (kg)
+                    <label htmlFor="weightUnit" className="form-label">
+                      Unit
                     </label>
-                    <input
-                      type="text"
+                    <select
                       className="form-control"
-                      id="weightKg"
-                      name="serviceRequired.weightKg"
-                      value={formData.serviceRequired.weightKg}
+                      id="weightUnit"
+                      name="weight.unit"
+                      value={formData.weight.unit}
                       onChange={handleInputChange}
-                      placeholder="Enter weight in kilograms"
-                      required
-                    />
+                    >
+                      <option value="lb">LB</option>
+                      <option value="kg">KG</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -271,7 +266,7 @@ const CreateClinicalAndDiagnoses = () => {
               aria-labelledby="headingDMENeeded"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 {[
                   "bedsideCommode",
                   "cane",
@@ -287,12 +282,14 @@ const CreateClinicalAndDiagnoses = () => {
                 ].map((dme) => (
                   <div className="form-check" key={dme}>
                     <input
+                    type="checkbox"
+                    id={dme}
+                    name="dmeNeeded"
+                    value={dme}
+                    checked={formData.dmeNeeded.includes(dme)}
+                    onChange={handleInputChange}
                       className="form-check-input"
-                      type="checkbox"
-                      id={dme}
-                      name={`dmeNeeded.${dme}`}
-                      checked={formData.dmeNeeded[dme] === "true"}
-                      onChange={handleInputChange}
+                    
                     />
                     <label className="form-check-label" htmlFor={dme}>
                       {dme}
@@ -304,25 +301,25 @@ const CreateClinicalAndDiagnoses = () => {
           </div>
 
           <div className="accordion-item">
-            <h2 className="accordion-header" id="headingPatientDiagnosis">
+            <h2 className="accordion-header" id="headingPrimaryDiagnosis">
               <button
                 className="accordion-button collapsed"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#collapsePatientDiagnosis"
+                data-bs-target="#collapsePrimaryDiagnosis"
                 aria-expanded="false"
-                aria-controls="collapsePatientDiagnosis"
+                aria-controls="collapsePrimaryDiagnosis"
               >
-                Patient Diagnosis
+                Primary Diagnosis
               </button>
             </h2>
             <div
-              id="collapsePatientDiagnosis"
+              id="collapsePrimaryDiagnosis"
               className="accordion-collapse collapse"
-              aria-labelledby="headingPatientDiagnosis"
+              aria-labelledby="headingPrimaryDiagnosis"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="row mb-3">
                   <div className="col-md-6">
                     <label htmlFor="primaryDiagnosis" className="form-label">
@@ -336,7 +333,6 @@ const CreateClinicalAndDiagnoses = () => {
                       value={formData.primaryDiagnosis}
                       onChange={handleInputChange}
                       placeholder="Enter primary diagnosis"
-                      required
                     />
                   </div>
                   <div className="col-md-6">
@@ -344,7 +340,7 @@ const CreateClinicalAndDiagnoses = () => {
                       htmlFor="primaryDiagnosisCode"
                       className="form-label"
                     >
-                      ICD-10-CM Code
+                      Primary Diagnosis Code
                     </label>
                     <input
                       type="text"
@@ -353,73 +349,85 @@ const CreateClinicalAndDiagnoses = () => {
                       name="primaryDiagnosisCode"
                       value={formData.primaryDiagnosisCode}
                       onChange={handleInputChange}
-                      placeholder="Enter ICD-10-CM code"
-                      required
+                      placeholder="Enter primary diagnosis code"
                     />
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="headingOtherDiagnoses">
+              <button
+                className="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOtherDiagnoses"
+                aria-expanded="false"
+                aria-controls="collapseOtherDiagnoses"
+              >
+                Other Diagnoses
+              </button>
+            </h2>
+            <div
+              id="collapseOtherDiagnoses"
+              className="accordion-collapse collapse"
+              aria-labelledby="headingOtherDiagnoses"
+              data-bs-parent="#ClinicalDiagnosisInfoAccordion"
+            >
+              <div className="accordion-body py-2">
                 {formData.otherDiagnoses.map((diagnosis, index) => (
                   <div className="row mb-3" key={index}>
                     <div className="col-md-6">
                       <label
-                        htmlFor={`otherDiagnoses.${index}.diagnosis`}
+                        htmlFor={`diagnosis-${index}`}
                         className="form-label"
                       >
-                        Other Diagnosis {index + 1}
+                        Diagnosis
                       </label>
                       <input
                         type="text"
                         className="form-control"
-                        id={`otherDiagnoses.${index}.diagnosis`}
+                        id={`diagnosis-${index}`}
                         name={`otherDiagnoses.${index}.diagnosis`}
                         value={diagnosis.diagnosis}
                         onChange={(e) => handleInputChange(e, index)}
-                        placeholder="Enter other diagnosis"
-                        required
+                        placeholder="Enter diagnosis"
                       />
                     </div>
                     <div className="col-md-6">
-                      <label
-                        htmlFor={`otherDiagnoses.${index}.code`}
-                        className="form-label"
-                      >
-                        ICD-10-CM Code {index + 1}
+                      <label htmlFor={`code-${index}`} className="form-label">
+                        Code
                       </label>
                       <input
                         type="text"
                         className="form-control"
-                        id={`otherDiagnoses.${index}.code`}
+                        id={`code-${index}`}
                         name={`otherDiagnoses.${index}.code`}
                         value={diagnosis.code}
                         onChange={(e) => handleInputChange(e, index)}
-                        placeholder="Enter ICD-10-CM code"
-                        required
+                        placeholder="Enter code"
                       />
                     </div>
-                    {index > 0 && (
-                      <div className="col-md-1 mt-4">
-                        <button
-                          type="button"
-                          className="btn btn-outline-danger"
-                          onClick={() => handleRemoveDiagnosis(index)}
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    )}
+                    <div className="col-md-12 mt-4">
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={() => handleRemoveDiagnosis(index)}
+                      >
+                        Remove 
+                      </button>
+                    </div>
                   </div>
                 ))}
-                <div className="row mb-3">
-                  <div className="col-md-12">
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={handleAddDiagnosis}
-                    >
-                      + Add Diagnosis
-                    </button>
-                  </div>
-                </div>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleAddDiagnosis}
+                >
+                  Add Diagnosis
+                </button>
               </div>
             </div>
           </div>
@@ -443,16 +451,7 @@ const CreateClinicalAndDiagnoses = () => {
               aria-labelledby="headingClinicalComments"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
-              <div className="accordion-body">
-                <div className="mb-3">
-                  <label htmlFor="templates" className="form-label">
-                    Templates
-                  </label>
-                  <Template
-                    selectedTemplate={template}
-                    setSelectedTemplate={setTemplate}
-                  />
-                </div>
+              <div className="accordion-body py-2">
                 <div className="mb-3">
                   <label htmlFor="clinicalComments" className="form-label">
                     Clinical Comments
@@ -467,27 +466,28 @@ const CreateClinicalAndDiagnoses = () => {
                     rows="3"
                   ></textarea>
                 </div>
+                <Template setTemplate={setTemplate} />
               </div>
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-end mt-3">
+        <div className="d-flex justify-content-end gap-3 mt-3">
           <button
-            type="submit"
-            className="btn btn-secondary me-2"
+            type="button"
+            className="btn btn-secondary"
             onClick={handleSaveAndExit}
           >
-            Save and Exit
+            Save & Exit
           </button>
           <button
-            type="submit"
-            className="btn btn-primary me-2"
-            onClick={handleSaveAndContinue}
+            type="button"
+            className="btn btn-primary"
+            onSubmit={handleSaveAndContinue}
           >
-            Save and Continue
+            Save & Continue
           </button>
-          <button className="btn btn-success" type="submit">
-            Admit
+          <button type="submit" className="btn btn-success">
+            save
           </button>
         </div>
       </div>

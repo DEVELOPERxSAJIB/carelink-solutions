@@ -289,7 +289,6 @@ const PatientProfile = () => {
       ? localStoragePatient?.trackF2FDocumentation
       : "",
   });
-  const [fromError, setFormError] = useState("");
   const handleInputChange = (e, index) => {
     const { name, value, type, checked } = e.target;
 
@@ -320,124 +319,11 @@ const PatientProfile = () => {
     }
   };
 
-  const handleAdmit = async () => {
-    if (!formData.firstName) {
-      setFormError("Patient First name is required");
-      return;
-    }
-    if (!formData.lastName) {
-      setFormError("Patient Last name is required");
-      return;
-    }
-    if (!formData.gender) {
-      setFormError("Patient Gender is required");
-      return;
-    }
-    if (!formData.dateOfBirth) {
-      setFormError("Patient Date of birth is required");
-      return;
-    }
-    if (!formData.socialSecurityNumber) {
-      setFormError("SocialSecurity Number is required");
-      return;
-    }
-    if (!formData.mobilePhone) {
-      setFormError("Mobile Phone is required");
-      return;
-    }
-    if (!formData.emailAddress) {
-      setFormError("Email Address is required");
-      return;
-    }
-
-    if (!formData.clinicalManager) {
-      setFormError("Clinical Manager is required");
-      return;
-    }
-    if (!formData.caseManager) {
-      setFormError("Case Manager is required");
-      return;
-    }
-    if (!formData.clinician) {
-      setFormError("Clinician is required");
-      return;
-    }
-    if (!formData.branch) {
-      setFormError("Branch is required");
-      return;
-    }
-    if (!formData.patientIdMrn) {
-      setFormError("Patient Id/Mrn is required");
-      return;
-    }
-    if (!formData.defaultServiceLocation) {
-      setFormError("Default Service Location is required");
-      return;
-    }
-    if (!formData.primaryAddress1) {
-      setFormError("Primary Address1 is required");
-      return;
-    }
-    if (!formData.primaryZip) {
-      setFormError("Primary Zip is required");
-      return;
-    }
-    if (!primaryCounty) {
-      setFormError("Primary County is required");
-      return;
-    }
-    if (!primaryCity) {
-      error.data.message = "Primary city Required";
-      return;
-    }
-    if (!primaryState) {
-      setFormError("Primary State is required");
-      return;
-    }
-    if (!formData.mailingZip) {
-      setFormError("Mailing Zip 1 is required");
-      return;
-    }
-
-    if (!mailingCity) {
-      setFormError("Mailing city is required");
-      return;
-    }
-
-    if (!mailingState) {
-      setFormError("Mailing state 1 is required");
-      return;
-    }
-    if (!formData.visitAddress1) {
-      setFormError("Visit Address1  is required");
-      return;
-    }
-    if (!formData.visitAddress1) {
-      setFormError("Visit Address1  is required");
-      return;
-    }
-    if (!formData.preferredLanguage) {
-      setFormError("Preferred Language is required");
-      return;
-    }
-    if (!formData.episodeTiming) {
-      setFormError("Episode Timing is required");
-      return;
-    }
-    if (!formData.startOfCareDate) {
-      setFormError("Start Of Care Date is required");
-      return;
-    }
-    if (!formData.episodeStartDate) {
-      setFormError("Episode Start Date is required");
-      return;
-    }
-
-    setFormError("");
+  const handleAdmit = (e) => {
+    e.preventDefault();
     formData.primaryCounty = primaryCounty;
     formData.primaryCity = primaryCity;
     formData.primaryState = primaryState;
-
     formData.mailingCounty = mailingCounty;
     formData.mailingCity = mailingCity;
     formData.mailingState = mailingState;
@@ -446,120 +332,8 @@ const PatientProfile = () => {
     formData.visitState = visitState;
     createPatient(formData);
   };
-  const handleSaveAndContinue = () => {
-    if (!formData.firstName) {
-      setFormError("Patient First name is required");
-      return;
-    }
-    if (!formData.lastName) {
-      setFormError("Patient Last name is required");
-      return;
-    }
-    if (!formData.gender) {
-      setFormError("Patient Gender is required");
-      return;
-    }
-    if (!formData.dateOfBirth) {
-      setFormError("Patient Date of birth is required");
-      return;
-    }
-    if (!formData.socialSecurityNumber) {
-      setFormError("SocialSecurity Number is required");
-      return;
-    }
-    if (!formData.mobilePhone) {
-      setFormError("Mobile Phone is required");
-      return;
-    }
-    if (!formData.emailAddress) {
-      setFormError("Email Address is required");
-      return;
-    }
-
-    if (!formData.clinicalManager) {
-      setFormError("Clinical Manager is required");
-      return;
-    }
-    if (!formData.caseManager) {
-      setFormError("Case Manager is required");
-      return;
-    }
-    if (!formData.clinician) {
-      setFormError("Clinician is required");
-      return;
-    }
-    if (!formData.branch) {
-      setFormError("Branch is required");
-      return;
-    }
-    if (!formData.patientIdMrn) {
-      setFormError("Patient Id/Mrn is required");
-      return;
-    }
-    if (!formData.defaultServiceLocation) {
-      setFormError("Default Service Location is required");
-      return;
-    }
-    if (!formData.primaryAddress1) {
-      setFormError("Primary Address1 is required");
-      return;
-    }
-    if (!formData.primaryZip) {
-      setFormError("Primary Zip is required");
-      return;
-    }
-    if (!primaryCounty) {
-      setFormError("Primary County is required");
-      return;
-    }
-    if (!primaryCity) {
-      error.data.message = "Primary city Required";
-      return;
-    }
-    if (!primaryState) {
-      setFormError("Primary State is required");
-      return;
-    }
-    if (!formData.mailingZip) {
-      setFormError("Mailing Zip 1 is required");
-      return;
-    }
-
-    if (!mailingCity) {
-      setFormError("Mailing city is required");
-      return;
-    }
-
-    if (!mailingState) {
-      setFormError("Mailing state 1 is required");
-      return;
-    }
-    if (!formData.visitAddress1) {
-      setFormError("Visit Address1  is required");
-      return;
-    }
-    if (!formData.visitAddress1) {
-      setFormError("Visit Address1  is required");
-      return;
-    }
-    if (!formData.preferredLanguage) {
-      setFormError("Preferred Language is required");
-      return;
-    }
-    if (!formData.episodeTiming) {
-      setFormError("Episode Timing is required");
-      return;
-    }
-    if (!formData.startOfCareDate) {
-      setFormError("Start Of Care Date is required");
-      return;
-    }
-    if (!formData.episodeStartDate) {
-      setFormError("Episode Start Date is required");
-      return;
-    }
-
-    setFormError("");
+  const handleSaveAndContinue = (e) => {
+    e.preventDefault();
     formData.primaryCounty = primaryCounty;
     formData.primaryCity = primaryCity;
     formData.primaryState = primaryState;
@@ -570,16 +344,14 @@ const PatientProfile = () => {
     formData.visitCounty = visitCounty;
     formData.visitCity = visitCity;
     formData.visitState = visitState;
-    console.log(formData);
     localStorage.setItem("Patient", JSON.stringify(formData));
-    // createPatient(formData);
+    createPatient(formData);
   };
-  const handleSaveAndExit = () => {
-    setFormError("");
+  const handleSaveAndExit = (e) => {
+    e.preventDefault();
     formData.primaryCounty = primaryCounty;
     formData.primaryCity = primaryCity;
     formData.primaryState = primaryState;
-
     formData.mailingCounty = mailingCounty;
     formData.mailingCity = mailingCity;
     formData.mailingState = mailingState;
@@ -590,17 +362,17 @@ const PatientProfile = () => {
   };
   useEffect(() => {
     if (localStoragePatient) {
-        setPrimaryCounty(localStoragePatient.primaryCounty || "");
-        setMailingCounty(localStoragePatient.mailingCounty || "");
-        setVisitCounty(localStoragePatient.visitCounty || "");
-        setPrimaryState(localStoragePatient.primaryState || "");
-        setMailingState(localStoragePatient.mailingState || "");
-        setVisitState(localStoragePatient.visitState || "");
-        setPrimaryCity(localStoragePatient.primaryCity || "");
-        setMailingCity(localStoragePatient.mailingCity || "");
-        setVisitCity(localStoragePatient.visitCity || "");
+      setPrimaryCounty(localStoragePatient.primaryCounty || "");
+      setMailingCounty(localStoragePatient.mailingCounty || "");
+      setVisitCounty(localStoragePatient.visitCounty || "");
+      setPrimaryState(localStoragePatient.primaryState || "");
+      setMailingState(localStoragePatient.mailingState || "");
+      setVisitState(localStoragePatient.visitState || "");
+      setPrimaryCity(localStoragePatient.primaryCity || "");
+      setMailingCity(localStoragePatient.mailingCity || "");
+      setVisitCity(localStoragePatient.visitCity || "");
     }
-}, [localStoragePatient]);
+  }, [localStoragePatient]);
 
   if (isLoading) return <AuthLoader />;
   return (
@@ -616,9 +388,6 @@ const PatientProfile = () => {
             <div className="alert alert-danger text-center">
               {error?.data?.message}
             </div>
-          )}
-          {fromError && (
-            <div className="alert alert-danger text-center">{fromError}</div>
           )}
         </div>
         <div className="accordion-item">

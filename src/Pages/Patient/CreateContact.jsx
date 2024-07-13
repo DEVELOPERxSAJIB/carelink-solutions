@@ -40,6 +40,7 @@ const ContactForm = () => {
       county: "",
     },
   });
+  console.log(formData);
   const [emergencyContacts, setEmergencyContacts] = useState({
     primary: {
       firstName: "",
@@ -145,12 +146,13 @@ const ContactForm = () => {
     });
   };
   const handleFormChange = (field, value) => {
+    console.log(field, value);
     setFormData({
       ...formData,
-      [field]: value,
+      patientSelectedRepresentativeOption: value,
     });
   };
-
+console.log(formData?.patientSelectedRepresentativeOption)
   const handleCheckboxChange = (field) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -184,33 +186,14 @@ const ContactForm = () => {
     setRemainingCharacters(2000 - text.length);
   };
 
-  const clearSelectedItems = () => {
-    setSelectedTemplate("");
-    setComments("");
-    setRemainingCharacters(2000);
-  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Ensure all required fields are filled (validate as per your application's requirements)
-
-      // Prepare the contact data to be sent to the API
       const contactData = {
-        representativeContacted: formData.representativeContacted,
-        legalRepresentativeOption: formData.legalRepresentativeOption,
-        patientSelectedRepresentativeOption:
-          formData.patientSelectedRepresentativeOption,
-        otherDetails: formData.otherDetails,
-        physicianNotified: formData.physicianNotified,
-        patientNotified: formData.patientNotified,
-        previousField1: formData.previousField1,
-        previousField2: formData.previousField2,
-        doNotContactCAHPS: formData.doNotContactCAHPS,
-        reasonForNoContact: formData.reasonForNoContact,
-        otherReason: formData.otherReason,
-        alternateCAHPSContact: formData.alternateCAHPSContact,
+        ...formData,
         alternateCAHPSContactDetails: {
           ...formData.alternateCAHPSContactDetails,
           city: CAHPSCity,
@@ -233,36 +216,37 @@ const ContactForm = () => {
         comments,
         remainingCharacters,
       };
-
-      const mutationResult = await createContact(contactData);
-
-      console.log("Contact created:", mutationResult);
-      clearSelectedItems();
+      createContact(contactData);
     } catch (error) {
       console.error("Error creating contact:", error);
     }
   };
   useEffect(() => {
     setComments((prev) =>
-      prev ? prev + (selectedTemplate?.value || "<br/> <br/> <br/> <br/> ") : selectedTemplate?.value || "<br/>"
+      prev
+        ? prev + (selectedTemplate?.value || "<br/> <br/> <br/> <br/> ")
+        : selectedTemplate?.value || "<br/>"
     );
   }, [selectedTemplate]);
-  
-if (isLoading) return <AuthLoader />;
+
+  if (isLoading) return <AuthLoader />;
   return (
-    <form onSubmit={handleSubmit} className="card">
+    <form   onSubmit={handleSubmit} className="card">
       <PageHeader title="Contact" className="card-header fs-3" />
-      {data?.message && (
-        <div className="alert alert-success text-center">{data?.message}</div>
-      )}
-      {error?.data?.message && (
-        <div className="alert alert-danger text-center">
-          {error?.data?.message}
-        </div>
-      )}
+
       <div className="card-body">
         <div className="accordion" id="emergencyContactsAccordion">
           {/* Primary Emergency Contact */}
+          {data?.message && (
+            <div className="alert alert-success text-center">
+              {data?.message}
+            </div>
+          )}
+          {error?.data?.message && (
+            <div className="alert alert-danger text-center">
+              {error?.data?.message}
+            </div>
+          )}
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingPrimary">
               <button
@@ -282,7 +266,7 @@ if (isLoading) return <AuthLoader />;
               aria-labelledby="headingPrimary"
               data-bs-parent="#emergencyContactsAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label htmlFor="primaryFirstName" className="form-label">
@@ -586,7 +570,7 @@ if (isLoading) return <AuthLoader />;
                 aria-labelledby={`additionalHeading-${index}`}
                 data-bs-parent="#emergencyContactsAccordion"
               >
-                <div className="accordion-body">
+                <div className="accordion-body py-2">
                   <div className="row g-3">
                     <div className="col-md-6">
                       <label
@@ -952,7 +936,7 @@ if (isLoading) return <AuthLoader />;
               aria-labelledby="headingRepresentativeContacted"
               data-bs-parent="#admissionFormAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="mb-3">
                   <label>Representative contacted regarding admission:</label>
                   <select
@@ -1177,7 +1161,7 @@ if (isLoading) return <AuthLoader />;
               aria-labelledby="headingCAHPS"
               data-bs-parent="#admissionFormAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="mb-3">
                   <div className="form-check">
                     <input
@@ -1572,7 +1556,7 @@ if (isLoading) return <AuthLoader />;
 
             <button
               type="submit"
-              onClick={clearSelectedItems}
+        
               className="btn btn-primary my-5 text-"
             >
               submit

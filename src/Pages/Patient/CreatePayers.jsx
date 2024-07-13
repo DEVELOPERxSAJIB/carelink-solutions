@@ -1,24 +1,39 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import AuthLoader from "../../utils/Loaders/AuthLoader";
 import PageHeader from "../../components/FormElement/PageHeader";
 
 import { useCreatePayerMutation } from "../../Redux/api/PayerApi";
-import Template from './../../components/FormElement/Template';
+import Template from "./../../components/FormElement/Template";
 
 const CreatePayers = () => {
   const [createPayer, { data, isLoading, error }] = useCreatePayerMutation();
   const localStoragePatient = JSON.parse(localStorage.getItem("Payer"));
-  const [formError, setFormError] = useState("");
   const [template, setTemplate] = useState("");
   const [formData, setFormData] = useState({
-    mbiNumber: localStoragePatient?.mbiNumber?localStoragePatient?.mbiNumber:"",
-    hicNumber: localStoragePatient?.hicNumber?localStoragePatient?.hicNumber:"",
-    medicaidNumber:  localStoragePatient?.medicaidNumber?localStoragePatient?.medicaidNumber:"",
-    alternateMedicaidNumber: localStoragePatient?.alternateMedicaidNumber?localStoragePatient?.alternateMedicaidNumber:"",
-    primaryInsurance: localStoragePatient?.primaryInsurance?localStoragePatient?.primaryInsurance:"",
-    secondaryInsurance: localStoragePatient?.secondaryInsurance?localStoragePatient?.secondaryInsurance:"",
-    tertiaryInsurance: localStoragePatient?.tertiaryInsurance?localStoragePatient?.tertiaryInsurance:"",
-    payerComments: localStoragePatient?.payerComments?localStoragePatient?.payerComments:"",
+    mbiNumber: localStoragePatient?.mbiNumber
+      ? localStoragePatient?.mbiNumber
+      : "",
+    hicNumber: localStoragePatient?.hicNumber
+      ? localStoragePatient?.hicNumber
+      : "",
+    medicaidNumber: localStoragePatient?.medicaidNumber
+      ? localStoragePatient?.medicaidNumber
+      : "",
+    alternateMedicaidNumber: localStoragePatient?.alternateMedicaidNumber
+      ? localStoragePatient?.alternateMedicaidNumber
+      : "",
+    primaryInsurance: localStoragePatient?.primaryInsurance
+      ? localStoragePatient?.primaryInsurance
+      : "",
+    secondaryInsurance: localStoragePatient?.secondaryInsurance
+      ? localStoragePatient?.secondaryInsurance
+      : "",
+    tertiaryInsurance: localStoragePatient?.tertiaryInsurance
+      ? localStoragePatient?.tertiaryInsurance
+      : "",
+    payerComments: localStoragePatient?.payerComments
+      ? localStoragePatient?.payerComments
+      : "",
     occurrenceCodes: [
       { code: "", date: "" },
       { code: "", date: "" },
@@ -52,17 +67,34 @@ const CreatePayers = () => {
       "",
       "",
     ],
-    employmentRelated: localStoragePatient?.employmentRelated?localStoragePatient?.employmentRelated:"",
-    autoAccident: localStoragePatient?.autoAccident?localStoragePatient?.autoAccident:"",
-    claimCode: localStoragePatient?.claimCode?localStoragePatient?.claimCode:"",
-    unableToWorkFrom: localStoragePatient?.unableToWorkFrom?localStoragePatient?.unableToWorkFrom:"",
-    unableToWorkTo: localStoragePatient?.unableToWorkTo?localStoragePatient?.unableToWorkTo:"",
-    hospitalizationStartDate: localStoragePatient?.hospitalizationStartDate?localStoragePatient?.hospitalizationStartDate:"",
-    hospitalizationEndDate: localStoragePatient?.hospitalizationEndDate?localStoragePatient?.hospitalizationEndDate:"",
-    emergencyTreatmentIndicator: localStoragePatient?.emergencyTreatmentIndicator?localStoragePatient?.emergencyTreatmentIndicator:"",
+    employmentRelated: localStoragePatient?.employmentRelated
+      ? localStoragePatient?.employmentRelated
+      : "",
+    autoAccident: localStoragePatient?.autoAccident
+      ? localStoragePatient?.autoAccident
+      : "",
+    claimCode: localStoragePatient?.claimCode
+      ? localStoragePatient?.claimCode
+      : "",
+    unableToWorkFrom: localStoragePatient?.unableToWorkFrom
+      ? localStoragePatient?.unableToWorkFrom
+      : "",
+    unableToWorkTo: localStoragePatient?.unableToWorkTo
+      ? localStoragePatient?.unableToWorkTo
+      : "",
+    hospitalizationStartDate: localStoragePatient?.hospitalizationStartDate
+      ? localStoragePatient?.hospitalizationStartDate
+      : "",
+    hospitalizationEndDate: localStoragePatient?.hospitalizationEndDate
+      ? localStoragePatient?.hospitalizationEndDate
+      : "",
+    emergencyTreatmentIndicator:
+      localStoragePatient?.emergencyTreatmentIndicator
+        ? localStoragePatient?.emergencyTreatmentIndicator
+        : "",
     // Add more fields here
   });
-  
+
   const handleChange = (field, value) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -71,66 +103,24 @@ const CreatePayers = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.mbiNumber) {
-      setFormError("MBI Number is required");
-      return;
-    }
-    if (!formData.medicaidNumber) {
-      setFormError("Medicaid Number is required");
-      return;
-    }
-    if (!formData.primaryInsurance) {
-      setFormError("Primary Insurance is required");
-      return;
-    } else {
-      localStorage.setItem("Payer",JSON.stringify(formData))
-      setFormData("");
-      createPayer(formData);
-    }
+    createPayer(formData);
+    localStorage.setItem("Payer", JSON.stringify(formData));
   };
 
-  const handleAdmit = () => {};
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    if (!formData.mbiNumber) {
-      setFormError("MBI Number is required");
-      return;
-    }
-    if (!formData.medicaidNumber) {
-      setFormError("Medicaid Number is required");
-      return;
-    }
-    if (!formData.primaryInsurance) {
-      setFormError("Primary Insurance is required");
-      return;
-    } else {
-      localStorage.setItem("Payer",JSON.stringify(formData))
-      setFormData("");
-      createPayer(formData);
-    }
+    localStorage.setItem("Payer", JSON.stringify(formData));
+    createPayer(formData);
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    if (!formData.mbiNumber) {
-      setFormError("MBI Number is required");
-      return;
-    }
-    if (!formData.medicaidNumber) {
-      setFormError("Medicaid Number is required");
-      return;
-    }
-    if (!formData.primaryInsurance) {
-      setFormError("Primary Insurance is required");
-      return;
-    } else {
-      localStorage.setItem("Payer",JSON.stringify(formData))
-      setFormData("");
-    }
+    localStorage.setItem("Payer", JSON.stringify(formData));
   };
   useEffect(() => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      payerComments: prevFormData?.payerComments +template?.value?template?.value:""
+      payerComments:
+        prevFormData?.payerComments + template?.value ? template?.value : "",
     }));
   }, [template]);
   if (isLoading) return <AuthLoader />;
@@ -151,10 +141,8 @@ const CreatePayers = () => {
               {error?.data?.message}
             </div>
           )}
-          {formError && (
-            <div className="alert alert-close alert-danger text-center">{formError}</div>
-          )}
-         
+       
+
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingPrimary">
               <button
@@ -174,7 +162,7 @@ const CreatePayers = () => {
               aria-labelledby="headingPrimary"
               data-bs-parent="#payerAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label htmlFor="mbiNumber" className="form-label">
@@ -265,7 +253,7 @@ const CreatePayers = () => {
               aria-labelledby="headingInsurance"
               data-bs-parent="#payerAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="row g-3">
                   <div className="col-md-4">
                     <label htmlFor="primaryInsurance" className="form-label">
@@ -336,11 +324,14 @@ const CreatePayers = () => {
               aria-labelledby="headingPayerComments"
               data-bs-parent="#payerAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="row g-3">
                   <div className="col-md-12">
                     <label className="form-label">Selected Templates:</label>
-                   <Template selectedTemplate={template} setSelectedTemplate={setTemplate}/>
+                    <Template
+                      selectedTemplate={template}
+                      setSelectedTemplate={setTemplate}
+                    />
                   </div>
                   <div className="col-md-12">
                     <label htmlFor="payerComments" className="form-label">
@@ -382,68 +373,69 @@ const CreatePayers = () => {
               aria-labelledby="headingUB04Locators"
               data-bs-parent="#payerAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="row g-3">
                   <p>(UB-04 Locators 31 - 34) Occurrence Codes</p>
-                  {formData?.occurrenceCodes?.map((code, index) => (
-                    <React.Fragment key={`occurrenceCode-${index}`}>
-                      <div className="col-md-6">
-                        <label
-                          htmlFor={`occurrenceCode${index + 1}A`}
-                          className="form-label"
-                        >
-                          {`${31 + Math.floor(index / 2)}${
-                            index % 2 === 0 ? "A" : "B"
-                          } Code:`}
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id={`occurrenceCode${index + 1}A`}
-                          value={code.code}
-                          onChange={(e) => {
-                            const newOccurrenceCodes = [
-                              ...formData.occurrenceCodes,
-                            ];
-                            newOccurrenceCodes[index].code = e.target.value;
-                            setFormData((prevData) => ({
-                              ...prevData,
-                              occurrenceCodes: newOccurrenceCodes,
-                            }));
-                          }}
-                          placeholder={`Enter Code ${
-                            31 + Math.floor(index / 2)
-                          }${index % 2 === 0 ? "A" : "B"}`}
-                        />
-                      </div>
-                      <div className="col-md-6">
-                        <label
-                          htmlFor={`occurrenceCode${index + 1}ADate`}
-                          className="form-label"
-                        >
-                          {`${31 + Math.floor(index / 2)}${
-                            index % 2 === 0 ? "A" : "B"
-                          } Date:`}
-                        </label>
-                        <input
-                          type="date"
-                          className="form-control"
-                          id={`occurrenceCode${index + 1}ADate`}
-                          value={code.date}
-                          onChange={(e) => {
-                            const newOccurrenceCodes = [
-                              ...formData.occurrenceCodes,
-                            ];
-                            newOccurrenceCodes[index].date = e.target.value;
-                            setFormData((prevData) => ({
-                              ...prevData,
-                              occurrenceCodes: newOccurrenceCodes,
-                            }));
-                          }}
-                        />
-                      </div>
-                    </React.Fragment>
-                  ))}
+                  {formData?.occurrenceCodes &&
+                    formData?.occurrenceCodes?.map((code, index) => (
+                      <React.Fragment key={`occurrenceCode-${index}`}>
+                        <div className="col-md-6">
+                          <label
+                            htmlFor={`occurrenceCode${index + 1}A`}
+                            className="form-label"
+                          >
+                            {`${31 + Math.floor(index / 2)}${
+                              index % 2 === 0 ? "A" : "B"
+                            } Code:`}
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id={`occurrenceCode${index + 1}A`}
+                            value={code.code}
+                            onChange={(e) => {
+                              const newOccurrenceCodes = [
+                                ...formData.occurrenceCodes,
+                              ];
+                              newOccurrenceCodes[index].code = e.target.value;
+                              setFormData((prevData) => ({
+                                ...prevData,
+                                occurrenceCodes: newOccurrenceCodes,
+                              }));
+                            }}
+                            placeholder={`Enter Code ${
+                              31 + Math.floor(index / 2)
+                            }${index % 2 === 0 ? "A" : "B"}`}
+                          />
+                        </div>
+                        <div className="col-md-6">
+                          <label
+                            htmlFor={`occurrenceCode${index + 1}ADate`}
+                            className="form-label"
+                          >
+                            {`${31 + Math.floor(index / 2)}${
+                              index % 2 === 0 ? "A" : "B"
+                            } Date:`}
+                          </label>
+                          <input
+                            type="date"
+                            className="form-control"
+                            id={`occurrenceCode${index + 1}ADate`}
+                            value={code.date}
+                            onChange={(e) => {
+                              const newOccurrenceCodes = [
+                                ...formData.occurrenceCodes,
+                              ];
+                              newOccurrenceCodes[index].date = e.target.value;
+                              setFormData((prevData) => ({
+                                ...prevData,
+                                occurrenceCodes: newOccurrenceCodes,
+                              }));
+                            }}
+                          />
+                        </div>
+                      </React.Fragment>
+                    ))}
                 </div>
               </div>
             </div>
@@ -468,87 +460,89 @@ const CreatePayers = () => {
               aria-labelledby="headingUB04Spans"
               data-bs-parent="#payerAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="row g-3">
                   <p>(UB-04 Spans 35 - 36) Occurrence Spans</p>
-                  {formData?.occurrenceSpans?.map((span, index) => (
-                    <React.Fragment key={`occurrenceSpan-${index}`}>
-                      <div className="col-md-4">
-                        <label
-                          htmlFor={`occurrenceSpan${index + 1}Code`}
-                          className="form-label"
-                        >
-                          {`${35 + index} Code:`}
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id={`occurrenceSpan${index + 1}Code`}
-                          value={span.code}
-                          onChange={(e) => {
-                            const newOccurrenceSpans = [
-                              ...formData.occurrenceSpans,
-                            ];
-                            newOccurrenceSpans[index].code = e.target.value;
-                            setFormData((prevData) => ({
-                              ...prevData,
-                              occurrenceSpans: newOccurrenceSpans,
-                            }));
-                          }}
-                          placeholder={`Enter Code ${35 + index}`}
-                        />
-                      </div>
-                      <div className="col-md-4">
-                        <label
-                          htmlFor={`occurrenceSpan${index + 1}StartDate`}
-                          className="form-label"
-                        >
-                          {`${35 + index} Start Date:`}
-                        </label>
-                        <input
-                          type="date"
-                          className="form-control"
-                          id={`occurrenceSpan${index + 1}StartDate`}
-                          value={span.startDate}
-                          onChange={(e) => {
-                            const newOccurrenceSpans = [
-                              ...formData.occurrenceSpans,
-                            ];
-                            newOccurrenceSpans[index].startDate =
-                              e.target.value;
-                            setFormData((prevData) => ({
-                              ...prevData,
-                              occurrenceSpans: newOccurrenceSpans,
-                            }));
-                          }}
-                        />
-                      </div>
-                      <div className="col-md-4">
-                        <label
-                          htmlFor={`occurrenceSpan${index + 1}EndDate`}
-                          className="form-label"
-                        >
-                          {`${35 + index} End Date:`}
-                        </label>
-                        <input
-                          type="date"
-                          className="form-control"
-                          id={`occurrenceSpan${index + 1}EndDate`}
-                          value={span.endDate}
-                          onChange={(e) => {
-                            const newOccurrenceSpans = [
-                              ...formData.occurrenceSpans,
-                            ];
-                            newOccurrenceSpans[index].endDate = e.target.value;
-                            setFormData((prevData) => ({
-                              ...prevData,
-                              occurrenceSpans: newOccurrenceSpans,
-                            }));
-                          }}
-                        />
-                      </div>
-                    </React.Fragment>
-                  ))}
+                  {formData?.occurrenceSpans &&
+                    formData?.occurrenceSpans?.map((span, index) => (
+                      <React.Fragment key={`occurrenceSpan-${index}`}>
+                        <div className="col-md-4">
+                          <label
+                            htmlFor={`occurrenceSpan${index + 1}Code`}
+                            className="form-label"
+                          >
+                            {`${35 + index} Code:`}
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id={`occurrenceSpan${index + 1}Code`}
+                            value={span.code}
+                            onChange={(e) => {
+                              const newOccurrenceSpans = [
+                                ...formData.occurrenceSpans,
+                              ];
+                              newOccurrenceSpans[index].code = e.target.value;
+                              setFormData((prevData) => ({
+                                ...prevData,
+                                occurrenceSpans: newOccurrenceSpans,
+                              }));
+                            }}
+                            placeholder={`Enter Code ${35 + index}`}
+                          />
+                        </div>
+                        <div className="col-md-4">
+                          <label
+                            htmlFor={`occurrenceSpan${index + 1}StartDate`}
+                            className="form-label"
+                          >
+                            {`${35 + index} Start Date:`}
+                          </label>
+                          <input
+                            type="date"
+                            className="form-control"
+                            id={`occurrenceSpan${index + 1}StartDate`}
+                            value={span.startDate}
+                            onChange={(e) => {
+                              const newOccurrenceSpans = [
+                                ...formData.occurrenceSpans,
+                              ];
+                              newOccurrenceSpans[index].startDate =
+                                e.target.value;
+                              setFormData((prevData) => ({
+                                ...prevData,
+                                occurrenceSpans: newOccurrenceSpans,
+                              }));
+                            }}
+                          />
+                        </div>
+                        <div className="col-md-4">
+                          <label
+                            htmlFor={`occurrenceSpan${index + 1}EndDate`}
+                            className="form-label"
+                          >
+                            {`${35 + index} End Date:`}
+                          </label>
+                          <input
+                            type="date"
+                            className="form-control"
+                            id={`occurrenceSpan${index + 1}EndDate`}
+                            value={span.endDate}
+                            onChange={(e) => {
+                              const newOccurrenceSpans = [
+                                ...formData.occurrenceSpans,
+                              ];
+                              newOccurrenceSpans[index].endDate =
+                                e.target.value;
+                              setFormData((prevData) => ({
+                                ...prevData,
+                                occurrenceSpans: newOccurrenceSpans,
+                              }));
+                            }}
+                          />
+                        </div>
+                      </React.Fragment>
+                    ))}
                 </div>
               </div>
             </div>
@@ -573,35 +567,36 @@ const CreatePayers = () => {
               aria-labelledby="headingConditionCodes"
               data-bs-parent="#payerAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="row g-3">
-                  {formData?.conditionCodes?.map((code, index) => (
-                    <div className="col-md-2" key={`conditionCode-${index}`}>
-                      <label
-                        htmlFor={`conditionCode${index + 1}`}
-                        className="form-label"
-                      >
-                        Condition Code {index + 1}:
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id={`conditionCode${index + 1}`}
-                        value={code}
-                        onChange={(e) => {
-                          const newConditionCodes = [
-                            ...formData.conditionCodes,
-                          ];
-                          newConditionCodes[index] = e.target.value;
-                          setFormData((prevData) => ({
-                            ...prevData,
-                            conditionCodes: newConditionCodes,
-                          }));
-                        }}
-                        placeholder={`Enter Condition Code ${index + 1}`}
-                      />
-                    </div>
-                  ))}
+                  {formData?.conditionCodes &&
+                    formData?.conditionCodes?.map((code, index) => (
+                      <div className="col-md-2" key={`conditionCode-${index}`}>
+                        <label
+                          htmlFor={`conditionCode${index + 1}`}
+                          className="form-label"
+                        >
+                          Condition Code {index + 1}:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id={`conditionCode${index + 1}`}
+                          value={code}
+                          onChange={(e) => {
+                            const newConditionCodes = [
+                              ...formData.conditionCodes,
+                            ];
+                            newConditionCodes[index] = e.target.value;
+                            setFormData((prevData) => ({
+                              ...prevData,
+                              conditionCodes: newConditionCodes,
+                            }));
+                          }}
+                          placeholder={`Enter Condition Code ${index + 1}`}
+                        />
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>
@@ -626,7 +621,7 @@ const CreatePayers = () => {
               aria-labelledby="headingEmploymentAuto"
               data-bs-parent="#payerAccordion"
             >
-              <div className="accordion-body">
+              <div className="accordion-body py-2">
                 <div className="row g-3">
                   <div className="col-md-4">
                     <label htmlFor="employmentRelated" className="form-label">
@@ -757,14 +752,14 @@ const CreatePayers = () => {
               <button
                 className="btn btn-primary"
                 type="submit"
-                onClick={handleAdmit}
+
               >
-                Admit
+                Save
               </button>
               <button
                 className="btn btn-primary"
                 type="submit"
-                onClick={handleSaveAndContinue}
+                onSubmit={handleSaveAndContinue}
               >
                 Save and Continue
               </button>

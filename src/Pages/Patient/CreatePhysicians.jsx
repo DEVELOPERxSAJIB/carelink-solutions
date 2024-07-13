@@ -43,59 +43,12 @@ const CreatePhysicians = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
  
-    if (!formData.firstName) {
-      setFormError("First name is required");
-      return;
-    }
-    if (!formData.lastName) {
-      setFormError("last name is required");
-      return;
-    }
-    if (!formData.taxonomyCode) {
-      setFormError("taxonomy Code is required");
-      return;
-    }
-    if (!formData.credentials) {
-      setFormError("credentials is required");
-      return;
-    }
-    if (!formData.npiNo) {
-      setFormError("NPI Number is required");
-      return;
-    }
-    if (!formData.medicaidProviderIdentifier) {
-      setFormError("Medicaid ProviderIdentifier is required");
-      return;
-    }
-    if (!formData.addressLine1) {
-      setFormError("AddressLine1 is required");
-      return;
-    }
-    if (!formData.addressLine1) {
-      setFormError("AddressLine1 is required");
-      return;
-    }
-    if (!city) {
-      setFormError("City is required");
-      return;
-    }
-    if (!state) {
-      setFormError("State is required");
-      return;
-    }
-    if (!formData.primaryPhone) {
-      setFormError("Primary Phone is required");
-      return;
-    }
-    if (!formData.zip) {
-      setFormError("Zip is required");
-      return;
-    } else {
+   
       setFormError("")
       formData.city= city
       formData.state= state
       createPhysician(formData);
-    }
+    
   };
   if (isLoading) return <AuthLoader />;
   return (
@@ -389,7 +342,7 @@ const CreatePhysicians = () => {
           </div>
 
           <div className="col-md-6 mt-5 d-flex gap-2">
-            <button type="submit" className="btn btn-primary mr-2">
+            <button  type="submit" className="btn btn-primary mr-2">
               Save
             </button>
             <button type="button" className="btn btn-secondary">

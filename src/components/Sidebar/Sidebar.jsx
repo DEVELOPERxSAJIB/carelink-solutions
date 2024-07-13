@@ -177,7 +177,6 @@ const Sidebar = () => {
           href: "/advance-directives",
           icon: "",
         },
-        
         {
           title: "Referral information",
           href: "/referral-information",
