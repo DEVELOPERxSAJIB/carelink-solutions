@@ -185,6 +185,7 @@ const ManageShift = () => {
             tableClassName="custom-table"
             onEdit={handleEdit}
             onDelete={handleDelete}
+            tableName="manageShift"
           />
         </div>
       </div>

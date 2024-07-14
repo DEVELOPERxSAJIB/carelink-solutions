@@ -131,6 +131,7 @@ const ViewVehicleInspection = () => {
             tableClassName="custom-table"
             onEdit={handleEdit}
             onDelete={handleDelete}
+            tableName="viewVehicleInspection"
           />
         </div>
       </div>

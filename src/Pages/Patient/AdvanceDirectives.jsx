@@ -5,11 +5,14 @@ import TableHeader from "./../../components/Tables/TableHeader";
 import { useGetAllDirectivesQuery } from "../../Redux/api/DirectiveApi";
 import { useNavigate } from "react-router-dom";
 import MainLoader from "./../../utils/Loaders/MainLoader";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { getPermissionData } from "./../../Redux/slices/updateSlice";
 const AdvanceDirectives = () => {
-  const { data, isLoading } = useGetAllDirectivesQuery();
-  console.log(data)
+  const { data, isLoading, refetch } = useGetAllDirectivesQuery();
+  const update = useSelector(getPermissionData);
+  console.log(update);
   const columns = [
-    
     {
       field: "admission",
       header: "Admission",
@@ -18,6 +21,12 @@ const AdvanceDirectives = () => {
   ];
 
   const navigate = useNavigate();
+  useEffect(() => {
+    if (update) {
+      refetch();
+    }
+  }, [update, refetch]);
+  if (isLoading) return <MainLoader />;
 
   return (
     <>
@@ -82,6 +91,7 @@ const AdvanceDirectives = () => {
                 columns={columns}
                 data={data?.payload?.directives ?? []}
                 tableClassName="custom-table"
+                tableName="AdvanceDirectives"
               />
             </div>
           </div>
@@ -92,4 +102,3 @@ const AdvanceDirectives = () => {
 };
 
 export default AdvanceDirectives;
-

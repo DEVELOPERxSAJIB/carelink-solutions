@@ -260,6 +260,7 @@ const MyRoutes = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="myRoutes"
             onDelete={handleDelete}
           />
         </div>

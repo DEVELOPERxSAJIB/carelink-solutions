@@ -4,7 +4,7 @@ export const PatientApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getPatientById: builder.query({
       query: (patientId) => `patients/${patientId}`,
-      providesTags: (result, error, patientId) => [{ type: "Patient", id: patientId }],
+      providesTags: (result, error, _id) => [{ type: "Patient", id: _id }],
     }),
     createPatient: builder.mutation({
       query: (patientData) => ({
@@ -19,7 +19,7 @@ export const PatientApi = rootApi.injectEndpoints({
         url: "patient/patients",
         method: "GET",
       }),
-        providesTags: (result, error, patientId) => [{ type: "Patient", id: patientId }],
+        providesTags: (result, error, _id) => [{ type: "Patient", id: _id }],
     }),
     updatePatient: builder.mutation({
       query: ({ patientId, patientData }) => ({
@@ -27,8 +27,8 @@ export const PatientApi = rootApi.injectEndpoints({
         method: "PUT",
         body: patientData,
       }),
-      invalidatesTags: (result, error, { patientId }) => [
-        { type: "Patient", id: patientId },
+      invalidatesTags: (result, error,  _id ) => [
+        { type: "Patient", id: _id },
       ],
     }),
     deletePatient: builder.mutation({
@@ -36,8 +36,8 @@ export const PatientApi = rootApi.injectEndpoints({
         url: `patient/patients/${patientId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, patientId) => [
-        { type: "Patient", id: patientId },
+      invalidatesTags: (result, error, _id) => [
+        { type: "Patient", id: _id },
       ],
     }),
   }),

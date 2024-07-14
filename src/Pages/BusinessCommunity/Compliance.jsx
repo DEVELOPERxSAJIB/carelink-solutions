@@ -403,6 +403,7 @@ const initialState = {
                     data={tableData}
                     tableClassName="custom-table"
                     onEdit={handleEdit}
+                     tableName="compliance"
                     onDelete={handleDelete}
                   />
                 </div>
@@ -484,6 +485,7 @@ const initialState = {
             <DataTable
               columns={columns3}
               data={data3}
+               tableName="complianceAssignAllIndividual"
               tableClassName="custom-table"
             />
           </FullscreenModal>
@@ -492,6 +494,7 @@ const initialState = {
           <DataTable
             columns={columns}
             data={data}
+             tableName="locationOfService"
             tableClassName="custom-table"
             onEdit={handleEdit}
             onDelete={handleDelete}

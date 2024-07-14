@@ -8,7 +8,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [logOutUser,isSuccess,isLoading] = useLogOutUserMutation();
 const { data,refetch } = useMeQuery();
- console.log(data)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] =
     useState(false);

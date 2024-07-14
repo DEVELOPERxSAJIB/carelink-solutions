@@ -126,6 +126,7 @@ const handleSubmit=()=>{}
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="addListOfActivity"
             onDelete={handleDelete}
           />
         </div>

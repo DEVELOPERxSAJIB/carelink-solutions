@@ -106,6 +106,7 @@ const EmployeePayroll = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="payroll"
             onDelete={handleDelete}
           />
         </div>

@@ -122,6 +122,7 @@ const ViewGroupDocumentation = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+             tableName="locationOfService"
             onDelete={handleDelete}
           />
         </div>

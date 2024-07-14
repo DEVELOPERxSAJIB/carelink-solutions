@@ -246,6 +246,7 @@ const ViewAssignedMileage = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="viewAssignedMileage"
             onDelete={handleDelete}
           />
         </div>

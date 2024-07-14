@@ -4,7 +4,7 @@ export const EmergencyApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getEmergencyById: builder.query({
       query: (emergencyId) => `emergency/${emergencyId}`,
-      providesTags: (result, error, emergencyId) => [{ type: "Emergency", id: emergencyId }],
+      providesTags: (result, error, _id) => [{ type: "Emergency", id: _id }],
     }),
     createEmergency: builder.mutation({
       query: (emergencyData) => ({
@@ -27,8 +27,8 @@ export const EmergencyApi = rootApi.injectEndpoints({
         method: "PUT",
         body: emergencyData,
       }),
-      invalidatesTags: (result, error, { emergencyId }) => [
-        { type: "Emergency", id: emergencyId },
+      invalidatesTags: (result, error,  _id ) => [
+        { type: "Emergency", id: _id },
       ],
     }),
     deleteEmergency: builder.mutation({
@@ -36,8 +36,8 @@ export const EmergencyApi = rootApi.injectEndpoints({
         url: `emergency/${emergencyId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, emergencyId) => [
-        { type: "Emergency", id: emergencyId },
+      invalidatesTags: (result, error, _id) => [
+        { type: "Emergency", id: _id },
       ],
     }),
   }),

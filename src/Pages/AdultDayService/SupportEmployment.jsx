@@ -325,6 +325,7 @@ const SupportEmployment = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+             tableName="supportEmployment"
             onDelete={handleDelete}
           />
         </div>

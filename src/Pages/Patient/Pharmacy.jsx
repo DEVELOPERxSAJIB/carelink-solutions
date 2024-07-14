@@ -60,7 +60,7 @@ const Pharmacy = () => {
           </button>
         </div>
         <div className="mt-5">
-          <DataTable columns={columns} data={data?.payload?.pharmacies ?? []} tableClassName="custom-table" />
+          <DataTable tableName="pharmacy" columns={columns} data={data?.payload?.pharmacies ?? []} tableClassName="custom-table" />
         </div>
       </div>
     </div>

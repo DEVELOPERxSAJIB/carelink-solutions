@@ -204,6 +204,7 @@ const CoAdmin = () => {
               tableClassName="custom-table"
               onEdit={handleEdit}
               onDelete={handleDelete}
+              tableName="coAdmin"
             />
           </div>
         </div>

@@ -244,6 +244,7 @@ const data = [
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="myVehicles"
             onDelete={handleDelete}
           />
         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+
 import DataTable from "./../../components/Tables/DynamicTable";
 import ExportButton from "./../../components/Buttons/ExportButton";
 import TableHeader from "./../../components/Tables/TableHeader";
@@ -136,6 +136,7 @@ const EmergencyPreparedness = () => {
         <div className="mt-5">
           <DataTable
             columns={columns}
+            tableName="emergencyPreparedness"
             data={flattenedData ?? []}
             tableClassName="custom-table"
           />
@@ -146,4 +147,3 @@ const EmergencyPreparedness = () => {
 };
 
 export default EmergencyPreparedness;
-

@@ -313,6 +313,7 @@ const VehicleViewLog = () => {
             tableClassName="custom-table"
             onEdit={handleEdit}
             onDelete={handleDelete}
+            tableName="viewLog"
           />
         </div>
       </div>

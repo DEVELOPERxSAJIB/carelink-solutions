@@ -102,6 +102,7 @@ const ViewOutcomes = () => {
           onEdit={handleEdit}
           onDelete={handleDelete}
           data={data}
+           tableName="viewOutcomes"
           columns={columns}
         />
       </div>

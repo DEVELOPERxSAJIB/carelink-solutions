@@ -118,6 +118,7 @@ const MyBriefcase = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="myBriefCase"
             onDelete={handleDelete}
           />
         </div>

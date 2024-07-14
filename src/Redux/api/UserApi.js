@@ -4,7 +4,7 @@ export const UserApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getUserById: builder.query({
       query: (userId) => `auth/${userId}`,
-      providesTags: (result, error, userId) => [{ type: "User", id: userId }],
+      providesTags: (result, error, _id) => [{ type: "User", id: _id }],
     }),
     processRegister: builder.mutation({
       query: (userData) => ({
@@ -52,8 +52,8 @@ export const UserApi = rootApi.injectEndpoints({
         method: "PUT",
         body: userData,
       }),
-      invalidatesTags: (result, error, { userId }) => [
-        { type: "User", id: userId },
+      invalidatesTags: (result, error,  _id ) => [
+        { type: "User", id: _id },
       ],
     }),
     
@@ -89,8 +89,8 @@ export const UserApi = rootApi.injectEndpoints({
         url: `auth/${userId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, userId) => [
-        { type: "User", id: userId },
+      invalidatesTags: (result, error, _id) => [
+        { type: "User", id: _id },
       ],
     }),
   }),

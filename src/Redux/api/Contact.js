@@ -4,7 +4,7 @@ export const ContactApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getContactById: builder.query({
       query: (contactId) => `contacts/${contactId}`,
-      providesTags: (result, error, contactId) => [{ type: "Contact", id: contactId }],
+      providesTags: (result, error, _id) => [{ type: "Contact", id: _id }],
     }),
     createContact: builder.mutation({
       query: (contactData) => ({
@@ -27,7 +27,7 @@ export const ContactApi = rootApi.injectEndpoints({
         method: "PUT",
         body: contactData,
       }),
-      invalidatesTags: (result, error, { contactId }) => [{ type: "Contact", id: contactId }],
+      invalidatesTags: (result, error, { _id }) => [{ type: "Contact", id: _id }],
     }),
     deleteContact: builder.mutation({
       query: (contactId) => ({

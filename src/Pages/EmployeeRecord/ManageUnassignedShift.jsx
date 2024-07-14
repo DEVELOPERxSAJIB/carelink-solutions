@@ -74,6 +74,7 @@ const ManageUnassignedShift = () => {
               data={data}
               tableClassName="custom-table"
               onEdit={handleEdit}
+              tableName="manageUnassignedShift"
               onDelete={handleDelete}
             />
           )}

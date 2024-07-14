@@ -1,13 +1,16 @@
+
 import React, { useState, useEffect, useRef } from "react";
 
+import Delete from './Delete';
+import Edit from './Edit';
 const DataTable = ({
   columns,
   data,
   tableName,
   tableClassName,
-  onEdit,
-  onDelete,setSelectedEvent
+  setSelectedEvent
 }) => {
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(20); // Default rows per page
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,13 +19,13 @@ const DataTable = ({
   const [tableMenu, setTableMenu] = useState(false);
   const [rowId, setRowId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [activeDropdown, setActiveDropdown] = useState(null); // State to track active dropdown
+  const [dropdownOpen, setDropdownOpen] = useState(Array(data.length).fill(false));
   const [visibleColumns, setVisibleColumns] = useState(
     columns.slice(0, 5).map((column) => column.field) // Show only first 5 columns by default
   );
   const [truncate, setTruncate] = useState(true); // State to track truncation
-
   const tableRef = useRef();
-
   // Toggle truncation based on checkbox change
   const handleTruncate = (e) => {
     setTruncate(e.target.checked);
@@ -79,21 +82,13 @@ const DataTable = ({
     )
   );
 
-  const handleEditClick = (rowData) => {
-    if (onEdit) {
-      onEdit(rowData);
-    }
-  };
 
-  const handleDeleteClick = (rowData) => {
-    if (onDelete) {
-      onDelete(rowData);
-    }
-  };
+ 
 
   const handleTabMenu = (id) => {
     setTableMenu(!tableMenu);
     setRowId(id);
+    activeDropdown === id ? null : id
   };
 
   // Go to first page
@@ -109,6 +104,8 @@ const DataTable = ({
   const handleClose = (e) => {
     if (tableRef.current && !tableRef.current.contains(e.target)) {
       setTableMenu(false);
+      setDropdownOpen(Array(data?.length).fill(false));
+      setActiveDropdown(null);
     }
   };
 
@@ -137,19 +134,18 @@ const DataTable = ({
   // Handle deletion of selected rows
   const handleDeleteSelected = () => {
     const selectedData = selectedRows.map((index) => currentRows[index]);
-    if (onDelete) {
-      selectedData.forEach((row) => onDelete(row));
-    }
+   
     setSelectedRows([]);
   };
-
+  const handleDropdownToggle = (index) => {
+    setDropdownOpen((prevState) =>
+      prevState.map((item, i) => (i === index ? !item : item))
+    );
+  };
   useEffect(() => {
-    // Add event listener when the component is mounted
-    document.addEventListener("mousedown", handleClose);
-
-    // Clean up the event listener when the component is unmounted
+    document.addEventListener("click", handleClose);
     return () => {
-      document.removeEventListener("mousedown", handleClose);
+      document.removeEventListener("click", handleClose);
     };
   }, []);
 
@@ -163,14 +159,15 @@ const DataTable = ({
   };
 
   const handleRowClick = (rowData) => {
-    setSelectedEvent(rowData);
-    console.log('Row clicked:', rowData);
+    // setSelectedEvent(rowData);
   };
 
-  
+
+
   return (
     <div className="position-relative">
-      {tableName && <h5 className="card-header">{tableName}</h5>}
+     
+     
       <div className="card-datatable table-responsive">
         <div className="flex my-5 row w-100 justify-content-between align-items-end">
           <div className="col-md-1 col-4">
@@ -254,7 +251,7 @@ const DataTable = ({
           <input type="checkbox" className="form-check-input" value={truncate} checked={truncate?true:false} onChange={handleTruncate} />
         </label>
 
-        <table
+        <table ref={tableRef}
           className={`card-datatable table-responsive w-100 table ${tableClassName}`}
         >
           <thead>
@@ -283,12 +280,12 @@ const DataTable = ({
                     </div>
                   </th>
                 ))}
-              {onEdit && <th>Actions</th>}
+
             </tr>
           </thead>
           <tbody>
             {filteredRows.map((row, rowIndex) => (
-              <tr className={`${truncate?"truncate":"notruncate"}`} key={rowIndex} onClick={() => handleRowClick(row)}>
+              <tr   className={`${truncate?"truncate":"notruncate"}`} key={rowIndex} onClick={() => handleRowClick(row)}>
                 <td>
                   <input
                     className="form-check-input"
@@ -324,51 +321,26 @@ const DataTable = ({
                       )}
                     </td>
                   ))}
-                {onEdit && (
-                  <td>
-                    <button
-                      onClick={() => handleTabMenu(rowIndex)}
+
+                  <td >
+                    <button 
+                      onClick={() => {handleTabMenu(rowIndex), handleDropdownToggle(rowIndex)}}
                       className={`btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow  ${
                         rowId === rowIndex && tableMenu && "show"
                       }`}
                     >
                       <i className="ti ti-dots-vertical ti-md"></i>
                     </button>
-                    <ul
-                      ref={tableRef}
-                      className={`dropdown-menu dropdown-menu-end m-0 table_drop_menu ${
-                        rowId === rowIndex && tableMenu && "show"
-                      }`}
-                    >
-                      <li>
-                        <a href="" className="dropdown-item">
-                          Details
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:;" className="dropdown-item">
-                          Archive
-                        </a>
-                      </li>
-                      <div className="dropdown-divider"></div>
-                      <li>
-                        <a
-                          href="#"
-                          onClick={() => handleDeleteClick(row)}
-                          className="dropdown-item text-danger delete-record"
-                        >
-                          Delete
-                        </a>
-                      </li>
-                    </ul>
-                    <button
-                      className="btn btn-sm btn-text-secondary rounded-pill btn-icon item-edit"
-                      onClick={() => handleEditClick(row)}
-                    >
-                      <i className="ti ti-pencil ti-md"></i>
-                    </button>
+                    {dropdownOpen[rowIndex]?(
+                    <div className="dropdown-menu show">
+                    
+                     <Edit/>
+                      <Delete tableName={`${tableName}`} rowData={row}/>
+                    </div>
+                  ): null}
+                   
                   </td>
-                )}
+              
               </tr>
             ))}
           </tbody>

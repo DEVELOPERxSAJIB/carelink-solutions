@@ -163,6 +163,7 @@ const SetBudget = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="setBudget"
             onDelete={handleDelete}
           />
         </div>

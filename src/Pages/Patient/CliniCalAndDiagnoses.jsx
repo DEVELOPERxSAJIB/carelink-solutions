@@ -139,6 +139,7 @@ const ClinicalDiagnoses = () => {
             columns={columns}
             data={flattenedData ?? []}
             tableClassName="custom-table"
+            tableName="clinicalDiagnoses"
           />
         </div>
       </div>

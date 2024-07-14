@@ -379,6 +379,7 @@ const HealthCareProfessional = () => {
                     data={tableData}
                     tableClassName="custom-table"
                     onEdit={handleEdit}
+                    tableName="healthCareProfessional"
                     onDelete={handleDelete}
                   />
                 </div>
@@ -460,6 +461,7 @@ const HealthCareProfessional = () => {
             <DataTable
               columns={columns3}
               data={data3}
+                 tableName="HealthCareProfession2"
               tableClassName="custom-table"
             />
           </FullscreenModal>
@@ -470,6 +472,7 @@ const HealthCareProfessional = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="HealthCareProfession3"
             onDelete={handleDelete}
           />
         </div>

@@ -5,8 +5,11 @@ import TableHeader from "./../../components/Tables/TableHeader";
 import { useGetAllPatientsQuery } from "../../Redux/api/PatientApi";
 import { useNavigate } from "react-router-dom";
 import MainLoader from "./../../utils/Loaders/MainLoader";
+import {useSelector} from "react-redux"
+import { getPermissionData } from './../../Redux/slices/updateSlice';
+import { useEffect } from 'react';
 const Patients = () => {
-  const { data, isLoading } = useGetAllPatientsQuery();
+  const { data, isLoading,refetch } = useGetAllPatientsQuery();
   const columns = [
     { field: "patientIdMrn", header: "Patient ID/MRN" },
     { field: "firstName", header: "First Name" },
@@ -131,9 +134,15 @@ const Patients = () => {
     },
     { field: "trackF2FDocumentation", header: "Track F2F Documentation" },
   ];
-
+  const {update} = useSelector(getPermissionData)
+ console.log(update)
   const navigate = useNavigate();
-
+useEffect(()=>{
+if(update){
+  refetch()
+}
+},[update,refetch])
+console.log(update)
   return (
     <>
       {isLoading ? (
@@ -197,6 +206,7 @@ const Patients = () => {
                 columns={columns}
                 data={data?.payload ?? []}
                 tableClassName="custom-table"
+                tableName="patients"
               />
             </div>
           </div>

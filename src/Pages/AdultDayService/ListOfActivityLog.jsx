@@ -119,6 +119,7 @@ const ListOfActivityLog = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+             tableName="listOfActivityLog"
             onDelete={handleDelete}
           />
         </div>

@@ -123,6 +123,7 @@ const AddCommunityIntegration = () => {
             tableClassName="custom-table"
             onEdit={handleEdit}
             onDelete={handleDelete}
+            tableName="addCommunityIntegration"
           />
         </div>
       </div>

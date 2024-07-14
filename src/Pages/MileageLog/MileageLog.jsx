@@ -155,6 +155,7 @@ const MileageLog = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="mileageLog"
             onDelete={handleDelete}
           />
         </div>

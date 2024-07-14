@@ -122,6 +122,7 @@ const Folders = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="folders"
             onDelete={handleDelete}
           />
         </div>

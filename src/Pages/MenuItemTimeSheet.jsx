@@ -468,6 +468,7 @@ const MenuItemTimeSheet = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+             tableName="menuItemTimeSheet"
             onDelete={handleDelete}
           />
         </div>

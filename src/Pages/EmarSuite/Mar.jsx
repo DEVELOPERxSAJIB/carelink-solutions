@@ -854,6 +854,7 @@ const Mar = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="supportAdministrators"
             onDelete={handleDelete}
           />
         </div>

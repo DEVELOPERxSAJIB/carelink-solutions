@@ -78,6 +78,7 @@ const navigate = useNavigate()
         tableClassName="custom-table"
         onEdit={handleEdit}
         onDelete={handleDelete}
+        tableName="payroll2"
       />
       </div>
       </div>

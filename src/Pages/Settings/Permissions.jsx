@@ -36,8 +36,7 @@ const Permissions = () => {
         data={data}
         tableClassName="custom-table"
         onEdit={handleEdit}
-        tableName="Modules Permission
-"
+        tableName="modulesPermission"
         onDelete={handleDelete}
       />
       </div>

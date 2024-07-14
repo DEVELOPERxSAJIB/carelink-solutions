@@ -364,6 +364,7 @@ const SupportAdministrators = () => {
                     data={tableData}
                     tableClassName="custom-table"
                     onEdit={handleEdit}
+                     tableName="supportAdministrators"
                     onDelete={handleDelete}
                   />
                 </div>
@@ -444,6 +445,7 @@ const SupportAdministrators = () => {
             <DataTable
               columns={columns3}
               data={data3}
+              tableName="supportAdministrators2"
               tableClassName="custom-table"
             />
           </FullscreenModal>
@@ -452,6 +454,7 @@ const SupportAdministrators = () => {
           <DataTable
             columns={columns}
             data={data}
+            tableName="supportAdministrators3"
             tableClassName="custom-table"
             onEdit={handleEdit}
             onDelete={handleDelete}

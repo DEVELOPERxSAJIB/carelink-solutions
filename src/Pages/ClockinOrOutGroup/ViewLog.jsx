@@ -162,6 +162,7 @@ const ViewLog = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="viewLog"
             onDelete={handleDelete}
           />
         </div>

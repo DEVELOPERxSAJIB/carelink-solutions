@@ -69,7 +69,7 @@ const AgencyInvoice = () => {
           tableClassName="custom-table"
           onEdit={handleEdit}
           onDelete={handleDelete}
-          tableName="Manage Invoices"
+          tableName="agencyInvoice"
         />
 
       </div>

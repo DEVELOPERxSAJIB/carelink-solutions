@@ -184,6 +184,7 @@ const AddNewTicket = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="addNewTicket"
             onDelete={handleDelete}
           />
         </div>

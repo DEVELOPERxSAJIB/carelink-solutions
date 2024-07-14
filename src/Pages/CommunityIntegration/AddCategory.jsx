@@ -129,6 +129,7 @@ const AddCategory = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="addCategory"
             onDelete={handleDelete}
           />
         </div>

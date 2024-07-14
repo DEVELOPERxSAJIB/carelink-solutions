@@ -369,6 +369,7 @@ const Guardians = () => {
                     data={tableData}
                     tableClassName="custom-table"
                     onEdit={handleEdit}
+                     tableName="guardians"
                     onDelete={handleDelete}
                   />
                 </div>
@@ -450,6 +451,7 @@ const Guardians = () => {
             <DataTable
               columns={columns3}
               data={data3}
+              tableName="guardiansAssignAllIndividual"
               tableClassName="custom-table"
             />
           </FullscreenModal>
@@ -460,6 +462,7 @@ const Guardians = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="guardians"
             onDelete={handleDelete}
           />
         </div>

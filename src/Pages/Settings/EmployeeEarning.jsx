@@ -82,6 +82,7 @@ const EmployeeEarning = () => {
             tableClassName="custom-table"
             onEdit={handleEdit}
             onDelete={handleDelete}
+            tableName="employeeEarning"
           />
         </div>
       </div>

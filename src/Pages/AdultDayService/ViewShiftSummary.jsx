@@ -113,6 +113,7 @@ const navigate= useNavigate()
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+             tableName="viewShiftSummary"
             onDelete={handleDelete}
           />
         </div>

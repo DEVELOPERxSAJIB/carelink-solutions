@@ -11,8 +11,6 @@ const ExportButton = ({
   orientation = "portrait",
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  console.log(data);
-  console.log(columns);
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -43,7 +41,7 @@ const ExportButton = ({
     const tableBody = data.map((row) =>
       columns.map((col) => (row[col.field] !== undefined ? row[col.field] : ""))
     );
-    console.log(tableHead, tableBody);
+
     // Add table content
     doc.autoTable({
       head: [tableHead],

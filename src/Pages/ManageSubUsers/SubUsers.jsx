@@ -175,6 +175,7 @@ const SubUsers = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="subUsers"
             onDelete={handleDelete}
           />
         </div>

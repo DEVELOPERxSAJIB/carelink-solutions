@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import logo from "../../../public/logo.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 const Sidebar = () => {
   const [isActive, setIsActive] = useState(false); // State to manage active state
   const location = window.location;
-  const history = useLocation();
-  console.log(history);
+
   const toggleMenu = () => {
     setIsActive(!isActive); // Toggle the isActive state
   };

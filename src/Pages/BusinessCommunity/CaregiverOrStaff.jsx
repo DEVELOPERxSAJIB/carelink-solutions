@@ -507,6 +507,7 @@ const CaregiverOrStaff = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+             tableName="caregiverOrStaff"
             onDelete={handleDelete}
           />
         </div>

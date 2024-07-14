@@ -5,9 +5,12 @@ import TableHeader from './../../components/Tables/TableHeader';
 import {useGetAllPayersQuery} from "../../Redux/api/PayerApi"
 import { useNavigate } from 'react-router-dom';
 import MainLoader from './../../utils/Loaders/MainLoader';
+import { useEffect } from 'react';
+import { getPermissionData } from './../../Redux/slices/updateSlice';
+import { useSelector } from 'react-redux';
 const Payers = () => {
   const navigate = useNavigate()
-  const {data,isLoading} = useGetAllPayersQuery();
+  const {data,isLoading,refetch} = useGetAllPayersQuery();
   const columns = [
     { field: "_id", header: "Payer ID/MRN" },
     { field: "mbiNumber", header: "Medicare Beneficiary Identifier (MBI) Number" },
@@ -126,7 +129,13 @@ const Payers = () => {
     { label: "Track F2F Documentation", key: "trackF2FDocumentation" },
     
   ];
-  
+  const {update} = useSelector(getPermissionData)
+console.log(update)
+  useEffect(()=>{
+  if(update){
+    refetch()
+  }
+  },[update,refetch])
 
 if(isLoading) return <MainLoader/>
   
@@ -184,6 +193,7 @@ console.log(isLoading)
             columns={columns}
             data={data?.data??[]}
             tableClassName="custom-table"
+            tableName="payers"
           />
         </div>
       </div>

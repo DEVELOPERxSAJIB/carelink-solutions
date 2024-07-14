@@ -215,6 +215,7 @@ const Scheduler = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="scheduler"
             onDelete={handleDelete}
           />
         </div>

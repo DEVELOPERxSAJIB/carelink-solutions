@@ -4,7 +4,7 @@ export const agencyInvoiceApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getUserById: builder.query({
       query: (userId) => `settings/${userId}`,
-      providesTags: (result, error, userId) => [{ type: "Setting", id: userId }],
+      providesTags: (result, error, _id) => [{ type: "Setting", id: _id }],
     }),
     createCompany: builder.mutation({
       query: (companyData) => ({
@@ -28,7 +28,7 @@ export const agencyInvoiceApi = rootApi.injectEndpoints({
     }),
     agencyInvoiceById: builder.query({
       query: (invoiceId) => `settings/agency-invoice/${invoiceId}`,
-      providesTags: (result, error, invoiceId) => [{ type: "Setting", id: invoiceId }],
+      providesTags: (result, error, _id) => [{ type: "Setting", id: _id }],
     }),
     agencyInvoiceUpdate: builder.mutation({
       query: ({ invoiceId, agencyInvoiceData }) => ({
@@ -36,8 +36,8 @@ export const agencyInvoiceApi = rootApi.injectEndpoints({
         method: "PUT",
         body: agencyInvoiceData,
       }),
-      invalidatesTags: (result, error, { invoiceId }) => [
-        { type: "Setting", id: invoiceId },
+      invalidatesTags: (result, error,  _id ) => [
+        { type: "Setting", id: _id },
       ],
     }),
     agencyInvoiceDelete: builder.mutation({
@@ -45,8 +45,8 @@ export const agencyInvoiceApi = rootApi.injectEndpoints({
         url: `settings/agency-invoice-delete/${invoiceId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, invoiceId) => [
-        { type: "Setting", id: invoiceId },
+      invalidatesTags: (result, error, _id) => [
+        { type: "Setting", id: _id },
       ],
     }),
     createQuestion: builder.mutation({

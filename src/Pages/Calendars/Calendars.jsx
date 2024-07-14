@@ -168,6 +168,7 @@ const Calendars = () => {
           <DataTable
             columns={columns}
             data={data}
+            tableName="calendars"
             tableClassName="custom-table"
             onEdit={handleEdit}
             onDelete={handleDelete}

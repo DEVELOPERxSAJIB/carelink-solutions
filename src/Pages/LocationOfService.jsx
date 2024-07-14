@@ -194,6 +194,7 @@ const LocationOfService = () => {
             columns={columns}
             data={data}
             tableClassName="custom-table"
+            tableName="locationOfService"
             onEdit={handleEdit}
             onDelete={handleDelete}
           />

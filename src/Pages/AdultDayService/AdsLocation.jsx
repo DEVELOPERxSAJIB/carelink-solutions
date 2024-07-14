@@ -220,6 +220,7 @@ const AdsLocation = () => {
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+             tableName="adsLocation"
             onDelete={handleDelete}
           />
         </div>

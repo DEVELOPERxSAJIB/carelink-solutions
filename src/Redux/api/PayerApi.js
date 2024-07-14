@@ -4,7 +4,7 @@ export const PayerApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getPayerById: builder.query({
       query: (payerId) => `payers/${payerId}`,
-      providesTags: (result, error, payerId) => [{ type: "Payer", id: payerId }],
+      providesTags: (result, error, _id) => [{ type: "Payer", id: _id }],
     }),
     createPayer: builder.mutation({
       query: (payerData) => ({
@@ -27,8 +27,8 @@ export const PayerApi = rootApi.injectEndpoints({
         method: "PUT",
         body: payerData,
       }),
-      invalidatesTags: (result, error, { payerId }) => [
-        { type: "Payer", id: payerId },
+      invalidatesTags: (result, error, _id ) => [
+        { type: "Payer", id: _id },
       ],
     }),
     deletePayer: builder.mutation({
@@ -36,8 +36,8 @@ export const PayerApi = rootApi.injectEndpoints({
         url: `payer/payer/${payerId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, payerId) => [
-        { type: "Payer", id: payerId },
+      invalidatesTags: (result, error, _id) => [
+        { type: "Payer", id: _id },
       ],
     }),
   }),

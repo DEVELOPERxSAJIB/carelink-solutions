@@ -147,6 +147,7 @@ const navigate= useNavigate()
             columns={columns}
             data={data?.payload?.physicians ?? []}
             tableClassName="custom-table"
+            tableName="physicians"
           />
         </div>
       </div>

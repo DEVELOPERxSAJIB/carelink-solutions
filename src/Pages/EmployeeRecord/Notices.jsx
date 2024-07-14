@@ -151,6 +151,7 @@ const data = [
             data={data}
             tableClassName="custom-table"
             onEdit={handleEdit}
+            tableName="notices"
             onDelete={handleDelete}
           />
         </div>

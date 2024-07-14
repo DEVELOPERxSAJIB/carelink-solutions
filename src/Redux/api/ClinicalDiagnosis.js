@@ -5,7 +5,9 @@ export const ClinicalDiagnosisApi = rootApi.injectEndpoints({
     // Query endpoint to get a clinical diagnosis by ID
     getClinicalDiagnosisById: builder.query({
       query: (diagnosisId) => `clinical/${diagnosisId}`,
-      providesTags: (result, error, diagnosisId) => [{ type: "ClinicalDiagnosis", id: diagnosisId }],
+      providesTags: (result, error, _id) => [
+        { type: "ClinicalDiagnosis", id: _id },
+      ],
     }),
 
     // Mutation endpoint to create a new clinical diagnosis
@@ -34,7 +36,9 @@ export const ClinicalDiagnosisApi = rootApi.injectEndpoints({
         method: "PUT",
         body: diagnosisData,
       }),
-      invalidatesTags: (result, error, { diagnosisId }) => [{ type: "ClinicalDiagnosis", id: diagnosisId }],
+      invalidatesTags: (result, error, { id }) => [
+        { type: "ClinicalDiagnosis", id: id },
+      ],
     }),
 
     // Mutation endpoint to delete a clinical diagnosis
@@ -43,7 +47,9 @@ export const ClinicalDiagnosisApi = rootApi.injectEndpoints({
         url: `clinical/${diagnosisId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, diagnosisId) => [{ type: "ClinicalDiagnosis", id: diagnosisId }],
+      invalidatesTags: (result, error, _id) => [
+        { type: "ClinicalDiagnosis", id: _id },
+      ],
     }),
   }),
 });

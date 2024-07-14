@@ -24,6 +24,7 @@ const AssignAllIndividual = () => {
           columns={columns3}
           data={data3}
           tableClassName="custom-table"
+           tableName="assignAll"
         />
       </div>
     </div>

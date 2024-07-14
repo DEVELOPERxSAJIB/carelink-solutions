@@ -143,6 +143,7 @@ const RequestedTimeOff = () => {
             tableClassName="custom-table"
             onEdit={handleEdit}
             onDelete={handleDelete}
+            tableName="requestedTimeOff"
             setSelectedEvent={setSelectedEvent} // Handle row click to set selected event
           />
         </div>

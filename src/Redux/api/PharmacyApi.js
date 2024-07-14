@@ -4,7 +4,7 @@ export const PharmacyApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getPharmacyById: builder.query({
       query: (pharmacyId) => `pharmacies/${pharmacyId}`,
-      providesTags: (result, error, pharmacyId) => [{ type: "Pharmacy", id: pharmacyId }],
+      providesTags: (result, error, _id) => [{ type: "Pharmacy", id: _id }],
     }),
     createPharmacy: builder.mutation({
       query: (pharmacyData) => ({
@@ -27,8 +27,8 @@ export const PharmacyApi = rootApi.injectEndpoints({
         method: "PUT",
         body: pharmacyData,
       }),
-      invalidatesTags: (result, error, { pharmacyId }) => [
-        { type: "Pharmacy", id: pharmacyId },
+      invalidatesTags: (result, error,  _id ) => [
+        { type: "Pharmacy", id: _id },
       ],
     }),
     deletePharmacy: builder.mutation({
@@ -36,8 +36,8 @@ export const PharmacyApi = rootApi.injectEndpoints({
         url: `pharmacy/${pharmacyId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, pharmacyId) => [
-        { type: "Pharmacy", id: pharmacyId },
+      invalidatesTags: (result, error, _id) => [
+        { type: "Pharmacy", id: _id },
       ],
     }),
   }),
