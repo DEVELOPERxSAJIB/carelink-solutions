@@ -5,17 +5,17 @@ const useFormFields = (initialState) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [name]: value,
-    });
+    }));
   };
 
   const resetForm = () => {
     setFormData(initialState);
   };
 
-  return [formData, handleChange, resetForm];
+  return [formData, handleChange, setFormData, resetForm];
 };
 
 export default useFormFields;

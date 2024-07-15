@@ -27,18 +27,14 @@ export const EmergencyApi = rootApi.injectEndpoints({
         method: "PUT",
         body: emergencyData,
       }),
-      invalidatesTags: (result, error,  _id ) => [
-        { type: "Emergency", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "Emergency", id: _id }],
     }),
     deleteEmergency: builder.mutation({
       query: (emergencyId) => ({
         url: `emergency/${emergencyId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, _id) => [
-        { type: "Emergency", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "Emergency", id: _id }],
     }),
   }),
 });

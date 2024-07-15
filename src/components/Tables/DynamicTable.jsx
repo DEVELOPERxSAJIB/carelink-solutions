@@ -1,16 +1,16 @@
-
 import React, { useState, useEffect, useRef } from "react";
 
-import Delete from './Delete';
-import Edit from './Edit';
+import Delete from "./Delete";
+import Edit from "./Edit";
 const DataTable = ({
   columns,
   data,
   tableName,
   tableClassName,
-  setSelectedEvent
+  setSelectedEvent,
+  onDelete,
+  onEdit,
 }) => {
-  
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(20); // Default rows per page
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,7 +20,9 @@ const DataTable = ({
   const [rowId, setRowId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const [activeDropdown, setActiveDropdown] = useState(null); // State to track active dropdown
-  const [dropdownOpen, setDropdownOpen] = useState(Array(data.length).fill(false));
+  const [dropdownOpen, setDropdownOpen] = useState(
+    Array(data.length).fill(false)
+  );
   const [visibleColumns, setVisibleColumns] = useState(
     columns.slice(0, 5).map((column) => column.field) // Show only first 5 columns by default
   );
@@ -82,13 +84,10 @@ const DataTable = ({
     )
   );
 
-
- 
-
   const handleTabMenu = (id) => {
     setTableMenu(!tableMenu);
     setRowId(id);
-    activeDropdown === id ? null : id
+    activeDropdown === id ? null : id;
   };
 
   // Go to first page
@@ -134,7 +133,7 @@ const DataTable = ({
   // Handle deletion of selected rows
   const handleDeleteSelected = () => {
     const selectedData = selectedRows.map((index) => currentRows[index]);
-   
+
     setSelectedRows([]);
   };
   const handleDropdownToggle = (index) => {
@@ -162,12 +161,8 @@ const DataTable = ({
     // setSelectedEvent(rowData);
   };
 
-
-
   return (
     <div className="position-relative">
-     
-     
       <div className="card-datatable table-responsive">
         <div className="flex my-5 row w-100 justify-content-between align-items-end">
           <div className="col-md-1 col-4">
@@ -246,16 +241,26 @@ const DataTable = ({
             />
           </div>
         </div>
-        <label className="w-100 text-primary font-bold d-flex align-items-center justify-content-start gap-2 my-2" htmlFor="">
+        <label
+          className="w-100 text-primary font-bold d-flex align-items-center justify-content-start gap-2 my-2"
+          htmlFor=""
+        >
           Expend table row
-          <input type="checkbox" className="form-check-input" value={truncate} checked={truncate?true:false} onChange={handleTruncate} />
+          <input
+            type="checkbox"
+            className="form-check-input"
+            value={truncate}
+            checked={truncate ? true : false}
+            onChange={handleTruncate}
+          />
         </label>
 
-        <table ref={tableRef}
+        <table
+          ref={tableRef}
           className={`card-datatable table-responsive w-100 table ${tableClassName}`}
         >
           <thead>
-            <tr className={`${truncate?"truncate":"notruncate"}`}>
+            <tr className={`${truncate ? "truncate" : "notruncate"}`}>
               <th>
                 <input
                   type="checkbox"
@@ -280,12 +285,15 @@ const DataTable = ({
                     </div>
                   </th>
                 ))}
-
             </tr>
           </thead>
           <tbody>
             {filteredRows.map((row, rowIndex) => (
-              <tr   className={`${truncate?"truncate":"notruncate"}`} key={rowIndex} onClick={() => handleRowClick(row)}>
+              <tr
+                className={`${truncate ? "truncate" : "notruncate"}`}
+                key={rowIndex}
+                onClick={() => handleRowClick(row)}
+              >
                 <td>
                   <input
                     className="form-check-input"
@@ -322,25 +330,34 @@ const DataTable = ({
                     </td>
                   ))}
 
-                  <td >
-                    <button 
-                      onClick={() => {handleTabMenu(rowIndex), handleDropdownToggle(rowIndex)}}
-                      className={`btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow  ${
-                        rowId === rowIndex && tableMenu && "show"
-                      }`}
-                    >
-                      <i className="ti ti-dots-vertical ti-md"></i>
-                    </button>
-                    {dropdownOpen[rowIndex]?(
+                <td>
+                  <button
+                    onClick={() => {
+                      handleTabMenu(rowIndex), handleDropdownToggle(rowIndex);
+                    }}
+                    className={`btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow  ${
+                      rowId === rowIndex && tableMenu && "show"
+                    }`}
+                  >
+                    <i className="ti ti-dots-vertical ti-md"></i>
+                  </button>
+                  {dropdownOpen[rowIndex] ? (
                     <div className="dropdown-menu show">
-                    
-                     <Edit/>
-                      <Delete tableName={`${tableName}`} rowData={row}/>
+                      <button
+                        className="dropdown-item"
+                        onClick={() => onDelete(row)}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        className="dropdown-item"
+                        onClick={() => onEdit(row)}
+                      >
+                        Edit
+                      </button>
                     </div>
-                  ): null}
-                   
-                  </td>
-              
+                  ) : null}
+                </td>
               </tr>
             ))}
           </tbody>

@@ -27,18 +27,14 @@ export const PayerApi = rootApi.injectEndpoints({
         method: "PUT",
         body: payerData,
       }),
-      invalidatesTags: (result, error, _id ) => [
-        { type: "Payer", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "Payer", id: _id }],
     }),
     deletePayer: builder.mutation({
       query: (payerId) => ({
         url: `payer/payer/${payerId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, _id) => [
-        { type: "Payer", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "Payer", id: _id }],
     }),
   }),
 });

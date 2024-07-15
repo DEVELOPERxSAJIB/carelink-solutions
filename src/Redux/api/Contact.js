@@ -27,14 +27,18 @@ export const ContactApi = rootApi.injectEndpoints({
         method: "PUT",
         body: contactData,
       }),
-      invalidatesTags: (result, error, { _id }) => [{ type: "Contact", id: _id }],
+      invalidatesTags: (result, error, { _id }) => [
+        { type: "Contact", id: _id },
+      ],
     }),
     deleteContact: builder.mutation({
       query: (contactId) => ({
         url: `contact/contacts/${contactId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, contactId) => [{ type: "Contact", id: contactId }],
+      invalidatesTags: (result, error, contactId) => [
+        { type: "Contact", id: contactId },
+      ],
     }),
   }),
 });

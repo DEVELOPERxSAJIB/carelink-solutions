@@ -1,182 +1,252 @@
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import swal from "sweetalert";
 import DataTable from "../components/Tables/DynamicTable";
-import PopupModal from './../components/Models/PopupModel';
-import useFormFields from './../hook/useFormHook';
-import TableHeader from './../components/Tables/TableHeader';
-
-// Function to get the start and end dates of the current week
-const getCurrentWeekDateRange = () => {
-  const now = new Date();
-  const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-  const endOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
-
-  const formatDate = (date) => {
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      weekday: "short",
-    };
-    return date.toLocaleDateString("en-US", options);
-  };
-
-  return {
-    start: formatDate(startOfWeek),
-    end: formatDate(endOfWeek),
-  };
-};
+import PopupModal from "../components/Models/PopupModel";
+import useFormFields from "../hook/useFormHook";
+import TableHeader from "../components/Tables/TableHeader";
+import {
+  useCreateLocationMutation,
+  useGetAllLocationsQuery,
+  useDeleteLocationMutation,
+  useUpdateLocationMutation,
+} from "../Redux/api/LocationApi";
+import StateSelect from "../components/FormElement/StateSelect";
+import CitySelect from "../components/FormElement/CitySelect";
+import AuthLoader from "./../utils/Loaders/AuthLoader";
+import EditModal from "./../components/Models/EditModal";
 
 const LocationOfService = () => {
-  const { start, end } = getCurrentWeekDateRange();
-  const navigate = useNavigate();
-  const columns = [
-    { header: "S.No", field: "serialNumber" },
-    { header: "Service Address 1", field: "serviceAddress1" },
-    { header: "Service Address 2", field: "serviceAddress2" },
-    { header: "Service City", field: "serviceCity" },
-    { header: "Service State", field: "serviceState" },
-    { header: "Service Zip Code", field: "serviceZipCode" },
-    { header: "Created By", field: "createdBy" },
-    { header: "Created On", field: "createdOn" },
-  ];
-
-  const data = [
+  const [
+    createLocation,
     {
-      serialNumber: 1,
-      serviceAddress1: "19 dakkhin",
-      serviceAddress2: "2 no cross road",
-      serviceCity: "Khulna",
-      serviceState: "Khulna",
-      serviceZipCode: "9100",
-      createdBy: "Sajib",
-      createdOn : "13 APR 2024"
+      data: createData,
+      isLoading: isCreateLoading,
+      isSuccess: isCreateSuccess,
+      error: createError,
     },
+  ] = useCreateLocationMutation();
+  const [
+    updateLocation,
     {
-      serialNumber: 2,
-      serviceAddress1: "19 dakkhin",
-      serviceAddress2: "2 no cross road",
-      serviceCity: "Khulna",
-      serviceState: "Khulna",
-      serviceZipCode: "9100",
-      createdBy: "Sajib",
-      createdOn : "13 APR 2024"
+      data: updateData,
+      isLoading: isUpdateLoading,
+      isSuccess: isUseUpdateLocationSuccess,
+      error: updateError,
     },
+  ] = useUpdateLocationMutation();
+
+  const [
+    deleteLocation,
     {
-      serialNumber: 3,
-      serviceAddress1: "19 dakkhin",
-      serviceAddress2: "2 no cross road",
-      serviceCity: "Khulna",
-      serviceState: "Khulna",
-      serviceZipCode: "9100",
-      createdBy: "Sajib",
-      createdOn : "13 APR 2024"
+      data: deleteData,
+      isLoading: isDeleteLoading,
+      isSuccess: isDeleteSuccess,
+      error: deleteError,
     },
+  ] = useDeleteLocationMutation();
 
-    // Add more rows as needed
-  ];
+  const { data, isLoading, refetch } = useGetAllLocationsQuery();
 
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [show, setShow] = useState(false);
+  const [editId, setEditId] = useState("");
   const handleEdit = (rowData) => {
-    alert(`Editing ${rowData.firstName} ${rowData.lastName}`);
-    // Implement edit logic here
+    setShow(true);
+    setCity(rowData.city);
+    setEditId(rowData._id);
+    setState(rowData.state);
+    setFormData({
+      address1: rowData.address1,
+      address2: rowData.address2,
+      zip: rowData.zip,
+    });
   };
+  const columns = [
+    { header: "ID", field: "_id" },
+    { header: "Address 1", field: "address1" },
+    { header: "Address 2", field: "address2" },
+    { header: "City", field: "city" },
+    { header: "State", field: "state" },
+    { header: "Zip Code", field: "zip" },
+    { header: "Created By", field: "createdBy" },
+    { header: "Created On", field: "createdAt" },
+  ];
 
   const handleDelete = (rowData) => {
-    alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
-    // Implement delete logic here
-  };
-  const initialState = {
-    address1: '',
-    address2: '',
-    city: '',
-    state: '',
-    zipCode: ''
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
+        deleteLocation(rowData?._id);
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
   };
 
-  const [formData, handleChange, resetForm] = useFormFields(initialState);
+  const initialState = {
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    zip: "",
+  };
+
+  const [formData, handleChange, setFormData, resetForm] =
+    useFormFields(initialState);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    // onSave(formData); // Pass formData to parent component or handle saving logic
-    resetForm(); // Reset form fields after submission
+    if (editId) {
+      const data = {
+        ...formData,
+        city,
+        state,
+      };
+      updateLocation({ locationId: editId, locationData: data });
+    } else {
+      const data = {
+        ...formData,
+        city,
+        state,
+      };
+      createLocation(data);
+    }
   };
+
+  useEffect(() => {
+    if (isCreateSuccess) {
+      refetch();
+    }
+    if (isDeleteSuccess) {
+      refetch();
+    }
+    if (isUseUpdateLocationSuccess) {
+      refetch();
+      setShow(false);
+    }
+  }, [isDeleteSuccess, isCreateSuccess, isUseUpdateLocationSuccess]);
+
+  if (isLoading) return <AuthLoader />;
   return (
     <div className="card">
-      
-      <TableHeader title="Manage Locations" className="card-header py-3 pt-5 fs-3"/>
+      <TableHeader
+        title="Manage Locations"
+        className="card-header py-3 pt-5 fs-3"
+      />
+
       <div className="card-body">
+        {deleteData?.message && (
+          <div className="alert alert-success text-center">
+            {deleteData.message}
+          </div>
+        )}
+        {updateData?.message && (
+          <div className="alert alert-success text-center">
+            {updateData.message}
+          </div>
+        )}
+
+        {updateError?.data?.message && (
+          <div className="alert alert-danger text-center">
+            {updateError?.data?.message}
+          </div>
+        )}
+        {deleteError?.data?.message && (
+          <div className="alert alert-danger text-center">
+            {deleteError?.data?.message}
+          </div>
+        )}
         <div className="gap-3 d-flex flex-wrap">
-        <PopupModal title="Add Service Location" id="manageLocations">
-        <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-        <label htmlFor="address1" className="form-label">Address1</label>
-        <input
-          type="text"
-          id="address1"
-          name="address1"
-          className="form-control"
-          value={formData.address1}
-          onChange={handleChange}
-          placeholder="Enter Address1"
-          required
-        />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="address2" className="form-label">Address2</label>
-        <input
-          type="text"
-          id="address2"
-          name="address2"
-          className="form-control"
-          value={formData.address2}
-          onChange={handleChange}
-          placeholder="Enter Address2"
-        />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="city" className="form-label">City</label>
-        <input
-          type="text"
-          id="city"
-          name="city"
-          className="form-control"
-          value={formData.city}
-          onChange={handleChange}
-          placeholder="Enter City"
-          required
-        />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="state" className="form-label">State</label>
-        <input
-          type="text"
-          id="state"
-          name="state"
-          className="form-control"
-          value={formData.state}
-          onChange={handleChange}
-          placeholder="Enter State"
-          required
-        />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="zipCode" className="form-label">Zip Code</label>
-        <input
-          type="text"
-          id="zipCode"
-          name="zipCode"
-          className="form-control"
-          value={formData.zipCode}
-          onChange={handleChange}
-          placeholder="Enter Zip Code"
-          required
-        />
-      </div>
-      <div className="d-grid">
-        <button type="submit" className="btn btn-primary">Add Service Location</button>
-      </div>
-    </form>
-        </PopupModal>
+          <PopupModal title="Add Service Location" id="newaddServiceLocation">
+            <form onSubmit={handleSubmit}>
+              {createError?.data?.message && (
+                <div className="alert alert-danger text-center">
+                  {createError?.data?.message}
+                </div>
+              )}
+              {createData?.message && (
+                <div className="alert alert-success text-center">
+                  {createData.message}
+                </div>
+              )}
+              <div className="mb-3">
+                <label htmlFor="address1" className="form-label">
+                  Address1
+                </label>
+                <input
+                  type="text"
+                  id="address1"
+                  name="address1"
+                  className="form-control"
+                  value={formData.address1}
+                  onChange={handleChange}
+                  placeholder="Enter Address1"
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="address2" className="form-label">
+                  Address2
+                </label>
+                <input
+                  type="text"
+                  id="address2"
+                  name="address2"
+                  className="form-control"
+                  value={formData.address2}
+                  onChange={handleChange}
+                  placeholder="Enter Address2"
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="city" className="form-label">
+                  City
+                </label>
+                <CitySelect
+                  stateCode={state}
+                  selectedCity={city}
+                  setSelectedCity={setCity}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="state" className="form-label">
+                  State
+                </label>
+                <StateSelect
+                  selectedState={state}
+                  setSelectedState={setState}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="zip" className="form-label">
+                  Zip Code
+                </label>
+                <input
+                  type="text"
+                  id="zip"
+                  name="zip"
+                  className="form-control"
+                  value={formData.zip}
+                  onChange={handleChange}
+                  placeholder="Enter Zip Code"
+                />
+              </div>
+              <div className="d-grid">
+                <button type="submit" className="btn btn-primary">
+                  Add Service Location
+                </button>
+              </div>
+            </form>
+          </PopupModal>
+
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -189,10 +259,82 @@ const LocationOfService = () => {
             </span>
           </button>
         </div>
+        {show && (
+          <EditModal show={show} onClose={setShow}>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label htmlFor="address1" className="form-label">
+                  Address1
+                </label>
+                <input
+                  type="text"
+                  id="address1"
+                  name="address1"
+                  className="form-control"
+                  value={formData.address1}
+                  onChange={handleChange}
+                  placeholder="Enter Address1"
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="address2" className="form-label">
+                  Address2
+                </label>
+                <input
+                  type="text"
+                  id="address2"
+                  name="address2"
+                  className="form-control"
+                  value={formData.address2}
+                  onChange={handleChange}
+                  placeholder="Enter Address2"
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="city" className="form-label">
+                  City
+                </label>
+                <CitySelect
+                  stateCode={state}
+                  selectedCity={city}
+                  setSelectedCity={setCity}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="state" className="form-label">
+                  State
+                </label>
+                <StateSelect
+                  selectedState={state}
+                  setSelectedState={setState}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="zip" className="form-label">
+                  Zip Code
+                </label>
+                <input
+                  type="text"
+                  id="zip"
+                  name="zip"
+                  className="form-control"
+                  value={formData.zip}
+                  onChange={handleChange}
+                  placeholder="Enter Zip Code"
+                />
+              </div>
+              <div className="d-grid">
+                <button type="submit" className="btn btn-primary">
+                  Edit Service Location
+                </button>
+              </div>
+            </form>
+          </EditModal>
+        )}
         <div className="mt-5">
           <DataTable
             columns={columns}
-            data={data}
+            data={data?.payload?.locations ?? []}
             tableClassName="custom-table"
             tableName="locationOfService"
             onEdit={handleEdit}

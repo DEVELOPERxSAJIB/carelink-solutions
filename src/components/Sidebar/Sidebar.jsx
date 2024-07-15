@@ -272,7 +272,7 @@ const Sidebar = () => {
         },
         {
           title: "Clock out",
-          href: "/clock-out",
+          href: "/view-log",
           icon: "",
         },
         {

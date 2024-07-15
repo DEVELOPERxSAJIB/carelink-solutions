@@ -27,18 +27,14 @@ export const PharmacyApi = rootApi.injectEndpoints({
         method: "PUT",
         body: pharmacyData,
       }),
-      invalidatesTags: (result, error,  _id ) => [
-        { type: "Pharmacy", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "Pharmacy", id: _id }],
     }),
     deletePharmacy: builder.mutation({
       query: (pharmacyId) => ({
         url: `pharmacy/${pharmacyId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, _id) => [
-        { type: "Pharmacy", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "Pharmacy", id: _id }],
     }),
   }),
 });

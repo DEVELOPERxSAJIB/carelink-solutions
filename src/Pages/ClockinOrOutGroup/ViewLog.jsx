@@ -1,107 +1,177 @@
-
+import { useState, useEffect } from "react";
 import DataTable from "./../../components/Tables/DynamicTable";
 import { useNavigate } from "react-router-dom";
-import TableHeader from './../../components/Tables/TableHeader';
+import TableHeader from "./../../components/Tables/TableHeader";
+import EditModal from "./../../components/Models/EditModal";
+import AuthLoader from "./../../utils/Loaders/AuthLoader";
+import DatePicker from "react-datepicker";
+import MultiSelect from "./../../components/FormElement/MultiSelect";
+import useFormFields from "./../../hook/useFormHook";
+import  swal  from 'sweetalert';
+import { useGetAllSubUsersQuery } from "../../Redux/api/SubUserApi.js";
+import {
+  useGetAllClocksQuery,
+  useUpdateClockMutation,
+  useDeleteClockMutation,
+} from "../../Redux/api/ClockApi";
 
-// Function to get the start and end dates of the current week
-const getCurrentWeekDateRange = () => {
-  const now = new Date();
-  const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-  const endOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
 
-  const formatDate = (date) => {
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      weekday: "short",
-    };
-    return date.toLocaleDateString("en-US", options);
-  };
-
-  return {
-    start: formatDate(startOfWeek),
-    end: formatDate(endOfWeek),
-  };
-};
 
 const ViewLog = () => {
-  const { start, end } = getCurrentWeekDateRange();
+  const { data: subUsers } = useGetAllSubUsersQuery();
   const navigate = useNavigate();
+  const [ multiValue,setMultiValue] = useState([]);
+
+  const handleChangeMulti = (selectedOptions) => {
+     setMultiValue(selectedOptions);
+   };
+  const [startDate, setStartDate] = useState(new Date());
+  const { data, isLoading, error, refetch } = useGetAllClocksQuery();
+  const [show, setShow] = useState(false);
+  const [editId, setEditId] = useState("");
+  const [
+    updateClock,
+    {
+      data: updateData,
+      isLoading: isUpdateLoading,
+      isSuccess: isUpdateSuccess,
+      error: updateError,
+    },
+  ] = useUpdateClockMutation();
+  const [
+    deleteClock,
+    {
+      data: deleteData,
+      isLoading: isDeleteLoading,
+      isSuccess: isDeleteSuccess,
+      error: deleteError,
+    },
+  ] = useDeleteClockMutation();
+  const initialState = {
+    dateOfService: "",
+    ratioNumerator: null,
+    ratioDenominator: null,
+    workCode: "",
+    startTime: "",
+    endTime: "",
+    milesUsed: null,
+    location: "",
+  };
+
+  const [formData, handleChange, setFormData] =
+    useFormFields(initialState);
+
   const columns = [
-    { header: "S.No", field: "serialNumber" },
+    { header: "Id", field: "_id" },
     { header: "Date Of Service", field: "dateOfService" },
     { header: "Work Code", field: "workCode" },
     { header: "Start Time", field: "startTime" },
     { header: "End Time", field: "endTime" },
-    { header: "Total Hours", field: "totalHours" },
-    { header: "Ratio", field: "ratio" },
+    { header: "Ratio Numerator", field: "ratioNumerator" },
+    { header: "Ratio Denominator", field: "ratioDenominator" },
     { header: "Added By", field: "addedBy" },
-    { header: "Added On", field: "addedOn" },
+    { header: "Location", field: "location" },
+    { header: "Added On", field: "createdAt" },
   ];
-
-  const data = [
-    {
-      serialNumber: 1,
-      dateOfService: "2024-06-01",
-      workCode: "W123",
-      startTime: "08:00",
-      endTime: "12:00",
-      totalHours: 4,
-      ratio: 0.8,
-      addedBy: "John Doe",
-      addedOn: "2024-06-01 12:30",
-    },
-    {
-      serialNumber: 2,
-      dateOfService: "2024-06-02",
-      workCode: "W124",
-      startTime: "09:00",
-      endTime: "17:00",
-      totalHours: 8,
-      ratio: 1.0,
-      addedBy: "Jane Smith",
-      addedOn: "2024-06-02 17:30",
-    },
-    {
-      serialNumber: 3,
-      dateOfService: "2024-06-03",
-      workCode: "W125",
-      startTime: "10:00",
-      endTime: "14:00",
-      totalHours: 4,
-      ratio: 0.9,
-      addedBy: "Alice Johnson",
-      addedOn: "2024-06-03 14:30",
-    }
-  ];
-  
-  
-    // Add more rows as needed
-  
-  
-
   const handleEdit = (rowData) => {
-    alert(`Editing ${rowData.firstName} ${rowData.lastName}`);
-    // Implement edit logic here
+    setShow(true);
+    setEditId(rowData._id);
+    setStartDate(rowData.dateOfService);
+    setFormData({
+      dateOfService: rowData.dateOfService,
+      ratioNumerator: rowData.ratioNumerator,
+      ratioDenominator: rowData.ratioDenominator,
+      workCode: rowData.workCode,
+      startTime: rowData.startTime,
+      endTime: rowData.endTime,
+      milesUsed: rowData.milesUsed,
+      location: rowData.location,
+    });
+setMultiValue(rowData?.individuals?.map((item)=>({value:item._id,label:item.firstName})))    
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const updatedFormData = {
+        ...formData,
+        dateOfService: startDate,
+      };
+      await updateClock({ clockId: editId, clockData: updatedFormData });
+    } catch (error) {
+      console.error("Error creating clock:", error);
+    }
   };
 
   const handleDelete = (rowData) => {
-    alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
-    // Implement delete logic here
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
+        deleteClock(rowData?._id);
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
+    
   };
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      refetch();
+      setShow(false);
+    }
+    if (isDeleteSuccess) {
+      refetch();
+    }
+  }, [isUpdateSuccess, isDeleteSuccess]);
 
+  if (isLoading || isUpdateLoading || isDeleteLoading) return <AuthLoader />;
   return (
     <div className="card">
-      <TableHeader title="Group Time Sheet" className="py-3 pt-5 fs-3 card-header"/>
+      <TableHeader
+        title="Group Time Sheet"
+        className="py-3 pt-5 fs-3 card-header"
+      />
+      
+
       <div className="card-body">
+      {data?.message && (
+        <div className="alert alert-success text-center">{data.message}</div>
+      )}
+      {updateData?.message && (
+        <div className="alert alert-success text-center">{updateData.message}</div>
+      )}
+
+      {deleteData?.message && (
+        <div className="alert alert-success text-center">
+          {deleteData.message}
+        </div>
+      )}
+
+      {deleteError?.data?.message && (
+        <div className="alert alert-danger text-center">
+          {deleteError?.data?.message}
+        </div>
+      )}
+      {error?.data?.message && (
+        <div className="alert alert-danger text-center">
+          {error?.data?.message}
+        </div>
+      )}
         <div className="gap-3 d-flex flex-wrap">
           <button
             className="btn btn-secondary create-new btn-primary waves-effect waves-light"
             tabIndex={0}
             aria-controls="DataTables_Table_0"
             type="button"
-            onClick={()=>navigate("/clock-in")}
+            onClick={() => navigate("/clock-in")}
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-plus me-sm-1" />{" "}
@@ -120,7 +190,7 @@ const ViewLog = () => {
             </span>
           </button>
           <button
-            style={{ background: "#9fd74d", color: "#fff",}}
+            style={{ background: "#9fd74d", color: "#fff" }}
             className="btn waves-effect waves-light"
             tabIndex={0}
             aria-controls="DataTables_Table_0"
@@ -138,7 +208,7 @@ const ViewLog = () => {
             type="button"
           >
             <span className="d-flex align-items-center">
-            <i className="ti ti-history me-1"></i>{" "}
+              <i className="ti ti-history me-1"></i>{" "}
               <span className="d-none d-sm-inline-block">History</span>
             </span>
           </button>
@@ -150,16 +220,169 @@ const ViewLog = () => {
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-archive me-1" />
-              <span className="d-none d-sm-inline-block">
-                Archive{" "}
-              </span>
+              <span className="d-none d-sm-inline-block">Archive </span>
             </span>
           </button>
         </div>
+        {show && (
+          <EditModal
+            show={show}
+            onClose={setShow}
+            title="Edit Clock in"
+            id="clockIn"
+          >
+            <form onSubmit={handleSubmit} className="card-body">
+              <div className="row">
+               
+                {updateError?.data?.message && (
+                  <div className="alert alert-danger text-center">
+                    {updateError?.data?.message}
+                  </div>
+                )}
+              </div>
+              <div className="row g-6">
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="company-name">
+                    Date Of Service <span className="text-danger">*</span>
+                  </label>
+                  <DatePicker
+                    className="w-100 form-control"
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="formValidationLang">
+                    Choose Individual <span className="text-danger">*</span>
+                  </label>
+                  <MultiSelect
+
+               value={multiValue}
+               onChange={handleChangeMulti}
+               options={
+                  subUsers?.payload?.subUsers.map((item) => ({
+                    value: item?._id,
+                    label: item?.firstName,
+                  })) ?? []
+                }
+              />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="formValidationLang">
+                    Ratio <span className="text-danger">*</span>
+                  </label>
+                  <div className=" d-flex gap-5 align-items-center">
+                    <input
+                      type="number"
+                      value={formData?.ratioNumerator}
+                      className="form-control"
+                      name="ratioNumerator"
+                      onChange={handleChange}
+                      id="ratioNumerator"
+                      placeholder="ratio"
+                    />
+                    :
+                    <input
+                      type="number"
+                      value={formData?.ratioDenominator}
+                      className="form-control"
+                      name="ratioDenominator"
+                      id="ratioDenominator"
+                      onChange={handleChange}
+                      placeholder="ratio"
+                    />
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="form-repeater-1-3">
+                    Work Code <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    name="workCode"
+                    value={formData?.workCode}
+                    onChange={handleChange}
+                    id="form-repeater-1-3"
+                    className="form-select"
+                  >
+                    <option value="Awake">Awake</option>
+                    <option value="OSOC">OSOC</option>
+                    <option value="Training">Training</option>
+                    <option value="PTO">PTO</option>
+                    <option value="Meeting">Meeting</option>
+                    <option value="Active">Active</option>
+                    <option value="sleep">sleep</option>
+                    <option value="other">other</option>
+                  </select>
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="formValidationLang">
+                    Start Time <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="time"
+                    value={formData?.startTime}
+                    className="form-control"
+                    name="startTime"
+                    id="startTime"
+                    onChange={handleChange}
+                    placeholder="time"
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="formValidationLang">
+                    end Time <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="time"
+                    value={formData?.endTime}
+                    className="form-control"
+                    name="endTime"
+                    id="endTime"
+                    onChange={handleChange}
+                    placeholder="time"
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="formValidationLang">
+                    Miles Used <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    value={formData?.milesUsed}
+                    className="form-control"
+                    onChange={handleChange}
+                    name="milesUsed"
+                    id="milesUsed"
+                    placeholder="0"
+                  />
+                </div>
+                <div className="col-md-12">
+                  <label className="form-label" htmlFor="formValidationLang">
+                    Location <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={formData?.location}
+                    className="form-control"
+                    name="location"
+                    id="location"
+                    onChange={handleChange}
+                    placeholder="location"
+                  />
+                </div>
+              </div>
+              <div className="pt-6">
+                <button type="submit" className="btn btn-primary me-4">
+                  Clock In
+                </button>
+              </div>
+            </form>
+          </EditModal>
+        )}
         <div className="mt-5">
           <DataTable
             columns={columns}
-            data={data}
+            data={data?.payload?.clocks ?? []}
             tableClassName="custom-table"
             onEdit={handleEdit}
             tableName="viewLog"

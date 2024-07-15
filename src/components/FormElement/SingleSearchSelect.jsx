@@ -2,20 +2,15 @@ import React, { useState } from "react";
 import Select from "react-select";
 
 const SingleSearchSelect = ({
-  options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ],
+  options,selected,setSelected
 }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
-
+ 
   return (
     <div className="App">
       <Select
-        defaultValue={selectedOption}
-        onChange={setSelectedOption}
-        options={options}
+        defaultValue={selected}
+        onChange={setSelected}
+        options={options??[]}
       />
     </div>
   );

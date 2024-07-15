@@ -1,83 +1,83 @@
 import { useNavigate } from "react-router-dom";
 import { FaRegFolder } from "react-icons/fa";
 import DataTable from "../../components/Tables/DynamicTable";
-import FullscreenModal from './../../components/Models/FullScreenModel';
-import useFormFields from './../../hook/useFormHook';
-import TableHeader from './../../components/Tables/TableHeader';
-
-// Function to get the start and end dates of the current week
-const getCurrentWeekDateRange = () => {
-  const now = new Date();
-  const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-  const endOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
-
-  const formatDate = (date) => {
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      weekday: "short",
-    };
-    return date.toLocaleDateString("en-US", options);
-  };
-
-  return {
-    start: formatDate(startOfWeek),
-    end: formatDate(endOfWeek),
-  };
-};
+import FullscreenModal from "./../../components/Models/FullScreenModel";
+import useFormFields from "./../../hook/useFormHook";
+import TableHeader from "./../../components/Tables/TableHeader";
+import {
+  useCreateMileageMutation,
+  useGetAllMileagesQuery,
+  useUpdateMileageMutation,
+  useDeleteMileageMutation,
+} from "../../Redux/api/MileageApi.js";
+import { useGetAllSubUsersQuery } from "../../Redux/api/SubUserApi.js";
+import { useState, useEffect } from "react";
+import  swal  from "sweetalert";
+import EditModal from "./../../components/Models/EditModal";
+import AuthLoader from "./../../utils/Loaders/AuthLoader";
+import DatePicker from "react-datepicker";
 
 const ViewAssignedMileage = () => {
-  const { start, end } = getCurrentWeekDateRange();
-  const navigate = useNavigate();
-
+  const [editId, setEditId] = useState("");
+  const [show, setShow] = useState(false);
+  const [date, setDate] = useState("");
+  const [
+    createMileage,
+    { data: createData, isSuccess: isCreateSuccess, error: createError },
+  ] = useCreateMileageMutation();
+  const { data, isLoading, refetch } = useGetAllMileagesQuery();
+  const [
+    updateMileage,
+    { data: updateData, isSuccess: isUpdateSuccess, error: updateError },
+  ] = useUpdateMileageMutation();
+  const [
+    deleteMileage,
+    {
+      data: deleteData,
+      isSuccess: isDeleteSuccess,
+      isLoading: isDeleteLoading,
+      error: deleteError,
+    },
+  ] = useDeleteMileageMutation();
+  const { data: subUsers } = useGetAllSubUsersQuery();
   const columns = [
-    { header: "S.No", field: "serialNumber" },
-    { header: "Individual", field: "individual" },
-    { header: "Month/Year", field: "monthYear" },
-    { header: "Initial Miles", field: "initialMiles" },
+    { header: "Id", field: "_id" },
+    { header: "Mileage Period", field: "mileagePeriod" },
     { header: "Total Miles", field: "totalMiles" },
     { header: "Added By", field: "addedBy" },
-    { header: "Added On", field: "addedOn" },
+    { header: "Added On", field: "createdAt" },
   ];
-  
-  const data = [
-    {
-      serialNumber: 1,
-      individual: "John Doe",
-      monthYear: "06/2024",
-      initialMiles: 120,
-      totalMiles: 200,
-      addedBy: "Jane Smith",
-      addedOn: "2024-06-01 12:30"
-    },
-    {
-      serialNumber: 2,
-      individual: "Alice Johnson",
-      monthYear: "06/2024",
-      initialMiles: 100,
-      totalMiles: 180,
-      addedBy: "John Doe",
-      addedOn: "2024-06-02 17:30"
-    },
-    {
-      serialNumber: 3,
-      individual: "Bob Brown",
-      monthYear: "06/2024",
-      initialMiles: 150,
-      totalMiles: 230,
-      addedBy: "Alice Johnson",
-      addedOn: "2024-06-03 14:30"
-    }
-  ];
-  
 
   const handleEdit = (rowData) => {
-    alert(`Editing ${rowData.firstName} ${rowData.lastName}`);
+    setShow(true);
+    setEditId(rowData._id);
+    setDate(rowData.date);
+    setFormData({
+      mileageType: rowData.mileageType,
+      individual: rowData.individual._id,
+      mileagePeriod: rowData.mileagePeriod,
+      totalMiles: rowData.totalMiles,
+      comment: rowData.comment,
+    });
   };
 
   const handleDelete = (rowData) => {
-    alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
+        deleteMileage(rowData._id);
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
   };
   const initialState = {
     date: "07/04/2024",
@@ -88,123 +88,289 @@ const ViewAssignedMileage = () => {
     comment: "",
   };
 
-  const [formData, handleChange, resetForm] = useFormFields(initialState);
- 
+  const [formData, handleChange, setFormData, resetForm] =
+    useFormFields(initialState);
+
   const handleSubmit = (e) => {
+    if (editId) {
+      formData.date = date;
+      updateMileage({ mileageId: editId, mileageData: formData });
+    } else {
+      formData.date = date;
+      setEditId("");
+      createMileage(formData);
+    }
     e.preventDefault();
-    // Implement your form submission logic here
-    console.log("Form Data:", formData);
     resetForm();
-   
   };
+  useEffect(() => {
+    if (isCreateSuccess) {
+      refetch();
+    }
+    if (isDeleteSuccess) {
+      refetch();
+    }
+    if (isUpdateSuccess) {
+      setEditId("");
+      refetch();
+    }
+  }, [isCreateSuccess, isDeleteSuccess, isUpdateSuccess]);
+  if (isLoading || isDeleteLoading) return <AuthLoader />;
   return (
     <div className="card">
-
-      <TableHeader title="Assigned Miles" className="py-3 pt-5 fs-3 card-header"/>
+      <TableHeader
+        title="Assigned Miles"
+        className="py-3 pt-5 fs-3 card-header"
+      />
       <div className="card-body">
+        {deleteData?.message && (
+          <div className="alert alert-success text-center">
+            {deleteData.message}
+          </div>
+        )}
+
+        {deleteError?.data?.message && (
+          <div className="alert alert-danger text-center">
+            {deleteError?.data?.message}
+          </div>
+        )}
+
         <div className="gap-3 d-flex flex-wrap">
           <FullscreenModal title="Add Mileage" id="addmileage">
-          <form onSubmit={handleSubmit}>
-          <div className="row">
-            <div className="col-md-6 mb-3">
-              <label htmlFor="date" className="form-label">
-                Date
-              </label>
-              <input
-                type="text"
-                id="date"
-                name="date"
-                className="form-control"
-                value={formData.date}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="col-md-6 mb-3">
-              <label htmlFor="mileageType" className="form-label">
-                Mileage Type
-              </label>
-              <select
-                id="mileageType"
-                name="mileageType"
-                className="form-select"
-                value={formData.mileageType}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Mileage Type</option>
-                <option value="Individual Mileage">Individual Mileage</option>
-                <option value="Share Mileage">Share Mileage</option>
-              </select>
-            </div>
-            <div className="col-md-6 mb-3">
-              <label htmlFor="individual" className="form-label">
-                Select Individual
-              </label>
-              <select
-                id="individual"
-                name="individual"
-                className="form-select"
-                value={formData.individual}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Individual</option>
-                {/* Add options dynamically here */}
-              </select>
-            </div>
-            <div className="col-md-6 mb-3">
-              <label htmlFor="mileagePeriod" className="form-label">
-                Select Mileage Period
-              </label>
-              <select
-                id="mileagePeriod"
-                name="mileagePeriod"
-                className="form-select"
-                value={formData.mileagePeriod}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Mileage Period</option>
-                <option value="Monthly">Monthly</option>
-                <option value="Yearly">Yearly</option>
-              </select>
-            </div>
-            <div className="col-md-6 mb-3">
-              <label htmlFor="totalMiles" className="form-label">
-                Total Miles
-              </label>
-              <input
-                type="text"
-                id="totalMiles"
-                name="totalMiles"
-                className="form-control"
-                value={formData.totalMiles}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="col-md-12 mb-3">
-              <label htmlFor="comment" className="form-label">
-                Comment
-              </label>
-              <textarea
-                id="comment"
-                name="comment"
-                className="form-control"
-                value={formData.comment}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className="d-flex justify-content-end">
-            <button type="submit" className="btn btn-primary">
-              Add Mileage
-            </button>
-          </div>
-        </form>
-      
+            <form onSubmit={handleSubmit}>
+              {createError?.data?.message && (
+                <div className="alert alert-danger text-center">
+                  {createError?.data?.message}
+                </div>
+              )}
+              {createData?.message && (
+                <div className="alert alert-success text-center">
+                  {createData.message}
+                </div>
+              )}
+
+              <div className="row">
+                <div className="col-md-6 mb-3">
+                  <label htmlFor="date" className="form-label">
+                    Date
+                  </label>
+                  <DatePicker
+                    selected={date}
+                    className="form-control"
+                    onChange={(date) => setDate(date)}
+                  />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label htmlFor="mileageType" className="form-label">
+                    Mileage Type
+                  </label>
+                  <select
+                    id="mileageType"
+                    name="mileageType"
+                    className="form-select"
+                    value={formData.mileageType}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select Mileage Type</option>
+                    <option value="Individual Mileage">
+                      Individual Mileage
+                    </option>
+                    <option value="Share Mileage">Share Mileage</option>
+                  </select>
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label htmlFor="individual" className="form-label">
+                    Select Individual
+                  </label>
+                  <select
+                    id="individual"
+                    name="individual"
+                    className="form-select"
+                    value={formData.individual}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select Individual</option>
+                    {subUsers?.payload?.subUsers.map((item, index) => {
+                      return (
+                        <option key={index} value={item._id}>
+                          {item.firstName}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label htmlFor="mileagePeriod" className="form-label">
+                    Select Mileage Period
+                  </label>
+                  <select
+                    id="mileagePeriod"
+                    name="mileagePeriod"
+                    className="form-select"
+                    value={formData.mileagePeriod}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select Mileage Period</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Yearly">Yearly</option>
+                  </select>
+                </div>
+                <div className="col-md-12 mb-3">
+                  <label htmlFor="totalMiles" className="form-label">
+                    Total Miles
+                  </label>
+                  <input
+                    type="text"
+                    id="totalMiles"
+                    name="totalMiles"
+                    className="form-control"
+                    value={formData.totalMiles}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="col-md-12 mb-3">
+                  <label htmlFor="comment" className="form-label">
+                    Comment
+                  </label>
+                  <textarea
+                    id="comment"
+                    name="comment"
+                    className="form-control"
+                    value={formData.comment}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="d-flex justify-content-end">
+                <button type="submit" className="btn btn-primary">
+                  Add Mileage
+                </button>
+              </div>
+            </form>
           </FullscreenModal>
+          {show && (
+            <EditModal title="Edit mileage" onClose={setShow}>
+              <form onSubmit={handleSubmit}>
+                {updateData?.message && (
+                  <div className="alert alert-success text-center">
+                    {updateData.message}
+                  </div>
+                )}
+
+                {updateError?.data?.message && (
+                  <div className="alert alert-danger text-center">
+                    {updateError?.data?.message}
+                  </div>
+                )}
+
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label htmlFor="date" className="form-label">
+                      Date
+                    </label>
+                    <DatePicker
+                      selected={date}
+                      className="form-control"
+                      onChange={(date) => setDate(date)}
+                    />
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label htmlFor="mileageType" className="form-label">
+                      Mileage Type
+                    </label>
+                    <select
+                      id="mileageType"
+                      name="mileageType"
+                      className="form-select"
+                      value={formData.mileageType}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">Select Mileage Type</option>
+                      <option value="Individual Mileage">
+                        Individual Mileage
+                      </option>
+                      <option value="Share Mileage">Share Mileage</option>
+                    </select>
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label htmlFor="individual" className="form-label">
+                      Select Individual
+                    </label>
+                    <select
+                      id="individual"
+                      name="individual"
+                      className="form-select"
+                      value={formData.individual}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">Select Individual</option>
+                      {subUsers?.payload?.subUsers.map((item, index) => {
+                        return (
+                          <option key={index} value={item._id}>
+                            {item.firstName}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label htmlFor="mileagePeriod" className="form-label">
+                      Select Mileage Period
+                    </label>
+                    <select
+                      id="mileagePeriod"
+                      name="mileagePeriod"
+                      className="form-select"
+                      value={formData.mileagePeriod}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">Select Mileage Period</option>
+                      <option value="Monthly">Monthly</option>
+                      <option value="Yearly">Yearly</option>
+                    </select>
+                  </div>
+                  <div className="col-md-12 mb-3">
+                    <label htmlFor="totalMiles" className="form-label">
+                      Total Miles
+                    </label>
+                    <input
+                      type="text"
+                      id="totalMiles"
+                      name="totalMiles"
+                      className="form-control"
+                      value={formData.totalMiles}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-md-12 mb-3">
+                    <label htmlFor="comment" className="form-label">
+                      Comment
+                    </label>
+                    <textarea
+                      id="comment"
+                      name="comment"
+                      className="form-control"
+                      value={formData.comment}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="d-flex justify-content-end">
+                  <button type="submit" className="btn btn-primary">
+                    Edit Mileage
+                  </button>
+                </div>
+              </form>
+            </EditModal>
+          )}
           <button
             className="btn btn-secondary waves-effect waves-light"
             tabIndex={0}
@@ -243,7 +409,7 @@ const ViewAssignedMileage = () => {
         <div className="mt-5">
           <DataTable
             columns={columns}
-            data={data}
+            data={data?.payload?.mileages ?? []}
             tableClassName="custom-table"
             onEdit={handleEdit}
             tableName="viewAssignedMileage"

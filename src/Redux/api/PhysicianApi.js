@@ -27,18 +27,14 @@ export const PhysicianApi = rootApi.injectEndpoints({
         method: "PUT",
         body: physicianData,
       }),
-      invalidatesTags: (result, error,  _id ) => [
-        { type: "Physician", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "Physician", id: _id }],
     }),
     deletePhysician: builder.mutation({
       query: (physicianId) => ({
         url: `physician/physician/${physicianId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, _id) => [
-        { type: "Physician", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "Physician", id: _id }],
     }),
   }),
 });

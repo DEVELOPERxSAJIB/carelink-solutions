@@ -29,18 +29,14 @@ export const DirectiveApi = rootApi.injectEndpoints({
         method: "PUT",
         body: directiveData,
       }),
-      invalidatesTags: (result, error,  _id ) => [
-        { type: "Directive", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "Directive", id: _id }],
     }),
     deleteDirective: builder.mutation({
       query: (directiveId) => ({
         url: `directive/${directiveId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, _id) => [
-        { type: "Directive", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "Directive", id: _id }],
     }),
   }),
 });

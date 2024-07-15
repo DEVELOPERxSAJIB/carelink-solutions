@@ -1,35 +1,12 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import DataTable from "./../../components/Tables/DynamicTable";
-import ExportButton from "./../../components/Buttons/ExportButton";
-import { useNavigate } from "react-router-dom";
+
 import FullscreenModal from "./../../components/Models/FullScreenModel";
-import TableHeader from './../../components/Tables/TableHeader';
+import TableHeader from "./../../components/Tables/TableHeader";
 
-// Function to get the start and end dates of the current week
-const getCurrentWeekDateRange = () => {
-  const now = new Date();
-  const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-  const endOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
-
-  const formatDate = (date) => {
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      weekday: "short",
-    };
-    return date.toLocaleDateString("en-US", options);
-  };
-
-  return {
-    start: formatDate(startOfWeek),
-    end: formatDate(endOfWeek),
-  };
-};
 
 const CoAdmin = () => {
-  const { start, end } = getCurrentWeekDateRange();
-  const navigate = useNavigate();
+
   const columns = [
     { header: "S.No", field: "serialNumber" },
     { header: "First Name", field: "firstName" },
@@ -94,11 +71,17 @@ const CoAdmin = () => {
   return (
     <>
       <div className="card">
-
-        <TableHeader title="Manage Co-Admins" className="py-3 pt-5 fs-3 card-header"/>
+        <TableHeader
+          title="Manage Co-Admins"
+          className="py-3 pt-5 fs-3 card-header"
+        />
         <div className="card-body">
           <div className="gap-3 d-flex flex-wrap">
-            <FullscreenModal id="addnewcoadmin" title="Add New Co-Admin" onSave={handleSave}>
+            <FullscreenModal
+              id="addnewcoadmin"
+              title="Add New Co-Admin"
+              onSave={handleSave}
+            >
               <form className="w-100">
                 <div className="mb-3 w-100">
                   <label htmlFor="gender" className="form-label">

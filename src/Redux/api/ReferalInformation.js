@@ -4,9 +4,7 @@ export const ReferralApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getReferralById: builder.query({
       query: (referralId) => `referral/${referralId}`,
-      providesTags: (result, error, _id) => [
-        { type: "Referral", id: _id },
-      ],
+      providesTags: (result, error, _id) => [{ type: "Referral", id: _id }],
     }),
     createReferral: builder.mutation({
       query: (referralData) => ({
@@ -29,18 +27,14 @@ export const ReferralApi = rootApi.injectEndpoints({
         method: "PUT",
         body: referralData,
       }),
-      invalidatesTags: (result, error, _id ) => [
-        { type: "Referral", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "Referral", id: _id }],
     }),
     deleteReferral: builder.mutation({
       query: (referralId) => ({
         url: `referral/${referralId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, _id) => [
-        { type: "Referral", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "Referral", id: _id }],
     }),
   }),
 });

@@ -4,11 +4,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const updateSlice = createSlice({
   name: "update",
   initialState: {
-    update:false
+    update: false,
   },
   reducers: {
     setDataRefetch: (state, action) => {
-      state.update=action.payload
+      state.update = action.payload;
     },
   },
 });

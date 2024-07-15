@@ -1,14 +1,51 @@
-
 import DataTable from "./../../components/Tables/DynamicTable";
 import { useNavigate } from "react-router-dom";
-import useFormFields from './../../hook/useFormHook';
-import FullscreenModal from './../../components/Models/FullScreenModel';
-import TableHeader from './../../components/Tables/TableHeader';
-
-
+import useFormFields from "./../../hook/useFormHook";
+import FullscreenModal from "./../../components/Models/FullScreenModel";
+import TableHeader from "./../../components/Tables/TableHeader";
+import {
+  useCreateSubUserMutation,
+  useGetAllSubUsersQuery,
+  useUpdateSubUserMutation,
+  useDeleteSubUserMutation,
+} from "../../Redux/api/SubUserApi.js";
+import { useEffect, useState } from "react";
+import AuthLoader from "./../../utils/Loaders/AuthLoader";
+import EditModal from "./../../components/Models/EditModal";
+import swal from "sweetalert";
 const SubUsers = () => {
+  const [editId, setEditId] = useState("");
+  const [
+    createSubUser,
+    {
+      data: createData,
+      isLoading: isCreateLoading,
+      isSuccess: isCreateSuccess,
+      error: createError,
+    },
+  ] = useCreateSubUserMutation();
+  const { data, isLoading, error, refetch } = useGetAllSubUsersQuery();
+  console.log(data);
+  const [
+    updateSubUser,
+    {
+      data: updateData,
+      isLoading: isUpdateLoading,
+      isSuccess: isUpdateSuccess,
+      error: updateError,
+    },
+  ] = useUpdateSubUserMutation();
+  const [show, setShow] = useState(false);
+  const [
+    deleteSubUser,
+    {
+      data: deleteData,
+      isLoading: isDeleteLoading,
+      isSuccess: isDeleteSuccess,
+      error: deleteError,
+    },
+  ] = useDeleteSubUserMutation();
 
-  const navigate = useNavigate();
   const initialState = {
     gender: "Male",
     firstName: "",
@@ -17,17 +54,21 @@ const SubUsers = () => {
     medAdministration: "Yes",
   };
 
-  const [formData, handleChange, resetForm] = useFormFields(initialState);
+  const [formData, handleChange, setFormData] = useFormFields(initialState);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // handleSave(formData);
-    resetForm();
+    if (editId) {
+      updateSubUser({ subUserId: editId, subUserData: formData });
+    } else {
+      createSubUser(formData);
+    }
   };
 
   const columns = [
-    { header: "S.No", field: "serialNumber" },
+    { header: "Id", field: "_id" },
     { header: "First Name", field: "firstName" },
+    { header: "Gender", field: "gender" },
     { header: "Last Name", field: "lastName" },
     { header: "Email", field: "email" },
     { header: "Created By", field: "createdBy" },
@@ -35,128 +76,262 @@ const SubUsers = () => {
     { header: "Billing Permission", field: "billingPermission" },
   ];
 
-  const data = [
-    {
-      serialNumber: 1,
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@example.com",
-      createdBy: "Admin",
-      status: "Active",
-      billingPermission: "Allowed",
-    },
-    {
-      serialNumber: 2,
-      firstName: "Jane",
-      lastName: "Smith",
-      email: "jane.smith@example.com",
-      createdBy: "Manager",
-      status: "Inactive",
-      billingPermission: "Not Allowed",
-    },
-    // Add more rows as needed
-  ];
-
   const handleEdit = (rowData) => {
-    alert(`Editing ${rowData.firstName} ${rowData.lastName}`);
-    // Implement edit logic here
+    setShow(true);
+    setEditId(rowData._id);
+    setFormData({
+      gender: rowData.gender,
+      firstName: rowData.firstName,
+      lastName: rowData.lastName,
+      email: rowData.email,
+      medAdministration: rowData.medAdministration,
+    });
   };
 
   const handleDelete = (rowData) => {
-    alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
-    // Implement delete logic here
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
+        deleteSubUser(rowData?._id);
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
   };
-
+  useEffect(() => {
+    if (isCreateSuccess) {
+      refetch();
+      const modalTriggerButton = document.querySelector(
+        '[data-bs-dismiss="modal"]'
+      );
+      if (modalTriggerButton) {
+        modalTriggerButton.click();
+      }
+    }
+    if (isDeleteSuccess) {
+      refetch();
+    }
+    if (isUpdateSuccess) {
+      refetch();
+      setEditId("")
+      setShow(false);
+    }
+  }, [isDeleteSuccess, isCreateSuccess, isUpdateSuccess]);
+  if ( isLoading )
+    return <AuthLoader />;
   return (
     <div className="card">
-
-      <TableHeader title="Manage Sub Users" className="py-3 pt-5 fs-3 card-header"/>
+      <TableHeader
+        title="Manage Sub Users"
+        className="py-3 pt-5 fs-3 card-header"
+      />
       <div className="card-body">
+        {createData?.message && (
+          <div className="alert alert-success text-center">
+            {createData.message}
+          </div>
+        )}
+        {updateData?.message && (
+          <div className="alert alert-success text-center">
+            {updateData.message}
+          </div>
+        )}
+        {deleteData?.message && (
+          <div className="alert alert-success text-center">
+            {deleteData.message}
+          </div>
+        )}
+        {error?.data?.message && (
+          <div className="alert alert-danger text-center">
+            {error?.data?.message}
+          </div>
+        )}
+        {updateError?.data?.message && (
+          <div className="alert alert-danger text-center">
+            {updateError?.data?.message}
+          </div>
+        )}
+        {deleteError?.data?.message && (
+          <div className="alert alert-danger text-center">
+            {deleteError?.data?.message}
+          </div>
+        )}
         <div className="gap-3 d-flex flex-wrap">
-        <FullscreenModal id="addnewsubuser" title="Add New Sub-User" onSave={handleSubmit}>
-      <form className="w-100">
-        <div className="mb-3 w-100">
-          <label htmlFor="gender" className="form-label">
-            Gender <span className="text-danger">*</span>
-          </label>
-          <select
-            id="gender"
-            name="gender"
-            className="form-select"
-            value={formData.gender}
-            onChange={handleChange}
-            required
-          >
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="firstName" className="form-label">
-            First Name <span className="text-danger">*</span>
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            className="form-control"
-            value={formData.firstName}
-            onChange={handleChange}
-            placeholder="First Name"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="lastName" className="form-label">
-            Last Name <span className="text-danger">*</span>
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            className="form-control"
-            placeholder="Last Name"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email Address <span className="text-danger">*</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Email Address"
-            className="form-control"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="medAdministration" className="form-label">
-            Med-Administration
-          </label>
-          <select
-            id="medAdministration"
-            name="medAdministration"
-            className="form-select"
-            value={formData.medAdministration}
-            onChange={handleChange}
-          >
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
-        </div>
-        <button type="submit" className="btn btn-primary me-4">
-        Add New Sub-User
-        </button>
-      </form>
-    </FullscreenModal>
+          <FullscreenModal id="addnewsubuser" title="Add New Sub-User">
+            <form onSubmit={handleSubmit} className="w-100">
+              {createError?.data?.message && (
+                <div className="alert alert-danger text-center">
+                  {createError?.data.message}
+                </div>
+              )}
+              <div className="mb-3 w-100">
+                <label htmlFor="gender" className="form-label">
+                  Gender <span className="text-danger">*</span>
+                </label>
+                <select
+                  id="gender"
+                  name="gender"
+                  className="form-select"
+                  value={formData.gender}
+                  onChange={handleChange}
+                >
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="firstName" className="form-label">
+                  First Name <span className="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  className="form-control"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  placeholder="First Name"
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="lastName" className="form-label">
+                  Last Name <span className="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  className="form-control"
+                  placeholder="Last Name"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                  Email Address <span className="text-danger">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Email Address"
+                  className="form-control"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="medAdministration" className="form-label">
+                  Med-Administration
+                </label>
+                <select
+                  id="medAdministration"
+                  name="medAdministration"
+                  className="form-select"
+                  value={formData.medAdministration}
+                  onChange={handleChange}
+                >
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              <button type="submit" className="btn btn-primary me-4">
+                Add New Sub-User
+              </button>
+            </form>
+          </FullscreenModal>
+          {show && (
+            <EditModal title="Edit sub user" show={show} onClose={setShow}>
+              <form onSubmit={handleSubmit} className="w-100">
+                <div className="mb-3 w-100">
+                  <label htmlFor="gender" className="form-label">
+                    Gender <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    id="gender"
+                    name="gender"
+                    className="form-select"
+                    value={formData.gender}
+                    onChange={handleChange}
+                  >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="firstName" className="form-label">
+                    First Name <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    className="form-control"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    placeholder="First Name"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="lastName" className="form-label">
+                    Last Name <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    className="form-control"
+                    placeholder="Last Name"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="email" className="form-label">
+                    Email Address <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Email Address"
+                    className="form-control"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="medAdministration" className="form-label">
+                    Med-Administration
+                  </label>
+                  <select
+                    id="medAdministration"
+                    name="medAdministration"
+                    className="form-select"
+                    value={formData.medAdministration}
+                    onChange={handleChange}
+                  >
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+                <button type="submit" className="btn btn-primary me-4">
+                  Edit Sub-User
+                </button>
+              </form>
+            </EditModal>
+          )}
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -165,14 +340,16 @@ const SubUsers = () => {
           >
             <span>
               <i className="ti ti-trash me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Delete all selected</span>
+              <span className="d-none d-sm-inline-block">
+                Delete all selected
+              </span>
             </span>
           </button>
         </div>
         <div className="mt-5">
           <DataTable
             columns={columns}
-            data={data}
+            data={data?.payload?.subUsers ?? []}
             tableClassName="custom-table"
             onEdit={handleEdit}
             tableName="subUsers"
