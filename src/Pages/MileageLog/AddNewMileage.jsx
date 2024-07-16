@@ -37,6 +37,7 @@ const  navigate = useNavigate()
     e.preventDefault();
     try {
       await createMileageLog(formData);
+      resetForm()
     } catch (error) {
       console.error("Error creating Mileage Log:", error);
     }

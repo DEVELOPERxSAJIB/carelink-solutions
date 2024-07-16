@@ -155,11 +155,11 @@ const Sidebar = () => {
           icon: "",
         },
         
-        {
-          title: "Create contacts",
-          href: "/create-contacts",
-          icon: "",
-        },
+        // {
+        //   title: "Create contacts",
+        //   href: "/create-contacts",
+        //   icon: "",
+        // },
         {
           title: "Contract",
           href: "/contacts",

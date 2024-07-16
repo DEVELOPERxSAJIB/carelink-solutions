@@ -4,8 +4,9 @@ import CountySelect from "./../FormElement/CountySelect";
 import CitySelect from "./../FormElement/CitySelect";
 import { useCreatePatientMutation } from "../../Redux/api/PatientApi";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
+import { useNavigate } from 'react-router-dom';
 const PatientProfile = () => {
-  const [createPatient, { data, isLoading, error }] =
+  const [createPatient, { data, isLoading, error ,isSuccess}] =
     useCreatePatientMutation();
   const [primaryCounty, setPrimaryCounty] = useState("");
   const [mailingCounty, setMailingCounty] = useState("");
@@ -16,364 +17,342 @@ const PatientProfile = () => {
   const [primaryCity, setPrimaryCity] = useState("");
   const [mailingCity, setMailingCity] = useState("");
   const [visitCity, setVisitCity] = useState("");
-  const localStoragePatient = JSON.parse(localStorage.getItem("Patient"));
-  const [formData, setFormData] = useState({
-    firstName: localStoragePatient?.firstName
-      ? localStoragePatient?.firstName
-      : "",
-    middleInitial: localStoragePatient?.middleInitial
-      ? localStoragePatient?.middleInitial
-      : "",
-    lastName: localStoragePatient?.lastName
-      ? localStoragePatient?.lastName
-      : "",
-    gender: localStoragePatient?.gender ? localStoragePatient?.gender : "",
-    dateOfBirth: localStoragePatient?.dateOfBirth
-      ? localStoragePatient?.dateOfBirth
-      : "",
-    socialSecurityNumber: localStoragePatient?.socialSecurityNumber
-      ? localStoragePatient?.socialSecurityNumber
-      : "",
-    maritalStatus: localStoragePatient?.maritalStatus
-      ? localStoragePatient?.maritalStatus
-      : "",
-    mobilePhone: localStoragePatient?.mobilePhone
-      ? localStoragePatient?.mobilePhone
-      : "",
-    alternatePhone: localStoragePatient?.alternatePhone
-      ? localStoragePatient?.alternatePhone
-      : "",
-    emailAddress: localStoragePatient?.emailAddress
-      ? localStoragePatient?.emailAddress
-      : "",
-    clinicalManager: localStoragePatient?.clinicalManager
-      ? localStoragePatient?.clinicalManager
-      : "",
-    caseManager: localStoragePatient?.caseManager
-      ? localStoragePatient?.caseManager
-      : "",
-    clinician: localStoragePatient?.clinician
-      ? localStoragePatient?.clinician
-      : "",
-    branch: localStoragePatient?.branch ? localStoragePatient?.branch : "",
-    patientIdMrn: localStoragePatient?.patientIdMrn
-      ? localStoragePatient?.patientIdMrn
-      : "",
-    defaultServiceLocation: localStoragePatient?.defaultServiceLocation
-      ? localStoragePatient?.defaultServiceLocation
-      : "",
-    primaryAddress1: localStoragePatient?.primaryAddress1
-      ? localStoragePatient?.primaryAddress1
-      : "",
-    primaryAddress2: localStoragePatient?.primaryAddress2
-      ? localStoragePatient?.primaryAddress2
-      : "",
-    primaryZip: localStoragePatient?.primaryZip
-      ? localStoragePatient?.primaryZip
-      : "",
-    primaryZip4: localStoragePatient?.primaryZip
-      ? localStoragePatient?.clinicalManager
-      : "",
-    primaryCounty: localStoragePatient?.primaryCounty
-      ? localStoragePatient?.primaryCounty
-      : "",
-    primaryCity: localStoragePatient?.primaryCity
-      ? localStoragePatient?.primaryCity
-      : "",
-    primaryState: localStoragePatient?.primaryState
-      ? localStoragePatient?.primaryState
-      : "",
+  const navigate = useNavigate()
+  const initialState = {
+    firstName: "",
+    middleInitial: "",
+    lastName: "",
+    gender: "",
+    dateOfBirth: "",
+    socialSecurityNumber: "",
+    maritalStatus: "",
+    mobilePhone: "",
+    alternatePhone: "",
+    emailAddress: "",
+    clinicalManager: "",
+    caseManager: "",
+    clinician: "",
+    branch: "",
+    patientIdMrn: "",
+    defaultServiceLocation: "",
+    primaryAddress1: "",
+    primaryAddress2: "",
+    primaryZip: "",
+    primaryZip4: "",
+    primaryCity: primaryCity,
+    primaryCounty: primaryCounty,
+    primaryState: primaryState,
     mailingSameAsPrimary: false,
-    mailingAddress1: localStoragePatient?.mailingAddress1
-      ? localStoragePatient?.mailingAddress1
-      : "",
-    mailingAddress2: localStoragePatient?.mailingAddress2
-      ? localStoragePatient?.mailingAddress2
-      : "",
-    mailingZip: localStoragePatient?.mailingZip
-      ? localStoragePatient?.mailingZip
-      : "",
-    mailingZip4: localStoragePatient?.mailingZip4
-      ? localStoragePatient?.mailingZip4
-      : "",
-    mailingCounty: localStoragePatient?.mailingCounty
-      ? localStoragePatient?.mailingCounty
-      : "",
-    mailingCity: localStoragePatient?.mailingCity
-      ? localStoragePatient?.mailingCity
-      : "",
-    mailingState: localStoragePatient?.mailingState
-      ? localStoragePatient?.mailingState
-      : "",
-    visitAddress1: localStoragePatient?.visitAddress1
-      ? localStoragePatient?.visitAddress1
-      : "",
-    visitAddress2: localStoragePatient?.visitAddress2
-      ? localStoragePatient?.visitAddress2
-      : "",
-    visitZip: localStoragePatient?.visitZip
-      ? localStoragePatient?.visitZip
-      : "",
-    visitZip4: localStoragePatient?.visitZip4
-      ? localStoragePatient?.visitZip4
-      : "",
-    visitCounty: localStoragePatient?.visitCounty
-      ? localStoragePatient?.visitCounty
-      : "",
-    visitCity: localStoragePatient?.visitCity
-      ? localStoragePatient?.visitCity
-      : "",
-    visitState: localStoragePatient?.visitState
-      ? localStoragePatient?.visitState
-      : "",
-    hispanicLatino: localStoragePatient?.hispanicLatino
-      ? localStoragePatient?.hispanicLatino
-      : "",
-    mexican: localStoragePatient?.mexican ? localStoragePatient?.mexican : "",
-    puertoRican: localStoragePatient?.puertoRican
-      ? localStoragePatient?.puertoRican
-      : "",
-    cuban: localStoragePatient?.cuban ? localStoragePatient?.cuban : "",
-    anotherHispanic: localStoragePatient?.anotherHispanic
-      ? localStoragePatient?.anotherHispanic
-      : "",
-    unableToRespondEthnicity: localStoragePatient?.unableToRespondEthnicity
-      ? localStoragePatient?.unableToRespondEthnicity
-      : "",
-    declineToRespondEthnicity: localStoragePatient?.declineToRespondEthnicity
-      ? localStoragePatient?.declineToRespondEthnicity
-      : "",
-    white: localStoragePatient?.white ? localStoragePatient?.white : "",
-    blackAfricanAmerican: localStoragePatient?.blackAfricanAmerican
-      ? localStoragePatient?.blackAfricanAmerican
-      : "",
-    americanIndian: localStoragePatient?.americanIndian
-      ? localStoragePatient?.americanIndian
-      : "",
-    asianIndian: localStoragePatient?.asianIndian
-      ? localStoragePatient?.asianIndian
-      : "",
-    chinese: localStoragePatient?.chinese ? localStoragePatient?.chinese : "",
-    filipino: localStoragePatient?.filipino
-      ? localStoragePatient?.filipino
-      : "",
-    japanese: localStoragePatient?.japanese
-      ? localStoragePatient?.japanese
-      : "",
-    korean: localStoragePatient?.korean ? localStoragePatient?.korean : "",
-    vietnamese: localStoragePatient?.vietnamese
-      ? localStoragePatient?.vietnamese
-      : "",
-    otherAsian: localStoragePatient?.otherAsian
-      ? localStoragePatient?.otherAsian
-      : "",
-    nativeHawaiian: localStoragePatient?.nativeHawaiian
-      ? localStoragePatient?.nativeHawaiian
-      : "",
-    guamanianChamorro: localStoragePatient?.guamanianChamorro
-      ? localStoragePatient?.guamanianChamorro
-      : "",
-    samoan: localStoragePatient?.samoan ? localStoragePatient?.samoan : "",
-    otherPacificIslander: localStoragePatient?.otherPacificIslander
-      ? localStoragePatient?.otherPacificIslander
-      : "",
-    unableToRespondRace: localStoragePatient?.unableToRespondRace
-      ? localStoragePatient?.unableToRespondRace
-      : "",
-    declineToRespondRace: localStoragePatient?.declineToRespondRace
-      ? localStoragePatient?.declineToRespondRace
-      : "",
-    noneOfTheAbove: localStoragePatient?.noneOfTheAbove
-      ? localStoragePatient?.noneOfTheAbove
-      : "",
-    preferredLanguage: localStoragePatient?.preferredLanguage
-      ? localStoragePatient?.preferredLanguage
-      : "",
+    mailingAddress1: "",
+    mailingAddress2: "",
+    mailingZip: "",
+    mailingZip4: "",
+    mailingCity: mailingCity,
+    mailingCounty: mailingCounty,
+    mailingState: mailingState,
+    visitAddress1: "",
+    visitAddress2: "",
+    visitZip: "",
+    visitZip4: "",
+    visitCity: visitCity,
+    visitCounty: visitCounty,
+    visitState: visitState,
+    origin: [],
+    race: [],
+    preferredLanguage: "",
     additionalLanguages: ["", "", ""],
-    needInterpreter: localStoragePatient?.needInterpreter
-      ? localStoragePatient?.needInterpreter
-      : "",
-    nonePaymentSource: localStoragePatient?.nonePaymentSource
-      ? localStoragePatient?.nonePaymentSource
-      : "",
-    medicareTraditional: localStoragePatient?.medicareTraditional
-      ? localStoragePatient?.medicareTraditional
-      : "",
-    medicareManagedCare: localStoragePatient?.medicareManagedCare
-      ? localStoragePatient?.medicareManagedCare
-      : "",
-    medicaidTraditional: localStoragePatient?.medicaidTraditional
-      ? localStoragePatient?.medicaidTraditional
-      : "",
-    medicaidManagedCare: localStoragePatient?.medicaidManagedCare
-      ? localStoragePatient?.medicaidManagedCare
-      : "",
-    workersCompensation: localStoragePatient?.workersCompensation
-      ? localStoragePatient?.workersCompensation
-      : "",
-    titlePrograms: localStoragePatient?.titlePrograms
-      ? localStoragePatient?.titlePrograms
-      : "",
-    otherGovernment: localStoragePatient?.otherGovernment
-      ? localStoragePatient?.otherGovernment
-      : "",
-    privateInsurance: localStoragePatient?.privateInsurance
-      ? localStoragePatient?.privateInsurance
-      : "",
-    privateManagedCare: localStoragePatient?.privateManagedCare
-      ? localStoragePatient?.privateManagedCare
-      : "",
-    selfPay: localStoragePatient?.selfPay ? localStoragePatient?.selfPay : "",
-    unknownPaymentSource: localStoragePatient?.unknownPaymentSource
-      ? localStoragePatient?.unknownPaymentSource
-      : "",
-    otherSpecify: localStoragePatient?.otherSpecify
-      ? localStoragePatient?.otherSpecify
-      : "",
-    longTermNursingFacility: localStoragePatient?.longTermNursingFacility
-      ? localStoragePatient?.longTermNursingFacility
-      : "",
-    skilledNursingFacility: localStoragePatient?.skilledNursingFacility
-      ? localStoragePatient?.skilledNursingFacility
-      : "",
-    shortStayAcuteHospital: localStoragePatient?.shortStayAcuteHospital
-      ? localStoragePatient?.shortStayAcuteHospital
-      : "",
-    longTermCareHospital: localStoragePatient?.longTermCareHospital
-      ? localStoragePatient?.longTermCareHospital
-      : "",
-    inpatientRehabilitation: localStoragePatient?.inpatientRehabilitation
-      ? localStoragePatient?.inpatientRehabilitation
-      : "",
-    psychiatricHospital: localStoragePatient?.psychiatricHospital
-      ? localStoragePatient?.psychiatricHospital
-      : "",
-    otherInpatientFacility: localStoragePatient?.otherInpatientFacility
-      ? localStoragePatient?.otherInpatientFacility
-      : "",
-    otherInpatientFacilityText: localStoragePatient?.otherInpatientFacilityText
-      ? localStoragePatient?.otherInpatientFacilityText
-      : "",
-    episodeTiming: localStoragePatient?.episodeTiming
-      ? localStoragePatient?.episodeTiming
-      : "",
-    startOfCareDate: localStoragePatient?.startOfCareDate
-      ? localStoragePatient?.startOfCareDate
-      : "",
-    episodeStartDate: localStoragePatient?.episodeStartDate
-      ? localStoragePatient?.episodeStartDate
-      : "",
-    createEpisodeScheduleVisit: localStoragePatient?.createEpisodeScheduleVisit
-      ? localStoragePatient?.createEpisodeScheduleVisit
-      : "",
-    createEpisodeScheduleOasisStartCare:
-      localStoragePatient?.createEpisodeScheduleOasisStartCare
-        ? localStoragePatient?.createEpisodeScheduleOasisStartCare
-        : "",
-    createEpisodeScheduleTherapyEvaluation:
-      localStoragePatient?.createEpisodeScheduleTherapyEvaluation
-        ? localStoragePatient?.createEpisodeScheduleTherapyEvaluation
-        : "",
-    createEpisodeScheduleNonOasisStartCare: localStoragePatient?.clinicalManager
-      ? localStoragePatient?.clinicalManager
-      : "",
-    createEpisodeScheduleInitialOasisRecert:
-      localStoragePatient?.createEpisodeScheduleNonOasisStartCare
-        ? localStoragePatient?.createEpisodeScheduleNonOasisStartCare
-        : "",
-    createEpisodeScheduleInitialNonOasisRecert:
-      localStoragePatient?.createEpisodeScheduleInitialNonOasisRecert
-        ? localStoragePatient?.createEpisodeScheduleInitialNonOasisRecert
-        : "",
-    trackF2FDocumentation: localStoragePatient?.trackF2FDocumentation
-      ? localStoragePatient?.trackF2FDocumentation
-      : "",
-  });
+    needInterpreter: "",
+    paymentSource: [],
+    privateInsurance: "",
+    privateManagedCare: "",
+    selfPay: "",
+    unknownPaymentSource: "",
+    otherSpecify: "",
+    facility: [],
+    episodeTiming: "",
+    startOfCareDate: "",
+    episodeStartDate: "",
+    episode: [],
+  };
+
+  const [formData, setFormData] = useState(initialState);
+
   const handleInputChange = (e, index) => {
     const { name, value, type, checked } = e.target;
-
-    if (type === "checkbox") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: checked ? value : "",
-      }));
-    } else if (type === "radio") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: value,
-      }));
-    } else if (name === "additionalLanguages") {
-      setFormData((prevFormData) => {
+    setFormData((prevFormData) => {
+      if (type === "checkbox") {
+        if (Array.isArray(prevFormData[name])) {
+          const updatedArray = checked
+            ? [...prevFormData[name], value]
+            : prevFormData[name].filter((item) => item !== value);
+          return {
+            ...prevFormData,
+            [name]: updatedArray,
+          };
+        } else {
+          return {
+            ...prevFormData,
+            [name]: checked ? value : "",
+          };
+        }
+      } else if (type === "radio") {
+        return {
+          ...prevFormData,
+          [name]: value,
+        };
+      } else if (name === "additionalLanguages") {
         const updatedLanguages = [...prevFormData.additionalLanguages];
-        updatedLanguages[index] = value; // Update the value at the specified index
+        updatedLanguages[index] = value;
         return {
           ...prevFormData,
           additionalLanguages: updatedLanguages,
         };
-      });
-    } else {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: value,
-      }));
-    }
+      } else {
+        return {
+          ...prevFormData,
+          [name]: value,
+        };
+      }
+    });
   };
 
   const handleAdmit = (e) => {
     e.preventDefault();
-    formData.primaryCounty = primaryCounty;
-    formData.primaryCity = primaryCity;
-    formData.primaryState = primaryState;
-    formData.mailingCounty = mailingCounty;
-    formData.mailingCity = mailingCity;
-    formData.mailingState = mailingState;
-    formData.visitCounty = visitCounty;
-    formData.visitCity = visitCity;
-    formData.visitState = visitState;
     createPatient(formData);
+    setFormData({firstName: "",
+      middleInitial: "",
+      lastName: "",
+      gender: "",
+      dateOfBirth: "",
+      socialSecurityNumber: "",
+      maritalStatus: "",
+      mobilePhone: "",
+      alternatePhone: "",
+      emailAddress: "",
+      clinicalManager: "",
+      caseManager: "",
+      clinician: "",
+      branch: "",
+      patientIdMrn: "",
+      defaultServiceLocation: "",
+      primaryAddress1: "",
+      primaryAddress2: "",
+      primaryZip: "",
+      primaryZip4: "",
+      primaryCity: primaryCity,
+      primaryCounty: primaryCounty,
+      primaryState: primaryState,
+      mailingSameAsPrimary: false,
+      mailingAddress1: "",
+      mailingAddress2: "",
+      mailingZip: "",
+      mailingZip4: "",
+      mailingCity: mailingCity,
+      mailingCounty: mailingCounty,
+      mailingState: mailingState,
+      visitAddress1: "",
+      visitAddress2: "",
+      visitZip: "",
+      visitZip4: "",
+      visitCity: visitCity,
+      visitCounty: visitCounty,
+      visitState: visitState,
+      origin: [],
+      race: [],
+      preferredLanguage: "",
+      additionalLanguages: ["", "", ""],
+      needInterpreter: "",
+      paymentSource: [],
+      privateInsurance: "",
+      privateManagedCare: "",
+      selfPay: "",
+      unknownPaymentSource: "",
+      otherSpecify: "",
+      facility: [],
+      episodeTiming: "",
+      startOfCareDate: "",
+      episodeStartDate: "",
+      episode: []})
   };
+
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    formData.primaryCounty = primaryCounty;
-    formData.primaryCity = primaryCity;
-    formData.primaryState = primaryState;
-
-    formData.mailingCounty = mailingCounty;
-    formData.mailingCity = mailingCity;
-    formData.mailingState = mailingState;
-    formData.visitCounty = visitCounty;
-    formData.visitCity = visitCity;
-    formData.visitState = visitState;
     localStorage.setItem("Patient", JSON.stringify(formData));
     createPatient(formData);
   };
+
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    formData.primaryCounty = primaryCounty;
-    formData.primaryCity = primaryCity;
-    formData.primaryState = primaryState;
-    formData.mailingCounty = mailingCounty;
-    formData.mailingCity = mailingCity;
-    formData.mailingState = mailingState;
-    formData.visitCounty = visitCounty;
-    formData.visitCity = visitCity;
-    formData.visitState = visitState;
     localStorage.setItem("Patient", JSON.stringify(formData));
   };
-  useEffect(() => {
-    if (localStoragePatient) {
-      setPrimaryCounty(localStoragePatient.primaryCounty || "");
-      setMailingCounty(localStoragePatient.mailingCounty || "");
-      setVisitCounty(localStoragePatient.visitCounty || "");
-      setPrimaryState(localStoragePatient.primaryState || "");
-      setMailingState(localStoragePatient.mailingState || "");
-      setVisitState(localStoragePatient.visitState || "");
-      setPrimaryCity(localStoragePatient.primaryCity || "");
-      setMailingCity(localStoragePatient.mailingCity || "");
-      setVisitCity(localStoragePatient.visitCity || "");
-    }
-  }, [localStoragePatient]);
 
+  const raceOptions = [
+    { id: "white", label: "White", value: "White" },
+    {
+      id: "blackAfricanAmerican",
+      label: "Black or African American",
+      value: "Black or African American",
+    },
+    {
+      id: "americanIndian",
+      label: "American Indian or Alaska Native",
+      value: "American Indian or Alaska Native",
+    },
+    { id: "asianIndian", label: "Asian Indian", value: "Asian Indian" },
+    { id: "chinese", label: "Chinese", value: "Chinese" },
+    { id: "filipino", label: "Filipino", value: "Filipino" },
+    { id: "japanese", label: "Japanese", value: "Japanese" },
+    { id: "korean", label: "Korean", value: "Korean" },
+    { id: "vietnamese", label: "Vietnamese", value: "Vietnamese" },
+    { id: "otherAsian", label: "Other Asian", value: "Other Asian" },
+    {
+      id: "nativeHawaiian",
+      label: "Native Hawaiian",
+      value: "Native Hawaiian",
+    },
+    {
+      id: "guamanianChamorro",
+      label: "Guamanian or Chamorro",
+      value: "Guamanian or Chamorro",
+    },
+    { id: "samoan", label: "Samoan", value: "Samoan" },
+    {
+      id: "otherPacificIslander",
+      label: "Other Pacific Islander",
+      value: "Other Pacific Islander",
+    },
+    {
+      id: "unableToRespondRace",
+      label: "Patient unable to respond",
+      value: "Patient unable to respond",
+    },
+    {
+      id: "declineToRespondRace",
+      label: "Patient declines to respond",
+      value: "Patient declines to respond",
+    },
+    {
+      id: "noneOfTheAbove",
+      label: "None of the above",
+      value: "None of the above",
+    },
+  ];
+
+  const originOptions = [
+    {
+      id: "origin1",
+      value: "Hispanic, Latino/a, or Spanish Origin",
+      label: "No, not of Hispanic, Latino/a, or Spanish origin",
+    },
+    {
+      id: "origin2",
+      value: "Mexican, Mexican American, Chicano/a",
+      label: "Yes, Mexican, Mexican American, Chicano/a",
+    },
+    { id: "origin3", value: "Puerto Rican", label: "Yes, Puerto Rican" },
+    { id: "origin4", value: "Cuban", label: "Yes, Cuban" },
+    {
+      id: "origin5",
+      value: "Another Hispanic, Latino, or Spanish origin",
+      label: "Yes, another Hispanic, Latino, or Spanish origin",
+    },
+    {
+      id: "origin6",
+      value: "Patient unable to respond",
+      label: "Patient unable to respond",
+    },
+    {
+      id: "origin7",
+      value: "Patient declines to respond",
+      label: "Patient declines to respond",
+    },
+  ];
+
+  const paymentOptions = [
+    {
+      id: "medicare-fee-for-service",
+      label: "Medicare (traditional fee-for-service)",
+    },
+    { id: "medicare-hmo", label: "Medicare (HMO/Managed Care)" },
+    {
+      id: "medicaid-fee-for-service",
+      label: "Medicaid (traditional fee-for-service)",
+    },
+    { id: "medicaid-hmo", label: "Medicaid (HMO/Managed Care)" },
+    { id: "workers-compensation", label: "Workers' Compensation" },
+    {
+      id: "title-programs",
+      label: "Title Programs (e.g., Title III, V, or XX)",
+    },
+    {
+      id: "other-government",
+      label: "Other government (for example, TriCare, VA)",
+    },
+    { id: "private-insurance", label: "Private insurance" },
+    { id: "private-hmo", label: "Private HMO/ managed care" },
+    { id: "self-pay", label: "Self-pay" },
+    { id: "unknown", label: "Unknown" },
+    { id: "other", label: "Other (Specify)" },
+  ];
+
+  const facilityOptions = [
+    { id: "nf", label: "Long-term nursing facility (NF)" },
+    { id: "snf", label: "Skilled nursing facility (SNF/TCU)" },
+    { id: "ipps", label: "Short-stay acute hospital (IPPS)" },
+    { id: "ltch", label: "Long-term care hospital (LTCH)" },
+    { id: "irf", label: "Inpatient rehabilitation hospital or unit (IRF)" },
+    { id: "psychiatric", label: "Psychiatric hospital or unit" },
+    { id: "other", label: "Other" },
+  ];
+
+  const actionsOptions = [
+    { id: "episode", label: "Create episode & schedule visit after saving" },
+    {
+      id: "oasisStartCare",
+      label: "Create episode & schedule OASIS Start of Care visit after saving",
+    },
+    {
+      id: "therapyEvaluation",
+      label: "Create episode and schedule therapy evaluation",
+    },
+    {
+      id: "nonOasisStartCare",
+      label:
+        "Create episode and schedule non-OASIS Start of Care visit after saving",
+    },
+  ];
+
+
+
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      primaryCity,
+      primaryCounty,
+      primaryState,
+      mailingCity,
+      mailingCounty,
+      mailingState,
+      visitCity,
+      visitCounty,
+      visitState,
+    }));
+  }, [
+    primaryCity,
+    primaryCounty,
+    primaryState,
+    mailingCity,
+    mailingCounty,
+    mailingState,
+    visitCity,
+    visitCounty,
+    visitState,
+  ]);
+useEffect(()=>{
+if(isSuccess){
+  navigate("/patient")
+}
+},[isSuccess])
   if (isLoading) return <AuthLoader />;
   return (
     <form className=" mt-5">
@@ -1104,165 +1083,26 @@ const PatientProfile = () => {
             <div className="accordion-body">
               {/* Hispanic, Latino/a, or Spanish Origin */}
               <div className="mb-3">
-                <p>
-                  <strong>
-                    (A1005) Are you of Hispanic, Latino/a, or Spanish Origin?
-                    (Check all that apply.)
-                  </strong>
-                </p>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="hispanicLatino"
-                    name="hispanicLatino"
-                    value="Hispanic, Latino/a, or Spanish Origin"
-                    checked={
-                      formData.hispanicLatino ===
-                      "Hispanic, Latino/a, or Spanish Origin"
-                    }
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        "hispanicLatino",
-                        "Hispanic, Latino/a, or Spanish Origin"
-                      )
-                    }
-                  />
-                  <label className="form-check-label" htmlFor="hispanicLatino">
-                    No, not of Hispanic, Latino/a, or Spanish origin
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="mexican"
-                    name="mexican"
-                    value="Mexican, Mexican American, Chicano/a"
-                    checked={
-                      formData.mexican ===
-                      "Mexican, Mexican American, Chicano/a"
-                    }
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        "mexican",
-                        "Mexican, Mexican American, Chicano/a"
-                      )
-                    }
-                  />
-                  <label className="form-check-label" htmlFor="mexican">
-                    Yes, Mexican, Mexican American, Chicano/a
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="puertoRican"
-                    name="puertoRican"
-                    value="Puerto Rican"
-                    checked={formData.puertoRican === "Puerto Rican"}
-                    onChange={(e) =>
-                      handleInputChange(e, "puertoRican", "Puerto Rican")
-                    }
-                  />
-                  <label className="form-check-label" htmlFor="puertoRican">
-                    Yes, Puerto Rican
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="cuban"
-                    name="cuban"
-                    value="Cuban"
-                    checked={formData.cuban === "Cuban"}
-                    onChange={(e) => handleInputChange(e, "cuban", "Cuban")}
-                  />
-                  <label className="form-check-label" htmlFor="cuban">
-                    Yes, Cuban
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="anotherHispanic"
-                    value="Another Hispanic, Latino, or Spanish origin"
-                    name="anotherHispanic"
-                    checked={
-                      formData.anotherHispanic ===
-                      "Another Hispanic, Latino, or Spanish origin"
-                    }
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        "anotherHispanic",
-                        "Another Hispanic, Latino, or Spanish origin"
-                      )
-                    }
-                  />
-                  <label className="form-check-label" htmlFor="anotherHispanic">
-                    Yes, another Hispanic, Latino, or Spanish origin
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="unableToRespondEthnicity"
-                    name="unableToRespondEthnicity"
-                    value="Patient unable to respond"
-                    checked={
-                      formData.unableToRespondEthnicity ===
-                      "Patient unable to respond"
-                    }
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        "unableToRespondEthnicity",
-                        "Patient unable to respond"
-                      )
-                    }
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="unableToRespondEthnicity"
-                  >
-                    Patient unable to respond
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="declineToRespondEthnicity"
-                    name="declineToRespondEthnicity"
-                    value="Patient declines to respond"
-                    checked={
-                      formData.declineToRespondEthnicity ===
-                      "Patient declines to respond"
-                    }
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        "declineToRespondEthnicity",
-                        "Patient declines to respond"
-                      )
-                    }
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="declineToRespondEthnicity"
-                  >
-                    Patient declines to respond
-                  </label>
-                </div>
+                {originOptions.map((option) => (
+                  <div className="form-check" key={option.id}>
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id={option.id}
+                      name="origin"
+                      value={option.value}
+                      checked={
+                        formData.origin &&
+                        formData.origin.includes(option.value)
+                      }
+                      onChange={(e) => handleInputChange(e, option.value)}
+                    />
+                    <label className="form-check-label" htmlFor={option.id}>
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
               </div>
-
               {/* Race Section */}
               <div className="mb-3">
                 <p>
@@ -1270,329 +1110,24 @@ const PatientProfile = () => {
                     (A1010) What is your race? (Check all that apply.)
                   </strong>
                 </p>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="white"
-                    name="white"
-                    value="White"
-                    checked={formData.white === "White"}
-                    onChange={(e) => handleInputChange(e, "white", "White")}
-                  />
-                  <label className="form-check-label" htmlFor="white">
-                    White
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="blackAfricanAmerican"
-                    value="Black or African American"
-                    name="blackAfricanAmerican"
-                    checked={
-                      formData.blackAfricanAmerican ===
-                      "Black or African American"
-                    }
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        "blackAfricanAmerican",
-                        "Black or African American"
-                      )
-                    }
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="blackAfricanAmerican"
-                  >
-                    Black or African American
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="americanIndian"
-                    name="americanIndian"
-                    value="American Indian or Alaska Native"
-                    checked={
-                      formData.americanIndian ===
-                      "American Indian or Alaska Native"
-                    }
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        "americanIndian",
-                        "American Indian or Alaska Native"
-                      )
-                    }
-                  />
-                  <label className="form-check-label" htmlFor="americanIndian">
-                    American Indian or Alaska Native
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="asianIndian"
-                    value="Asian Indian"
-                    name="asianIndian"
-                    checked={formData.asianIndian === "Asian Indian"}
-                    onChange={(e) =>
-                      handleInputChange(e, "asianIndian", "Asian Indian")
-                    }
-                  />
-                  <label className="form-check-label" htmlFor="asianIndian">
-                    Asian Indian
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="chinese"
-                    name="chinese"
-                    value="Chinese"
-                    checked={formData.chinese === "Chinese"}
-                    onChange={(e) => handleInputChange(e, "chinese", "Chinese")}
-                  />
-                  <label className="form-check-label" htmlFor="chinese">
-                    Chinese
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="filipino"
-                    name="filipino"
-                    value="Filipino"
-                    checked={formData.filipino === "Filipino"}
-                    onChange={(e) =>
-                      handleInputChange(e, "filipino", "Filipino")
-                    }
-                  />
-                  <label className="form-check-label" htmlFor="filipino">
-                    Filipino
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="japanese"
-                    name="japanese"
-                    value="Japanese"
-                    checked={formData.japanese === "Japanese"}
-                    onChange={(e) =>
-                      handleInputChange(e, "japanese", "Japanese")
-                    }
-                  />
-                  <label className="form-check-label" htmlFor="japanese">
-                    Japanese
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="korean"
-                    name="korean"
-                    value="Korean"
-                    checked={formData.korean === "Korean"}
-                    onChange={(e) => handleInputChange(e, "korean", "Korean")}
-                  />
-                  <label className="form-check-label" htmlFor="korean">
-                    Korean
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="vietnamese"
-                    name="vietnamese"
-                    value="Vietnamese"
-                    checked={formData.vietnamese === "Vietnamese"}
-                    onChange={(e) =>
-                      handleInputChange(e, "vietnamese", "Vietnamese")
-                    }
-                  />
-                  <label className="form-check-label" htmlFor="vietnamese">
-                    Vietnamese
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="otherAsian"
-                    name="otherAsian"
-                    value="Other Asian"
-                    checked={formData.otherAsian === "Other Asian"}
-                    onChange={(e) =>
-                      handleInputChange(e, "otherAsian", "Other Asian")
-                    }
-                  />
-                  <label className="form-check-label" htmlFor="otherAsian">
-                    Other Asian
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="nativeHawaiian"
-                    name="nativeHawaiian"
-                    value="Native Hawaiian"
-                    checked={formData.nativeHawaiian === "Native Hawaiian"}
-                    onChange={(e) =>
-                      handleInputChange(e, "nativeHawaiian", "Native Hawaiian")
-                    }
-                  />
-                  <label className="form-check-label" htmlFor="nativeHawaiian">
-                    Native Hawaiian
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="guamanianChamorro"
-                    value="Guamanian or Chamorro"
-                    name="guamanianChamorro"
-                    checked={
-                      formData.guamanianChamorro === "Guamanian or Chamorro"
-                    }
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        "guamanianChamorro",
-                        "Guamanian or Chamorro"
-                      )
-                    }
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="guamanianChamorro"
-                  >
-                    Guamanian or Chamorro
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="samoan"
-                    value="Samoan"
-                    name="samoan"
-                    checked={formData.samoan === "Samoan"}
-                    onChange={(e) => handleInputChange(e, "samoan", "Samoan")}
-                  />
-                  <label className="form-check-label" htmlFor="samoan">
-                    Samoan
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="otherPacificIslander"
-                    name="otherPacificIslander"
-                    value="Other Pacific Islander"
-                    checked={
-                      formData.otherPacificIslander === "Other Pacific Islander"
-                    }
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        "otherPacificIslander",
-                        "Other Pacific Islander"
-                      )
-                    }
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="otherPacificIslander"
-                  >
-                    Other Pacific Islander
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="unableToRespondRace"
-                    value="Patient unable to respond"
-                    name="unableToRespondRace"
-                    checked={
-                      formData.unableToRespondRace ===
-                      "Patient unable to respond"
-                    }
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        "unableToRespondRace",
-                        "Patient unable to respond"
-                      )
-                    }
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="unableToRespondRace"
-                  >
-                    Patient unable to respond
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="declineToRespondRace"
-                    name="declineToRespondRace"
-                    value="Patient declines to respond"
-                    checked={
-                      formData.declineToRespondRace ===
-                      "Patient declines to respond"
-                    }
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        "declineToRespondRace",
-                        "Patient declines to respond"
-                      )
-                    }
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="declineToRespondRace"
-                  >
-                    Patient declines to respond
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="noneOfTheAbove"
-                    name="noneOfTheAbove"
-                    value="None of the above"
-                    checked={formData.noneOfTheAbove === "None of the above"}
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        "noneOfTheAbove",
-                        "None of the above"
-                      )
-                    }
-                  />
-                  <label className="form-check-label" htmlFor="noneOfTheAbove">
-                    None of the above
-                  </label>
-                </div>
+                {raceOptions.map((option) => (
+                  <div className="form-check" key={option.id}>
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id={option.id}
+                      name="race"
+                      value={option.value}
+                      checked={
+                        formData.race && formData.race.includes(option.value)
+                      }
+                      onChange={(e) => handleInputChange(e, option.value)}
+                    />
+                    <label className="form-check-label" htmlFor={option.id}>
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -1770,245 +1305,25 @@ const PatientProfile = () => {
             data-bs-parent="#patientInfoAccordion"
           >
             <div className="accordion-body">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="nonePaymentSource"
-                  name="nonePaymentSource"
-                  value="None; no charge for current services"
-                  checked={
-                    formData.nonePaymentSource ===
-                    "None; no charge for current services"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label className="form-check-label" htmlFor="nonePaymentSource">
-                  None; no charge for current services
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="medicareTraditional"
-                  name="medicareTraditional"
-                  value="Medicare (traditional fee-for-service)"
-                  checked={
-                    formData.medicareTraditional ===
-                    "Medicare (traditional fee-for-service)"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="medicareTraditional"
-                >
-                  Medicare (traditional fee-for-service)
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="medicareManagedCare"
-                  name="medicareManagedCare"
-                  value="Medicare (HMO/Managed Care)"
-                  checked={
-                    formData.medicareManagedCare ===
-                    "Medicare (HMO/Managed Care)"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="medicareManagedCare"
-                >
-                  Medicare (HMO/Managed Care)
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="medicaidTraditional"
-                  name="medicaidTraditional"
-                  value="Medicaid (traditional fee-for-service)"
-                  checked={
-                    formData.medicaidTraditional ===
-                    "Medicaid (traditional fee-for-service)"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="medicaidTraditional"
-                >
-                  Medicaid (traditional fee-for-service)
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="medicaidManagedCare"
-                  name="medicaidManagedCare"
-                  value="Medicaid (HMO/Managed Care)"
-                  checked={
-                    formData.medicaidManagedCare ===
-                    "Medicaid (HMO/Managed Care)"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="medicaidManagedCare"
-                >
-                  Medicaid (HMO/Managed Care)
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="workersCompensation"
-                  name="workersCompensation"
-                  value="Workers' Compensation"
-                  checked={
-                    formData.workersCompensation === "Workers' Compensation"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="workersCompensation"
-                >
-                  Workers&apos; Compensation
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="titlePrograms"
-                  name="titlePrograms"
-                  value="Title Programs (e.g., Title III, V, or XX)"
-                  checked={
-                    formData.titlePrograms ===
-                    "Title Programs (e.g., Title III, V, or XX)"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label className="form-check-label" htmlFor="titlePrograms">
-                  Title Programs (e.g., Title III, V, or XX)
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="otherGovernment"
-                  name="otherGovernment"
-                  value="Other government (for example, TriCare, VA)"
-                  checked={
-                    formData.otherGovernment ===
-                    "Other government (for example, TriCare, VA)"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label className="form-check-label" htmlFor="otherGovernment">
-                  Other government (for example, TriCare, VA)
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="privateInsurance"
-                  name="privateInsurance"
-                  value="Private insurance"
-                  checked={formData.privateInsurance === "Private insurance"}
-                  onChange={handleInputChange}
-                />
-                <label className="form-check-label" htmlFor="privateInsurance">
-                  Private insurance
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="privateManagedCare"
-                  name="privateManagedCare"
-                  value="Private HMO/ managed care"
-                  checked={
-                    formData.privateManagedCare === "Private HMO/ managed care"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="privateManagedCare"
-                >
-                  Private HMO/ managed care
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="selfPay"
-                  name="selfPay"
-                  value="Self-pay"
-                  checked={formData.selfPay === "Self-pay"}
-                  onChange={handleInputChange}
-                />
-                <label className="form-check-label" htmlFor="selfPay">
-                  Self-pay
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="unknownPaymentSource"
-                  name="unknownPaymentSource"
-                  value="Unknown"
-                  checked={formData.unknownPaymentSource === "Unknown"}
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="unknownPaymentSource"
-                >
-                  Unknown
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="otherSpecify"
-                  name="otherSpecify"
-                  value={formData.otherSpecify}
-                  checked={!!formData.otherSpecify}
-                  onChange={handleInputChange}
-                />
-                <label className="form-check-label" htmlFor="otherSpecify">
-                  Other (Specify)
-                </label>
-                {formData.otherSpecify && (
+              {paymentOptions.map((option) => (
+                <div className="form-check" key={option.id}>
                   <input
-                    type="text"
-                    className="form-control mt-2"
-                    id="otherSpecifyInput"
-                    name="otherSpecify"
-                    value={formData.otherSpecify}
-                    onChange={handleInputChange}
-                    placeholder="Specify other payment source"
+                    type="checkbox"
+                    className="form-check-input"
+                    id={option.id}
+                    name="paymentSource"
+                    value={option.label}
+                    checked={
+                      formData.paymentSource &&
+                      formData.paymentSource.includes(option.label)
+                    }
+                    onChange={(e) => handleInputChange(e, option.label)}
                   />
-                )}
-              </div>
+                  <label className="form-check-label" htmlFor={option.id}>
+                    {option.label}
+                  </label>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -2033,129 +1348,25 @@ const PatientProfile = () => {
             data-bs-parent="#patientInfoAccordion"
           >
             <div className="accordion-body">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="longTermNursingFacility"
-                  name="longTermNursingFacility"
-                  checked={formData.longTermNursingFacility}
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="longTermNursingFacility"
-                >
-                  Long-term nursing facility (NF)
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="skilledNursingFacility"
-                  name="skilledNursingFacility"
-                  checked={formData.skilledNursingFacility}
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="skilledNursingFacility"
-                >
-                  Skilled nursing facility (SNF/TCU)
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="shortStayAcuteHospital"
-                  name="shortStayAcuteHospital"
-                  checked={formData.shortStayAcuteHospital}
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="shortStayAcuteHospital"
-                >
-                  Short-stay acute hospital (IPPS)
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="longTermCareHospital"
-                  name="longTermCareHospital"
-                  checked={formData.longTermCareHospital}
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="longTermCareHospital"
-                >
-                  Long-term care hospital (LTCH)
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="inpatientRehabilitation"
-                  name="inpatientRehabilitation"
-                  checked={formData.inpatientRehabilitation}
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="inpatientRehabilitation"
-                >
-                  Inpatient rehabilitation hospital or unit (IRF)
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="psychiatricHospital"
-                  name="psychiatricHospital"
-                  checked={formData.psychiatricHospital}
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="psychiatricHospital"
-                >
-                  Psychiatric hospital or unit
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="otherInpatientFacility"
-                  name="otherInpatientFacility"
-                  checked={formData.otherInpatientFacility}
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="otherInpatientFacility"
-                >
-                  Other:
-                </label>
-                {formData.otherInpatientFacility && (
+              {facilityOptions.map((option) => (
+                <div className="form-check" key={option.id}>
                   <input
-                    type="text"
-                    className="form-control mt-2"
-                    id="otherInpatientFacilityInput"
-                    name="otherInpatientFacilityText"
-                    value={formData.otherInpatientFacilityText}
-                    onChange={handleInputChange}
-                    placeholder="Specify other inpatient facility"
+                    type="checkbox"
+                    className="form-check-input"
+                    id={option.id}
+                    name="facility"
+                    value={option.label}
+                    checked={
+                      formData.facility &&
+                      formData.facility.includes(option.label)
+                    }
+                    onChange={(e) => handleInputChange(e, option.label)}
                   />
-                )}
-              </div>
+                  <label className="form-check-label" htmlFor={option.id}>
+                    {option.label}
+                  </label>
+                </div>
+              ))}
               <div>
                 <p>
                   (M0110) Episode Timing * Is the Medicare home health episode,
@@ -2281,151 +1492,25 @@ const PatientProfile = () => {
                   required
                 />
               </div>
-              <div className="form-check mb-3">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="createEpisodeScheduleVisit"
-                  name="createEpisodeScheduleVisit"
-                  value="Create episode & schedule visit after saving"
-                  checked={
-                    formData.createEpisodeScheduleVisit ===
-                    "Create episode & schedule visit after saving"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="createEpisodeScheduleVisit"
-                >
-                  Create episode & schedule visit after saving
-                </label>
-              </div>
-              <div className="form-check mb-3">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="createEpisodeScheduleOasisStartCare"
-                  name="createEpisodeScheduleOasisStartCare"
-                  checked={
-                    formData.createEpisodeScheduleOasisStartCare ===
-                    "Create episode & schedule OASIS Start of Care visit after saving"
-                  }
-                  value="Create episode & schedule OASIS Start of Care visit after saving"
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="createEpisodeScheduleOasisStartCare"
-                >
-                  Create episode & schedule OASIS Start of Care visit after
-                  saving
-                </label>
-              </div>
-              <div className="form-check mb-3">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="createEpisodeScheduleTherapyEvaluation"
-                  name="createEpisodeScheduleTherapyEvaluation"
-                  value="Create episode and schedule therapy evaluation (Checking this box will allow therapist to perform 'therapy only' admissions, and when an OASIS is required to be completed by an RN within the 5-day window, an OASIS will need to be scheduled.)"
-                  checked={
-                    formData.createEpisodeScheduleTherapyEvaluation ===
-                    "Create episode and schedule therapy evaluation (Checking this box will allow therapist to perform 'therapy only' admissions, and when an OASIS is required to be completed by an RN within the 5-day window, an OASIS will need to be scheduled.)"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="createEpisodeScheduleTherapyEvaluation"
-                >
-                  Create episode and schedule therapy evaluation (Checking this
-                  box will allow therapist to perform &apos;therapy only&apos;
-                  admissions, and when an OASIS is required to be completed by
-                  an RN within the 5-day window, an OASIS will need to be
-                  scheduled.)
-                </label>
-              </div>
-              <div className="form-check mb-3">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="createEpisodeScheduleNonOasisStartCare"
-                  name="createEpisodeScheduleNonOasisStartCare"
-                  value="Create episode & schedule Non-OASIS Start of Care visit after saving"
-                  checked={
-                    formData.createEpisodeScheduleNonOasisStartCare ===
-                    "Create episode & schedule Non-OASIS Start of Care visit after saving"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="createEpisodeScheduleNonOasisStartCare"
-                >
-                  Create episode & schedule Non-OASIS Start of Care visit after
-                  saving
-                </label>
-              </div>
-              <div className="form-check mb-3">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="createEpisodeScheduleInitialOasisRecert"
-                  name="createEpisodeScheduleInitialOasisRecert"
-                  value="Create episode & schedule initial OASIS Recert in Axxess"
-                  checked={
-                    formData.createEpisodeScheduleInitialOasisRecert ===
-                    "Create episode & schedule initial OASIS Recert in Axxess"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="createEpisodeScheduleInitialOasisRecert"
-                >
-                  Create episode & schedule initial OASIS Recert in Axxess
-                </label>
-              </div>
-              <div className="form-check mb-3">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="createEpisodeScheduleInitialNonOasisRecert"
-                  name="createEpisodeScheduleInitialNonOasisRecert"
-                  value="Create episode & schedule initial Non-OASIS Recert in Axxess"
-                  checked={
-                    formData.createEpisodeScheduleInitialNonOasisRecert ===
-                    "Create episode & schedule initial Non-OASIS Recert in Axxess"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="createEpisodeScheduleInitialNonOasisRecert"
-                >
-                  Create episode & schedule initial Non-OASIS Recert in Axxess
-                </label>
-              </div>
-              <div className="form-check mb-3">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="trackF2FDocumentation"
-                  name="trackF2FDocumentation"
-                  value="Track F2F Documentation"
-                  checked={
-                    formData.trackF2FDocumentation === "Track F2F Documentation"
-                  }
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="trackF2FDocumentation"
-                >
-                  Track F2F Documentation
-                </label>
-              </div>
+              {actionsOptions.map((option) => (
+                <div className="form-check" key={option.id}>
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id={option.id}
+                    name="episode"
+                    value={option.label}
+                    checked={
+                      formData.episode &&
+                      formData.episode.includes(option.label)
+                    }
+                    onChange={(e) => handleInputChange(e, option.label)}
+                  />
+                  <label className="form-check-label" htmlFor={option.id}>
+                    {option.label}
+                  </label>
+                </div>
+              ))}
             </div>
           </div>
         </div>

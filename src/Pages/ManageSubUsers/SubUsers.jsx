@@ -1,5 +1,4 @@
 import DataTable from "./../../components/Tables/DynamicTable";
-import { useNavigate } from "react-router-dom";
 import useFormFields from "./../../hook/useFormHook";
 import FullscreenModal from "./../../components/Models/FullScreenModel";
 import TableHeader from "./../../components/Tables/TableHeader";
@@ -30,7 +29,6 @@ const SubUsers = () => {
     updateSubUser,
     {
       data: updateData,
-      isLoading: isUpdateLoading,
       isSuccess: isUpdateSuccess,
       error: updateError,
     },
@@ -40,7 +38,6 @@ const SubUsers = () => {
     deleteSubUser,
     {
       data: deleteData,
-      isLoading: isDeleteLoading,
       isSuccess: isDeleteSuccess,
       error: deleteError,
     },
@@ -54,14 +51,16 @@ const SubUsers = () => {
     medAdministration: "Yes",
   };
 
-  const [formData, handleChange, setFormData] = useFormFields(initialState);
+  const [formData, handleChange, setFormData,resetForm] = useFormFields(initialState);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editId) {
       updateSubUser({ subUserId: editId, subUserData: formData });
+      resetForm()
     } else {
       createSubUser(formData);
+      resetForm()
     }
   };
 
@@ -97,13 +96,8 @@ const SubUsers = () => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        swal("Poof! Your imaginary file has been deleted!", {
-          icon: "success",
-        });
         deleteSubUser(rowData?._id);
-      } else {
-        swal("Your imaginary file is safe!");
-      }
+      } 
     });
   };
   useEffect(() => {

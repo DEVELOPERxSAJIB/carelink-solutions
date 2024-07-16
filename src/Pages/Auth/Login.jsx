@@ -10,25 +10,20 @@ import AuthLoader from "../../utils/Loaders/AuthLoader";
 
 const Login = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
-const togglePasswordVisibility = (setPasswordVisibility) => {
+  const togglePasswordVisibility = (setPasswordVisibility) => {
     setPasswordVisibility((prevState) => !prevState);
   };
-
- 
   const navigate = useNavigate();
   const [loginUser, { data, isSuccess, isError, isLoading, error }] =
     useLoginUserMutation();
-console.log(data,error)
+  console.log(data, error);
   const initialValues = {
     email: localStorage.getItem("email") || "",
     password: localStorage.getItem("password") || "",
     remember: localStorage.getItem("remember") === "true",
   };
-
-  // State for "Remember Me" checkbox
   const [remember, setRemember] = useState(initialValues.remember);
 
-  // Submission handler
   const onSubmit = (data) => {
     if (remember) {
       localStorage.setItem("email", data.email);
@@ -114,7 +109,7 @@ console.log(data,error)
                   </label>
                   <div className="input-group input-group-merge">
                     <input
-                      type={showNewPassword ? 'text' : 'password'}
+                      type={showNewPassword ? "text" : "password"}
                       id="password"
                       className={`form-control ${
                         errors.password ? "is-invalid" : ""
@@ -124,7 +119,14 @@ console.log(data,error)
                       aria-describedby="password"
                     />
                     <span className="input-group-text cursor-pointer">
-                      <i onClick={() => togglePasswordVisibility(setShowNewPassword)} className={showNewPassword ? 'ti ti-eye' : 'ti ti-eye-off'}></i>
+                      <i
+                        onClick={() =>
+                          togglePasswordVisibility(setShowNewPassword)
+                        }
+                        className={
+                          showNewPassword ? "ti ti-eye" : "ti ti-eye-off"
+                        }
+                      ></i>
                     </span>
                     {errors.password && (
                       <div className="invalid-feedback">

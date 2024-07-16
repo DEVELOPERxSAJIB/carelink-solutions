@@ -277,17 +277,13 @@
   overflow: hidden !important;
   text-overflow: ellipsis;
   transition: all 0.5s ease-in-out !important;
-  
 }
 .notruncate {
   border: 1px solid rgb(255, 245, 245);
 }
-.truncate th{
+.truncate th {
   border: 1px solid rgb(255, 245, 245);
 }
-
-
-
 
 /* modal css  */
 /* components/CustomModal.css */
@@ -307,8 +303,7 @@
 .custom-modal {
   background: white;
   border-radius: 5px;
-  min-width: 500px;
-  max-width: 90%;
+
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   animation: fadeIn 0.3s ease;
 }

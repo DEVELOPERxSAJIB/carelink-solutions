@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import CitySelect from "../../components/FormElement/CitySelect";
 import StateSelect from "./../../components/FormElement/StateSelect";
 
 import { useCreatePhysicianMutation } from "../../Redux/api/PhysicianApi";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
-// useCreatePhysicianMutation
-// useGetAllPhysiciansQuery
+import { useNavigate } from "react-router-dom";
+
 const CreatePhysicians = () => {
-  const [createPhysician, { data, isLoading, error }] =
+  const navigate = useNavigate();
+  const [createPhysician, { data, isLoading, error, isSuccess }] =
     useCreatePhysicianMutation();
   const [formData, setFormData] = useState({
     npiNumber: "",
@@ -42,39 +43,59 @@ const CreatePhysicians = () => {
   const [formError, setFormError] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
- 
-   
-      setFormError("")
-      formData.city= city
-      formData.state= state
-      createPhysician(formData);
-    
+
+    setFormError("");
+    formData.city = city;
+    formData.state = state;
+    createPhysician(formData);
   };
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/physicians");
+      setFormData({
+        npiNumber: "",
+        firstName: "",
+        mi: "",
+        lastName: "",
+        taxonomyCode: "",
+        credentials: "",
+        npiNo: null,
+        medicaidProviderIdentifier: "",
+        addressLine1: "",
+        addressLine2: "",
+        city: "",
+        state: "",
+        zip: "",
+        primaryPhone: "",
+        alternatePhone: "",
+        deliveryMethod: "",
+        fax: "",
+        email: "",
+      });
+    }
+  }, [isSuccess]);
   if (isLoading) return <AuthLoader />;
   return (
     <div className="card mt-4">
       <PageHeader title="New Physician" className="card-header fs-3" />
-   
 
       <div className="card-body">
-      <div className="row">
-        <div className="col-md-12">
-        <h6>Search Physician</h6>
+        <div className="row">
+          <div className="col-md-12">
+            <h6>Search Physician</h6>
+          </div>
         </div>
-      </div>
-      {data?.message && (
-        <div className="alert alert-success text-center">{data?.message}</div>
-      )}
-      {error?.data?.message && (
-        <div className="alert alert-danger text-center">
-          {error?.data?.message}
-        </div>
-      )}
-      {formError && (
-        <div className="alert alert-danger text-center">
-          {formError}
-        </div>
-      )}
+        {data?.message && (
+          <div className="alert alert-success text-center">{data?.message}</div>
+        )}
+        {error?.data?.message && (
+          <div className="alert alert-danger text-center">
+            {error?.data?.message}
+          </div>
+        )}
+        {formError && (
+          <div className="alert alert-danger text-center">{formError}</div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className=" col-md-6">
@@ -103,7 +124,7 @@ const CreatePhysicians = () => {
                 type="text"
                 className="form-control"
                 id="firstName"
-                 placeholder="Enter first name"
+                placeholder="Enter first name"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
@@ -118,7 +139,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="mi"
                 name="mi"
-                 placeholder="Enter One Mi Charecter"
+                placeholder="Enter One Mi Charecter"
                 value={formData.mi}
                 onChange={handleChange}
               />
@@ -132,7 +153,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="lastName"
                 name="lastName"
-                 placeholder="Enter last name"
+                placeholder="Enter last name"
                 value={formData.lastName}
                 onChange={handleChange}
               />
@@ -146,7 +167,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="taxonomyCode"
                 name="taxonomyCode"
-                 placeholder="Enter Taxonomy code"
+                placeholder="Enter Taxonomy code"
                 value={formData.taxonomyCode}
                 onChange={handleChange}
               />
@@ -159,7 +180,7 @@ const CreatePhysicians = () => {
                 type="text"
                 className="form-control"
                 id="credentials"
-                 placeholder="Enter Credentials"
+                placeholder="Enter Credentials"
                 name="credentials"
                 value={formData.credentials}
                 onChange={handleChange}
@@ -173,7 +194,7 @@ const CreatePhysicians = () => {
                 type="number"
                 className="form-control"
                 id="npiNo"
-                 placeholder="Enter NPI Number"
+                placeholder="Enter NPI Number"
                 name="npiNo"
                 value={formData.npiNo}
                 onChange={handleChange}
@@ -193,7 +214,7 @@ const CreatePhysicians = () => {
                 name="medicaidProviderIdentifier"
                 value={formData.medicaidProviderIdentifier}
                 onChange={handleChange}
-                 placeholder="Enter Medicaid Provider Identifier"
+                placeholder="Enter Medicaid Provider Identifier"
               />
             </div>
           </div>
@@ -209,7 +230,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="addressLine1"
                 name="addressLine1"
-                 placeholder="Enter address line1"
+                placeholder="Enter address line1"
                 value={formData.addressLine1}
                 onChange={handleChange}
               />
@@ -223,7 +244,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="addressLine2"
                 name="addressLine2"
-                 placeholder="Enter address line2"
+                placeholder="Enter address line2"
                 value={formData.addressLine2}
                 onChange={handleChange}
               />
@@ -257,7 +278,7 @@ const CreatePhysicians = () => {
                 name="zip"
                 value={formData.zip}
                 onChange={handleChange}
-                 placeholder="Enter zip"
+                placeholder="Enter zip"
               />
             </div>
 
@@ -270,7 +291,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="primaryPhone"
                 name="primaryPhone"
-                 placeholder="Enter Primary phone"
+                placeholder="Enter Primary phone"
                 value={formData.primaryPhone}
                 onChange={handleChange}
               />
@@ -284,7 +305,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="alternatePhone"
                 name="alternatePhone"
-                 placeholder="Enter Alternate Phone"
+                placeholder="Enter Alternate Phone"
                 value={formData.alternatePhone}
                 onChange={handleChange}
               />
@@ -302,7 +323,9 @@ const CreatePhysicians = () => {
               >
                 {/* "AxxessPhysicianPortal", "Email", "Phone", "Fax", "Courier", "Other" */}
                 <option value="">-- Delivery Method --</option>
-                <option value="AxxessPhysicianPortal">AxxessPhysicianPortal</option>
+                <option value="AxxessPhysicianPortal">
+                  AxxessPhysicianPortal
+                </option>
                 <option value="Email">Email</option>
                 <option value="Phone">Phone</option>
                 <option value="Fax">Fax</option>
@@ -321,7 +344,7 @@ const CreatePhysicians = () => {
                 id="fax"
                 name="fax"
                 value={formData.fax}
-                 placeholder="Enter Fax number"
+                placeholder="Enter Fax number"
                 onChange={handleChange}
               />
             </div>
@@ -334,7 +357,7 @@ const CreatePhysicians = () => {
                 className="form-control"
                 id="email"
                 name="email"
-                 placeholder="Enter email"
+                placeholder="Enter email"
                 value={formData.email}
                 onChange={handleChange}
               />
@@ -342,7 +365,7 @@ const CreatePhysicians = () => {
           </div>
 
           <div className="col-md-6 mt-5 d-flex gap-2">
-            <button  type="submit" className="btn btn-primary mr-2">
+            <button type="submit" className="btn btn-primary mr-2">
               Save
             </button>
             <button type="button" className="btn btn-secondary">

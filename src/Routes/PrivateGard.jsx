@@ -8,7 +8,6 @@ const PrivateGard = () => {
   if (isLoading) {
     return <AuthLoader />;
   }
-
   if (isSuccess && data?.payload?.user) {
     return (
       <PageTransition>

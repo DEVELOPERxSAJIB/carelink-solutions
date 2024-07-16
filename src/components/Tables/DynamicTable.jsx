@@ -1,7 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-
-import Delete from "./Delete";
-import Edit from "./Edit";
+import { useState, useEffect, useRef } from "react";
 const DataTable = ({
   columns,
   data,

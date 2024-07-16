@@ -18,30 +18,37 @@ const CreateEmergencyPreparedness = () => {
   const localStorageData = JSON.parse(localStorage.getItem("Emergency"));
 
   const initialFormData = {
-    emergencyTriage: localStorageData?.emergencyTriage ?? "",
-    emergencyPrepInfo: [],
-    medicalNeedsInfo: localStorageData?.medicalNeedsInfo ?? "",
-    evacuationZone: localStorageData?.evacuationZone ?? "",
-    evacuationAddress: localStorageData?.evacuationAddress ?? false,
-    same: localStorageData?.evacuationAddress ?? false,
-    additionalComments: localStorageData?.additionalComments ?? "",
-    visitLocation: localStorageData?.visitLocation ?? false,
-    comments: localStorageData?.comments ?? "",
-    mobilePhone: localStorageData?.mobilePhone ?? "",
-    altMobilePhone: localStorageData?.altMobilePhone ?? "",
+    emergencyTriage: "",
+    additionalInfo: [],
+    additionalComments: "",
+    evacuationZone: "",
+    sameAsEvacuationContact: false,
+    addressLine1: "",
+    addressLine2: null,
+    city: "",
+    state: "",
+    zip: "",
+    county: "",
+    mobilePhone: "",
+    altMobilePhone: null,
+    visitLocation: false,
+    comments: null,
+    trash: true,
+    status: true,
   };
+  
 
   const [formData, setFormData] = useState(initialFormData);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    if (name === "emergencyPrepInfo") {
+    if (name === "additionalInfo") {
       setFormData((prevState) => ({
         ...prevState,
-        emergencyPrepInfo: checked
-          ? [...prevState.emergencyPrepInfo, value]
-          : prevState.emergencyPrepInfo.filter((item) => item !== value),
+        additionalInfo: checked
+          ? [...prevState.additionalInfo, value]
+          : prevState.additionalInfo.filter((item) => item !== value),
       }));
     } else if (type === "checkbox") {
       setFormData({
@@ -89,16 +96,16 @@ const CreateEmergencyPreparedness = () => {
   };
 
   useEffect(() => {
-    if (template?.value) {
+    if (addTemplate?.value) {
       setFormData((prev) => ({
         ...prev,
         additionalComments:
           prev.additionalComments +
           (prev.additionalComments ? "\n" : "") +
-          template.value,
+          addTemplate.value,
       }));
     }
-  }, [template?.value]);
+  }, [addTemplate?.value]);
   useEffect(() => {
     if (template?.value) {
       setFormData((prev) => ({
@@ -203,17 +210,17 @@ const CreateEmergencyPreparedness = () => {
                   </div>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="emergencyPrepInfo" className="form-label">
+                  <label htmlFor="additionalInfo" className="form-label">
                     Additional Emergency Preparedness Information
                   </label>
                   <div>
                     <input
                       type="checkbox"
-                      name="emergencyPrepInfo"
+                      name="additionalInfo"
                       id="needsAssistance"
                       value="needsAssistance"
                       onChange={handleInputChange}
-                      checked={formData.emergencyPrepInfo.includes(
+                      checked={formData.additionalInfo.includes(
                         "needsAssistance"
                       )}
                     />{" "}
@@ -222,11 +229,11 @@ const CreateEmergencyPreparedness = () => {
                   <div>
                     <input
                       type="checkbox"
-                      name="emergencyPrepInfo"
+                      name="additionalInfo"
                       id="contactWithOfficials"
                       value="contactWithOfficials"
                       onChange={handleInputChange}
-                      checked={formData.emergencyPrepInfo.includes(
+                      checked={formData.additionalInfo.includes(
                         "contactWithOfficials"
                       )}
                     />{" "}
@@ -237,18 +244,18 @@ const CreateEmergencyPreparedness = () => {
                   <div>
                     <input
                       type="checkbox"
-                      name="emergencyPrepInfo"
+                      name="additionalInfo"
                       id="medicalNeeds"
                       value="medicalNeeds"
                       onChange={handleInputChange}
-                      checked={formData.emergencyPrepInfo.includes(
+                      checked={formData.additionalInfo.includes(
                         "medicalNeeds"
                       )}
                     />{" "}
                     Medical Needs/Equipment (i.e., bedbound, oxygen, vent, IV
                     cardiac meds other DME)
                   </div>
-                  {formData.emergencyPrepInfo.medicalNeeds && (
+                  {formData.additionalInfo.medicalNeeds && (
                     <div>
                       <label htmlFor="medicalNeedsInfo" className="form-label">
                         Medical Needs/Equipment Details

@@ -6,11 +6,12 @@ import CountySelect from "./../../components/FormElement/CountySelect";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import Template from "./../../components/FormElement/Template";
+import { useNavigate } from "react-router-dom";
 
 const ContactForm = () => {
   const [createContact, { data, isLoading, isSuccess, error }] =
     useCreateContactMutation();
-
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     representativeContacted: "",
     legalRepresentativeOption: "",
@@ -40,7 +41,7 @@ const ContactForm = () => {
       county: "",
     },
   });
-  console.log(formData);
+
   const [emergencyContacts, setEmergencyContacts] = useState({
     primary: {
       firstName: "",
@@ -149,10 +150,9 @@ const ContactForm = () => {
     console.log(field, value);
     setFormData({
       ...formData,
-      patientSelectedRepresentativeOption: value,
+      [name]: value,
     });
   };
-console.log(formData?.patientSelectedRepresentativeOption)
   const handleCheckboxChange = (field) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -185,8 +185,6 @@ console.log(formData?.patientSelectedRepresentativeOption)
     setComments(text);
     setRemainingCharacters(2000 - text.length);
   };
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -223,15 +221,17 @@ console.log(formData?.patientSelectedRepresentativeOption)
   };
   useEffect(() => {
     setComments((prev) =>
-      prev
-        ? prev + (selectedTemplate?.value || "<br/> <br/> <br/> <br/> ")
-        : selectedTemplate?.value || "<br/>"
+      prev ? prev + selectedTemplate?.value : selectedTemplate?.value
     );
   }, [selectedTemplate]);
-
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/contacts");
+    }
+  }, [isSuccess]);
   if (isLoading) return <AuthLoader />;
   return (
-    <form   onSubmit={handleSubmit} className="card">
+    <form onSubmit={handleSubmit} className="card">
       <PageHeader title="Contact" className="card-header fs-3" />
 
       <div className="card-body">
@@ -1554,11 +1554,7 @@ console.log(formData?.patientSelectedRepresentativeOption)
               ></textarea>
             </div>
 
-            <button
-              type="submit"
-        
-              className="btn btn-primary my-5 text-"
-            >
+            <button type="submit" className="btn btn-primary my-5 text-">
               submit
             </button>
           </div>

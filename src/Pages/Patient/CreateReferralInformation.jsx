@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import CitySelect from "../../components/FormElement/CitySelect";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import { useCreateReferralMutation } from "../../Redux/api/ReferalInformation";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
+import { useNavigate } from 'react-router-dom';
 
 const CreateReferralInformation = () => {
-  const [createReferral, { data, error, isLoading }] =
+  const [createReferral, { data, error, isLoading,isSuccess }] =
     useCreateReferralMutation();
   const [formData, setFormData] = useState({
     city: "",
@@ -61,6 +62,12 @@ const CreateReferralInformation = () => {
     e.preventDefault();
     localStorage.setItem("Referral", JSON.stringify(formData));
   };
+  const navigate = useNavigate()
+  useEffect(()=>{
+   if(isSuccess){
+    navigate("/referral-information")
+   }
+  },[isSuccess])
   if (isLoading) return <AuthLoader />;
   return (
     <div className="card">

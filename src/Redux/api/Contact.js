@@ -8,7 +8,7 @@ export const ContactApi = rootApi.injectEndpoints({
     }),
     createContact: builder.mutation({
       query: (contactData) => ({
-        url: "contact/contacts",
+        url: "contacts",
         method: "POST",
         body: contactData,
       }),
@@ -16,14 +16,14 @@ export const ContactApi = rootApi.injectEndpoints({
     }),
     getAllContacts: builder.query({
       query: () => ({
-        url: "contact/contacts",
+        url: "contacts",
         method: "GET",
       }),
       providesTags: (result, error) => [{ type: "Contact" }],
     }),
     updateContact: builder.mutation({
       query: ({ contactId, contactData }) => ({
-        url: `contact/contacts/${contactId}`,
+        url: `contacts/${contactId}`,
         method: "PUT",
         body: contactData,
       }),
@@ -33,7 +33,7 @@ export const ContactApi = rootApi.injectEndpoints({
     }),
     deleteContact: builder.mutation({
       query: (contactId) => ({
-        url: `contact/contacts/${contactId}`,
+        url: `contacts/${contactId}`,
         method: "DELETE",
       }),
       invalidatesTags: (result, error, contactId) => [

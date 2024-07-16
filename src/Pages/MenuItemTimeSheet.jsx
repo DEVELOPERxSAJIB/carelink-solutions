@@ -65,13 +65,9 @@ const MenuItemTimeSheet = () => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        swal("Poof! Your imaginary file has been deleted!", {
-          icon: "success",
-        });
+        
         deleteTimeSheet(rowData._id);
-      } else {
-        swal("Your imaginary file is safe!");
-      }
+      } 
     });
   };
 
@@ -107,9 +103,11 @@ const MenuItemTimeSheet = () => {
     if (editId) {
       formData.dateOfService= date
       updateTimeSheet({ timesheetId: editId, timeSheetData: formData });
+      resetForm()
     } else {
       formData.dateOfService= date
       createTimeSheet(formData);
+      resetForm()
     }
     resetForm();
   };

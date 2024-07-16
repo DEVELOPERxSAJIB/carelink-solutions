@@ -3,10 +3,11 @@ import { useCreateDirectiveMutation } from "../../Redux/api/DirectiveApi";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import Template from "./../../components/FormElement/Template";
+import { useNavigate } from 'react-router-dom';
 // useCreateDirectiveMutation
 
 const CreateAdvanceDirectives = () => {
-  const [createDirective, { data, isLoading, error }] = useCreateDirectiveMutation();
+  const [createDirective, { data, isLoading, error ,isSuccess}] = useCreateDirectiveMutation();
 
   const [template, setTemplate] = useState("");
 
@@ -53,13 +54,18 @@ const CreateAdvanceDirectives = () => {
 
   useEffect(() => {
     if (template?.value) {
-      setFormData((prev) => ({
-        ...prev,
-        comment: prev.comment + (prev.comment ? "\n" : "") + template.value,
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        comment: (prevFormData.comment || '') + template.value,
       }));
     }
-  }, [template?.value]);
-
+  }, [template]);
+  const navigate = useNavigate()
+  useEffect(()=>{
+  if(isSuccess){
+    navigate("/advance-directives")
+  }
+  },[isSuccess])
   if (isLoading) return <AuthLoader />;
 
   return (

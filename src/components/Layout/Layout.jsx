@@ -1,8 +1,17 @@
 import Sidebar from "./../Sidebar/Sidebar";
 import Navbar from "./../Navbar/Navbar";
 import Footer from "./../Footer/Footer";
-import { Outlet } from "react-router-dom";
+import { Outlet ,useLocation} from "react-router-dom";
+import {useEffect} from "react"
 const Layout = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname !== "/login" && location.pathname !== "/register" && location.pathname !== "/") {
+      localStorage.setItem("pathName", location.pathname);
+    }
+  }, [location]);
+
   return (
     <div className="layout-wrapper layout-content-navbar  ">
       <div className="layout-container">

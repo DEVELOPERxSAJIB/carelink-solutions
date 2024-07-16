@@ -58,7 +58,7 @@ const MileageLog = () => {
     endingMileage: "",
     activityDescription: "",
   };
-  const [formData, handleChange, setFormData] = useFormFields(initialState);
+  const [formData, handleChange, setFormData,resetForm] = useFormFields(initialState);
 
   const handleEdit = (rowData) => {
     setEditId(rowData._id);
@@ -88,13 +88,9 @@ const MileageLog = () => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        swal("Poof! Your imaginary file has been deleted!", {
-          icon: "success",
-        });
+        
         deleteMileageLog(rowData?._id);
-      } else {
-        swal("Your imaginary file is safe!");
-      }
+      } 
     });
   };
   const handleSubmit = async (e) => {
@@ -104,6 +100,7 @@ const MileageLog = () => {
         mileageLogId: editId,
         mileageLogData: formData,
       });
+      resetForm()
     } catch (error) {
       console.error("Error creating Mileage Log:", error);
     }
@@ -137,7 +134,7 @@ const MileageLog = () => {
             {updateData.message}
           </div>
         )}
-       
+
         <div className="gap-3 d-flex flex-wrap">
           <button
             onClick={() => navigate("/add-new-mileage")}

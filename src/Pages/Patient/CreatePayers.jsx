@@ -4,10 +4,12 @@ import PageHeader from "../../components/FormElement/PageHeader";
 
 import { useCreatePayerMutation } from "../../Redux/api/PayerApi";
 import Template from "./../../components/FormElement/Template";
+import { useNavigate } from 'react-router-dom';
 
 const CreatePayers = () => {
-  const [createPayer, { data, isLoading, error }] = useCreatePayerMutation();
+  const [createPayer, { data, isLoading,isSuccess, error }] = useCreatePayerMutation();
   const localStoragePatient = JSON.parse(localStorage.getItem("Payer"));
+  const navigate = useNavigate()
   const [template, setTemplate] = useState("");
   const [formData, setFormData] = useState({
     mbiNumber: localStoragePatient?.mbiNumber
@@ -123,6 +125,12 @@ const CreatePayers = () => {
         prevFormData?.payerComments + template?.value ? template?.value : "",
     }));
   }, [template]);
+
+  useEffect(()=>{
+   if(isSuccess){
+    navigate("/payers")
+   }
+  },[isSuccess])
   if (isLoading) return <AuthLoader />;
   return (
     <form onSubmit={handleSubmit} className="card">
@@ -329,8 +337,8 @@ const CreatePayers = () => {
                   <div className="col-md-12">
                     <label className="form-label">Selected Templates:</label>
                     <Template
-                      selectedTemplate={template}
-                      setSelectedTemplate={setTemplate}
+                       selectedTemplate={template}
+                       setSelectedTemplate={setTemplate}
                     />
                   </div>
                   <div className="col-md-12">

@@ -8,7 +8,7 @@ export const PhysicianApi = rootApi.injectEndpoints({
     }),
     createPhysician: builder.mutation({
       query: (physicianData) => ({
-        url: "physician/create-physician",
+        url: "physician",
         method: "POST",
         body: physicianData,
       }),
@@ -16,14 +16,14 @@ export const PhysicianApi = rootApi.injectEndpoints({
     }),
     getAllPhysicians: builder.query({
       query: () => ({
-        url: "physician/physicians",
+        url: "physician",
         method: "GET",
       }),
       providesTags: (result, error, _) => [{ type: "Physician" }],
     }),
     updatePhysician: builder.mutation({
       query: ({ physicianId, physicianData }) => ({
-        url: `physician/physician/${physicianId}`,
+        url: `physician/${physicianId}`,
         method: "PUT",
         body: physicianData,
       }),
@@ -31,7 +31,7 @@ export const PhysicianApi = rootApi.injectEndpoints({
     }),
     deletePhysician: builder.mutation({
       query: (physicianId) => ({
-        url: `physician/physician/${physicianId}`,
+        url: `physician/${physicianId}`,
         method: "DELETE",
       }),
       invalidatesTags: (result, error, _id) => [{ type: "Physician", id: _id }],

@@ -120,15 +120,15 @@ const CreateClinicalAndDiagnoses = () => {
     createClinicalDiagnosis(formData);
   };
 
+ 
   useEffect(() => {
-    setFormData((prev) => ({
-      ...prev,
-      clinicalComments:
-        (prev.clinicalComments || "") +
-        (template?.value ? template.value + "\n\n" : ""),
-    }));
+    if (template?.value) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        clinicalComments: (prevFormData.clinicalComments || '') + template.value,
+      }));
+    }
   }, [template]);
-
   if (isLoading) return <AuthLoader />;
 
   return (
@@ -466,7 +466,8 @@ const CreateClinicalAndDiagnoses = () => {
                     rows="3"
                   ></textarea>
                 </div>
-                <Template setTemplate={setTemplate} />
+                <Template  selectedTemplate={template}
+                          setSelectedTemplate={setTemplate} />
               </div>
             </div>
           </div>

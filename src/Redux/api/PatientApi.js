@@ -8,7 +8,7 @@ export const PatientApi = rootApi.injectEndpoints({
     }),
     createPatient: builder.mutation({
       query: (patientData) => ({
-        url: "patient/patients",
+        url: "patients",
         method: "POST",
         body: patientData,
       }),
@@ -16,14 +16,14 @@ export const PatientApi = rootApi.injectEndpoints({
     }),
     getAllPatients: builder.query({
       query: () => ({
-        url: "patient/patients",
+        url: "patients",
         method: "GET",
       }),
       providesTags: (result, error, _id) => [{ type: "Patient", id: _id }],
     }),
     updatePatient: builder.mutation({
       query: ({ patientId, patientData }) => ({
-        url: `patient/patients/${patientId}`,
+        url: `patients/${patientId}`,
         method: "PUT",
         body: patientData,
       }),
@@ -31,7 +31,7 @@ export const PatientApi = rootApi.injectEndpoints({
     }),
     deletePatient: builder.mutation({
       query: (patientId) => ({
-        url: `patient/patients/${patientId}`,
+        url: `patients/${patientId}`,
         method: "DELETE",
       }),
       invalidatesTags: (result, error, _id) => [{ type: "Patient", id: _id }],

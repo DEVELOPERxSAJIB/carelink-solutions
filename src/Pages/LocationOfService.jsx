@@ -18,18 +18,12 @@ import EditModal from "./../components/Models/EditModal";
 const LocationOfService = () => {
   const [
     createLocation,
-    {
-      data: createData,
-      isLoading: isCreateLoading,
-      isSuccess: isCreateSuccess,
-      error: createError,
-    },
+    { data: createData, isSuccess: isCreateSuccess, error: createError },
   ] = useCreateLocationMutation();
   const [
     updateLocation,
     {
       data: updateData,
-      isLoading: isUpdateLoading,
       isSuccess: isUseUpdateLocationSuccess,
       error: updateError,
     },
@@ -82,12 +76,7 @@ const LocationOfService = () => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        swal("Poof! Your imaginary file has been deleted!", {
-          icon: "success",
-        });
         deleteLocation(rowData?._id);
-      } else {
-        swal("Your imaginary file is safe!");
       }
     });
   };
@@ -112,6 +101,7 @@ const LocationOfService = () => {
         state,
       };
       updateLocation({ locationId: editId, locationData: data });
+      resetForm()
     } else {
       const data = {
         ...formData,
@@ -119,6 +109,7 @@ const LocationOfService = () => {
         state,
       };
       createLocation(data);
+      resetForm()
     }
   };
 
