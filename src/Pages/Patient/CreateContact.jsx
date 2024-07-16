@@ -41,7 +41,6 @@ const ContactForm = () => {
       county: "",
     },
   });
-
   const [emergencyContacts, setEmergencyContacts] = useState({
     primary: {
       firstName: "",
@@ -146,12 +145,11 @@ const ContactForm = () => {
       additional: updatedAdditional,
     });
   };
-  const handleFormChange = (field, value) => {
-    console.log(field, value);
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const handleFormChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
   const handleCheckboxChange = (field) => {
     setFormData((prevData) => ({
@@ -214,6 +212,7 @@ const ContactForm = () => {
         comments,
         remainingCharacters,
       };
+      console.log(contactData)
       createContact(contactData);
     } catch (error) {
       console.error("Error creating contact:", error);
@@ -940,14 +939,10 @@ const ContactForm = () => {
                 <div className="mb-3">
                   <label>Representative contacted regarding admission:</label>
                   <select
+                    name="representativeContacted"
                     className="form-select"
                     value={formData.representativeContacted}
-                    onChange={(e) =>
-                      handleFormChange(
-                        "representativeContacted",
-                        e.target.value
-                      )
-                    }
+                    onChange={handleFormChange}
                   >
                     <option value="N/A">
                       N/A (no legal/patient-selected representative)
@@ -987,12 +982,7 @@ const ContactForm = () => {
                           formData.legalRepresentativeOption ===
                           "contactedAvailable"
                         }
-                        onChange={(e) =>
-                          handleFormChange(
-                            "legalRepresentativeOption",
-                            e.target.value
-                          )
-                        }
+                        onChange={handleFormChange}
                       />
                       <label
                         className="form-check-label"
@@ -1013,12 +1003,7 @@ const ContactForm = () => {
                           formData.legalRepresentativeOption ===
                           "inAgreementNotAvailable"
                         }
-                        onChange={(e) =>
-                          handleFormChange(
-                            "legalRepresentativeOption",
-                            e.target.value
-                          )
-                        }
+                        onChange={handleFormChange}
                       />
                       <label
                         className="form-check-label"
@@ -1039,12 +1024,7 @@ const ContactForm = () => {
                         id="legalRepOption3"
                         value="other"
                         checked={formData.legalRepresentativeOption === "other"}
-                        onChange={(e) =>
-                          handleFormChange(
-                            "legalRepresentativeOption",
-                            e.target.value
-                          )
-                        }
+                        onChange={handleFormChange}
                       />
                       <label
                         className="form-check-label"
@@ -1069,12 +1049,7 @@ const ContactForm = () => {
                           formData.patientSelectedRepresentativeOption ===
                           "contactedAvailable"
                         }
-                        onChange={(e) =>
-                          handleFormChange(
-                            "patientSelectedRepresentativeOption",
-                            e.target.value
-                          )
-                        }
+                        onChange={handleFormChange}
                       />
                       <label
                         className="form-check-label"
@@ -1095,12 +1070,7 @@ const ContactForm = () => {
                           formData.patientSelectedRepresentativeOption ===
                           "sentCopy"
                         }
-                        onChange={(e) =>
-                          handleFormChange(
-                            "patientSelectedRepresentativeOption",
-                            e.target.value
-                          )
-                        }
+                        onChange={handleFormChange}
                       />
                       <label
                         className="form-check-label"
@@ -1122,12 +1092,7 @@ const ContactForm = () => {
                           formData.patientSelectedRepresentativeOption ===
                           "other"
                         }
-                        onChange={(e) =>
-                          handleFormChange(
-                            "patientSelectedRepresentativeOption",
-                            e.target.value
-                          )
-                        }
+                        onChange={handleFormChange}
                       />
                       <label
                         className="form-check-label"

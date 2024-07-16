@@ -15,17 +15,41 @@ import {
 import { useNavigate } from "react-router-dom";
 import MainLoader from "./../../utils/Loaders/MainLoader";
 import EditModal from "./../../components/Models/EditModal";
-import { swal } from "sweetalert";
-import Alert from './../../components/Alert/Alert';
+import swal from "sweetalert";
+import Alert from "./../../components/Alert/Alert";
 
 const Contact = () => {
-  const { data, isLoading,refetch } = useGetAllContactsQuery();
-  const [updateContact, { data: updateData, isSuccess: isUpdateSuccess,error:updateError }] =
-    useUpdateContactMutation();
-  const [deleteContact, { data: deleteData, isSuccess: isDeleteSuccess,error:deleteError }] =
-    useDeleteContactMutation();
+  const { data, isLoading, refetch } = useGetAllContactsQuery();
+  const [
+    updateContact,
+    { data: updateData, isSuccess: isUpdateSuccess, error: updateError },
+  ] = useUpdateContactMutation();
+  const [
+    deleteContact,
+    { data: deleteData, isSuccess: isDeleteSuccess, error: deleteError },
+  ] = useDeleteContactMutation();
   const [show, setShow] = useState(false);
   const [editId, setEditId] = useState("");
+  const columns = [
+    { field: "_id", header: "ID" },
+    { field: "representativeContacted", header: "Representative Contacted" },
+    {
+      field: "legalRepresentativeOption",
+      header: "Legal Representative Option",
+    },
+    {
+      field: "patientSelectedRepresentativeOption",
+      header: "Patient Selected Representative Option",
+    },
+    { field: "physicianNotified", header: "Physician Notified" },
+    { field: "patientNotified", header: "Patient Notified" },
+    { field: "doNotContactCAHPS", header: "Do Not Contact CAHPS" },
+    { field: "reasonForNoContact", header: "Reason for No Contact" },
+    { field: "otherReason", header: "Other Reason" },
+    { field: "alternateCAHPSContact", header: "Alternate CAHPS Contact" },
+    { field: "comments", header: "Comments" },
+    { field: "createdAt", header: "Created At" },
+  ];
   const [formData, setFormData] = useState({
     representativeContacted: "",
     legalRepresentativeOption: "",
@@ -89,6 +113,7 @@ const Contact = () => {
       },
     ],
   });
+
   const [primaryCity, setPrimaryCity] = useState("");
   const [primaryState, setPrimaryState] = useState("");
   const [additionalCity, setAdditionalCity] = useState("");
@@ -99,53 +124,7 @@ const Contact = () => {
   const [selectedTemplate, setSelectedTemplate] = useState("");
   const [comments, setComments] = useState("");
   const [remainingCharacters, setRemainingCharacters] = useState(2000);
-  const columns = [
-    { field: "_id", header: "ID" },
-    { field: "representativeContacted", header: "Representative Contacted" },
-    { field: "legalRepresentativeOption", header: "Legal Representative Option" },
-    { field: "patientSelectedRepresentativeOption", header: "Patient Selected Representative Option" },
-    { field: "physicianNotified", header: "Physician Notified" },
-    { field: "patientNotified", header: "Patient Notified" },
-    { field: "doNotContactCAHPS", header: "Do Not Contact CAHPS" },
-    { field: "reasonForNoContact", header: "Reason for No Contact" },
-    { field: "otherReason", header: "Other Reason" },
-    { field: "alternateCAHPSContact", header: "Alternate CAHPS Contact" },
-    { field: "comments", header: "Comments" },
-    { field: "createdAt", header: "Created At" },
 
-  ];
-  
-
-  const navigate = useNavigate();
-  const handleEdit = (row) => {
-    console.log(row)
-    setShow(true);
-    setEditId(row._id);
-    setFormData({ ...row });
-    setEmergencyContacts({ ...row.emergencyContacts });
-    setPrimaryCity();
-    setPrimaryState();
-    setAdditionalCity();
-    setAdditionalState();
-    setCAHPSCity();
-    setCAHPSState();
-    setCAHPSCounty();
-    setSelectedTemplate();
-    setComments();
-  };
-  const handleDelete = (row) => {
-    swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this imaginary file!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        deleteContact(row._id);
-      }
-    });
-  };
   const handleChange = (type, field, value, index) => {
     if (type === "additional") {
       const updatedAdditional = [...emergencyContacts.additional];
@@ -204,12 +183,11 @@ const Contact = () => {
       additional: updatedAdditional,
     });
   };
-  const handleFormChange = (field, value) => {
-    console.log(field, value);
-    setFormData({
-      ...formData,
-      patientSelectedRepresentativeOption: value,
-    });
+  const handleFormChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
   const handleCheckboxChange = (field) => {
     setFormData((prevData) => ({
@@ -272,7 +250,8 @@ const Contact = () => {
         comments,
         remainingCharacters,
       };
-      updateContact({ contactId: editId, contactData: contactData });
+      console.log(contactData);
+      updateContact({ contactId: editId, contactData });
     } catch (error) {
       console.error("Error creating contact:", error);
     }
@@ -282,6 +261,104 @@ const Contact = () => {
       prev ? prev + selectedTemplate?.value : selectedTemplate?.value
     );
   }, [selectedTemplate]);
+  const navigate = useNavigate();
+  const handleEdit = (row) => {
+    console.log(row);
+    setShow(true);
+    setEditId(row._id);
+    setFormData({
+      representativeContacted: row.representativeContacted || "",
+      legalRepresentativeOption: row.legalRepresentativeOption || "",
+      patientSelectedRepresentativeOption:
+        row.patientSelectedRepresentativeOption || "",
+      otherDetails: row.otherDetails || "",
+      physicianNotified: row.physicianNotified || false,
+      patientNotified: row.patientNotified || false,
+      previousField1: row.previousField1 || "",
+      previousField2: row.previousField2 || "",
+      doNotContactCAHPS: row.doNotContactCAHPS || false,
+      reasonForNoContact: row.reasonForNoContact || "",
+      otherReason: row.otherReason || "",
+      alternateCAHPSContact: row.alternateCAHPSContact || false,
+      alternateCAHPSContactDetails: {
+        sameAsPrimaryEmergencyContact:
+          row.alternateCAHPSContactDetails?.sameAsPrimaryEmergencyContact ||
+          false,
+        firstName: row.alternateCAHPSContactDetails?.firstName || "",
+        lastName: row.alternateCAHPSContactDetails?.lastName || "",
+        relationship: row.alternateCAHPSContactDetails?.relationship || "",
+        mobilePhone: row.alternateCAHPSContactDetails?.mobilePhone || "",
+        alternatePhone: row.alternateCAHPSContactDetails?.alternatePhone || "",
+        email: row.alternateCAHPSContactDetails?.email || "",
+        addressLine1: row.alternateCAHPSContactDetails?.addressLine1 || "",
+        addressLine2: row.alternateCAHPSContactDetails?.addressLine2 || "",
+        city: row.alternateCAHPSContactDetails?.city || "",
+        state: row.alternateCAHPSContactDetails?.state || "",
+        zip: row.alternateCAHPSContactDetails?.zip || "",
+        county: row.alternateCAHPSContactDetails?.county || "",
+      },
+    });
+    setEmergencyContacts({
+      primary: {
+        firstName: row.emergencyContacts?.primary?.firstName || "",
+        lastName: row.emergencyContacts?.primary?.lastName || "",
+        mobilePhone: row.emergencyContacts?.primary?.mobilePhone || "",
+        alternatePhone: row.emergencyContacts?.primary?.alternatePhone || "",
+        relationship: row.emergencyContacts?.primary?.relationship || "",
+        email: row.emergencyContacts?.primary?.email || "",
+        representative:
+          row.emergencyContacts?.primary?.representative ||
+          "Legal Representative",
+        sameAsPatientAddress:
+          row.emergencyContacts?.primary?.sameAsPatientAddress || false,
+        addressLine1: row.emergencyContacts?.primary?.addressLine1 || "",
+        addressLine2: row.emergencyContacts?.primary?.addressLine2 || "",
+        city: row.emergencyContacts?.primary?.city || "",
+        state: row.emergencyContacts?.primary?.state || "",
+        zip: row.emergencyContacts?.primary?.zip || "",
+      },
+      additional:
+        row.emergencyContacts?.additional?.map((contact) => ({
+          firstName: contact.firstName || "",
+          lastName: contact.lastName || "",
+          mobilePhone: contact.mobilePhone || "",
+          alternatePhone: contact.alternatePhone || "",
+          relationship: contact.relationship || "",
+          email: contact.email || "",
+          representative: contact.representative || "Legal Representative",
+          sameAsPatientAddress: contact.sameAsPatientAddress || false,
+          addressLine1: contact.addressLine1 || "",
+          addressLine2: contact.addressLine2 || "",
+          city: contact.city || "",
+          state: contact.state || "",
+          zip: contact.zip || "",
+        })) || [],
+    });
+    setPrimaryCity(row.emergencyContacts?.primary?.city || "");
+    setPrimaryState(row.emergencyContacts?.primary?.state || "");
+    setAdditionalCity(row.emergencyContacts?.additional?.[0]?.city || "");
+    setAdditionalState(row.emergencyContacts?.additional?.[0]?.state || "");
+    setCAHPSCity(row.alternateCAHPSContactDetails?.city || "");
+    setCAHPSState(row.alternateCAHPSContactDetails?.state || "");
+    setCAHPSCounty(row.alternateCAHPSContactDetails?.county || "");
+    setSelectedTemplate(row.selectedTemplate || "");
+    setComments(row.comments || "");
+  };
+
+  const handleDelete = (row) => {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        deleteContact(row._id);
+      }
+    });
+  };
+
   useEffect(() => {
     if (isUpdateSuccess) {
       refetch();
@@ -295,7 +372,6 @@ const Contact = () => {
   const errors = updateError?.data?.message || deleteError?.data?.message;
   if (isLoading) return <MainLoader />;
 
-
   return (
     <div className="card">
       <TableHeader
@@ -303,8 +379,8 @@ const Contact = () => {
         className="py-3 pt-5 fs-3 card-header"
       />
       <div className="card-body">
-      <Alert message={message} type="success" />
-      
+        <Alert message={message} type="success" />
+
         <div className="gap-3 d-flex flex-wrap">
           <ExportButton
             data={data?.payload?.contacts ?? []}
@@ -349,19 +425,20 @@ const Contact = () => {
           </button>
         </div>
         {show && (
-          <EditModal style={{
-            minWidth: "70%",
-            maxWidth: "70%",
-            maxHeight: "80vh",
-            overflowY: "scroll",
-          }}
-          onClose={setShow}
-          title="Edit contact">
+          <EditModal
+            style={{
+              minWidth: "70%",
+              maxWidth: "70%",
+              maxHeight: "80vh",
+              overflowY: "scroll",
+            }}
+            onClose={setShow}
+            title="Edit contact"
+          >
             <form onSubmit={handleSubmit} className="card">
-            <Alert message={errors} type="danger" />
+              <Alert message={errors} type="danger" />
               <div className="card-body">
                 <div className="accordion" id="emergencyContactsAccordion">
-                  
                   <div className="accordion-item">
                     <h2 className="accordion-header" id="headingPrimary">
                       <button
@@ -1790,7 +1867,7 @@ const Contact = () => {
         <div className="mt-5">
           <DataTable
             columns={columns}
-            data={data?.payload?.contacts?? []}
+            data={data?.payload?.contacts ?? []}
             tableClassName="custom-table"
             onEdit={handleEdit}
             onDelete={handleDelete}

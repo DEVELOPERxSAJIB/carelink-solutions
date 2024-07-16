@@ -18,25 +18,42 @@ const CreateEmergencyPreparedness = () => {
   const localStorageData = JSON.parse(localStorage.getItem("Emergency"));
 
   const initialFormData = {
-    emergencyTriage: "",
-    additionalInfo: [],
-    additionalComments: "",
-    evacuationZone: "",
-    sameAsEvacuationContact: false,
-    addressLine1: "",
-    addressLine2: null,
-    city: "",
-    state: "",
-    zip: "",
-    county: "",
-    mobilePhone: "",
-    altMobilePhone: null,
-    visitLocation: false,
-    comments: null,
-    trash: true,
-    status: true,
+    emergencyTriage: localStorageData?.emergencyTriage
+      ? localStorageData?.emergencyTriage
+      : "",
+    additionalInfo: localStorageData?.additionalInfo
+      ? localStorageData?.additionalInfo
+      : [],
+    additionalComments: localStorageData?.additionalComments
+      ? localStorageData?.additionalComments
+      : "",
+    evacuationZone: localStorageData?.evacuationZone
+      ? localStorageData?.evacuationZone
+      : "",
+    sameAsEvacuationContact: localStorageData?.sameAsEvacuationContact
+      ? localStorageData?.sameAsEvacuationContact
+      : false,
+    addressLine1: localStorageData?.addressLine1
+      ? localStorageData?.addressLine1
+      : "",
+    addressLine2: localStorageData?.addressLine2
+      ? localStorageData?.addressLine2
+      : null,
+    city: localStorageData?.city ? localStorageData?.city : "",
+    state: localStorageData?.state ? localStorageData?.state : "",
+    zip: localStorageData?.zip ? localStorageData?.zip : "",
+    county: localStorageData?.county ? localStorageData?.county : "",
+    mobilePhone: localStorageData?.mobilePhone
+      ? localStorageData?.mobilePhone
+      : "",
+    altMobilePhone: localStorageData?.altMobilePhone
+      ? localStorageData?.altMobilePhone
+      : null,
+    visitLocation: localStorageData?.visitLocations
+      ? localStorageData?.visitLocations
+      : false,
+    comments: localStorageData?.comments ? localStorageData?.comments : null,
   };
-  
 
   const [formData, setFormData] = useState(initialFormData);
 
@@ -75,7 +92,6 @@ const CreateEmergencyPreparedness = () => {
     formData.state = state;
     formData.county = county;
     createEmergency(formData);
-    console.log(formData);
   };
 
   const handleSaveAndContinue = (e) => {
@@ -110,10 +126,7 @@ const CreateEmergencyPreparedness = () => {
     if (template?.value) {
       setFormData((prev) => ({
         ...prev,
-        comments:
-          prev.comments +
-          (prev.comments ? "\n" : "") +
-          template.value,
+        comments: prev.comments + (prev.comments ? "\n" : "") + template.value,
       }));
     }
   }, [template?.value]);
@@ -248,9 +261,7 @@ const CreateEmergencyPreparedness = () => {
                       id="medicalNeeds"
                       value="medicalNeeds"
                       onChange={handleInputChange}
-                      checked={formData.additionalInfo.includes(
-                        "medicalNeeds"
-                      )}
+                      checked={formData.additionalInfo.includes("medicalNeeds")}
                     />{" "}
                     Medical Needs/Equipment (i.e., bedbound, oxygen, vent, IV
                     cardiac meds other DME)
@@ -298,7 +309,10 @@ const CreateEmergencyPreparedness = () => {
                 <div className="row mb-3">
                   <div className="col-md-12">
                     <label htmlFor="additionalComments">Select Templates</label>
-                    <Template addTemplate={addTemplate} setSelectedTemplate={setAddTemplate}/>
+                    <Template
+                      addTemplate={addTemplate}
+                      setSelectedTemplate={setAddTemplate}
+                    />
                     <span>You have 2000 characters remaining</span>
                     <textarea
                       name="additionalComments"
