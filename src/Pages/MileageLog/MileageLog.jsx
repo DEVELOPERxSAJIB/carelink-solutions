@@ -195,7 +195,12 @@ const MileageLog = () => {
           </button>
         </div>
         {show && (
-          <EditModal onClose={setShow} title="Edit Mileage Log">
+          <EditModal style={{
+            minWidth: "70%",
+            maxWidth: "70%",
+            maxHeight: "80vh",
+            overflowY: "scroll",
+          }} onClose={setShow} title="Edit Mileage Log">
             <form className="card-body" onSubmit={handleSubmit}>
               {updateData?.message && (
                 <div className="alert alert-success text-center">

@@ -304,7 +304,12 @@ const MenuItemTimeSheet = () => {
             </form>
           </PopupModal>
           {show && (
-            <EditModal onClose={setShow}>
+            <EditModal style={{
+              minWidth: "70%",
+              maxWidth: "70%",
+              maxHeight: "80vh",
+              overflowY: "scroll",
+            }} onClose={setShow}>
               <form onSubmit={handleSubmit} className="w-100">
                 {updateData?.message && (
                   <div className="alert alert-success text-center">

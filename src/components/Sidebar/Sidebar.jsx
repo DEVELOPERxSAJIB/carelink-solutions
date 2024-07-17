@@ -95,30 +95,30 @@ const Sidebar = () => {
         },
       ],
     },
-    {
-      title: "Individual",
-      href: "",
-      icon: (
-        <i className="menu-icon tf-icons ti ti-user-plus menu-toggle-icon  d-xl-block align-middle"></i>
-      ),
-      subMenu: [
-        {
-          title: "Individual",
-          href: "/individual",
-          icon: "",
-        },
-        {
-          title: "Create New Individual",
-          href: "/create-new-individual",
-          icon: "",
-        },
-        {
-          title: "Individual Audit Review",
-          href: "/individual-audit-review",
-          icon: "",
-        },
-      ],
-    },
+    // {
+    //   title: "Individual",
+    //   href: "",
+    //   icon: (
+    //     <i className="menu-icon tf-icons ti ti-user-plus menu-toggle-icon  d-xl-block align-middle"></i>
+    //   ),
+    //   subMenu: [
+    //     {
+    //       title: "Individual",
+    //       href: "/individual",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "Create New Individual",
+    //       href: "/create-new-individual",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "Individual Audit Review",
+    //       href: "/individual-audit-review",
+    //       icon: "",
+    //     },
+    //   ],
+    // },
     {
       title: "Patient",
       href: "",
@@ -234,30 +234,30 @@ const Sidebar = () => {
       ),
       subMenu: [],
     },
-    {
-      title: "eMAR Suite",
-      href: "",
-      icon: (
-        <i className="menu-icon tf-icons ti ti-settings menu-toggle-icon  d-xl-block align-middle"></i>
-      ),
-      subMenu: [
-        {
-          title: "POS",
-          href: "/pos",
-          icon: "",
-        },
-        {
-          title: "MAR",
-          href: "/mar",
-          icon: "",
-        },
-        {
-          title: "TAR",
-          href: "/tar",
-          icon: "",
-        },
-      ],
-    },
+    // {
+    //   title: "eMAR Suite",
+    //   href: "",
+    //   icon: (
+    //     <i className="menu-icon tf-icons ti ti-settings menu-toggle-icon  d-xl-block align-middle"></i>
+    //   ),
+    //   subMenu: [
+    //     {
+    //       title: "POS",
+    //       href: "/pos",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "MAR",
+    //       href: "/mar",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "TAR",
+    //       href: "/tar",
+    //       icon: "",
+    //     },
+    //   ],
+    // },
     {
       title: "Clock in/out Group",
       href: "",
@@ -362,80 +362,80 @@ const Sidebar = () => {
         },
       ],
     },
-    {
-      title: "Adult Day Service",
-      href: "",
-      icon: (
-        <i className="menu-icon tf-icons ti ti-book menu-toggle-icon  d-xl-block align-middle"></i>
-      ),
-      subMenu: [
-        {
-          title: "Category",
-          href: "/category",
-          icon: "",
-        },
-        {
-          title: "ADS Location",
-          href: "/ads-location",
-          icon: "",
-        },
-        {
-          title: "List Of Activity Log",
-          href: "/list-of-activity-log",
-          icon: "",
-        },
-        {
-          title: "Add Group Activity Documentation",
-          href: "/add-group-activity-documentation",
-          icon: "",
-        },
-        {
-          title: "Add List Of Activity",
-          href: "/add-daily-activity",
-          icon: "",
-        },
-        {
-          title: "View Group Documentation Log",
-          href: "/view-group-documentation-log",
-          icon: "",
-        },
-        {
-          title: "ADS Configuration",
-          href: "/ads-configuration",
-          icon: "",
-        },
-        {
-          title: "Attendance Sheet",
-          href: "/attendance-sheet",
-          icon: "",
-        },
-        {
-          title: "Reports",
-          href: "/reports",
-          icon: "",
-        },
-        {
-          title: "Support Employment",
-          href: "/support-employment",
-          icon: "",
-        },
-        {
-          title: "View Outcome Log",
-          href: "/view-outcome-log",
-          icon: "",
-        },
-        {
-          title: "Add Shift Summary",
-          href: "/add-shift-summary",
-          icon: "",
-        },
-        {
-          title: "View Shift Summary",
-          href: "/view-shift-summary",
-          icon: "",
-        },
-      ],
-    },
+    // {
+    //   title: "Adult Day Service",
+    //   href: "",
+    //   icon: (
+    //     <i className="menu-icon tf-icons ti ti-book menu-toggle-icon  d-xl-block align-middle"></i>
+    //   ),
+    //   subMenu: [
+    //     {
+    //       title: "Category",
+    //       href: "/category",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "ADS Location",
+    //       href: "/ads-location",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "List Of Activity Log",
+    //       href: "/list-of-activity-log",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "Add Group Activity Documentation",
+    //       href: "/add-group-activity-documentation",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "Add List Of Activity",
+    //       href: "/add-daily-activity",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "View Group Documentation Log",
+    //       href: "/view-group-documentation-log",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "ADS Configuration",
+    //       href: "/ads-configuration",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "Attendance Sheet",
+    //       href: "/attendance-sheet",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "Reports",
+    //       href: "/reports",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "Support Employment",
+    //       href: "/support-employment",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "View Outcome Log",
+    //       href: "/view-outcome-log",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "Add Shift Summary",
+    //       href: "/add-shift-summary",
+    //       icon: "",
+    //     },
+    //     {
+    //       title: "View Shift Summary",
+    //       href: "/view-shift-summary",
+    //       icon: "",
+    //     },
+    //   ],
+    // },
     {
       title: "Employee Record",
       href: "",

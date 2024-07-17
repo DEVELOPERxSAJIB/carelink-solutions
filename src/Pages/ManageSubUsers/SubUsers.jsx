@@ -245,7 +245,12 @@ const SubUsers = () => {
             </form>
           </FullscreenModal>
           {show && (
-            <EditModal title="Edit sub user" show={show} onClose={setShow}>
+            <EditModal style={{
+              minWidth: "70%",
+              maxWidth: "70%",
+              maxHeight: "80vh",
+              overflowY: "scroll",
+            }} title="Edit sub user" show={show} onClose={setShow}>
               <form onSubmit={handleSubmit} className="w-100">
                 <div className="mb-3 w-100">
                   <label htmlFor="gender" className="form-label">

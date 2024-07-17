@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+
 import { FaRegFolder } from "react-icons/fa";
 import DataTable from "../../components/Tables/DynamicTable";
 import FullscreenModal from "./../../components/Models/FullScreenModel";
@@ -95,6 +95,7 @@ const ViewAssignedMileage = () => {
     if (editId) {
       formData.date = date;
       updateMileage({ mileageId: editId, mileageData: formData });
+    
     } else {
       formData.date = date;
       setEditId("");
@@ -113,6 +114,7 @@ const ViewAssignedMileage = () => {
     if (isUpdateSuccess) {
       setEditId("");
       refetch();
+      resetForm()
     }
   }, [isCreateSuccess, isDeleteSuccess, isUpdateSuccess]);
   if (isLoading || isDeleteLoading) return <AuthLoader />;
@@ -136,7 +138,7 @@ const ViewAssignedMileage = () => {
         )}
 
         <div className="gap-3 d-flex flex-wrap">
-          <FullscreenModal title="Add Mileage" id="addmileage">
+          <FullscreenModal className="col-md-6"  title="Add Mileage" id="addmileage">
             <form onSubmit={handleSubmit}>
               {createError?.data?.message && (
                 <div className="alert alert-danger text-center">
@@ -253,7 +255,12 @@ const ViewAssignedMileage = () => {
             </form>
           </FullscreenModal>
           {show && (
-            <EditModal title="Edit mileage" onClose={setShow}>
+            <EditModal style={{
+              minWidth: "70%",
+              maxWidth: "70%",
+              maxHeight: "80vh",
+              overflowY: "scroll",
+            }} title="Edit mileage" onClose={setShow}>
               <form onSubmit={handleSubmit}>
                 {updateData?.message && (
                   <div className="alert alert-success text-center">

@@ -1,85 +1,145 @@
-import { useNavigate } from "react-router-dom";
-import { FaRegFolder } from "react-icons/fa";
 import DataTable from "../../components/Tables/DynamicTable";
-import PopupModal from './../../components/Models/PopupModel';
-import TableHeader from './../../components/Tables/TableHeader';
-
-// Function to get the start and end dates of the current week
-const getCurrentWeekDateRange = () => {
-  const now = new Date();
-  const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-  const endOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
-
-  const formatDate = (date) => {
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      weekday: "short",
-    };
-    return date.toLocaleDateString("en-US", options);
-  };
-
-  return {
-    start: formatDate(startOfWeek),
-    end: formatDate(endOfWeek),
-  };
-};
+import PopupModal from "./../../components/Models/PopupModel";
+import TableHeader from "./../../components/Tables/TableHeader";
+import useFormFields from "./../../hook/useFormHook";
+import { useState, useEffect } from "react";
+import EditModal from "./../../components/Models/EditModal";
+import Alert from "./../../components/Alert/Alert";
+import MainLoader from "./../../utils/Loaders/MainLoader";
+import swal from "sweetalert";
+import {
+  useCreateFolderMutation,
+  useGetAllFoldersQuery,
+  useUpdateFolderMutation,
+  useDeleteFolderMutation,
+} from "../../Redux/api/FolderApi";
 
 const Folders = () => {
-  const { start, end } = getCurrentWeekDateRange();
-  const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const [editId, setEditId] = useState(false);
+  const [
+    createFolder,
+    { data: createData, isSuccess: isCreateSuccess, error: createError },
+  ] = useCreateFolderMutation();
 
+  const { data, isLoading, refetch } = useGetAllFoldersQuery();
+  const [
+    updateFolder,
+    { data: updateData, isSuccess: isUpdateSuccess, error: updateError },
+  ] = useUpdateFolderMutation();
+  const [
+    deleteFolder,
+    {
+      data: deleteData,
+
+      isSuccess: isDeleteSuccess,
+      error: deleteError,
+    },
+  ] = useDeleteFolderMutation();
   const columns = [
-    { header: "S.No", field: "serialNumber" },
+    { header: "Id", field: "_id" },
     { header: "Folder Name", field: "folderName" },
     { header: "Folder Creator", field: "folderCreator" },
-    { header: "Created On", field: "createdOn" },
+    { header: "Created On", field: "createdAt" },
   ];
-  
-  const data = [
-    {
-      serialNumber: 1,
-      folderName: "Documents",
-      folderCreator: "John Doe",
-      createdOn: "2024-06-01"
-    },
-    {
-      serialNumber: 2,
-      folderName: "Photos",
-      folderCreator: "Jane Smith",
-      createdOn: "2024-06-02"
-    },
-    {
-      serialNumber: 3,
-      folderName: "Projects",
-      folderCreator: "Alice Johnson",
-      createdOn: "2024-06-03"
+
+  const handleEdit = (row) => {
+    setShow(true);
+    setEditId(row._id);
+    setFormData({ ...row });
+    console.log({ ...row });
+  };
+
+  const handleDelete = (row) => {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        deleteFolder(row._id);
+      }
+    });
+  };
+  const [formData, handleChange, setFormData, resetForm] = useFormFields();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (editId) {
+      updateFolder({ folderId: editId, folderData: formData });
+      resetForm();
+    } else {
+      createFolder(formData);
+      resetForm();
     }
-  ];
-  
-  
-  
-
-  const handleEdit = (rowData) => {
-    alert(`Editing ${rowData.firstName} ${rowData.lastName}`);
   };
-
-  const handleDelete = (rowData) => {
-    alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
-  };
-
+  useEffect(() => {
+    if (isCreateSuccess) {
+      refetch();
+    }
+    if (isUpdateSuccess) {
+      refetch();
+      setShow(false);
+    }
+    if (isDeleteSuccess) {
+      refetch();
+    }
+  }, [isCreateSuccess, isUpdateSuccess, isDeleteSuccess]);
+  const message =
+    createData?.message || updateData?.message || deleteData?.message;
+  const errors =
+    createError?.data?.message ||
+    updateError?.data?.message ||
+    deleteError?.data?.message;
+  if (isLoading) return <MainLoader />;
   return (
     <div className="card">
-      <TableHeader title="Manage Folders" className="py-3 pt-5 fs-3 card-header"/>
+      <TableHeader
+        title="Manage Folders"
+        className="py-3 pt-5 fs-3 card-header"
+      />
       <div className="card-body">
+        <Alert message={message} type="success" />
         <div className="gap-3 d-flex flex-wrap">
           <PopupModal title="Add Folder" id="addFolder">
-            <form action="">
-              <input type="text" placeholder="folder name" className="form-control" />
+            <Alert message={message} type="success" />
+            <Alert message={errors} type="danger" />
+            <form onSubmit={handleSubmit} action="">
+              <input
+                type="text"
+                placeholder="folder name"
+                className="form-control"
+                name="folderName"
+                onChange={handleChange}
+              />
               <button className="mt-4 btn btn-primary">Save</button>
             </form>
           </PopupModal>
+          {show && (
+            <EditModal
+              onClose={setShow}
+              style={{
+                minWidth: "70%",
+                maxWidth: "70%",
+                maxHeight: "80vh",
+                overflowY: "scroll",
+              }}
+            >
+              <form onSubmit={handleSubmit} action="">
+                <Alert message={errors} type="danger" />
+                <input
+                  type="text"
+                  placeholder="folder name"
+                  className="form-control"
+                  name="folderName"
+                  value={formData?.folderName}
+                  onChange={handleChange}
+                />
+                <button className="mt-4 btn btn-primary">Save</button>
+              </form>
+            </EditModal>
+          )}
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -98,7 +158,7 @@ const Folders = () => {
             type="button"
           >
             <span className="d-flex align-items-center">
-            <i className="ti ti-history me-1"></i>{" "}
+              <i className="ti ti-history me-1"></i>{" "}
               <span className="d-none d-sm-inline-block">History</span>
             </span>
           </button>
@@ -110,16 +170,14 @@ const Folders = () => {
           >
             <span className="d-flex align-items-center">
               <i className="ti ti-archive me-1" />
-              <span className="d-none d-sm-inline-block">
-                Archive{" "}
-              </span>
+              <span className="d-none d-sm-inline-block">Archive </span>
             </span>
           </button>
         </div>
         <div className="mt-5">
           <DataTable
             columns={columns}
-            data={data}
+            data={data?.payload?.folders ?? []}
             tableClassName="custom-table"
             onEdit={handleEdit}
             tableName="folders"
@@ -132,4 +190,3 @@ const Folders = () => {
 };
 
 export default Folders;
-

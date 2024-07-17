@@ -251,7 +251,12 @@ const LocationOfService = () => {
           </button>
         </div>
         {show && (
-          <EditModal show={show} onClose={setShow}>
+          <EditModal style={{
+            minWidth: "70%",
+            maxWidth: "70%",
+            maxHeight: "80vh",
+            overflowY: "scroll",
+          }} show={show} onClose={setShow}>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="address1" className="form-label">

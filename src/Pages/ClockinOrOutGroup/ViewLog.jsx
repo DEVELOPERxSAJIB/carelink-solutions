@@ -225,7 +225,12 @@ setMultiValue(rowData?.individuals?.map((item)=>({value:item._id,label:item.firs
           </button>
         </div>
         {show && (
-          <EditModal
+          <EditModal style={{
+            minWidth: "70%",
+            maxWidth: "70%",
+            maxHeight: "80vh",
+            overflowY: "scroll",
+          }}
             show={show}
             onClose={setShow}
             title="Edit Clock in"
