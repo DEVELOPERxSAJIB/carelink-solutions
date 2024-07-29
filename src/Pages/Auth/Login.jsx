@@ -16,7 +16,6 @@ const Login = () => {
   const navigate = useNavigate();
   const [loginUser, { data, isSuccess, isError, isLoading, error }] =
     useLoginUserMutation();
-  console.log(data, error);
   const initialValues = {
     email: localStorage.getItem("email") || "",
     password: localStorage.getItem("password") || "",

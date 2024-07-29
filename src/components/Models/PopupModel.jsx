@@ -1,5 +1,5 @@
 
-const PopupModal = ({ id, title, children }) => {
+const PopupModal = ({ id, title, children,style }) => {
 
   const handleClose = () => {
     // Implement your close logic here
@@ -16,7 +16,7 @@ const PopupModal = ({ id, title, children }) => {
 
         {/* Modal */}
         <div className="modal fade" id={id} tabIndex="-1" aria-hidden="true">
-          <div className="modal-dialog" role="document">
+          <div style={{style}} className="modal-dialog" role="document">
             <div className="modal-content">
                 
               <div className="modal-header">

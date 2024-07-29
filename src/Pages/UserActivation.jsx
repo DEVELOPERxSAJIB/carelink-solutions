@@ -10,8 +10,6 @@ const UserActivation = () => {
   const [activateUser, { data, isLoading, isSuccess }] =
     useActivateUserMutation();
 
-  console.log(data?.payload);
-
   useEffect(() => {
     if (params.token) {
       activateUser(params?.token);
@@ -22,7 +20,6 @@ const UserActivation = () => {
       return () => clearTimeout(timer);
     }
   }, [navigate, params.token, activateUser]);
-
 
   return (
     <>
