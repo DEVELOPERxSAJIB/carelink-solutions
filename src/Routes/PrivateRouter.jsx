@@ -12,7 +12,6 @@ import CoAdmin from './../Pages/ManageCoAdmin/CoAdmin';
 import SubUsers from './../Pages/ManageSubUsers/SubUsers';
 import Billing from './../Pages/BillingModule/Billing';
 import Individual from './../Pages/Individual/Individual';
-import  CreateNewIndividual  from './../Pages/Individual/CreateNewIndividual';
 import IndividualAuditReview from './../Pages/Individual/IndividualAuditReview';
 import CaregiverOrStaff from './../Pages/BusinessCommunity/CaregiverOrStaff';
 import Guardians from './../Pages/BusinessCommunity/Guardians';
@@ -92,6 +91,9 @@ import AdvanceDirectives from './../Pages/Patient/AdvanceDirectives';
 import CreateAdvanceDirectives from './../Pages/Patient/CreateAdvanceDirectives';
 import CreateReferralInformation from './../Pages/Patient/CreateReferralInformation';
 import ReferralInformation from './../Pages/Patient/ReferralInformation';
+import UserActivation from '../Pages/UserActivation';
+import CreateNewIndividual from '../Pages/Individual/CreateNewIndividual';
+import Admin from '../Pages/BusinessCommunity/Admin';
 
 const privateRouter = [
   {
@@ -146,8 +148,12 @@ const privateRouter = [
             element: <Billing />,
           },
           {
-            path: "/individual",
+            path: "/providers",
             element: <Individual />,
+          },
+          {
+            path: "/create-new-provider",
+            element: <CreateNewIndividual />,
           },
           {
             path: "/patient",
@@ -172,6 +178,10 @@ const privateRouter = [
           {
             path: "/staff",
             element: <CaregiverOrStaff />,
+          },
+          {
+            path: "/admin",
+            element: <Admin />,
           },
           {
             path: "/guardians",
@@ -468,6 +478,10 @@ const privateRouter = [
         ],
       },
     ],
+  },
+  {
+    path: "/user-activation/:token",
+    element: <UserActivation/>,
   },
 ];
 

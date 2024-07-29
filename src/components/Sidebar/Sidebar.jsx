@@ -95,30 +95,6 @@ const Sidebar = () => {
         },
       ],
     },
-    // {
-    //   title: "Individual",
-    //   href: "",
-    //   icon: (
-    //     <i className="menu-icon tf-icons ti ti-user-plus menu-toggle-icon  d-xl-block align-middle"></i>
-    //   ),
-    //   subMenu: [
-    //     {
-    //       title: "Individual",
-    //       href: "/individual",
-    //       icon: "",
-    //     },
-    //     {
-    //       title: "Create New Individual",
-    //       href: "/create-new-individual",
-    //       icon: "",
-    //     },
-    //     {
-    //       title: "Individual Audit Review",
-    //       href: "/individual-audit-review",
-    //       icon: "",
-    //     },
-    //   ],
-    // },
     {
       title: "Patient",
       href: "",
@@ -185,6 +161,30 @@ const Sidebar = () => {
       ],
     },
     {
+      title: "Providers",
+      href: "",
+      icon: (
+        <i className="menu-icon tf-icons ti ti-user-plus menu-toggle-icon  d-xl-block align-middle"></i>
+      ),
+      subMenu: [
+        {
+          title: "My Providers",
+          href: "/providers",
+          icon: "",
+        },
+        {
+          title: "Create New Provider",
+          href: "/create-new-provider",
+          icon: "",
+        },
+        {
+          title: "Individual Audit Review",
+          href: "/individual-audit-review",
+          icon: "",
+        },
+      ],
+    },
+    {
       title: "Business Community",
       href: "",
       icon: (
@@ -194,6 +194,11 @@ const Sidebar = () => {
         {
           title: "Caregiver/Staff",
           href: "/staff",
+          icon: "",
+        },
+        {
+          title: "Admin",
+          href: "/admin",
           icon: "",
         },
         {
