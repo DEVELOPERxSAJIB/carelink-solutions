@@ -7,7 +7,7 @@ const Layout = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname !== "/login" && location.pathname !== "/register" && location.pathname !== "/") {
+    if (location.pathname !== "/login" && location.pathname !== "/register") {
       localStorage.setItem("pathName", location.pathname);
     }
   }, [location]);
