@@ -52,19 +52,16 @@ export const UserApi = rootApi.injectEndpoints({
         method: "PUT",
         body: userData,
       }),
-      invalidatesTags: (result, error,  _id ) => [
-        { type: "User", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "User", id: _id }],
     }),
-    
+
     forgotPassword: builder.mutation({
       query: (email) => ({
         url: `auth/forgot-password`,
         method: "POST",
         body: email,
       }),
-      invalidatesTags:  [{ type: "User",  }]
-      
+      invalidatesTags: [{ type: "User" }],
     }),
     resetPassword: builder.mutation({
       query: (userData) => ({
@@ -72,8 +69,7 @@ export const UserApi = rootApi.injectEndpoints({
         method: "PATCH",
         body: userData,
       }),
-      invalidatesTags:  [{ type: "User",  }]
-      
+      invalidatesTags: [{ type: "User" }],
     }),
     updatePasswordLogged: builder.mutation({
       query: (userData) => ({
@@ -81,17 +77,45 @@ export const UserApi = rootApi.injectEndpoints({
         method: "PATCH",
         body: userData,
       }),
-      invalidatesTags:  [{ type: "User",  }]
-      
+      invalidatesTags: [{ type: "User" }],
     }),
     deleteUser: builder.mutation({
       query: (userId) => ({
         url: `auth/${userId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, _id) => [
-        { type: "User", id: _id },
-      ],
+      invalidatesTags: (result, error, _id) => [{ type: "User", id: _id }],
+    }),
+
+    createUser: builder.mutation({
+      query: (userData) => ({
+        url: `user/create-user`,
+        method: "POST",
+        body: userData,
+      }),
+      invalidatesTags: [{ type: "User" }],
+    }),
+    activateUser: builder.mutation({
+      query: (token) => ({
+        url: `user/activate-user`,
+        method: "POST",
+        body: { token },
+      }),
+      invalidatesTags: [{ type: "User" }],
+    }),
+    roleBasedUser: builder.query({
+      query: (role) => ({
+        url: `user/get-user-by-role?role=${role}`,
+        method: "GET",
+      }),
+      providesTags: [{ type: "User" }], 
+    }),
+    deleteRoleBasedUser: builder.mutation({
+      query: (userId) => ({
+        url: `user/delete-user/${userId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result, error, _id) => [{ type: "User", id: _id }],
     }),
   }),
 });
@@ -108,5 +132,10 @@ export const {
   useVerifyRegisterMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
-  useUpdatePasswordLoggedMutation
+  useUpdatePasswordLoggedMutation,
+
+  useCreateUserMutation,
+  useActivateUserMutation,
+  useRoleBasedUserQuery,
+  useDeleteRoleBasedUserMutation,
 } = UserApi;

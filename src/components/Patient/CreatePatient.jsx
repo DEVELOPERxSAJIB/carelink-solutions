@@ -354,6 +354,7 @@ if(isSuccess){
 }
 },[isSuccess])
   if (isLoading) return <AuthLoader />;
+  
   return (
     <form className=" mt-5">
       <div className="accordion" id="patientInfoAccordion">

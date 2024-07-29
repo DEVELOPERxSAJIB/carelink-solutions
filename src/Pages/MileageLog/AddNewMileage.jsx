@@ -1,4 +1,4 @@
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import SingleSearchSelect from "./../../components/FormElement/SingleSearchSelect";
 import PageHeader from "./../../components/FormElement/PageHeader";
@@ -6,20 +6,20 @@ import { useCreateMileageLogMutation } from "../../Redux/api/MileAgeLogApi";
 import { useGetAllSubUsersQuery } from "../../Redux/api/SubUserApi";
 import useFormFields from "./../../hook/useFormHook";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const AddNewMileage = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [selected, setSelected] = useState("");
-  
-const  navigate = useNavigate()
+
+  const navigate = useNavigate();
   const initialState = {
     dateOfService: startDate,
     mileageType: "share",
     vehicleType: "regular",
     individual: "",
     initialMileage: "",
-    licensePlateNumber:selected,
+    licensePlateNumber: selected,
     startingMileage: "",
     tripType: "round",
     fromWhere: "",
@@ -27,27 +27,32 @@ const  navigate = useNavigate()
     endingMileage: "",
     activityDescription: "",
   };
+
   const [formData, handleChange, setFormData, resetForm] =
     useFormFields(initialState);
+
   const [createMileageLog, { data, isLoading, isSuccess, error }] =
     useCreateMileageLogMutation();
+
   const { data: subUsers } = useGetAllSubUsersQuery();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await createMileageLog(formData);
-      resetForm()
+      resetForm();
     } catch (error) {
       console.error("Error creating Mileage Log:", error);
     }
   };
-  useEffect(()=>{
-    if(isSuccess){
-      navigate("/mileage-log")
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/mileage-log");
     }
-  })
+  });
+
   if (isLoading) return <AuthLoader />;
+  
   return (
     <div>
       <div className="card mb-6">

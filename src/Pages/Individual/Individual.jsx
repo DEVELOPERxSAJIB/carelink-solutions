@@ -1,15 +1,25 @@
-import DataTable from "./../../components/Tables/DynamicTable";
-import { useNavigate } from "react-router-dom";
-import Accordion from "./../../components/Tables/Accordion";
-import FullscreenModal from "./../../components/Models/FullScreenModel";
-import useFormFields from "./../../hook/useFormHook";
-import ExportButton from "./../../components/Buttons/ExportButton";
-import TableHeader from "./../../components/Tables/TableHeader";
+import DataTable from "../../components/Tables/DynamicTable";
+import Accordion from "../../components/Tables/Accordion";
+import FullscreenModal from "../../components/Models/FullScreenModel";
+import useFormFields from "../../hook/useFormHook";
+import ExportButton from "../../components/Buttons/ExportButton";
+import TableHeader from "../../components/Tables/TableHeader";
+import {
+  useDeleteRoleBasedUserMutation,
+  useRoleBasedUserQuery,
+} from "../../Redux/api/UserApi";
+import swal from "sweetalert";
+import { useEffect } from "react";
 
 const Individual = () => {
+  const { data, isLoading, refetch } = useRoleBasedUserQuery("provider");
+  const [
+    deleteRoleBasedUser,
+    { data: deletedUser, isSuccess: isDeleteSuccess },
+  ] = useDeleteRoleBasedUserMutation();
+
   const columns = [
-    { header: "S.No", field: "serialNumber" },
-    { header: "Individual ID", field: "individualId" },
+    { header: "Provider ID", field: "providerID" },
     { header: "First Name", field: "firstName" },
     { header: "Last Name", field: "lastName" },
     { header: "Created By", field: "createdBy" },
@@ -52,6 +62,7 @@ const Individual = () => {
               <span className="d-none d-sm-inline-block">View user</span>
             </span>
           </button>
+
           <button
             className="btn btn-sm btn-secondary create-new btn-primary waves-effect waves-light"
             tabIndex={0}
@@ -65,114 +76,6 @@ const Individual = () => {
           </button>
         </div>
       ),
-    },
-  ];
-
-  const data = [
-    {
-      serialNumber: 1,
-      individualId: "001",
-      firstName: "Adnan",
-      lastName: "Sidirijal",
-      createdBy: "Liban Awil",
-      status: "active",
-      stakeholders: [
-        "NA",
-        "Email Address: adnan@gmail.com",
-        "Address1: 4691 McFadden Rd",
-        "Address2: NA",
-        "City: Columbus",
-        "State: OH",
-        "Zipcode: 43229",
-        "Phone: (614) 616-0379",
-        "Last Modified By: Liban Awil Agency",
-        "Last Modified On: 06/28/2024 09:53 PM",
-        "Changed Status: -",
-      ],
-    },
-    {
-      serialNumber: 2,
-      individualId: "002",
-      firstName: "John",
-      lastName: "Doe",
-      createdBy: "Jane Smith",
-      status: "block",
-      stakeholders: [
-        "NA",
-        "Email Address: john.doe@example.com",
-        "Address1: 123 Main St",
-        "Address2: Apt 2B",
-        "City: Anytown",
-        "State: CA",
-        "Zipcode: 90210",
-        "Phone: (555) 123-4567",
-        "Last Modified By: Jane Smith",
-        "Last Modified On: 06/30/2024 10:15 AM",
-        "Changed Status: -",
-      ],
-    },
-    {
-      serialNumber: 3,
-      individualId: "003",
-      firstName: "Alice",
-      lastName: "Johnson",
-      createdBy: "Bob Brown",
-      status: "active",
-      stakeholders: [
-        "NA",
-        "Email Address: alice.johnson@example.com",
-        "Address1: 456 Oak St",
-        "Address2: Suite 100",
-        "City: Smallville",
-        "State: NY",
-        "Zipcode: 12345",
-        "Phone: (555) 987-6543",
-        "Last Modified By: Bob Brown",
-        "Last Modified On: 06/29/2024 03:30 PM",
-        "Changed Status: -",
-      ],
-    },
-    {
-      serialNumber: 4,
-      individualId: "004",
-      firstName: "Eve",
-      lastName: "Smith",
-      createdBy: "Alice Green",
-      status: "block",
-      stakeholders: [
-        "NA",
-        "Email Address: eve.smith@example.com",
-        "Address1: 789 Elm St",
-        "Address2: Unit 5C",
-        "City: Metroville",
-        "State: TX",
-        "Zipcode: 54321",
-        "Phone: (555) 789-0123",
-        "Last Modified By: Alice Green",
-        "Last Modified On: 06/30/2024 11:45 AM",
-        "Changed Status: -",
-      ],
-    },
-    {
-      serialNumber: 5,
-      individualId: "005",
-      firstName: "Michael",
-      lastName: "Clark",
-      createdBy: "Sarah White",
-      status: "active",
-      stakeholders: [
-        "NA",
-        "Email Address: michael.clark@example.com",
-        "Address1: 567 Pine Ave",
-        "Address2: Suite 200",
-        "City: Lakeside",
-        "State: FL",
-        "Zipcode: 67890",
-        "Phone: (555) 234-5678",
-        "Last Modified By: Sarah White",
-        "Last Modified On: 06/29/2024 04:20 PM",
-        "Changed Status: -",
-      ],
     },
   ];
 
@@ -211,10 +114,31 @@ const Individual = () => {
     resetForm();
   };
 
+  const handleDelete = (data) => {
+    swal({
+      title: "Are you sure?",
+      text: "provider will be deleted forever",
+      icon: "warning",
+      buttons: true,
+      // dangerMode: true,
+      primaryMode : true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        deleteRoleBasedUser(data?._id);
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (isDeleteSuccess) {
+      refetch();
+    }
+  }, [isDeleteSuccess, refetch]);
+
   return (
     <div className="card">
       <TableHeader
-        title="Mange Sub Users"
+        title="Our Providers"
         className="py-3 pt-5 fs-3 card-header"
       />
       <div className="card-body">
@@ -620,8 +544,9 @@ const Individual = () => {
         <div className="mt-5">
           <DataTable
             columns={columns}
-            data={data}
+            data={Array.isArray(data?.payload?.user) ? data.payload.user : []}
             tableClassName="custom-table"
+            onDelete={handleDelete}
           />
         </div>
       </div>

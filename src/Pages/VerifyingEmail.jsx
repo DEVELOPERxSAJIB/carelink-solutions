@@ -10,10 +10,6 @@ const Verifying = () => {
   const [verifyRegister, { data, isLoading, isError, isSuccess }] =
     useVerifyRegisterMutation();
 
-  console.log(data);
-
-  // setTimeout(() => {}, 1000);
-
   useEffect(() => {
     if (params.token) {
       verifyRegister(params.token);

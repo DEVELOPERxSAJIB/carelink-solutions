@@ -21,8 +21,10 @@ const Payers = () => {
     updatePayer,
     { data: updateData, isSuccess: isUpdateSuccess, error: updateError },
   ] = useUpdatePayerMutation();
+
   const [deletePayer, { data: deleteData, isSuccess: isDeleteSuccess }] =
     useDeletePayerMutation();
+
   const [show, setShow] = useState(false);
   const [editId, setEditId] = useState("");
   const columns = [
@@ -170,7 +172,7 @@ const Payers = () => {
     if (isDeleteSuccess) {
       refetch();
     }
-  }, [isUpdateSuccess,isDeleteSuccess]);
+  }, [isUpdateSuccess, isDeleteSuccess]);
   if (isLoading) return <MainLoader />;
 
   return (

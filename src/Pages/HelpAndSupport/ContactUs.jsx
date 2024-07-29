@@ -1,47 +1,76 @@
-import { useState } from "react";
-import MultiSelect from "../../components/FormElement/MultiSelect";
-
-import DatePicker from "react-datepicker";
-import TextEditor from './../../components/FormElement/TextEditor';
-import PageHeader from './../../components/FormElement/PageHeader';
+import PageHeader from "./../../components/FormElement/PageHeader";
+import useFormFields from "../../hook/useFormHook";
+import { useCreateContactSupportApiMutation } from "../../Redux/api/ContactSupportApi";
 
 const ContactUs = () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [createContactSupportApi, { data, error, isLoading }] =
+    useCreateContactSupportApiMutation();
+
+  const initialState = {
+    subject: "",
+    message: "",
+  };
+
+  const [formData, handleChange, resetForm, isValid] =
+    useFormFields(initialState);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    createContactSupportApi(formData);
+    resetForm();
+  };
+
   return (
     <div>
       <div className="card mb-6">
-        <PageHeader title="Contact Us" className="card-header fs-3"/>
-        <form className="card-body">
+        <div className="row">
+          {data?.message && (
+            <div className="alert alert-success text-center">
+              {data?.message}
+            </div>
+          )}
+          {error?.data?.message && (
+            <div className="alert alert-danger text-center">
+              {error?.data?.message}
+            </div>
+          )}
+        </div>
+        <PageHeader title="Contact Us" className="card-header fs-3" />
+        <form onSubmit={handleSubmit} className="card-body">
           <div className="row g-6">
-           
-            
-            
             <div className="col-md-12">
               <label className="form-label" htmlFor="formValidationLang">
-                Subject 
+                Subject
               </label>
               <input
-                  type="text"
-                  value=""
-                  className="form-control"
-                  name="formValidationLang"
-                  id="formValidationLang"
-                  placeholder="Subject"
-                />
+                type="text"
+                value={formData?.subject || ""}
+                className="form-control"
+                id="formValidationLang"
+                placeholder="Subject"
+                name="subject"
+                onChange={handleChange}
+              />
             </div>
             <div className="col-md-12">
-              <label className="form-label" htmlFor="formValidationLang">
-                Message 
+              <label className="form-label" htmlFor="message">
+                Message
               </label>
-              <TextEditor/>
+              <input
+                type="text"
+                value={formData?.message || ""}
+                onChange={handleChange}
+                name="message"
+                id="message"
+                className="form-control"
+              />
             </div>
-          
           </div>
           <div className="pt-6">
             <button type="submit" className="btn btn-primary me-4">
-              Send
+              {isLoading ? "Sending . . ." : "Send"}
             </button>
-            
           </div>
         </form>
       </div>
@@ -50,4 +79,3 @@ const ContactUs = () => {
 };
 
 export default ContactUs;
-

@@ -1,5 +1,5 @@
 
-import IndividualCard from './../../components/Cards/IndividualCard';
+import IndividualCard from '../../components/Cards/IndividualCard';
 const AgencyDashboard = () => {
      
   return <div>
