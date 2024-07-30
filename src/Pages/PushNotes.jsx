@@ -2,128 +2,147 @@ import PopupModal from "./../components/Models/PopupModel";
 import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import avatar from "../../src/assets/img/avatars/7.png";
+import calling from "../assets/audio/ringing-151670.mp3";
+import endCall from "../assets/audio/end-call-120633.mp3";
 
 const PushNotes = () => {
   const [count, setCount] = useState(1);
-  const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState("");
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
   const [isVideoEnabled, setIsVideoEnabled] = useState(true);
+  const [availableCameras, setAvailableCameras] = useState([]);
+  const [selectedCamera, setSelectedCamera] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
-  const localVideoRef2 = useRef(null);
-  const toggleAudio2 = useRef(null);
   const socketRef = useRef(null);
   const peerConnectionRef = useRef(null);
-  const mediaStreamRef = useRef(null); // Keep a reference to the media stream
+  const mediaStreamRef = useRef(null);
+  const callingSoundRef = useRef(new Audio());
+  const endCallSoundRef = useRef(new Audio());
   const roomRef = useRef("room1");
 
   useEffect(() => {
-    // Initialize the socket connection only once
-    socketRef.current = io("http://localhost:5050");
+    // Fetch available cameras
+    navigator.mediaDevices.enumerateDevices().then((devices) => {
+      const videoDevices = devices.filter(
+        (device) => device.kind === "videoinput"
+      );
+      setAvailableCameras(videoDevices);
+      if (videoDevices.length > 0) {
+        setSelectedCamera(videoDevices[0].deviceId);
+      }
+    });
 
-    // Join a specific room
+    // Initialize the socket connection
+    socketRef.current = io("http://localhost:5050");
     socketRef.current.emit("join_room", roomRef.current);
 
+    // Set up media stream and WebRTC connection
     const constraints = {
-      video: true,
+      video: { deviceId: { exact: selectedCamera } },
       audio: true,
     };
+    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+      mediaStreamRef.current = stream;
+      if (localVideoRef.current) {
+        localVideoRef.current.srcObject = stream;
+      }
 
-    navigator.mediaDevices
-      .getUserMedia(constraints)
-      .then((stream) => {
-        console.log(stream);
-        console.log("Media stream obtained successfully.");
-        mediaStreamRef.current = stream; // Store the stream
-        if (localVideoRef.current) {
-          localVideoRef.current.srcObject = stream;
-        }
-        const configuration = {
-          iceServers: [
-            {
-              urls: "stun:stun.l.google.com:19302",
-            },
-          ],
-        };
-        peerConnectionRef.current = new RTCPeerConnection(configuration);
+      const configuration = {
+        iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+      };
+      peerConnectionRef.current = new RTCPeerConnection(configuration);
+      stream
+        .getTracks()
+        .forEach((track) => peerConnectionRef.current.addTrack(track, stream));
 
-        stream.getTracks().forEach((track) => {
-          peerConnectionRef.current.addTrack(track, stream);
-        });
-
-        peerConnectionRef.current.onicecandidate = (event) => {
-          if (event.candidate) {
-            socketRef.current.emit("candidate", {
-              room: roomRef.current,
-              candidate: event.candidate,
-            });
-          }
-        };
-
-        peerConnectionRef.current.ontrack = (event) => {
-          if (remoteVideoRef.current) {
-            remoteVideoRef.current.srcObject = event.streams[0];
-          }
-        };
-
-        socketRef.current.on("offer", (offer) => {
-          peerConnectionRef.current.setRemoteDescription(
-            new RTCSessionDescription(offer)
-          );
-          peerConnectionRef.current.createAnswer().then((answer) => {
-            peerConnectionRef.current.setLocalDescription(answer);
-            socketRef.current.emit("answer", { room: roomRef.current, answer });
+      peerConnectionRef.current.onicecandidate = (event) => {
+        if (event.candidate) {
+          socketRef.current.emit("candidate", {
+            room: roomRef.current,
+            candidate: event.candidate,
           });
-        });
+        }
+      };
 
-        socketRef.current.on("answer", (answer) => {
-          peerConnectionRef.current.setRemoteDescription(
-            new RTCSessionDescription(answer)
-          );
-        });
+      peerConnectionRef.current.ontrack = (event) => {
+        if (remoteVideoRef.current) {
+          remoteVideoRef.current.srcObject = event.streams[0];
+        }
+      };
 
-        socketRef.current.on("candidate", (candidate) => {
-          peerConnectionRef.current.addIceCandidate(
-            new RTCIceCandidate(candidate)
-          );
+      socketRef.current.on("offer", (offer) => {
+        peerConnectionRef.current.setRemoteDescription(
+          new RTCSessionDescription(offer)
+        );
+        peerConnectionRef.current.createAnswer().then((answer) => {
+          peerConnectionRef.current.setLocalDescription(answer);
+          socketRef.current.emit("answer", { room: roomRef.current, answer });
         });
-
-        socketRef.current.on("message", (message) => {
-          setMessages((prevMessages) => [...prevMessages, message]);
-        });
-
-        // Create an offer to initiate a call
-        peerConnectionRef.current.createOffer().then((offer) => {
-          peerConnectionRef.current.setLocalDescription(offer);
-          socketRef.current.emit("offer", { room: roomRef.current, offer });
-        });
-      })
-      .catch((error) => {
-        console.error("Error accessing media devices.", error);
       });
+
+      socketRef.current.on("answer", (answer) => {
+        peerConnectionRef.current.setRemoteDescription(
+          new RTCSessionDescription(answer)
+        );
+      });
+
+      socketRef.current.on("candidate", (candidate) => {
+        peerConnectionRef.current.addIceCandidate(
+          new RTCIceCandidate(candidate)
+        );
+      });
+
+      socketRef.current.on("message", (message) => {
+        setMessages((prevMessages) => [...prevMessages, message]);
+      });
+
+      // Create an offer to initiate a call
+      peerConnectionRef.current.createOffer().then((offer) => {
+        peerConnectionRef.current.setLocalDescription(offer);
+        socketRef.current.emit("offer", { room: roomRef.current, offer });
+        playSound(callingSoundRef, calling); // Set the source dynamically
+      });
+    });
 
     // Cleanup on component unmount
     return () => {
-      socketRef.current.disconnect();
+      handleEndCall();
     };
   }, []);
 
-  const handleSendMessage = (e) => {
-    e.preventDefault();
-    socketRef.current.emit("message", { room: roomRef.current, message });
-    setMessage("");
+  const handleCameraChange = (event) => {
+    setSelectedCamera(event.target.value);
+    switchCamera(event.target.value);
+  };
+
+  const switchCamera = (deviceId) => {
+    if (mediaStreamRef.current) {
+      mediaStreamRef.current.getTracks().forEach((track) => track.stop());
+    }
+    const constraints = {
+      video: { deviceId: { exact: deviceId } },
+      audio: true,
+    };
+    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+      mediaStreamRef.current = stream;
+      if (localVideoRef.current) {
+        localVideoRef.current.srcObject = stream;
+      }
+      stream
+        .getTracks()
+        .forEach((track) => peerConnectionRef.current.addTrack(track, stream));
+    });
   };
 
   const toggleAudio = () => {
     if (mediaStreamRef.current) {
       const audioTracks = mediaStreamRef.current.getAudioTracks();
       if (audioTracks.length > 0) {
-        audioTracks.forEach((track) => (track.enabled = !track.enabled));
-        setIsAudioEnabled((prev) => !prev);
+        audioTracks[0].enabled = !isAudioEnabled;
+        setIsAudioEnabled(!isAudioEnabled);
       }
-    } else {
-      console.warn("Media stream is not available.");
     }
   };
 
@@ -131,13 +150,54 @@ const PushNotes = () => {
     if (mediaStreamRef.current) {
       const videoTracks = mediaStreamRef.current.getVideoTracks();
       if (videoTracks.length > 0) {
-        videoTracks.forEach((track) => (track.enabled = !track.enabled));
-        setIsVideoEnabled((prev) => !prev);
+        videoTracks[0].enabled = !isVideoEnabled;
+        setIsVideoEnabled(!isVideoEnabled);
       }
-    } else {
-      console.warn("Media stream is not available.");
     }
   };
+
+  const handleEndCall = () => {
+    if (mediaStreamRef.current) {
+      mediaStreamRef.current.getTracks().forEach((track) => track.stop());
+    }
+    stopSound(callingSoundRef, endCall, false);
+    playSound(endCallSoundRef, endCall);
+    setIsVideoEnabled(false); // Set the source dynamically
+    if (socketRef.current) {
+      socketRef.current.disconnect();
+    }
+  };
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (message.trim()) {
+      socketRef.current.emit("message", { room: roomRef.current, message });
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: "You", text: message },
+      ]);
+      setMessage("");
+    }
+  };
+
+  const playSound = (audioRef, src, loop) => {
+    if (audioRef.current) {
+      audioRef.current.src = src; // Set the source dynamically
+      audioRef.current.currentTime = 0;
+      audioRef.current.loop = loop; // Enable continuous playback
+      audioRef.current.play().catch((error) => {
+        console.error("Error playing audio:", error);
+      });
+    }
+  };
+
+  const stopSound = (audioRef) => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  };
+
   const handleSubmit = () => {};
 
   return (
@@ -386,7 +446,7 @@ const PushNotes = () => {
                 <div className="my-6">
                   <label
                     htmlFor="chat-sidebar-left-user-about"
-                    className="text-uppercase text-muted mb-1"
+                    className="text-uppercase  mb-1"
                   >
                     About
                   </label>
@@ -401,7 +461,7 @@ const PushNotes = () => {
                   />
                 </div>
                 <div className="my-6">
-                  <p className="text-uppercase text-muted mb-1">Status</p>
+                  <p className="text-uppercase  mb-1">Status</p>
                   <div className="d-grid gap-2 pt-2 text-heading ms-2">
                     <div className="form-check form-check-success">
                       <input
@@ -458,7 +518,7 @@ const PushNotes = () => {
                   </div>
                 </div>
                 <div className="my-6">
-                  <p className="text-uppercase text-muted mb-1">Settings</p>
+                  <p className="text-uppercase  mb-1">Settings</p>
                   <ul className="list-unstyled d-grid gap-4 ms-2 pt-2 text-heading">
                     <li className="d-flex justify-content-between align-items-center">
                       <div>
@@ -560,7 +620,7 @@ const PushNotes = () => {
                     <h5 className="text-primary mb-0">Chats</h5>
                   </li>
                   <li className="chat-contact-list-item chat-list-item-0 d-none">
-                    <h6 className="text-muted mb-0">No Chats Found</h6>
+                    <h6 className=" mb-0">No Chats Found</h6>
                   </li>
                   <li className="chat-contact-list-item mb-1">
                     <a className="d-flex align-items-center">
@@ -576,7 +636,7 @@ const PushNotes = () => {
                           <h6 className="chat-contact-name text-truncate m-0 fw-normal">
                             Waldemar Mannering
                           </h6>
-                          <small className="text-muted">5 Minutes</small>
+                          <small className="">5 Minutes</small>
                         </div>
                         <small className="chat-contact-status text-truncate">
                           Refer friends. Get rewards.
@@ -598,7 +658,7 @@ const PushNotes = () => {
                           <h6 className="chat-contact-name text-truncate fw-normal m-0">
                             Felecia Rower
                           </h6>
-                          <small className="text-muted">30 Minutes</small>
+                          <small className="">30 Minutes</small>
                         </div>
                         <small className="chat-contact-status text-truncate">
                           I will purchase it for sure. 👍
@@ -618,7 +678,7 @@ const PushNotes = () => {
                           <h6 className="chat-contact-name text-truncate fw-normal m-0">
                             Calvin Moore
                           </h6>
-                          <small className="text-muted">1 Day</small>
+                          <small className="">1 Day</small>
                         </div>
                         <small className="chat-contact-status text-truncate">
                           If it takes long you can mail inbox user
@@ -636,7 +696,7 @@ const PushNotes = () => {
                     <h5 className="text-primary mb-0">Contacts</h5>
                   </li>
                   <li className="chat-contact-list-item contact-list-item-0 d-none">
-                    <h6 className="text-muted mb-0">No Contacts Found</h6>
+                    <h6 className=" mb-0">No Contacts Found</h6>
                   </li>
                   <li className="chat-contact-list-item">
                     <a className="d-flex align-items-center">
@@ -879,8 +939,8 @@ const PushNotes = () => {
                         style={{ minWidth: "500px", maxHeight: "80vh" }}
                         title={
                           <i
-                            className={`ti ti-video ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-secondary btn-icon rounded-pill ${
-                              isVideoEnabled ? "" : "text-muted"
+                            className={`ti ti-video ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill ${
+                              isVideoEnabled ? "" : ""
                             }`}
                           />
                         }
@@ -891,29 +951,65 @@ const PushNotes = () => {
                             style={{ width: "100%" }}
                             ref={localVideoRef}
                             autoPlay
-                            
                             playsInline
                             muted
                           ></video>
-                          <video 
+                          <video
                             style={{ width: "100%" }}
                             ref={remoteVideoRef}
                             autoPlay
                             playsInline
+                            className="d-none"
                           ></video>
                           <div className="d-flex gap-3">
                             <button
                               onClick={toggleAudio}
-                              className="btn btn-secondary"
+                              className={`btn ${
+                                isAudioEnabled ? "btn-success" : "btn-warning"
+                              } btn-secondary`}
                             >
-                              {isAudioEnabled ? "Mute" : "Unmute"}
+                              <i
+                                className={`ti ${
+                                  isAudioEnabled
+                                    ? "ti-microphone"
+                                    : "ti-microphone-off"
+                                } ti-md`}
+                              ></i>
                             </button>
                             <button
                               onClick={toggleVideo}
-                              className="btn btn-secondary"
+                              className={`btn ${
+                                isVideoEnabled ? "btn-primary" : "btn-secondary"
+                              } btn-secondary`}
                             >
-                              {isVideoEnabled ? "Stop video" : "Start video"}
+                              <i
+                                className={`ti ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill ${
+                                  isVideoEnabled ? "ti-video" : "ti-video-off "
+                                }`}
+                              ></i>
                             </button>
+                            <select
+                              onChange={handleCameraChange}
+                              value={selectedCamera}
+                              className="form-select w-50"
+                            >
+                              {availableCameras.map((camera) => (
+                                <option
+                                  key={camera.deviceId}
+                                  value={camera.deviceId}
+                                >
+                                  {camera.label || `Camera ${camera.deviceId}`}
+                                </option>
+                              ))}
+                            </select>
+                            {isVideoEnabled && (
+                              <button
+                                onClick={handleEndCall}
+                                className="btn btn-danger"
+                              >
+                                <i className="ti ti-phone-off"></i>
+                              </button>
+                            )}
                           </div>
                         </div>
                       </PopupModal>
@@ -923,48 +1019,64 @@ const PushNotes = () => {
                         style={{ minWidth: "500px", maxHeight: "80vh" }}
                         title={
                           <i
-                            className={`ti ti-phone ti-md cursor-pointer d-inline-flex me-1 btn btn-sm btn-text-secondary text-secondary btn-icon rounded-pill ${
-                              isAudioEnabled ? "" : "text-muted"
+                            className={`ti ti-phone ti-md cursor-pointer d-inline-flex me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill ${
+                              isAudioEnabled ? "" : ""
                             }`}
                           />
                         }
                         id="audio"
                       >
                         <div className="modal-body">
-                          <video
-                            style={{ width: "100%" }}
-                            ref={localVideoRef2}
-                            autoPlay
-                            playsInline
-                            
-                            muted
-                          ></video>
-                          <video
-                            style={{ width: "100%" }}
-                            ref={remoteVideoRef}
-                            autoPlay
-                            playsInline
-                          ></video>
+                          <p>{isVideoEnabled ? "Calling..." : "Call End"}</p>
                           <div className="d-flex gap-3">
                             <button
-                              onClick={toggleAudio2}
-                              className="btn btn-secondary"
+                              onClick={toggleAudio}
+                              className={`btn ${
+                                isAudioEnabled ? "btn-success" : "btn-warning"
+                              } btn-secondary`}
                             >
-                              {isAudioEnabled ? "Mute" : "Unmute"}
+                              <i
+                                className={`ti ${
+                                  isAudioEnabled
+                                    ? "ti-microphone"
+                                    : "ti-microphone-off"
+                                } ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill`}
+                              ></i>
                             </button>
                             <button
                               onClick={toggleVideo}
-                              className="btn btn-secondary"
+                              className={`btn ${
+                                isVideoEnabled ? "btn-primary" : "btn-secondary"
+                              } btn-secondary`}
                             >
-                              {isVideoEnabled ? "Stop audio" : "Start audio"}
+                              <i
+                                className={`ti ${
+                                  isVideoEnabled
+                                    ? "ti ti-phone"
+                                    : "ti ti-phone-off "
+                                } ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill`}
+                              ></i>
                             </button>
+                            {isVideoEnabled && (
+                              <button
+                                onClick={handleEndCall}
+                                className="btn btn-danger"
+                              >
+                                <i className="ti ti-phone-off ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill"></i>
+                              </button>
+                            )}
                           </div>
                         </div>
                       </PopupModal>
-                      <i className="ti ti-search ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-secondary btn-icon rounded-pill" />
+
+                      {/* Calling and Call-End Sounds */}
+                      <audio ref={callingSoundRef} />
+                      <audio ref={endCallSoundRef} />
+
+                      <i className="ti ti-search ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill" />
                       <div className="dropdown">
                         <button
-                          className="btn btn-sm btn-icon btn-text-secondary text-secondary rounded-pill dropdown-toggle hide-arrow"
+                          className="btn btn-sm btn-icon btn-text-secondary text-white rounded-pill dropdown-toggle hide-arrow"
                           data-bs-toggle="dropdown"
                           aria-expanded="true"
                           id="chat-header-actions"
@@ -1026,7 +1138,7 @@ const PushNotes = () => {
                                   <div className="chat-message-text">
                                     <p className="mb-0">{item}</p>
                                   </div>
-                                  <div className="text-end text-muted mt-1">
+                                  <div className="text-end  mt-1">
                                     <i className="ti ti-checks ti-16px text-success me-1" />
                                     <small>10:00 AM</small>
                                   </div>
@@ -1105,16 +1217,14 @@ const PushNotes = () => {
               </div>
               <div className="sidebar-body p-6 pt-0">
                 <div className="my-6">
-                  <p className="text-uppercase mb-1 text-muted">About</p>
+                  <p className="text-uppercase mb-1 ">About</p>
                   <p className="mb-0">
                     It is a long established fact that a reader will be
                     distracted by the readable content .
                   </p>
                 </div>
                 <div className="my-6">
-                  <p className="text-uppercase mb-1 text-muted">
-                    Personal Information
-                  </p>
+                  <p className="text-uppercase mb-1 ">Personal Information</p>
                   <ul className="list-unstyled d-grid gap-4 mb-0 ms-2 py-2 text-heading">
                     <li className="d-flex align-items-center">
                       <i className="ti ti-mail ti-md" />
@@ -1137,7 +1247,7 @@ const PushNotes = () => {
                   </ul>
                 </div>
                 <div className="my-6">
-                  <p className="text-uppercase text-muted mb-1">Options</p>
+                  <p className="text-uppercase  mb-1">Options</p>
                   <ul className="list-unstyled d-grid gap-4 ms-2 py-2 text-heading">
                     <li className="cursor-pointer d-flex align-items-center">
                       <i className="ti ti-badge ti-md" />

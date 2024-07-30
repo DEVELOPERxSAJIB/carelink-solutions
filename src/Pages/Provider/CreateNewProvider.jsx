@@ -7,7 +7,7 @@ import PickDate from "../../components/FormElement/DatePicker";
 import PageHeader from "../../components/FormElement/PageHeader";
 import { useCreateUserMutation } from "../../Redux/api/UserApi";
 
-const CreateNewIndividual = () => {
+const CreateNewProvider = () => {
   const [startDate, setStartDate] = useState(new Date());
 
   const [createUser, { data, error, isSuccess }] = useCreateUserMutation();
@@ -323,4 +323,4 @@ const CreateNewIndividual = () => {
   );
 };
 
-export default CreateNewIndividual;
+export default CreateNewProvider;

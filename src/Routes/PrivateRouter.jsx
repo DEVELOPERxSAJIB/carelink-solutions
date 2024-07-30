@@ -11,8 +11,8 @@ import Permissions from './../Pages/Settings/Permissions';
 import CoAdmin from './../Pages/ManageCoAdmin/CoAdmin';
 import SubUsers from './../Pages/ManageSubUsers/SubUsers';
 import Billing from './../Pages/BillingModule/Billing';
-import Individual from './../Pages/Individual/Individual';
-import IndividualAuditReview from './../Pages/Individual/IndividualAuditReview';
+import Provider from './../Pages/Provider/Provider';
+import ProviderAuditReview from './../Pages/Provider/ProviderAuditReview';
 import CaregiverOrStaff from './../Pages/BusinessCommunity/CaregiverOrStaff';
 import Guardians from './../Pages/BusinessCommunity/Guardians';
 import SupportAdministrators from './../Pages/BusinessCommunity/SupportAdministrators';
@@ -65,11 +65,11 @@ import AddNewTicket from './../Pages/HelpAndSupport/AddNewTicket';
 import ContactUs from './../Pages/HelpAndSupport/ContactUs';
 import CallUs from './../Pages/HelpAndSupport/CallUs';
 import RecycleBin from './../Pages/RecycleBin';
-import AgencyDashboard from './../Pages/Individual/AgencyDashboard';
+import AgencyDashboard from './../Pages/Provider/AgencyDashboard';
 import EmployeeEarning from './../Pages/Settings/EmployeeEarning';
 import AddAdultListOfActivity from './../Pages/AdultDayService/AddListOfActivity';
 import ManageShift from './../Pages/EmployeeRecord/ManageShift';
-import ReviewEmailLog from './../Pages/Individual/ReviewEmailLog';
+import ReviewEmailLog from './../Pages/Provider/ReviewEmailLog';
 import ViewOutcomes from './../Pages/AdultDayService/ViewOutcomes';
 import ManageUnassignedShift from './../Pages/EmployeeRecord/ManageUnassignedShift';
 import AssignAllIndividual from './../Pages/BusinessCommunity/AssignAllIndividual';
@@ -92,7 +92,7 @@ import CreateAdvanceDirectives from './../Pages/Patient/CreateAdvanceDirectives'
 import CreateReferralInformation from './../Pages/Patient/CreateReferralInformation';
 import ReferralInformation from './../Pages/Patient/ReferralInformation';
 import UserActivation from '../Pages/UserActivation';
-import CreateNewIndividual from '../Pages/Individual/CreateNewIndividual';
+import CreateNewProvider from '../Pages/Provider/CreateNewProvider';
 import Admin from '../Pages/BusinessCommunity/Admin';
 
 const privateRouter = [
@@ -149,11 +149,11 @@ const privateRouter = [
           },
           {
             path: "/providers",
-            element: <Individual />,
+            element: <Provider />,
           },
           {
             path: "/create-new-provider",
-            element: <CreateNewIndividual />,
+            element: <CreateNewProvider />,
           },
           {
             path: "/patient",
@@ -172,8 +172,8 @@ const privateRouter = [
             element: <AssignAllIndividual />,
           },
           {
-            path: "/individual-audit-review",
-            element: <IndividualAuditReview />,
+            path: "/provider-audit-review",
+            element: <ProviderAuditReview />,
           },
           {
             path: "/staff",

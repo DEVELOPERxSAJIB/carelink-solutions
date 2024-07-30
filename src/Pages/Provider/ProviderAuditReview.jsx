@@ -9,7 +9,7 @@ import {Link} from "react-router-dom"
 import TableHeader from './../../components/Tables/TableHeader';
 
 
-const IndividualAuditReview = () => {
+const ProviderAuditReview = () => {
 
   const navigate = useNavigate();
   const columns = [
@@ -265,4 +265,4 @@ const IndividualAuditReview = () => {
   );
 };
 
-export default IndividualAuditReview;
+export default ProviderAuditReview;

@@ -11,7 +11,7 @@ import {
 import swal from "sweetalert";
 import { useEffect } from "react";
 
-const Individual = () => {
+const Provider = () => {
   const { data, isLoading, refetch } = useRoleBasedUserQuery("provider");
   const [
     deleteRoleBasedUser,
@@ -554,4 +554,4 @@ const Individual = () => {
   );
 };
 
-export default Individual;
+export default Provider;
