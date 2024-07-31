@@ -36,7 +36,7 @@ const Sidebar = ({ userRole }) => {
       ),
       subMenu: [
         { title: "Company Profile", href: "/profile", icon: "" },
-        { title: "Agency Invoice", href: "/agency-invoice", icon: "" },
+        // { title: "Agency Invoice", href: "/agency-invoice", icon: "" },
         { title: "Payroll", href: "/payroll", icon: "" },
         { title: "Change Password", href: "/change-password", icon: "" },
         {

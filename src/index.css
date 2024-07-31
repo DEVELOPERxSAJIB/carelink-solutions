@@ -79,7 +79,7 @@
 }
 
 .react-datepicker-wrapper {
-  display: block !important;
+  display: !important !important;
 }
 
 .layout-menu {
@@ -375,4 +375,72 @@
   color: #000;
   opacity: 0.5;
   cursor: pointer;
+}
+.print-title {
+  display: none !important;
+  text-align: center !important;
+}
+@media print {
+  html,
+  body {
+    /* Use 100% here to support printing more than a single page*/
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+  }
+  .table {
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 10px !important; /* Adjust font size for better fit */
+  }
+  th,td {
+    font-size: 10px !important; /* Adjust font size for better fit */
+  }
+  .pagerect {
+    padding-top: 50px !important;
+  }
+  .hide-on-print {
+    display: none !important;
+  }
+  .print-area {
+    padding: 20px !important;
+  }
+  .print-title {
+    display: block !important;
+    text-align: center !important;
+  }
+  .extra-padding {
+    padding-top: 50px !important;
+  }
+  .extra-padding2 {
+    padding-top: 100px;
+  }
+  select {
+    appearance: none !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
+    overflow: hidden;
+    border-radius: 0px !important;
+    -webkit-appearance: none !important; /* Safari and Chrome */
+    -moz-appearance: none !important; /* Firefox */
+    background-image: none !important;
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]) {
+    -webkit-appearance: none !important; /* Safari and Chrome */
+    -moz-appearance: none !important; /* Firefox */
+    appearance: none !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
+    border-radius: 0px !important;
+  }
+  input::placeholder {
+    color: transparent !important;
+  }
+  #print-content {
+    display: block !important;
+  }
 }

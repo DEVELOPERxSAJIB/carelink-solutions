@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import jsPDF from "jspdf";
+import { useState, useRef,useEffect } from "react";
 import "jspdf-autotable";
 import { CSVLink } from "react-csv";
 import * as XLSX from "xlsx";
+import { ReactToPrint } from "react-to-print";
 
 const ExportButton = ({
   data,
@@ -14,61 +14,11 @@ const ExportButton = ({
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
-
-  const handlePrint = () => {
-    const doc = new jsPDF({
-      orientation: orientation === "landscape" ? "landscape" : "portrait",
-    });
-    const pageWidth = doc.internal.pageSize.width;
-
-    // Set document header
-    doc.setFontSize(18);
-    const headerText = "CareLink Solutions";
-    const headerWidth =
-      (doc.getStringUnitWidth(headerText) * doc.internal.getFontSize()) /
-      doc.internal.scaleFactor;
-    doc.text(headerText, (pageWidth - headerWidth) / 2, 15);
-
-    doc.setFontSize(12);
-    const subHeaderText = `Employee Salary Sheet - ${fileName}`;
-    const subHeaderWidth =
-      (doc.getStringUnitWidth(subHeaderText) * doc.internal.getFontSize()) /
-      doc.internal.scaleFactor;
-    doc.text(subHeaderText, (pageWidth - subHeaderWidth) / 2, 25);
-
-    // Prepare table data
-    const tableHead = columns.map((col) => col.header);
-    const tableBody = data.map((row) =>
-      columns.map((col) => (row[col.field] !== undefined ? row[col.field] : ""))
-    );
-
-    // Add table content
-    doc.autoTable({
-      head: [tableHead],
-      body: tableBody,
-      startY: 35, // Adjust starting position if needed
-      margin: { top: 10, bottom: 10 },
-      didDrawPage: (data) => {
-        // Ensure that the content fits within the page limits to prevent infinite loops
-        if (data.cursor.y > doc.internal.pageSize.height - 10) {
-          doc.addPage();
-        }
-      },
-    });
-
-    // Open PDF in new tab for printing
-    doc.autoPrint();
-    doc.output("dataurlnewwindow");
-
-    // For saving directly (not recommended for printing)
-    // doc.save(`${fileName}.pdf`);
-  };
+  const componentRef = useRef();
+  const menuRef = useRef();
 
   const handleExport = (type) => {
     switch (type) {
-      case "print":
-        handlePrint();
-        break;
       case "csv":
         // Prepare CSV data
         const csvData = data.map((item) =>
@@ -107,11 +57,6 @@ const ExportButton = ({
         XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
         XLSX.writeFile(workbook, `${fileName}.xlsx`);
         break;
-
-      case "pdf":
-        handlePrint();
-        break;
-
       case "copy":
         const textToCopy = data
           .map((row) =>
@@ -132,9 +77,23 @@ const ExportButton = ({
     }
     setDropdownOpen(false); // Close the dropdown after selection
   };
+  const handleClose = (e) => {
+    if (menuRef.current && !menuRef.current.contains(e.target)) {
+      setDropdownOpen(false)
+    }
+  };
 
+  useEffect(() => {
+    // Add event listener when the component is mounted
+    document.addEventListener("mousedown", handleClose);
+
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      document.removeEventListener("mousedown", handleClose);
+    };
+  }, []);
   return (
-    <div className="btn-group">
+    <div ref={menuRef} className="btn-group">
       <button
         className="btn btn-secondary buttons-collection dropdown-toggle btn-label-primary me-4 waves-effect waves-light border-none"
         type="button"
@@ -153,14 +112,17 @@ const ExportButton = ({
           aria-modal="true"
           role="dialog"
         >
-          <a
-            className="dropdown-item"
-            href="#"
-            onClick={() => handleExport("print")}
-          >
-            <i className="ti ti-printer me-1" />
-            Print
-          </a>
+          <ReactToPrint
+            trigger={() => (
+              <button className="btn">
+                <i className="ti ti-printer me-1" />
+                Print
+              </button>
+            )}
+            content={() => componentRef.current}
+            documentTitle="Patient"
+          />
+
           <a
             className="dropdown-item"
             href="#"
@@ -177,14 +139,16 @@ const ExportButton = ({
             <i className="ti ti-file-spreadsheet me-1" />
             Excel
           </a>
-          <a
-            className="dropdown-item"
-            href="#"
-            onClick={() => handleExport("pdf")}
-          >
-            <i className="ti ti-file-description me-1" />
-            PDF
-          </a>
+          <ReactToPrint
+            trigger={() => (
+              <button className="btn">
+                <i className="ti ti-printer me-1" />
+                Pdf
+              </button>
+            )}
+            content={() => componentRef.current}
+            documentTitle="Patient"
+          />
           <a
             className="dropdown-item"
             href="#"
@@ -195,7 +159,35 @@ const ExportButton = ({
           </a>
         </div>
       )}
-      <div id="print-content" className="dt-button-background" style={{}} />
+      <div
+        id="print-content"
+        ref={componentRef}
+        className="dt-button-background"
+        style={{ display: "none" }} // Hide by default, only shown on print
+      >
+        {/* Add the content you want to print here */}
+        <div className="container w-100">
+          <h3 className="text-center my-4">{fileName}</h3>
+          <table className="table table-striped table-bordered">
+            <thead className="thead-dark">
+              <tr>
+                {columns?.map((col) => (
+                  <th key={col.field}>{col.header}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {data?.map((item, index) => (
+                <tr key={index}>
+                  {columns?.map((col) => (
+                    <td key={col.field}>{item[col.field]}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };
