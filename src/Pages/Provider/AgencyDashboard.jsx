@@ -10,7 +10,7 @@ const AgencyDashboard = () => {
       <div className="row gap-y-5">
         {/* Display for all roles */}
         <IndividualCard icon="ti ti-bell ti-lg" count={0} title="Notifications" />
-        <IndividualCard icon="ti ti-user ti-lg" count={0} title="Individuals" />
+        <IndividualCard icon="ti ti-user ti-lg" count={0} title="Provider" />
         <IndividualCard icon="ti ti-mail ti-lg" count={0} title="Messages" />
 
         {/* Display for 'admin' and 'superadmin' */}
