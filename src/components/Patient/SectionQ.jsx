@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useUpdatePatientMutation } from "../../Redux/api/PatientApi";
 import { ReactToPrint } from "react-to-print";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
+import MainLoader from './../../utils/Loaders/MainLoader';
 const SectionQForm = ({ editId }) => {
   const componentRef = useRef();
 
@@ -18,7 +19,7 @@ const SectionQForm = ({ editId }) => {
     useCreatePatientMutation();
   const [
     updatePatient,
-    { data: updateData, isSuccess: isUpdateSuccess, error: updateError },
+    { data: updateData, isSuccess: isUpdateSuccess,isLoading:isUpdateLoading, error: updateError },
   ] = useUpdatePatientMutation();
   const dispatch = useDispatch();
   const allFormData = useSelector(getAllSectionState);
@@ -181,7 +182,7 @@ const SectionQForm = ({ editId }) => {
                 </div>
                 <div className="d-flex align-items-center gap-4 hide-on-print">
                   <button type="submit" className="btn btn-primary">
-                    Submit
+                   {isUpdateLoading ||isLoading ?"...Wait please":"Submit" } 
                   </button>
                   <ReactToPrint
                     trigger={() => (
