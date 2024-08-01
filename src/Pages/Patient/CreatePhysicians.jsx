@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useRef } from "react";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import CitySelect from "../../components/FormElement/CitySelect";
 import StateSelect from "./../../components/FormElement/StateSelect";
@@ -6,8 +6,11 @@ import StateSelect from "./../../components/FormElement/StateSelect";
 import { useCreatePhysicianMutation } from "../../Redux/api/PhysicianApi";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import { useNavigate } from "react-router-dom";
+import { ReactToPrint } from "react-to-print";
+ 
 
 const CreatePhysicians = () => {
+  const componentRef = useRef()
   const navigate = useNavigate();
   const [createPhysician, { data, isLoading, error, isSuccess }] =
     useCreatePhysicianMutation();
@@ -76,7 +79,7 @@ const CreatePhysicians = () => {
   }, [isSuccess]);
   if (isLoading) return <AuthLoader />;
   return (
-    <div className="card mt-4">
+    <div ref={componentRef} className="card mt-4">
       <PageHeader title="New Physician" className="card-header fs-3" />
 
       <div className="card-body">
@@ -322,7 +325,7 @@ const CreatePhysicians = () => {
                 onChange={handleChange}
               >
                 {/* "AxxessPhysicianPortal", "Email", "Phone", "Fax", "Courier", "Other" */}
-                <option value="">-- Delivery Method --</option>
+                <option className="hide-on-print" value="">Select delivery method</option>
                 <option value="AxxessPhysicianPortal">
                   AxxessPhysicianPortal
                 </option>
@@ -364,13 +367,20 @@ const CreatePhysicians = () => {
             </div>
           </div>
 
-          <div className="col-md-6 mt-5 d-flex gap-2">
+          <div className="col-md-6 mt-5 d-flex hide-on-print gap-2">
             <button type="submit" className="btn btn-primary mr-2">
               Save
             </button>
             <button type="button" className="btn btn-secondary">
               Exit
             </button>
+            <ReactToPrint
+                  trigger={() => (
+                    <span className="btn btn-primary">Print</span>
+                  )}
+                  content={() => componentRef.current}
+                  documentTitle="Patient"
+                />
           </div>
         </form>
       </div>

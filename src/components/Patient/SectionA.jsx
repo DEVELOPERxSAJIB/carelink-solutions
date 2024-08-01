@@ -108,7 +108,7 @@ const CreatePatient2 = () => {
           </h2>
           <div
             id="collapseAdmin"
-            className="accordion-collapse collapse       "
+            className="accordion-collapse collapse  show"
             aria-labelledby="headingAdmin"
             data-bs-parent="#administrativeInfoAccordion"
           >

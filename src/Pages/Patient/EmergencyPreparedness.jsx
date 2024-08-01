@@ -16,7 +16,15 @@ import EditModal from "./../../components/Models/EditModal";
 import Template from "./../../components/FormElement/Template";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import Alert from './../../components/Alert/Alert';
-
+import { ReactToPrint } from "react-to-print";
+ 
+ <ReactToPrint
+                  trigger={() => (
+                    <span className="btn btn-primary">Print</span>
+                  )}
+                  content={() => componentRef.current}
+                  documentTitle="Patient"
+                />
 const EmergencyPreparedness = () => {
   const { data, isLoading,refetch } = useGetAllEmergenciesQuery(); // Adjust hook name as per your actual hook
   const [updateEmergency, { data: updateData, isSuccess: isUpdateSuccess,error:updateError }] =
@@ -284,7 +292,7 @@ const EmergencyPreparedness = () => {
                     </h2>
                     <div
                       id="collapseEmergencyTriage"
-                      className="accordion-collapse collapse show"
+                      className="accordion-collapse collapse show "
                       aria-labelledby="headingEmergencyTriage"
                       data-bs-parent="#ClinicalDiagnosisInfoAccordion"
                     >

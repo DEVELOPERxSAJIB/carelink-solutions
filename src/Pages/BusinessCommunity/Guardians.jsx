@@ -1,387 +1,745 @@
-import { useState } from "react";
-import DataTable from "./../../components/Tables/DynamicTable";
-
-import { useNavigate } from "react-router-dom";
-
-import { FaRegFolder } from "react-icons/fa";
-import { FaRegFolderOpen } from "react-icons/fa";
-import FullscreenModal from "./../../components/Models/FullScreenModel";
-import useFormFields from "./../../hook/useFormHook";
-import TableHeader from './../../components/Tables/TableHeader';
-
-// Function to get the start and end dates of the current week
+import { useState, useEffect } from "react";
+import DataTable from "../../components/Tables/DynamicTable";
+import { Link } from "react-router-dom";
+import { useProcessRegisterMutation } from "../../Redux/api/UserApi";
+import StateSelect from "../../components/FormElement/StateSelect";
+import CitySelect from "../../components/FormElement/CitySelect";
+import CountySelect from "../../components/FormElement/CountySelect";
+import FullscreenModal from "../../components/Models/FullScreenModel";
+import TableHeader from "../../components/Tables/TableHeader";
+import generateRandomId from "./../../utils/RandomIdGenerator";
+import useFormValidation from "./../../hook/useFormValidation";
+import {
+  useMeQuery,
+  useGetAllGuardianQuery,
+  useUpdateGuardianMutation,
+  useDeleteUserMutation,
+} from "../../Redux/api/UserApi";
+import EditModal from "./../../components/Models/EditModal";
+import swal from "sweetalert";
+import {
+  registrationSchema,
+  updateregistrationSchema,
+} from "../../utils/validationSchemas";
 
 const Guardians = () => {
-  const [tableData, setTableData] = useState([
-    { id: 1, name: "Adnan Sidirijal", role: "Agency", permission: "View only" },
-    { id: 2, name: "Keetrah Chandler", role: "Agency", permission: "Edit" },
-    { id: 3, name: "Abdirahman Mohamed", role: "Agency", permission: "Edit" },
-    { id: 4, name: "James Masters", role: "Agency", permission: "Edit" },
-    { id: 5, name: "Ellott Verrilli", role: "Agency", permission: "Edit" },
-    { id: 6, name: "Omer Mohamed", role: "Agency", permission: "Edit" },
-  ]);
-
-  const columns2 = [
-    { field: "id", header: "S.No" },
-    { field: "name", header: "Individual" },
-    { field: "role", header: "Agency" },
+  const { data: addedBy } = useMeQuery();
+  const { data, refetch } = useGetAllGuardianQuery();
+  console.log(data);
+  const [
+    updateGuardian,
     {
-      field: "permission",
-      header: "Permission",
-      render: (row) => (
-        <select
-          className="form-control"
-          value={row.permission}
-          onChange={(e) => handlePermissionChange(row.id, e.target.value)}
-        >
-          <option value="Edit">Edit</option>
-          <option value="View only">View only</option>
-        </select>
-      ),
+      data: updateData,
+      isSuccess: isUpdateSuccess,
+      isLoading: isUpdateLoading,
+      error: updateError,
     },
-  ];
-
-  const navigate = useNavigate();
-
+  ] = useUpdateGuardianMutation();
+  const [
+    deleteUser,
+    { data: deleteData, isSuccess: isDeleteSuccess, error: deleteError },
+  ] = useDeleteUserMutation();
+  const [show, setShow] = useState(false);
+  const [editId, setEditId] = useState(null);
   const columns = [
-    { header: "S.No", field: "serialNumber" },
+    { header: "ID", field: "_id" },
     { header: "First Name", field: "firstName" },
     { header: "Last Name", field: "lastName" },
     { header: "Email", field: "email" },
-    { header: "Created By", field: "createdBy" },
+    { header: "Phone", field: "phone" },
+    { header: "Address 1", field: "address1" },
+    { header: "Address 2", field: "address2" },
+    { header: "ZIP", field: "zip" },
+    { header: "Added By", field: "addedBy" },
+    { header: "Role", field: "role" },
     { header: "Status", field: "status" },
   ];
+  const initialValues = {
+    role: "guardian",
+    phone: "",
+    address1: "",
+    address2: "",
+    zip: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    confirmPassword: "",
+    agreeTerms: false,
+    agreePrivacyPolicy: false,
+  };
+  const onSubmit = (data) => {
+    const updatedData = {
+      ...data,
+      role: "guardian",
+      city: selectedCity,
+      county: selectedCounty,
+      state: selectedState,
+      guardiansID: generateRandomId("guardian"),
+      addedBy: addedBy?.payload?.user?._id,
+    };
+    if (editId) {
+      updateGuardian({ userId: editId, userData: updatedData });
+    } else {
+      processRegister(updatedData);
+    }
+  };
 
-  const data = [
-    {
-      serialNumber: 1,
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@example.com",
-      createdBy: "Admin",
-      status: "Active",
-    },
-    {
-      serialNumber: 2,
-      firstName: "Jane",
-      lastName: "Smith",
-      email: "jane.smith@example.com",
-      createdBy: "Manager",
-      status: "Inactive",
-    },
-
-    // Add more rows as needed
-  ];
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useFormValidation(initialValues, registrationSchema, onSubmit);
+  const {
+    register: updateRegister,
+    handleSubmit: updateHandleSubmit,
+    formState: { errors: updateErrors },
+    reset: updateReset,
+  } = useFormValidation(initialValues, updateregistrationSchema, onSubmit);
 
   const handleEdit = (rowData) => {
-    alert(`Editing ${rowData.firstName} ${rowData.lastName}`);
+    setShow(true);
+    setEditId(rowData?._id);
+    updateReset({ ...rowData });
+    setSelectedState(rowData.state);
+    setSelectedCity(rowData.city);
+    setSelectedCounty(rowData.county);
   };
 
   const handleDelete = (rowData) => {
-    alert(`Deleting ${rowData.firstName} ${rowData.lastName}`);
-  };
-  const handlePermissionChange = (id, permission) => {
-    setTableData((prevData) =>
-      prevData.map((row) =>
-        row.id === id ? { ...row, permission: permission } : row
-      )
-    );
-  };
-  const initialState = {
-    gender: "Male",
-    firstName: "",
-    lastName: "",
-    email: "",
-    manager: false,
-    medAdministration: false,
-    address1: "",
-    city: "",
-    state: "",
-    zip: "",
-    phone: "",
-    dateOfBirth: "",
-    hireDate: "",
-    longevityAddon: false,
-    employeeNumber: "",
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        deleteUser(rowData._id);
+      }
+    });
   };
 
-  // Use the custom form hook
-  const [formData, handleChange, resetForm, isValid] =
-    useFormFields(initialState);
+  const [processRegister, { error, isSuccess, isLoading, isError }] =
+    useProcessRegisterMutation();
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedCounty, setSelectedCounty] = useState(null);
 
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // onSave(formData); // Pass form data to parent component for handling (e.g., saving to API)
-    resetForm(); // Reset the form after submission
-  };
-  const columns3 = [
-    { field: "id", header: "S.No" },
-    { field: "name", header: "Individual" },
-    { field: "role", header: "Agency" },
-  ];
-  const data3 = [
-    { id: 1, name: "Abdirahman Mohamed", role: "Agency" },
-    { id: 2, name: "Adnan Sidirijal", role: "Agency" },
-    { id: 3, name: "Ellott Verrilli", role: "Agency" },
-    { id: 4, name: "James Masters", role: "Agency" },
-    { id: 5, name: "Keetrah Chandler", role: "Agency" },
-    { id: 6, name: "Omer Mohamed", role: "Agency" },
-  ];
+  useEffect(() => {
+    if (isSuccess) {
+      reset();
+      refetch();
+      setSelectedCity(null);
+      setSelectedCounty(null);
+      setSelectedState(null);
+    }
+    if (isUpdateSuccess) {
+      refetch();
+      setShow(false);
+    }
+    if (isDeleteSuccess) {
+      refetch();
+    }
+  }, [isSuccess, reset, isUpdateSuccess, isDeleteSuccess, refetch]);
+
   return (
     <div className="card">
-
-      <TableHeader title="Guardians" className="py-3 pt-5 fs-3 card-header"/>
+      <TableHeader title="Guardians" className="py-3 pt-5 fs-3 card-header" />
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
           <FullscreenModal
-            className="col-md-7 "
-            title="Add New Guardians"
-            onSave={handleSubmit}
-            id="addnewguardians"
+            id="addnewcoguardians"
+            title="Add New guardians"
+            className="col-md-8"
+            style={{ width: "100%", minHeight: "60vh" }}
           >
-            <form
-              className="w-100 px-3 from-scrollbar h-75"
-              onSubmit={handleSubmit}
-            >
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="gender" className="form-label">
-                    Gender <span className="text-danger">*</span>
-                  </label>
-                  <select
-                    id="gender"
-                    name="gender"
-                    className="form-select"
-                    value={formData.gender}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="firstName" className="form-label">
-                    First Name <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    className="form-control"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    placeholder="First Name"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="lastName" className="form-label">
-                    Last Name <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    className="form-control"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    placeholder="Last Name"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Email Address <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="form-control"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Email Address"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3 form-check">
-                  <input
-                    type="checkbox"
-                    id="manager"
-                    name="manager"
-                    className="form-check-input"
-                    checked={formData.manager}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="manager" className="form-check-label">
-                    Manager
-                  </label>
-                </div>
-                <div className="col-md-6 mb-3 form-check">
-                  <input
-                    type="checkbox"
-                    id="medAdministration"
-                    name="medAdministration"
-                    className="form-check-input"
-                    checked={formData.medAdministration}
-                    onChange={handleChange}
-                  />
-                  <label
-                    htmlFor="medAdministration"
-                    className="form-check-label"
-                  >
-                    Med-Administration
-                  </label>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="address1" className="form-label">
-                    Address1 <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="address1"
-                    name="address1"
-                    className="form-control"
-                    value={formData.address1}
-                    onChange={handleChange}
-                    placeholder="Address1"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="city" className="form-label">
-                    City <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="city"
-                    name="city"
-                    className="form-control"
-                    value={formData.city}
-                    onChange={handleChange}
-                    placeholder="City"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="state" className="form-label">
-                    State <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="state"
-                    name="state"
-                    className="form-control"
-                    value={formData.state}
-                    onChange={handleChange}
-                    placeholder="State"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="zip" className="form-label">
-                    Zip <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="zip"
-                    name="zip"
-                    className="form-control"
-                    value={formData.zip}
-                    onChange={handleChange}
-                    placeholder="Zip"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="phone" className="form-label">
-                    Phone
-                  </label>
-                  <input
-                    type="text"
-                    id="phone"
-                    name="phone"
-                    className="form-control"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="Phone"
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="dateOfBirth" className="form-label">
-                    Date Of Birth
-                  </label>
-                  <input
-                    type="date"
-                    id="dateOfBirth"
-                    name="dateOfBirth"
-                    className="form-control"
-                    value={formData.dateOfBirth}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="hireDate" className="form-label">
-                    Hire Date
-                  </label>
-                  <input
-                    type="date"
-                    id="hireDate"
-                    name="hireDate"
-                    className="form-control"
-                    value={formData.hireDate}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="col-md-6 mb-3 form-check">
-                  <input
-                    type="checkbox"
-                    id="longevityAddon"
-                    name="longevityAddon"
-                    className="form-check-input"
-                    checked={formData.longevityAddon}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="longevityAddon" className="form-check-label">
-                    Longevity Addon
-                  </label>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="employeeNumber" className="form-label">
-                    Employee #
-                  </label>
-                  <input
-                    type="text"
-                    id="employeeNumber"
-                    name="employeeNumber"
-                    className="form-control"
-                    value={formData.employeeNumber}
-                    onChange={handleChange}
-                    placeholder="Employee #"
-                  />
-                </div>
-                <div className="mt-5 ">
-                  <DataTable
-                    columns={columns2}
-                    data={tableData}
-                    tableClassName="custom-table"
-                    onEdit={handleEdit}
-                     tableName="guardians"
-                    onDelete={handleDelete}
-                  />
+            <>
+              <div className="d-flex flex-column w-100 justify-content-center align-items-center">
+                {data?.message && (
+                  <div className="text-center alert alert-success w-100">
+                    {data?.message}
+                  </div>
+                )}
+                {error && (
+                  <div className="text-center alert alert-success w-100">
+                    {error?.data?.message}
+                  </div>
+                )}
+                <div className="row justify-content-center d-flex align-items-center">
+                  <div className="col-md-12">
+                    <div className="card-body">
+                      <form className="from-scrollbar" onSubmit={handleSubmit}>
+                        <div className="row mx-5">
+                          <div className="mb-3 col-md-12">
+                            <select
+                              id="role"
+                              name="role"
+                              className="form-select"
+                              {...register("role")}
+                              value="guardian"
+                              disabled
+                            >
+                              <option value="guardian">Guardian</option>
+                            </select>
+                          </div>
+
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="email" className="form-label">
+                              Email <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="email"
+                              id="email"
+                              name="email"
+                              className="form-control"
+                              {...register("email", {
+                                required: "Email is required.",
+                                pattern: {
+                                  value:
+                                    /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                                  message: "Invalid email address format.",
+                                },
+                              })}
+                              required
+                            />
+                            {errors.email && (
+                              <p className="text-danger">
+                                {errors.email.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* First Name input field */}
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="firstName" className="form-label">
+                              First Name <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              id="firstName"
+                              name="firstName"
+                              className="form-control"
+                              {...register("firstName", {
+                                required: "First name is required.",
+                              })}
+                              required
+                            />
+                            {errors.firstName && (
+                              <p className="text-danger">
+                                {errors.firstName.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Last Name input field */}
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="lastName" className="form-label">
+                              Last Name <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              id="lastName"
+                              name="lastName"
+                              className="form-control"
+                              {...register("lastName", {
+                                required: "Last name is required.",
+                              })}
+                              required
+                            />
+                            {errors.lastName && (
+                              <p className="text-danger">
+                                {errors.lastName.message}
+                              </p>
+                            )}
+                          </div>
+                          {/* Phone input field */}
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="phone" className="form-label">
+                              Phone <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="tel"
+                              id="phone"
+                              name="phone"
+                              className="form-control"
+                              {...register("phone", {
+                                required: "Phone number is required.",
+                              })}
+                              required
+                            />
+                            {errors.phone && (
+                              <p className="text-danger">
+                                {errors.phone.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Address Line 1 input field */}
+                          <div className="mb-3 col-md-12">
+                            <label htmlFor="address1" className="form-label">
+                              Address Line 1{" "}
+                              <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              id="address1"
+                              name="address1"
+                              className="form-control"
+                              {...register("address1", {
+                                required: "Address is required.",
+                              })}
+                              required
+                            />
+                            {errors.address1 && (
+                              <p className="text-danger">
+                                {errors.address1.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Address Line 2 input field */}
+                          <div className="mb-3 col-md-12">
+                            <label htmlFor="address2" className="form-label">
+                              Address Line 2
+                            </label>
+                            <input
+                              type="text"
+                              id="address2"
+                              name="address2"
+                              className="form-control"
+                              {...register("address2")}
+                            />
+                          </div>
+
+                          {/* State selection dropdown */}
+                          <div className="mb-3 col-md-12">
+                            <label htmlFor="state" className="form-label">
+                              State <span className="text-danger">*</span>
+                            </label>
+                            <StateSelect
+                              selectedState={selectedState}
+                              setSelectedState={setSelectedState}
+                            />
+                            {selectedState === "" && (
+                              <p className="text-danger">State is required!</p>
+                            )}
+                          </div>
+
+                          {/* City selection dropdown */}
+                          <div className="mb-3 col-md-12">
+                            <label htmlFor="city" className="form-label">
+                              City <span className="text-danger">*</span>
+                            </label>
+                            <CitySelect
+                              stateCode={selectedState}
+                              selectedCity={selectedCity}
+                              setSelectedCity={setSelectedCity}
+                            />
+                            {selectedCity === "" && (
+                              <p className="text-danger">City is required!</p>
+                            )}
+                          </div>
+
+                          {/* County selection dropdown */}
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="county" className="form-label">
+                              County <span className="text-danger">*</span>
+                            </label>
+                            <CountySelect
+                              selectedState={selectedState}
+                              selectedCounty={selectedCounty}
+                              setSelectedCounty={setSelectedCounty}
+                            />
+                            {selectedCounty === "" && (
+                              <p className="text-danger">County is required!</p>
+                            )}
+                          </div>
+
+                          {/* Zip Code input field */}
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="zip" className="form-label">
+                              Zip Code <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              id="zip"
+                              name="zip"
+                              className="form-control"
+                              {...register("zip", {
+                                required: "Zip code is required.",
+                              })}
+                              required
+                            />
+                            {errors.zip && (
+                              <p className="text-danger">
+                                {errors.zip.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Email input field */}
+
+                          {/* Password input field */}
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="password" className="form-label">
+                              Password <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="password"
+                              id="password"
+                              name="password"
+                              className="form-control"
+                              {...register("password", {
+                                required: "Password is required.",
+                                minLength: {
+                                  value: 8,
+                                  message:
+                                    "Password must be at least 8 characters.",
+                                },
+                              })}
+                              required
+                            />
+                            {errors.password && (
+                              <p className="text-danger">
+                                {errors.password.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Confirm Password input field */}
+                          <div className="mb-3 col-md-6">
+                            <label
+                              htmlFor="confirmPassword"
+                              className="form-label"
+                            >
+                              Confirm Password{" "}
+                              <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="password"
+                              id="confirmPassword"
+                              name="confirmPassword"
+                              className="form-control"
+                              {...register("confirmPassword", {
+                                required: "Please confirm your password.",
+                                validate: (value) =>
+                                  value === register.password ||
+                                  "Passwords do not match.",
+                              })}
+                              required
+                            />
+                            {errors.confirmPassword && (
+                              <p className="text-danger">
+                                {errors.confirmPassword.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Terms and Conditions checkbox */}
+                          <div className="mb-3 col-md-12">
+                            <div className="form-check">
+                              <input
+                                type="checkbox"
+                                id="agreeTerms"
+                                name="agreeTerms"
+                                className="form-check-input"
+                                {...register("agreeTerms", {
+                                  required:
+                                    "You must agree to the terms and conditions.",
+                                })}
+                                required
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="agreeTerms"
+                              >
+                                I agree to the{" "}
+                                <Link to="/terms" className="text-danger">
+                                  terms and conditions.
+                                </Link>
+                                <span className="text-danger">*</span>
+                              </label>
+                              {errors.agreeTerms && (
+                                <p className="text-danger">
+                                  {errors.agreeTerms.message}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Privacy Policy checkbox */}
+                          <div className="mb-3 col-md-12">
+                            <div className="form-check">
+                              <input
+                                type="checkbox"
+                                id="agreePrivacyPolicy"
+                                name="agreePrivacyPolicy"
+                                className="form-check-input"
+                                {...register("agreePrivacyPolicy", {
+                                  required:
+                                    "You must agree to the privacy policy.",
+                                })}
+                                required
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="agreePrivacyPolicy"
+                              >
+                                I agree to the{" "}
+                                <Link to="/privacy" className="text-danger">
+                                  privacy policy.
+                                </Link>
+                                <span className="text-danger">*</span>
+                              </label>
+                              {errors.agreePrivacyPolicy && (
+                                <p className="text-danger">
+                                  {errors.agreePrivacyPolicy.message}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Submit button */}
+                          <div className="mb-3 col-md-12">
+                            <button
+                              type="submit"
+                              className="btn btn-primary text-uppercase w-100 fw-bolder"
+                              disabled={isLoading}
+                            >
+                              {isLoading ? "...Wait please" : "Add Now"}
+                            </button>
+                          </div>
+
+                          {/* Error message */}
+                          {isError && (
+                            <div
+                              className="alert alert-danger text-center"
+                              role="alert"
+                            >
+                              {error?.data?.message ||
+                                "Failed to register. Please try again later."}
+                            </div>
+                          )}
+
+                          {/* Success message */}
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="d-flex justify-content-end mt-5">
-                <button type="submit" className="btn btn-primary">
-                  Add New Guardians
-                </button>
-              </div>
-            </form>
+            </>
           </FullscreenModal>
-          
+          {show && (
+            <EditModal
+              style={{
+                minWidth: "70%",
+                maxWidth: "70%",
+                maxHeight: "90vh",
+                overflow: "hidden",
+                overflowY: "scroll",
+              }}
+              title="Edit guardians"
+              onClose={setShow}
+            >
+              <form className="from-scrollbar" onSubmit={updateHandleSubmit}>
+                <div className="row mx-5">
+                  {/* First Name input field */}
+                  <div className="mb-3 col-md-6">
+                    <label htmlFor="firstName" className="form-label">
+                      First Name <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      className="form-control"
+                      {...updateRegister("firstName", {
+                        required: "First name is required.",
+                      })}
+                      required
+                    />
+                    {updateErrors.firstName && (
+                      <p className="text-danger">
+                        {updateErrors.firstName.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Last Name input field */}
+                  <div className="mb-3 col-md-6">
+                    <label htmlFor="lastName" className="form-label">
+                      Last Name <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      className="form-control"
+                      {...updateRegister("lastName", {
+                        required: "Last name is required.",
+                      })}
+                      required
+                    />
+                    {updateErrors.lastName && (
+                      <p className="text-danger">
+                        {updateErrors.lastName.message}
+                      </p>
+                    )}
+                  </div>
+                  {/* Phone input field */}
+                  <div className="mb-3 col-md-6">
+                    <label htmlFor="phone" className="form-label">
+                      Phone <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      className="form-control"
+                      {...updateRegister("phone", {
+                        required: "Phone number is required.",
+                      })}
+                      required
+                    />
+                    {updateErrors.phone && (
+                      <p className="text-danger">
+                        {updateErrors.phone.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Address Line 1 input field */}
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="address1" className="form-label">
+                      Address Line 1 <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="address1"
+                      name="address1"
+                      className="form-control"
+                      {...updateRegister("address1", {
+                        required: "Address is required.",
+                      })}
+                      required
+                    />
+                    {updateErrors.address1 && (
+                      <p className="text-danger">
+                        {updateErrors.address1.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Address Line 2 input field */}
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="address2" className="form-label">
+                      Address Line 2
+                    </label>
+                    <input
+                      type="text"
+                      id="address2"
+                      name="address2"
+                      className="form-control"
+                      {...updateRegister("address2")}
+                    />
+                  </div>
+
+                  {/* State selection dropdown */}
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="state" className="form-label">
+                      State <span className="text-danger">*</span>
+                    </label>
+                    <StateSelect
+                      selectedState={selectedState}
+                      setSelectedState={setSelectedState}
+                    />
+                    {selectedState === "" && (
+                      <p className="text-danger">State is required!</p>
+                    )}
+                  </div>
+
+                  {/* City selection dropdown */}
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="city" className="form-label">
+                      City <span className="text-danger">*</span>
+                    </label>
+                    <CitySelect
+                      stateCode={selectedState}
+                      selectedCity={selectedCity}
+                      setSelectedCity={setSelectedCity}
+                    />
+                    {selectedCity === "" && (
+                      <p className="text-danger">City is required!</p>
+                    )}
+                  </div>
+
+                  {/* County selection dropdown */}
+                  <div className="mb-3 col-md-6">
+                    <label htmlFor="county" className="form-label">
+                      County <span className="text-danger">*</span>
+                    </label>
+                    <CountySelect
+                      selectedState={selectedState}
+                      selectedCounty={selectedCounty}
+                      setSelectedCounty={setSelectedCounty}
+                    />
+                    {selectedCounty === "" && (
+                      <p className="text-danger">County is required!</p>
+                    )}
+                  </div>
+
+                  {/* Zip Code input field */}
+                  <div className="mb-3 col-md-6">
+                    <label htmlFor="zip" className="form-label">
+                      Zip Code <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="zip"
+                      name="zip"
+                      className="form-control"
+                      {...updateRegister("zip", {
+                        required: "Zip code is required.",
+                      })}
+                      required
+                    />
+                    {updateErrors.zip && (
+                      <p className="text-danger">{updateErrors.zip.message}</p>
+                    )}
+                  </div>
+
+                  {/* Email input field */}
+
+                  {/* Submit button */}
+                  <div className="mb-3 col-md-12">
+                    <button
+                      type="submit"
+                      className="btn btn-primary text-uppercase w-100 fw-bolder"
+                      disabled={isUpdateLoading}
+                    >
+                      {isUpdateLoading ? "...Wait please" : "Edit Now"}
+                    </button>
+                  </div>
+
+                  {/* Error message */}
+                  {isError && (
+                    <div
+                      className="alert alert-danger text-center"
+                      role="alert"
+                    >
+                      {error?.data?.message ||
+                        "Failed to register. Please try again later."}
+                    </div>
+                  )}
+
+                  {/* Success message */}
+                </div>
+              </form>
+            </EditModal>
+          )}
           <button
             style={{ fontSize: "12px" }}
             className="btn btn-info create-new btn-danger waves-effect waves-light"
@@ -426,7 +784,7 @@ const Guardians = () => {
             type="button"
           >
             <span className="d-flex align-items-center">
-              <FaRegFolder size={22} className="me-1" />{" "}
+              {/* <FaRegFolder size={22} className="me-1" />{" "} */}
               <span className="d-none d-sm-inline-block">Active</span>
             </span>
           </button>
@@ -438,28 +796,35 @@ const Guardians = () => {
             type="button"
           >
             <span className="d-flex align-items-center">
-              <FaRegFolderOpen size={22} className="me-1" />{" "}
+              {/* <FaRegFolderOpen size={22} className="me-1" />{" "} */}
               <span className="d-none d-sm-inline-block">Inactive</span>
             </span>
           </button>
-          <FullscreenModal
-            className="col-md-8 "
-            title="Assign All Individual "
-            // onSave={handleSubmit}
-            id="guardiansassignallindividual"
-          >
-            <DataTable
-              columns={columns3}
-              data={data3}
-              tableName="guardiansAssignAllIndividual"
-              tableClassName="custom-table"
-            />
-          </FullscreenModal>
         </div>
         <div className="mt-5">
+          {updateData?.message && (
+            <div className="alert alert-success w-100 text-center">
+              {updateData?.message}
+            </div>
+          )}
+          {updateError?.data?.message && (
+            <div className="alert alert-success w-100 text-center">
+              {updateError?.data?.message}
+            </div>
+          )}
+          {deleteData?.message && (
+            <div className="alert alert-success w-100 text-center">
+              {deleteData?.message}
+            </div>
+          )}
+          {deleteError?.data?.message && (
+            <div className="alert alert-success w-100 text-center">
+              {deleteError?.data?.message}
+            </div>
+          )}
           <DataTable
             columns={columns}
-            data={data}
+            data={data?.payload?.users ?? []}
             tableClassName="custom-table"
             onEdit={handleEdit}
             tableName="guardians"

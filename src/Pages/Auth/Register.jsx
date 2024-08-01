@@ -12,7 +12,7 @@ import AuthLoader from "../../utils/Loaders/AuthLoader";
 
 const Register = () => {
   const [processRegister, { isError, error, isSuccess, isLoading }] =
-  useProcessRegisterMutation();
+    useProcessRegisterMutation();
 
   const [selectedRole, setSelectedRole] = useState("caregiver");
   const [selectedState, setSelectedState] = useState(null);
@@ -54,14 +54,14 @@ const Register = () => {
   } = useFormValidation(initialValues, registrationSchema, onSubmit);
 
   useEffect(() => {
-    if(isSuccess) {
-      reset()
-      setSelectedCity(null)
-      setSelectedCounty(null)
-      setSelectedRole(null)
-      setSelectedState(null)
+    if (isSuccess) {
+      reset();
+      setSelectedCity(null);
+      setSelectedCounty(null);
+      setSelectedRole(null);
+      setSelectedState(null);
     }
-  }, [isSuccess, reset])
+  }, [isSuccess, reset]);
 
   return (
     <>
@@ -91,7 +91,7 @@ const Register = () => {
                       onChange={(e) => setSelectedRole(e.target.value)}
                       required
                     >
-                      <option value="">--select user--</option>
+                      <option value="">select user</option>
                       <option value="caregiver">Caregiver</option>
                       <option value="patient">Patient</option>
                     </select>
@@ -202,7 +202,7 @@ const Register = () => {
                       selectedState={selectedState}
                       setSelectedState={setSelectedState}
                     />
-                    {selectedState==="" && (
+                    {selectedState === "" && (
                       <p className="text-danger">State is required!</p>
                     )}
                   </div>
@@ -217,7 +217,7 @@ const Register = () => {
                       selectedCity={selectedCity}
                       setSelectedCity={setSelectedCity}
                     />
-                    {selectedCity ==="" && (
+                    {selectedCity === "" && (
                       <p className="text-danger">City is required!</p>
                     )}
                   </div>
@@ -232,7 +232,7 @@ const Register = () => {
                       selectedCounty={selectedCounty}
                       setSelectedCounty={setSelectedCounty}
                     />
-                    {selectedCounty ==="" && (
+                    {selectedCounty === "" && (
                       <p className="text-danger">County is required!</p>
                     )}
                   </div>
@@ -444,7 +444,10 @@ const Register = () => {
 
                   {/* Error message */}
                   {isError && (
-                    <div className="alert alert-danger text-center" role="alert">
+                    <div
+                      className="alert alert-danger text-center"
+                      role="alert"
+                    >
                       {error?.data?.message ||
                         "Failed to register. Please try again later."}
                     </div>
@@ -452,16 +455,18 @@ const Register = () => {
 
                   {/* Success message */}
                   {isSuccess && (
-                    <div className="alert alert-success text-center" role="alert">
+                    <div
+                      className="alert alert-success text-center"
+                      role="alert"
+                    >
                       Registered successfully! Please check your email for
                       verification.
                     </div>
-
                   )}
-                   <p className="text-center">
-                <span>Already have an account?</span>{" "}
-                <Link to="/login">Login</Link>
-              </p>
+                  <p className="text-center">
+                    <span>Already have an account?</span>{" "}
+                    <Link to="/login">Login</Link>
+                  </p>
                 </div>
               </form>
             </div>

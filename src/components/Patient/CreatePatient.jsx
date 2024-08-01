@@ -401,7 +401,7 @@ const PatientProfile = () => {
     //       </h2>
     //       <div
     //         id="collapseOne"
-    //         className="accordion-collapse collapse       "
+    //         className="accordion-collapse collapse  show"  
     //         aria-labelledby="headingOne"
     //         data-bs-parent="#patientInfoAccordion"
     //       >

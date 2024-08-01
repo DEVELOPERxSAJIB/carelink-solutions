@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import AuthLoader from "../../utils/Loaders/AuthLoader";
 import PageHeader from "../../components/FormElement/PageHeader";
 
 import { useCreatePayerMutation } from "../../Redux/api/PayerApi";
 import Template from "./../../components/FormElement/Template";
 import { useNavigate } from 'react-router-dom';
-
+import { ReactToPrint } from "react-to-print";
+ 
 const CreatePayers = () => {
+  const componentRef= useRef()
   const [createPayer, { data, isLoading,isSuccess, error }] = useCreatePayerMutation();
   const localStoragePatient = JSON.parse(localStorage.getItem("Payer"));
   const navigate = useNavigate()
@@ -133,7 +135,7 @@ const CreatePayers = () => {
   },[isSuccess])
   if (isLoading) return <AuthLoader />;
   return (
-    <form onSubmit={handleSubmit} className="card">
+    <form ref={componentRef} onSubmit={handleSubmit} className="card">
       <PageHeader title="Payer Information" className="card-header fs-3" />
 
       <div className="card-body">
@@ -166,7 +168,7 @@ const CreatePayers = () => {
             </h2>
             <div
               id="collapsePrimary"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse show "
               aria-labelledby="headingPrimary"
               data-bs-parent="#payerAccordion"
             >
@@ -328,7 +330,7 @@ const CreatePayers = () => {
             </h2>
             <div
               id="collapsePayerComments"
-              className="accordion-collapse collapse"
+              className="accordion-collapse collapse show"
               aria-labelledby="headingPayerComments"
               data-bs-parent="#payerAccordion"
             >
@@ -377,7 +379,7 @@ const CreatePayers = () => {
             </h2>
             <div
               id="collapseUB04Locators"
-              className="accordion-collapse collapse"
+              className="accordion-collapse collapse show"
               aria-labelledby="headingUB04Locators"
               data-bs-parent="#payerAccordion"
             >
@@ -464,7 +466,7 @@ const CreatePayers = () => {
             </h2>
             <div
               id="collapseUB04Spans"
-              className="accordion-collapse collapse"
+              className="accordion-collapse collapse show"
               aria-labelledby="headingUB04Spans"
               data-bs-parent="#payerAccordion"
             >
@@ -571,7 +573,7 @@ const CreatePayers = () => {
             </h2>
             <div
               id="collapseConditionCodes"
-              className="accordion-collapse collapse"
+              className="accordion-collapse collapse show"
               aria-labelledby="headingConditionCodes"
               data-bs-parent="#payerAccordion"
             >
@@ -625,7 +627,7 @@ const CreatePayers = () => {
             </h2>
             <div
               id="collapseEmploymentAuto"
-              className="accordion-collapse collapse"
+              className="accordion-collapse collapse show"
               aria-labelledby="headingEmploymentAuto"
               data-bs-parent="#payerAccordion"
             >
@@ -755,7 +757,7 @@ const CreatePayers = () => {
               </label>
             </div>
           </div>
-          <div className="row">
+          <div className="row hide-on-print">
             <div className="col-md-12 d-flex gap-3 mt-5 gap-2">
               <button
                 className="btn btn-primary"
@@ -778,6 +780,13 @@ const CreatePayers = () => {
               >
                 Save and Exit
               </button>
+              <ReactToPrint
+                  trigger={() => (
+                    <button className="btn btn-primary">Print</button>
+                  )}
+                  content={() => componentRef.current}
+                  documentTitle="Patient"
+                />
             </div>
           </div>
         </div>

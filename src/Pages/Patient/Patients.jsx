@@ -904,11 +904,10 @@ const Patients = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    
     if (isDeleteSuccess) {
       refetch();
     }
-  }, [isDeleteSuccess,refetch]);
+  }, [isDeleteSuccess, refetch]);
 
   return (
     <>
@@ -930,7 +929,7 @@ const Patients = () => {
               {deleteError?.data?.message}
             </div>
           )}
-          
+
           <div className="card-body">
             <div className="gap-3 d-flex flex-wrap">
               <ExportButton
@@ -1006,7 +1005,6 @@ const Patients = () => {
                 <SectionNForm />
                 <SectionOForm />
                 <SectionQForm editId={editId} />
-                
               </EditModal>
             )}
             <div className="mt-5">

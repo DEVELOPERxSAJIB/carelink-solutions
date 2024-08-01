@@ -1,133 +1,141 @@
 import DataTable from "../../components/Tables/DynamicTable";
 import Accordion from "../../components/Tables/Accordion";
 import FullscreenModal from "../../components/Models/FullScreenModel";
-import useFormFields from "../../hook/useFormHook";
 import ExportButton from "../../components/Buttons/ExportButton";
 import TableHeader from "../../components/Tables/TableHeader";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
-  useDeleteRoleBasedUserMutation,
-  useRoleBasedUserQuery,
+  registrationSchema,
+  updateregistrationSchema,
+} from "../../utils/validationSchemas";
+import { useProcessRegisterMutation } from "../../Redux/api/UserApi";
+import StateSelect from "../../components/FormElement/StateSelect";
+import CitySelect from "../../components/FormElement/CitySelect";
+import CountySelect from "../../components/FormElement/CountySelect";
+
+import generateRandomId from "./../../utils/RandomIdGenerator";
+import useFormValidation from "./../../hook/useFormValidation";
+import {
+  useMeQuery,
+  useGetAllProviderQuery,
+  useUpdateProviderMutation,
+  useDeleteUserMutation,
 } from "../../Redux/api/UserApi";
+import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
-import { useEffect } from "react";
-
 const Provider = () => {
-  const { data, isLoading, refetch } = useRoleBasedUserQuery("provider");
+  const [deleteUser, { data: deleteData, isSuccess: isDeleteSuccess }] =
+    useDeleteUserMutation();
+
+  const { data: addedBy } = useMeQuery();
+  const { data, refetch } = useGetAllProviderQuery();
+  console.log(data);
   const [
-    deleteRoleBasedUser,
-    { data: deletedUser, isSuccess: isDeleteSuccess },
-  ] = useDeleteRoleBasedUserMutation();
-
-  const columns = [
-    { header: "Provider ID", field: "providerID" },
-    { header: "First Name", field: "firstName" },
-    { header: "Last Name", field: "lastName" },
-    { header: "Created By", field: "createdBy" },
-    { header: "Status", field: "status" },
-    {
-      header: "Stakeholders(s)",
-      field: "stakeholders",
-      render: (rowData) => (
-        <Accordion
-          tableHead={"Stakeholders Details"}
-          data={rowData.stakeholders}
-        />
-      ),
-    },
-    {
-      header: "Actions",
-      field: "actions",
-      render: (rowData) => (
-        <div className="d-flex gap-3 flex-wrap">
-          <button
-            className="btn btn-sm btn-secondary create-new btn-warning waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span>
-              <i className="ti ti-edit me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Edit</span>
-            </span>
-          </button>
-
-          <button
-            className="btn btn-sm btn-secondary create-new btn-danger waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span>
-              <i className="ti ti-user me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">View user</span>
-            </span>
-          </button>
-
-          <button
-            className="btn btn-sm btn-secondary create-new btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span>
-              <i className="ti ti-notes me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Assign Form</span>
-            </span>
-          </button>
-        </div>
-      ),
-    },
-  ];
-
-  const initialState = {
-    individualId: "",
-    gender: "Male",
-    dateOfBirth: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    county: "Adams County",
+    updateUser,
+    { data: updateData, isSuccess: isUpdateSuccess,isLoading:isUpdateLoading, error: updateError },
+  ] = useUpdateProviderMutation();
+  const [show, setShow] = useState(false);
+  const [editId, setEditId] = useState(null);
+  const initialValues = {
+    role: "provider",
+    phone: "",
     address1: "",
     address2: "",
-    country: "",
-    state: "",
-    city: "",
     zip: "",
-    phoneType: "",
-    phone: "",
-    cellPhone: "",
-    fax: "",
-    language: "",
-    medicaidNumber: "",
-    medicareNumber: "",
-    memo: "",
-    patientAddressPrimary: false,
-    patientAddressType: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    confirmPassword: "",
+    agreeTerms: false,
+    agreePrivacyPolicy: false,
+  };
+  const onSubmit = (data) => {
+    const updatedData = {
+      ...data,
+      role: "provider",
+      city: selectedCity,
+      county: selectedCounty,
+      state: selectedState,
+      providerID: generateRandomId("provider"),
+      addedBy: addedBy?.payload?.user?._id,
+    };
+    if (editId) {
+      updateUser({ userId: editId, userData: updatedData });
+    } else {
+      processRegister(updatedData);
+    }
   };
 
-  const [formData, handleChange, resetForm, isValid] =
-    useFormFields(initialState);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useFormValidation(initialValues, registrationSchema, onSubmit);
+  const {
+    register: updateRegister,
+    handleSubmit: updateHandleSubmit,
+    formState: { errors: updateErrors },
+    reset: updateReset,
+  } = useFormValidation(initialValues, updateregistrationSchema, onSubmit);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // handleSave(formData);
-    resetForm();
+  const handleEdit = (rowData) => {
+    setShow(true);
+    setEditId(rowData?._id);
+    updateReset({ ...rowData });
+    setSelectedState(rowData.state);
+    setSelectedCity(rowData.city);
+    setSelectedCounty(rowData.county);
   };
 
-  const handleDelete = (data) => {
+  const handleDelete = (rowData) => {
     swal({
       title: "Are you sure?",
-      text: "provider will be deleted forever",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
       icon: "warning",
       buttons: true,
-      // dangerMode: true,
-      primaryMode : true,
+      dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        deleteRoleBasedUser(data?._id);
+        deleteUser(rowData?._id);
       }
     });
   };
+
+  const [processRegister, { error, isSuccess, isLoading, isError }] =
+    useProcessRegisterMutation();
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedCounty, setSelectedCounty] = useState(null);
+
+  useEffect(() => {
+    if (isSuccess) {
+      reset();
+      setSelectedCity(null);
+      setSelectedCounty(null);
+      setSelectedState(null);
+    }
+    if (isUpdateSuccess) {
+      refetch();
+      setShow(false);
+    }
+  }, [isSuccess, reset, isUpdateSuccess, refetch]);
+
+  const columns = [
+    { header: "ID", field: "_id" },
+    { header: "First Name", field: "firstName" },
+    { header: "Last Name", field: "lastName" },
+    { header: "Email", field: "email" },
+    { header: "Phone", field: "phone" },
+    { header: "Address 1", field: "address1" },
+    { header: "Address 2", field: "address2" },
+    { header: "ZIP", field: "zip" },
+    { header: "Added By", field: "addedBy" },
+    { header: "Role", field: "role" },
+    { header: "Status", field: "status" },
+  ];
 
   useEffect(() => {
     if (isDeleteSuccess) {
@@ -144,379 +152,601 @@ const Provider = () => {
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
           <FullscreenModal
-            className="col-md-7  "
-            id="managesubusers"
-            title="Add Individual"
-            onSave={handleSubmit}
+            id="addnewprovider"
+            title="Add New Provider"
+            className="col-md-8"
+            style={{ width: "100%", minHeight: "60vh" }}
           >
-            <form className="w-100 from-scrollbar px-3">
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="individualId" className="form-label">
-                    Individual ID <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="individualId"
-                    name="individualId"
-                    className="form-control"
-                    value={formData.individualId}
-                    onChange={handleChange}
-                    placeholder="Individual ID"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="gender" className="form-label">
-                    Gender <span className="text-danger">*</span>
-                  </label>
-                  <select
-                    id="gender"
-                    name="gender"
-                    className="form-select"
-                    value={formData.gender}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="dateOfBirth" className="form-label">
-                    Date Of Birth <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="date"
-                    id="dateOfBirth"
-                    name="dateOfBirth"
-                    className="form-control"
-                    value={formData.dateOfBirth}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="firstName" className="form-label">
-                    First Name <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    className="form-control"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    placeholder="First Name"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="lastName" className="form-label">
-                    Last Name <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    className="form-control"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    placeholder="Last Name"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Email Address <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="form-control"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Email Address"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="county" className="form-label">
-                    County Served In <span className="text-danger">*</span>
-                  </label>
-                  <select
-                    id="county"
-                    name="county"
-                    className="form-select"
-                    value={formData.county}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="Adams County">Adams County</option>
-                    {/* Add more county options here */}
-                  </select>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="patientAddressType" className="form-label">
-                    Patient Address Type
-                  </label>
-                  <select
-                    id="patientAddressType"
-                    name="patientAddressType"
-                    className="form-select"
-                    value={formData.patientAddressType}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select</option>
-                    {/* Add more address type options here */}
-                  </select>
-                </div>
-                <div className="col-md-6 mb-3 form-check">
-                  <input
-                    type="checkbox"
-                    id="patientAddressPrimary"
-                    name="patientAddressPrimary"
-                    className="form-check-input"
-                    checked={formData.patientAddressPrimary}
-                    onChange={handleChange}
-                  />
-                  <label
-                    htmlFor="patientAddressPrimary"
-                    className="form-check-label"
-                  >
-                    Patient Address Is Primary
-                  </label>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="address1" className="form-label">
-                    Address1 <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="address1"
-                    name="address1"
-                    className="form-control"
-                    value={formData.address1}
-                    onChange={handleChange}
-                    placeholder="Address1"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="address2" className="form-label">
-                    Address2
-                  </label>
-                  <input
-                    type="text"
-                    id="address2"
-                    name="address2"
-                    className="form-control"
-                    value={formData.address2}
-                    onChange={handleChange}
-                    placeholder="Address2"
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="country" className="form-label">
-                    Country <span className="text-danger">*</span>
-                  </label>
-                  <select
-                    id="country"
-                    name="country"
-                    className="form-select"
-                    value={formData.country}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="">Select Country</option>
-                    {/* Add more country options here */}
-                  </select>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="state" className="form-label">
-                    State <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="state"
-                    name="state"
-                    className="form-control"
-                    value={formData.state}
-                    onChange={handleChange}
-                    placeholder="State"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="city" className="form-label">
-                    City <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="city"
-                    name="city"
-                    className="form-control"
-                    value={formData.city}
-                    onChange={handleChange}
-                    placeholder="City"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="zip" className="form-label">
-                    Zip <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="zip"
-                    name="zip"
-                    className="form-control"
-                    value={formData.zip}
-                    onChange={handleChange}
-                    placeholder="Zip"
-                    required
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="phoneType" className="form-label">
-                    Phone Type
-                  </label>
-                  <select
-                    id="phoneType"
-                    name="phoneType"
-                    className="form-select"
-                    value={formData.phoneType}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select Type</option>
-                    {/* Add more phone type options here */}
-                  </select>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="phone" className="form-label">
-                    Telephone
-                  </label>
-                  <input
-                    type="text"
-                    id="phone"
-                    name="phone"
-                    className="form-control"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="Phone"
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="cellPhone" className="form-label">
-                    Cell Phone
-                  </label>
-                  <input
-                    type="text"
-                    id="cellPhone"
-                    name="cellPhone"
-                    className="form-control"
-                    value={formData.cellPhone}
-                    onChange={handleChange}
-                    placeholder="Cell Phone"
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="fax" className="form-label">
-                    Fax
-                  </label>
-                  <input
-                    type="text"
-                    id="fax"
-                    name="fax"
-                    className="form-control"
-                    value={formData.fax}
-                    onChange={handleChange}
-                    placeholder="Fax"
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="language" className="form-label">
-                    Language
-                  </label>
-                  <input
-                    type="text"
-                    id="language"
-                    name="language"
-                    className="form-control"
-                    value={formData.language}
-                    onChange={handleChange}
-                    placeholder="Language"
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="medicaidNumber" className="form-label">
-                    Medicaid Number
-                  </label>
-                  <input
-                    type="text"
-                    id="medicaidNumber"
-                    name="medicaidNumber"
-                    className="form-control"
-                    value={formData.medicaidNumber}
-                    onChange={handleChange}
-                    placeholder="Medicaid Number"
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="medicareNumber" className="form-label">
-                    Medicare Number
-                  </label>
-                  <input
-                    type="text"
-                    id="medicareNumber"
-                    name="medicareNumber"
-                    className="form-control"
-                    value={formData.medicareNumber}
-                    onChange={handleChange}
-                    placeholder="Medicare Number"
-                  />
-                </div>
-                <div className="col-md-12 mb-3">
-                  <label htmlFor="memo" className="form-label">
-                    Memo
-                  </label>
-                  <textarea
-                    id="memo"
-                    name="memo"
-                    className="form-control"
-                    value={formData.memo}
-                    onChange={handleChange}
-                    placeholder="Memo"
-                  />
-                </div>
-                <div className="col-md-12 mb-3">
-                  <label htmlFor="uploadPicture" className="form-label">
-                    Upload Your Picture
-                  </label>
-                  <input
-                    type="file"
-                    id="uploadPicture"
-                    name="uploadPicture"
-                    className="form-control"
-                    onChange={handleChange}
-                    accept=".jpg,.png,.jpeg"
-                  />
+            <>
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                {data?.message && (
+                  <div className=" text-center alert alert-success w-100">
+                    {data?.message}
+                  </div>
+                )}
+                {error && (
+                  <div className=" text-center alert alert-success w-100">
+                    {error?.data?.message}
+                  </div>
+                )}
+                <div className="row justify-content-center d-flex align-items-center">
+                  <div className="col-md-12">
+                    <div className="card-body">
+                      <form className="from-scrollbar" onSubmit={handleSubmit}>
+                        <div className="row mx-5">
+                          <div className="mb-3 col-md-12">
+                            <select
+                              id="role"
+                              name="role"
+                              className="form-select"
+                              {...register("role")}
+                              value="provider"
+                              disabled
+                            >
+                              <option value="provider">Provider</option>
+                            </select>
+                          </div>
+
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="email" className="form-label">
+                              Email <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="email"
+                              id="email"
+                              name="email"
+                              className="form-control"
+                              {...register("email", {
+                                required: "Email is required.",
+                                pattern: {
+                                  value:
+                                    /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                                  message: "Invalid email address format.",
+                                },
+                              })}
+                              required
+                            />
+                            {errors.email && (
+                              <p className="text-danger">
+                                {errors.email.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* First Name input field */}
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="firstName" className="form-label">
+                              First Name <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              id="firstName"
+                              name="firstName"
+                              className="form-control"
+                              {...register("firstName", {
+                                required: "First name is required.",
+                              })}
+                              required
+                            />
+                            {errors.firstName && (
+                              <p className="text-danger">
+                                {errors.firstName.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Last Name input field */}
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="lastName" className="form-label">
+                              Last Name <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              id="lastName"
+                              name="lastName"
+                              className="form-control"
+                              {...register("lastName", {
+                                required: "Last name is required.",
+                              })}
+                              required
+                            />
+                            {errors.lastName && (
+                              <p className="text-danger">
+                                {errors.lastName.message}
+                              </p>
+                            )}
+                          </div>
+                          {/* Phone input field */}
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="phone" className="form-label">
+                              Phone <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="tel"
+                              id="phone"
+                              name="phone"
+                              className="form-control"
+                              {...register("phone", {
+                                required: "Phone number is required.",
+                              })}
+                              required
+                            />
+                            {errors.phone && (
+                              <p className="text-danger">
+                                {errors.phone.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Address Line 1 input field */}
+                          <div className="mb-3 col-md-12">
+                            <label htmlFor="address1" className="form-label">
+                              Address Line 1{" "}
+                              <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              id="address1"
+                              name="address1"
+                              className="form-control"
+                              {...register("address1", {
+                                required: "Address is required.",
+                              })}
+                              required
+                            />
+                            {errors.address1 && (
+                              <p className="text-danger">
+                                {errors.address1.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Address Line 2 input field */}
+                          <div className="mb-3 col-md-12">
+                            <label htmlFor="address2" className="form-label">
+                              Address Line 2
+                            </label>
+                            <input
+                              type="text"
+                              id="address2"
+                              name="address2"
+                              className="form-control"
+                              {...register("address2")}
+                            />
+                          </div>
+
+                          {/* State selection dropdown */}
+                          <div className="mb-3 col-md-12">
+                            <label htmlFor="state" className="form-label">
+                              State <span className="text-danger">*</span>
+                            </label>
+                            <StateSelect
+                              selectedState={selectedState}
+                              setSelectedState={setSelectedState}
+                            />
+                            {selectedState === "" && (
+                              <p className="text-danger">State is required!</p>
+                            )}
+                          </div>
+
+                          {/* City selection dropdown */}
+                          <div className="mb-3 col-md-12">
+                            <label htmlFor="city" className="form-label">
+                              City <span className="text-danger">*</span>
+                            </label>
+                            <CitySelect
+                              stateCode={selectedState}
+                              selectedCity={selectedCity}
+                              setSelectedCity={setSelectedCity}
+                            />
+                            {selectedCity === "" && (
+                              <p className="text-danger">City is required!</p>
+                            )}
+                          </div>
+
+                          {/* County selection dropdown */}
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="county" className="form-label">
+                              County <span className="text-danger">*</span>
+                            </label>
+                            <CountySelect
+                              selectedState={selectedState}
+                              selectedCounty={selectedCounty}
+                              setSelectedCounty={setSelectedCounty}
+                            />
+                            {selectedCounty === "" && (
+                              <p className="text-danger">County is required!</p>
+                            )}
+                          </div>
+
+                          {/* Zip Code input field */}
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="zip" className="form-label">
+                              Zip Code <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              id="zip"
+                              name="zip"
+                              className="form-control"
+                              {...register("zip", {
+                                required: "Zip code is required.",
+                              })}
+                              required
+                            />
+                            {errors.zip && (
+                              <p className="text-danger">
+                                {errors.zip.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Email input field */}
+
+                          {/* Password input field */}
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="password" className="form-label">
+                              Password <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="password"
+                              id="password"
+                              name="password"
+                              className="form-control"
+                              {...register("password", {
+                                required: "Password is required.",
+                                minLength: {
+                                  value: 8,
+                                  message:
+                                    "Password must be at least 8 characters.",
+                                },
+                              })}
+                              required
+                            />
+                            {errors.password && (
+                              <p className="text-danger">
+                                {errors.password.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Confirm Password input field */}
+                          <div className="mb-3 col-md-6">
+                            <label
+                              htmlFor="confirmPassword"
+                              className="form-label"
+                            >
+                              Confirm Password{" "}
+                              <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="password"
+                              id="confirmPassword"
+                              name="confirmPassword"
+                              className="form-control"
+                              {...register("confirmPassword", {
+                                required: "Please confirm your password.",
+                                validate: (value) =>
+                                  value === register.password ||
+                                  "Passwords do not match.",
+                              })}
+                              required
+                            />
+                            {errors.confirmPassword && (
+                              <p className="text-danger">
+                                {errors.confirmPassword.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Terms and Conditions checkbox */}
+                          <div className="mb-3 col-md-12">
+                            <div className="form-check">
+                              <input
+                                type="checkbox"
+                                id="agreeTerms"
+                                name="agreeTerms"
+                                className="form-check-input"
+                                {...register("agreeTerms", {
+                                  required:
+                                    "You must agree to the terms and conditions.",
+                                })}
+                                required
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="agreeTerms"
+                              >
+                                I agree to the{" "}
+                                <Link to="/terms" className="text-danger">
+                                  terms and conditions.
+                                </Link>
+                                <span className="text-danger">*</span>
+                              </label>
+                              {errors.agreeTerms && (
+                                <p className="text-danger">
+                                  {errors.agreeTerms.message}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Privacy Policy checkbox */}
+                          <div className="mb-3 col-md-12">
+                            <div className="form-check">
+                              <input
+                                type="checkbox"
+                                id="agreePrivacyPolicy"
+                                name="agreePrivacyPolicy"
+                                className="form-check-input"
+                                {...register("agreePrivacyPolicy", {
+                                  required:
+                                    "You must agree to the privacy policy.",
+                                })}
+                                required
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="agreePrivacyPolicy"
+                              >
+                                I agree to the{" "}
+                                <Link to="/privacy" className="text-danger">
+                                  privacy policy.
+                                </Link>
+                                <span className="text-danger">*</span>
+                              </label>
+                              {errors.agreePrivacyPolicy && (
+                                <p className="text-danger">
+                                  {errors.agreePrivacyPolicy.message}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Submit button */}
+                          <div className="mb-3 col-md-12">
+                            <button
+                              type="submit"
+                              className="btn btn-primary text-uppercase w-100 fw-bolder"
+                              disabled={isLoading}
+                            >
+                              {isLoading ? "...Wait please" : "Add Now"}
+                            </button>
+                          </div>
+
+                          {/* Error message */}
+                          {isError && (
+                            <div
+                              className="alert alert-danger text-center"
+                              role="alert"
+                            >
+                              {error?.data?.message ||
+                                "Failed to register. Please try again later."}
+                            </div>
+                          )}
+
+                          {/* Success message */}
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="d-flex justify-content-end">
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={!isValid}
-                >
-                  Add new Individual
-                </button>
-              </div>
-            </form>
+            </>
           </FullscreenModal>
-          <ExportButton data={data} columns={columns} fileName="individual" />
+          {show && (
+            <EditModal
+              style={{
+                minWidth: "70%",
+                maxWidth: "70%",
+                maxHeight: "90vh",
+                overflow: "hidden",
+                overflowY: "scroll",
+              }}
+              title="Edit Provider"
+              onClose={setShow}
+            >
+              <form className="from-scrollbar" onSubmit={updateHandleSubmit}>
+                <div className="row mx-5">
+                  {/* First Name input field */}
+                  <div className="mb-3 col-md-6">
+                    <label htmlFor="firstName" className="form-label">
+                      First Name <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      className="form-control"
+                      {...updateRegister("firstName", {
+                        required: "First name is required.",
+                      })}
+                      required
+                    />
+                    {updateErrors.firstName && (
+                      <p className="text-danger">
+                        {updateErrors.firstName.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Last Name input field */}
+                  <div className="mb-3 col-md-6">
+                    <label htmlFor="lastName" className="form-label">
+                      Last Name <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      className="form-control"
+                      {...updateRegister("lastName", {
+                        required: "Last name is required.",
+                      })}
+                      required
+                    />
+                    {updateErrors.lastName && (
+                      <p className="text-danger">
+                        {updateErrors.lastName.message}
+                      </p>
+                    )}
+                  </div>
+                  {/* Phone input field */}
+                  <div className="mb-3 col-md-6">
+                    <label htmlFor="phone" className="form-label">
+                      Phone <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      className="form-control"
+                      {...updateRegister("phone", {
+                        required: "Phone number is required.",
+                      })}
+                      required
+                    />
+                    {updateErrors.phone && (
+                      <p className="text-danger">
+                        {updateErrors.phone.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Address Line 1 input field */}
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="address1" className="form-label">
+                      Address Line 1 <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="address1"
+                      name="address1"
+                      className="form-control"
+                      {...updateRegister("address1", {
+                        required: "Address is required.",
+                      })}
+                      required
+                    />
+                    {updateErrors.address1 && (
+                      <p className="text-danger">
+                        {updateErrors.address1.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Address Line 2 input field */}
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="address2" className="form-label">
+                      Address Line 2
+                    </label>
+                    <input
+                      type="text"
+                      id="address2"
+                      name="address2"
+                      className="form-control"
+                      {...updateRegister("address2")}
+                    />
+                  </div>
+
+                  {/* State selection dropdown */}
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="state" className="form-label">
+                      State <span className="text-danger">*</span>
+                    </label>
+                    <StateSelect
+                      selectedState={selectedState}
+                      setSelectedState={setSelectedState}
+                    />
+                    {selectedState === "" && (
+                      <p className="text-danger">State is required!</p>
+                    )}
+                  </div>
+
+                  {/* City selection dropdown */}
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="city" className="form-label">
+                      City <span className="text-danger">*</span>
+                    </label>
+                    <CitySelect
+                      stateCode={selectedState}
+                      selectedCity={selectedCity}
+                      setSelectedCity={setSelectedCity}
+                    />
+                    {selectedCity === "" && (
+                      <p className="text-danger">City is required!</p>
+                    )}
+                  </div>
+
+                  {/* County selection dropdown */}
+                  <div className="mb-3 col-md-6">
+                    <label htmlFor="county" className="form-label">
+                      County <span className="text-danger">*</span>
+                    </label>
+                    <CountySelect
+                      selectedState={selectedState}
+                      selectedCounty={selectedCounty}
+                      setSelectedCounty={setSelectedCounty}
+                    />
+                    {selectedCounty === "" && (
+                      <p className="text-danger">County is required!</p>
+                    )}
+                  </div>
+
+                  {/* Zip Code input field */}
+                  <div className="mb-3 col-md-6">
+                    <label htmlFor="zip" className="form-label">
+                      Zip Code <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="zip"
+                      name="zip"
+                      className="form-control"
+                      {...updateRegister("zip", {
+                        required: "Zip code is required.",
+                      })}
+                      required
+                    />
+                    {updateErrors.zip && (
+                      <p className="text-danger">{updateErrors.zip.message}</p>
+                    )}
+                  </div>
+
+                  {/* Email input field */}
+
+                  {/* Submit button */}
+                  <div className="mb-3 col-md-12">
+                    <button
+                      type="submit"
+                      className="btn btn-primary text-uppercase w-100 fw-bolder"
+                      disabled={isUpdateLoading}
+                    >
+                      {isUpdateLoading ? "...Wait please" : "Edit Now"}
+                    </button>
+                  </div>
+
+                  {/* Error message */}
+                  {isError && (
+                    <div
+                      className="alert alert-danger text-center"
+                      role="alert"
+                    >
+                      {error?.data?.message ||
+                        "Failed to register. Please try again later."}
+                    </div>
+                  )}
+
+                  {/* Success message */}
+                </div>
+              </form>
+            </EditModal>
+          )}
+          <ExportButton
+            data={data?.payload?.user ?? []}
+            columns={columns}
+            fileName="individual"
+          />
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -542,11 +772,27 @@ const Provider = () => {
           </button>
         </div>
         <div className="mt-5">
+          {deleteData?.message && (
+            <div className="alert alert-success text-center">
+              {deleteData?.message}
+            </div>
+          )}
+          {updateData?.message && (
+            <div className="alert alert-success text-center">
+              {updateData?.message}
+            </div>
+          )}
+          {updateError?.data?.message && (
+            <div className="alert alert-success text-center">
+              {updateError?.data?.message}
+            </div>
+          )}
           <DataTable
             columns={columns}
-            data={Array.isArray(data?.payload?.user) ? data.payload.user : []}
+            data={Array.isArray(data?.payload?.users) ? data.payload.users : []}
             tableClassName="custom-table"
             onDelete={handleDelete}
+            onEdit={handleEdit}
           />
         </div>
       </div>

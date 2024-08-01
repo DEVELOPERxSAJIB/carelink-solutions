@@ -168,7 +168,7 @@
 
 /* For screens smaller than 480px (common mobile breakpoint) */
 .from-scrollbar {
-  max-height: 80vh;
+  max-height: 70vh;
   overflow-y: scroll;
   overflow-x: hidden;
   scrollbar-width: none;
@@ -394,7 +394,8 @@
     max-width: 100% !important;
     font-size: 10px !important; /* Adjust font size for better fit */
   }
-  th,td {
+  th,
+  td {
     font-size: 10px !important; /* Adjust font size for better fit */
   }
   .pagerect {
@@ -421,13 +422,40 @@
     border-top: none !important;
     border-right: none !important;
     border-left: none !important;
+    border-bottom: 1px solid rgb(179, 179, 179) !important;
     overflow: hidden;
     border-radius: 0px !important;
     -webkit-appearance: none !important; /* Safari and Chrome */
     -moz-appearance: none !important; /* Firefox */
     background-image: none !important;
   }
-
+  Select {
+    appearance: none !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom: 1px solid rgb(179, 179, 179) !important;
+    overflow: hidden;
+    border-radius: 0px !important;
+    -webkit-appearance: none !important; /* Safari and Chrome */
+    -moz-appearance: none !important; /* Firefox */
+    background-image: none !important;
+  }
+  .accordion-item {
+    box-shadow: none !important;
+  }
+  .accordion-header {
+    background-color: transparent !important;
+  }
+  textarea {
+    border: none !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
+    overflow: hidden;
+    border-radius: 0px !important;
+    border-bottom: 1px solid rgb(179, 179, 179) !important;
+  }
   input:not([type="checkbox"]):not([type="radio"]) {
     -webkit-appearance: none !important; /* Safari and Chrome */
     -moz-appearance: none !important; /* Firefox */
@@ -436,6 +464,7 @@
     border-right: none !important;
     border-left: none !important;
     border-radius: 0px !important;
+    border-bottom: 1px solid rgb(179, 179, 179) !important;
   }
   input::placeholder {
     color: transparent !important;

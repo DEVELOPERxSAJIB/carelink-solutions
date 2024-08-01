@@ -1,11 +1,14 @@
-import { useState ,useEffect} from "react";
+import { useState ,useEffect,useRef} from "react";
 import { useCreatePharmacyMutation } from "../../Redux/api/PharmacyApi";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import CitySelect from "./../../components/FormElement/CitySelect";
-
+import { ReactToPrint } from "react-to-print";
+ 
+ 
 const CreatePharmacy = () => {
+  const componentRef = useRef()
   const [createPharmacy, { data, isLoading, error }] =
     useCreatePharmacyMutation();
     const localStorageData = JSON.parse(localStorage.getItem("Pharmacy"))
@@ -92,7 +95,7 @@ const CreatePharmacy = () => {
   },[localStorageData])
   if (isLoading) return <AuthLoader />;
   return (
-    <form  onSubmit={handleSubmit} className="card">
+    <form ref={componentRef}  onSubmit={handleSubmit} className="card">
       <div className="card-body">
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <PageHeader title="Pharmacy" className="card-header fs-3" />
@@ -296,7 +299,7 @@ const CreatePharmacy = () => {
           </div>
 
           {/* Additional Pharmacies */}
-          <div className="accordion-item">
+          <div className="accordion-item ">
             <h2 className="accordion-header" id="headingAdditionalPharmacies">
               <button
                 className="accordion-button collapsed"
@@ -311,7 +314,7 @@ const CreatePharmacy = () => {
             </h2>
             <div
               id="collapseAdditionalPharmacies"
-              className="accordion-collapse collapse"
+              className="accordion-collapse collapse show "
               aria-labelledby="headingAdditionalPharmacies"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -336,7 +339,7 @@ const CreatePharmacy = () => {
                       />
                       <button
                         onClick={() => handleRemovePharmacy(index)}
-                        className="btn-sm btn mt-2 btn-danger"
+                        className="btn-sm btn mt-2 btn-danger hide-on-print"
                       >
                         remove
                       </button>
@@ -345,7 +348,7 @@ const CreatePharmacy = () => {
                 </div>
                 <button
                   type="button"
-                  className="btn btn-outline-primary"
+                  className="btn btn-outline-primary hide-on-print"
                   onClick={handleAddPharmacy}
                 >
                   Add Pharmacy
@@ -356,7 +359,7 @@ const CreatePharmacy = () => {
         </div>
 
         {/* Buttons */}
-        <div className="d-flex justify-content-end mt-3">
+        <div className="d-flex justify-content-end mt-3 hide-on-print">
           <button type="submit" className="btn btn-success me-2">
             save
           </button>
@@ -374,6 +377,13 @@ const CreatePharmacy = () => {
           >
             save and exit
           </button>
+          <ReactToPrint
+                  trigger={() => (
+                    <span className="btn btn-primary">Print</span>
+                  )}
+                  content={() => componentRef.current}
+                  documentTitle="Patient"
+                />
         </div>
       </div>
     </form>

@@ -69,7 +69,7 @@ const SectionBForm = () => {
           </h2>
           <div
             id="collapseB"
-            className="accordion-collapse collapse       "
+            className="accordion-collapse collapse  show"  
             aria-labelledby="headingB"
             data-bs-parent="#sectionBAccordion"
           >

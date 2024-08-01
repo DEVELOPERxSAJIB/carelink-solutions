@@ -1,12 +1,15 @@
-import { useState,useEffect } from "react";
+import { useState,useEffect,useRef } from "react";
 import CitySelect from "../../components/FormElement/CitySelect";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import { useCreateReferralMutation } from "../../Redux/api/ReferalInformation";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import { useNavigate } from 'react-router-dom';
+import { ReactToPrint } from "react-to-print";
+ 
 
 const CreateReferralInformation = () => {
+  const componentRef = useRef()
   const [createReferral, { data, error, isLoading,isSuccess }] =
     useCreateReferralMutation();
   const [formData, setFormData] = useState({
@@ -70,7 +73,7 @@ const CreateReferralInformation = () => {
   },[isSuccess])
   if (isLoading) return <AuthLoader />;
   return (
-    <div className="card">
+    <div ref={componentRef} className="card">
       <PageHeader title="Referral Information" className="card-header fs-3" />
       <div className="card-header">
         {data?.message && (
@@ -408,7 +411,7 @@ const CreateReferralInformation = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="row">
+          <div className="row hide-on-print">
             <div className="col-md-12">
               {" "}
               <button type="submit" className="btn btn-success me-2">
@@ -428,6 +431,13 @@ const CreateReferralInformation = () => {
               >
                 save and exit
               </button>
+              <ReactToPrint
+                  trigger={() => (
+                    <span className="btn btn-primary">Print</span>
+                  )}
+                  content={() => componentRef.current}
+                  documentTitle="Patient"
+                />
             </div>
           </div>
         </form>

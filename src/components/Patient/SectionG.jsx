@@ -52,7 +52,7 @@ const dispatch = useDispatch()
           </h2>
           <div
             id="collapseG"
-            className="accordion-collapse collapse       "
+            className="accordion-collapse collapse  show"  
             aria-labelledby="headingG"
             data-bs-parent="#accordionSectionG"
           >

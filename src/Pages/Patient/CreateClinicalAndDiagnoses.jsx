@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useRef} from "react";
 import Template from "./../../components/FormElement/Template";
 import { useCreateClinicalDiagnosisMutation } from "../../Redux/api/ClinicalDiagnosis";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
-
+import { ReactToPrint } from "react-to-print";
+ 
+  
 const CreateClinicalAndDiagnoses = () => {
+  const componentRef = useRef()
   const [createClinicalDiagnosis, { data, error, isLoading }] =
     useCreateClinicalDiagnosisMutation();
   const localStorageClinicalDiagnosis = JSON.parse(
@@ -132,7 +135,7 @@ const CreateClinicalAndDiagnoses = () => {
   if (isLoading) return <AuthLoader />;
 
   return (
-    <form onSubmit={handleAdmit} className="card">
+    <form ref={componentRef} onSubmit={handleAdmit} className="card">
       <div className="card-body">
         <PageHeader title="Clinical/Diagnosis" className="card-header fs-3" />
         {data?.message && (
@@ -159,7 +162,7 @@ const CreateClinicalAndDiagnoses = () => {
             </h2>
             <div
               id="collapseServiceRequired"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse show "
               aria-labelledby="headingServiceRequired"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -262,7 +265,7 @@ const CreateClinicalAndDiagnoses = () => {
             </h2>
             <div
               id="collapseDMENeeded"
-              className="accordion-collapse collapse"
+              className="accordion-collapse collapse show"
               aria-labelledby="headingDMENeeded"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -315,7 +318,7 @@ const CreateClinicalAndDiagnoses = () => {
             </h2>
             <div
               id="collapsePrimaryDiagnosis"
-              className="accordion-collapse collapse"
+              className="accordion-collapse collapse show"
               aria-labelledby="headingPrimaryDiagnosis"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -372,7 +375,7 @@ const CreateClinicalAndDiagnoses = () => {
             </h2>
             <div
               id="collapseOtherDiagnoses"
-              className="accordion-collapse collapse"
+              className="accordion-collapse collapse show"
               aria-labelledby="headingOtherDiagnoses"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -410,7 +413,7 @@ const CreateClinicalAndDiagnoses = () => {
                         placeholder="Enter code"
                       />
                     </div>
-                    <div className="col-md-12 mt-4">
+                    <div className="col-md-12 mt-4 hide-on-print">
                       <button
                         type="button"
                         className="btn btn-danger"
@@ -423,7 +426,7 @@ const CreateClinicalAndDiagnoses = () => {
                 ))}
                 <button
                   type="button"
-                  className="btn btn-primary"
+                  className="btn btn-primary hide-on-print"
                   onClick={handleAddDiagnosis}
                 >
                   Add Diagnosis
@@ -447,7 +450,7 @@ const CreateClinicalAndDiagnoses = () => {
             </h2>
             <div
               id="collapseClinicalComments"
-              className="accordion-collapse collapse"
+              className="accordion-collapse collapse show"
               aria-labelledby="headingClinicalComments"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -472,7 +475,7 @@ const CreateClinicalAndDiagnoses = () => {
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-end gap-3 mt-3">
+        <div className="d-flex hide-on-print justify-content-end gap-3 mt-3">
           <button
             type="button"
             className="btn btn-secondary"
@@ -490,6 +493,13 @@ const CreateClinicalAndDiagnoses = () => {
           <button type="submit" className="btn btn-success">
             save
           </button>
+          <ReactToPrint
+                  trigger={() => (
+                    <span className="btn btn-primary">Print</span>
+                  )}
+                  content={() => componentRef.current}
+                  documentTitle="Patient"
+                />
         </div>
       </div>
     </form>

@@ -95,7 +95,7 @@ const SectionGGForm = () => {
           </h2>
           <div
             id="collapseGG"
-            className="accordion-collapse collapse       "
+            className="accordion-collapse collapse  show"  
             aria-labelledby="headingGG"
           >
             <div ref={componentRef} className="accordion-body print-area">

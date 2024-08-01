@@ -81,7 +81,7 @@ const SectionQForm = ({ editId }) => {
 
           <div
             id="collapseQ"
-            className="accordion-collapse collapse       "
+            className="accordion-collapse collapse  show"  
             aria-labelledby="headingQ"
             data-bs-parent="#accordionSectionQ"
           >

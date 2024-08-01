@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCreateEmergencyMutation } from "../../Redux/api/EmergencyApi";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
@@ -6,8 +6,10 @@ import Template from "./../../components/FormElement/Template";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import CountySelect from "./../../components/FormElement/CountySelect";
 import CitySelect from "../../components/FormElement/CitySelect";
+import { ReactToPrint } from "react-to-print";
 
 const CreateEmergencyPreparedness = () => {
+  const componentRef = useRef();
   const [createEmergency, { data, isLoading, error }] =
     useCreateEmergencyMutation();
   const [city, setCity] = useState("");
@@ -130,10 +132,9 @@ const CreateEmergencyPreparedness = () => {
       }));
     }
   }, [template?.value]);
-
   if (isLoading) return <AuthLoader />;
   return (
-    <form onSubmit={handleSubmit} className="card">
+    <form ref={componentRef} onSubmit={handleSubmit} className="card">
       <div className="card-body">
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <PageHeader
@@ -167,7 +168,7 @@ const CreateEmergencyPreparedness = () => {
             </h2>
             <div
               id="collapseEmergencyTriage"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse show "
               aria-labelledby="headingEmergencyTriage"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -301,7 +302,7 @@ const CreateEmergencyPreparedness = () => {
             </h2>
             <div
               id="collapseAdditionalInfo"
-              className="accordion-collapse collapse"
+              className="accordion-collapse collapse show"
               aria-labelledby="headingAdditionalInfo"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -343,7 +344,7 @@ const CreateEmergencyPreparedness = () => {
             </h2>
             <div
               id="collapseEvacuation"
-              className="accordion-collapse collapse"
+              className="accordion-collapse collapse show"
               aria-labelledby="headingEvacuation"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -495,7 +496,7 @@ const CreateEmergencyPreparedness = () => {
             </h2>
             <div
               id="collapseComments"
-              className="accordion-collapse collapse"
+              className="accordion-collapse collapse show"
               aria-labelledby="headingComments"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -522,7 +523,7 @@ const CreateEmergencyPreparedness = () => {
             </div>
           </div>
           {/* Action Buttons */}
-          <div className="row mt-4">
+          <div className="row mt-4 hide-on-print">
             <div className="col-md-12 d-flex gap-3">
               <button type="submit" className="btn btn-info">
                 Save
@@ -541,6 +542,11 @@ const CreateEmergencyPreparedness = () => {
               >
                 Save & Continue
               </button>
+              <ReactToPrint
+                trigger={() => <span className="btn btn-primary">Print</span>}
+                content={() => componentRef.current}
+                documentTitle="Patient"
+              />
             </div>
           </div>
         </div>

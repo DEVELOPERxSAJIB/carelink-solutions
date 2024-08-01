@@ -41,6 +41,29 @@ export const registrationSchema = yup.object().shape({
     .boolean()
     .oneOf([true], "Must agree to privacy policy"),
 });
+export const updateregistrationSchema = yup.object().shape({
+  phone: yup
+    .string()
+    .required("Phone is required")
+    .min(11, "Phone must be at least 11 characters"),
+  address1: yup.string().required("Address Line 1 is required"),
+  address2: yup.string().notRequired(),
+  zip: yup
+    .string()
+    .required("Zip is required")
+    .min(4, "Zip must be at least 4 characters")
+    .max(10, "Zip must be at most 10 characters"),
+  firstName: yup
+    .string()
+    .required("First Name is required")
+    .min(3, "First Name must be at least 3 characters")
+    .max(32, "First Name must be at most 32 characters"),
+  lastName: yup
+    .string()
+    .required("Last Name is required")
+    .min(3, "Last Name must be at least 3 characters")
+    .max(32, "Last Name must be at most 32 characters"),
+});
 
 export const loginSchema = yup.object().shape({
   email: yup.string().required("Email or Username is required"),

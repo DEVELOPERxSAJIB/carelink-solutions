@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CitySelect from "../../components/FormElement/CitySelect";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import { useCreateContactMutation } from "../../Redux/api/Contact";
@@ -7,8 +7,10 @@ import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import Template from "./../../components/FormElement/Template";
 import { useNavigate } from "react-router-dom";
+import { ReactToPrint } from "react-to-print";
 
 const ContactForm = () => {
+  const componentRef = useRef();
   const [createContact, { data, isLoading, isSuccess, error }] =
     useCreateContactMutation();
   const navigate = useNavigate();
@@ -212,7 +214,7 @@ const ContactForm = () => {
         comments,
         remainingCharacters,
       };
-      console.log(contactData)
+      console.log(contactData);
       createContact(contactData);
     } catch (error) {
       console.error("Error creating contact:", error);
@@ -230,7 +232,7 @@ const ContactForm = () => {
   }, [isSuccess]);
   if (isLoading) return <AuthLoader />;
   return (
-    <form onSubmit={handleSubmit} className="card">
+    <form ref={componentRef} onSubmit={handleSubmit} className="card">
       <PageHeader title="Contact" className="card-header fs-3" />
 
       <div className="card-body">
@@ -556,7 +558,7 @@ const ContactForm = () => {
                 {index > 0 && (
                   <button
                     type="button"
-                    className="btn btn-sm btn-danger ms-2"
+                    className="btn btn-sm btn-danger ms-2 hide-on-print"
                     onClick={() => removeAdditionalContact(index)}
                   >
                     Remove
@@ -565,7 +567,7 @@ const ContactForm = () => {
               </h2>
               <div
                 id={`additionalCollapse-${index}`}
-                className="accordion-collapse collapse"
+                className="accordion-collapse collapse show"
                 aria-labelledby={`additionalHeading-${index}`}
                 data-bs-parent="#emergencyContactsAccordion"
               >
@@ -900,7 +902,7 @@ const ContactForm = () => {
               </div>
             </div>
           ))}
-          <div className="row my-5">
+          <div className="row my-5 hide-on-print">
             <div className="col-md-12">
               <a
                 type="button"
@@ -931,7 +933,7 @@ const ContactForm = () => {
             </h2>
             <div
               id="collapseRepresentativeContacted"
-              className="accordion-collapse collapse "
+              className="accordion-collapse collapse show "
               aria-labelledby="headingRepresentativeContacted"
               data-bs-parent="#admissionFormAccordion"
             >
@@ -1122,7 +1124,7 @@ const ContactForm = () => {
             </h2>
             <div
               id="collapseCAHPS"
-              className="accordion-collapse collapse "
+              className="accordion-collapse collapse show "
               aria-labelledby="headingCAHPS"
               data-bs-parent="#admissionFormAccordion"
             >
@@ -1518,10 +1520,16 @@ const ContactForm = () => {
                 rows="5"
               ></textarea>
             </div>
-
-            <button type="submit" className="btn btn-primary my-5 text-">
-              submit
-            </button>
+            <div className="d-flex align-items-center gap-4 hide-on-print">
+              <button type="submit" className="btn btn-primary my-5 text-">
+                submit
+              </button>
+              <ReactToPrint
+                trigger={() => <span className="btn btn-primary">Print</span>}
+                content={() => componentRef.current}
+                documentTitle="Patient"
+              />
+            </div>
           </div>
         </div>
       </div>
