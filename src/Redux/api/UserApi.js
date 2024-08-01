@@ -227,7 +227,7 @@ export const {
   useGetAllCaregiverQuery,
   useGetAllPatientQuery,
   useGetAllProviderQuery,
-  userGetAllCoadminQuery,
+  useGetAllCoadminQuery,
   useGetAllGuardianQuery,
   useGetAllSupportAdministratorQuery,
   useGetAllHealthcareProfessionalQuery,

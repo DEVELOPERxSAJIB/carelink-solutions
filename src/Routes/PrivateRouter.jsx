@@ -136,7 +136,7 @@ const privateRouter = [
             element: <Permissions />,
           },
           {
-            path: "/co-admins",
+            path: "/coadmins",
             element: <CoAdmin />,
           },
           {

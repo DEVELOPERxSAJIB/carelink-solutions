@@ -15,19 +15,24 @@ import generateRandomId from "./../../utils/RandomIdGenerator";
 import useFormValidation from "./../../hook/useFormValidation";
 import {
   useMeQuery,
-  useGetAllAdminQuery,
-  useUpdateAdminMutation,
+  useGetAllCoadminQuery,
+  useUpdateCoAdminMutation,
   useDeleteUserMutation,
 } from "../../Redux/api/UserApi";
 import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
 const CoAdmin = () => {
   const { data: addedBy } = useMeQuery();
-  const { data, refetch } = useGetAllAdminQuery();
+  const { data, refetch } = useGetAllCoadminQuery();
   const [
     updateUser,
-    { data: updateData, isSuccess: isUpdateSuccess,isLoading:isUpdateLoading, error: updateError },
-  ] = useUpdateAdminMutation();
+    {
+      data: updateData,
+      isSuccess: isUpdateSuccess,
+      isLoading: isUpdateLoading,
+      error: updateError,
+    },
+  ] = useUpdateCoAdminMutation();
   const [
     deleteUser,
     { data: deleteData, isSuccess: isDeleteSuccess, error: deleteError },
@@ -49,7 +54,7 @@ const CoAdmin = () => {
   ];
 
   const initialValues = {
-    role: "admin",
+    role: "coadmin",
     phone: "",
     address1: "",
     address2: "",
@@ -65,11 +70,11 @@ const CoAdmin = () => {
   const onSubmit = (data) => {
     const updatedData = {
       ...data,
-      role: "admin",
+      role: "coadmin",
       city: selectedCity,
       county: selectedCounty,
       state: selectedState,
-      adminID: generateRandomId("admin"),
+      coadminID: generateRandomId("coadmin"),
       addedBy: addedBy?.payload?.user?._id,
     };
     if (editId) {
@@ -124,7 +129,7 @@ const CoAdmin = () => {
   useEffect(() => {
     if (isSuccess) {
       reset();
-      refetch()
+      refetch();
       setSelectedCity(null);
       setSelectedCounty(null);
       setSelectedState(null);
@@ -177,10 +182,10 @@ const CoAdmin = () => {
                                 name="role"
                                 className="form-select"
                                 {...register("role")}
-                                value="admin"
+                                value="coadmin"
                                 disabled
                               >
-                                <option value="admin">Admin</option>
+                                <option value="coadmin">coadmin</option>
                               </select>
                             </div>
 
@@ -765,7 +770,7 @@ const CoAdmin = () => {
               </div>
             )}
             {updateError?.data?.message && (
-              <div className="alert text-center alert-error">
+              <div className="alert text-center alert-danger">
                 {updateError?.data?.message}
               </div>
             )}
@@ -775,7 +780,7 @@ const CoAdmin = () => {
               </div>
             )}
             {deleteError?.message && (
-              <div className="alert text-center alert-success">
+              <div className="alert text-center alert-danger">
                 {deleteError?.message}
               </div>
             )}

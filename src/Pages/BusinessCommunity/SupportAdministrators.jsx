@@ -809,7 +809,7 @@ const SupportAdministrators = () => {
             </div>
           )}
           {updateError?.data?.message && (
-            <div className="alert alert-success w-100 text-center">
+            <div className="alert alert-danger w-100 text-center">
               {updateError?.data?.message}
             </div>
           )}
@@ -819,7 +819,7 @@ const SupportAdministrators = () => {
             </div>
           )}
           {deleteError?.data?.message && (
-            <div className="alert alert-success w-100 text-center">
+            <div className="alert alert-danger w-100 text-center">
               {deleteError?.data?.message}
             </div>
           )}

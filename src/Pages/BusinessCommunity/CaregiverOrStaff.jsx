@@ -166,12 +166,12 @@ const CaregiverOrStaff = () => {
               <>
                 <div className="d-flex flex-column w-100 justify-content-center align-items-center">
                   {data?.message && (
-                    <div className="alert alert-success w-100">
+                    <div className="alert  alert-success w-100">
                       {data?.message}
                     </div>
                   )}
                   {error && (
-                    <div className="alert alert-success w-100">
+                    <div className="alert  alert-danger w-100">
                       {error?.data?.message}
                     </div>
                   )}
@@ -531,8 +531,8 @@ const CaregiverOrStaff = () => {
                             {/* Error message */}
                             {isError && (
                               <div
-                                className="alert alert-danger text-center"
-                                role="alert"
+                                className="alert  alert-danger text-center"
+                                role="alert "
                               >
                                 {error?.data?.message ||
                                   "Failed to register. Please try again later."}
@@ -746,8 +746,8 @@ const CaregiverOrStaff = () => {
                     {/* Error message */}
                     {isError && (
                       <div
-                        className="alert alert-danger text-center"
-                        role="alert"
+                        className="alert  alert-danger text-center"
+                        role="alert "
                       >
                         {error?.data?.message ||
                           "Failed to register. Please try again later."}
@@ -888,22 +888,22 @@ const CaregiverOrStaff = () => {
           </div>
           <div className="mt-5 w-100">
             {updateData?.message && (
-              <div className="alert alert-success w-100 text-center">
+              <div className="alert  alert-success w-100 text-center">
                 {updateData?.message}
               </div>
             )}
             {updateError?.data?.message && (
-              <div className="alert alert-success w-100 text-center">
+              <div className="alert  alert-danger w-100 text-center">
                 {updateError?.data?.message}
               </div>
             )}
             {deleteData?.message && (
-              <div className="alert alert-success w-100 text-center">
+              <div className="alert  alert-success w-100 text-center">
                 {deleteData?.message}
               </div>
             )}
             {deleteError?.data?.message && (
-              <div className="alert alert-success w-100 text-center">
+              <div className="alert  alert-danger w-100 text-center">
                 {deleteError?.data?.message}
               </div>
             )}

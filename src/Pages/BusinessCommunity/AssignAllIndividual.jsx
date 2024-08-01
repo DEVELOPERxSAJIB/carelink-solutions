@@ -1,6 +1,6 @@
 import React from "react";
 import DataTable from "./../../components/Tables/DynamicTable";
-import TableHeader from './../../components/Tables/TableHeader';
+import TableHeader from "./../../components/Tables/TableHeader";
 
 const AssignAllIndividual = () => {
   const columns3 = [
@@ -18,13 +18,13 @@ const AssignAllIndividual = () => {
   ];
   return (
     <div className="card">
-      <TableHeader title="Assign all individual" className="card-header pb-0"/>
+      <TableHeader title="Assign all individual" className="card-header pb-0" />
       <div className="card-body">
         <DataTable
           columns={columns3}
           data={data3}
           tableClassName="custom-table"
-           tableName="assignAll"
+          tableName="assignAll"
         />
       </div>
     </div>
