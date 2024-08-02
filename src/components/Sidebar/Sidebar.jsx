@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../../public/logo.png";
 
-const Sidebar = ({ userRole }) => {
+const Sidebar = ({ userRole, permissions }) => {
   const [isActive, setIsActive] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null);
   const location = useLocation();
@@ -18,20 +18,11 @@ const Sidebar = ({ userRole }) => {
     setActiveMenu(activeMenu === index ? null : index);
   };
 
-  // Filter menu items based on user role
-  const filterMenuItems = (menuItems, userRole) => {
-    return menuItems.filter(
-      (item) => !item.roles || item.roles.includes(userRole)
-    );
-  };
-
-  // Menu items configuration
-  // Menu items configuration
   const sideBarMenu = [
     {
       title: "Settings",
       href: "",
-      roles: ["superadmin", "admin"],
+      // roles: ["superadmin", "admin"],
       icon: (
         <i className="menu-icon tf-icons ti ti-settings menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -52,7 +43,7 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Manage Co-Admins",
       href: "",
-      roles: ["superadmin"],
+      // roles: ["superadmin"],
       icon: (
         <i className="menu-icon tf-icons ti ti-users menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -61,7 +52,7 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Add New Mileage",
       href: "/add-new-mileage",
-      roles: ["provider", "superadmin"],
+      // roles: ["provider", "superadmin"],
       icon: (
         <i className="menu-icon tf-icons ti ti-car menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -70,18 +61,18 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Patient",
       href: "",
-      roles: [
-        "superadmin",
-        "admin",
-        "provider",
-        "caregiver",
-        "patient",
-        "coadmin",
-        "supportadministrator",
-        "healthcareprofessional",
-        "compliance",
-        "guardian",
-      ],
+      // roles: [
+      //   "superadmin",
+      //   "admin",
+      //   "provider",
+      //   "caregiver",
+      //   "patient",
+      //   "coadmin",
+      //   "supportadministrator",
+      //   "healthcareprofessional",
+      //   "compliance",
+      //   "guardian",
+      // ],
       icon: (
         <i className="menu-icon tf-icons ti ti-user-plus menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -109,15 +100,15 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Providers",
       href: "",
-      roles: [
-        "superadmin",
-        "admin",
-        "provider",
-        "coadmin",
-        "supportadministrator",
-        "healthcareprofessional",
-        "compliance",
-      ],
+      // roles: [
+      //   "superadmin",
+      //   "admin",
+      //   "provider",
+      //   "coadmin",
+      //   "supportadministrator",
+      //   "healthcareprofessional",
+      //   "compliance",
+      // ],
       icon: (
         <i className="menu-icon tf-icons ti ti-user-plus menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -133,16 +124,16 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Business Community",
       href: "",
-      roles: [
-        "superadmin",
-        "admin",
-        "provider",
-        "coadmin",
-        "supportadministrator",
-        "healthcareprofessional",
-        "compliance",
-        "guardian",
-      ],
+      // roles: [
+      //   "superadmin",
+      //   "admin",
+      //   "provider",
+      //   "coadmin",
+      //   "supportadministrator",
+      //   "healthcareprofessional",
+      //   "compliance",
+      //   "guardian",
+      // ],
       icon: (
         <i className="menu-icon tf-icons ti ti-users menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -166,7 +157,7 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Location of Service",
       href: "/location-of-service",
-      roles: ["superadmin", "admin", "provider", "caregiver", "coadmin"],
+      // roles: ["superadmin", "admin", "provider", "caregiver", "coadmin"],
       icon: (
         <i className="menu-icon tf-icons ti ti-location menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -175,7 +166,7 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Push Notes",
       href: "/push-notes",
-      roles: ["superadmin", "admin", "provider", "caregiver", "coadmin"],
+      // roles: ["superadmin", "admin", "provider", "caregiver", "coadmin"],
       icon: (
         <i className="menu-icon tf-icons ti ti-file-description menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -184,7 +175,7 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Clock in/out Group",
       href: "",
-      roles: ["provider", "caregiver", "superadmin", "coadmin"],
+      // roles: ["provider", "caregiver", "superadmin", "coadmin"],
       icon: (
         <i className="menu-icon tf-icons ti ti-bell menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -197,7 +188,7 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Timesheet",
       href: "/timesheet",
-      roles: ["superadmin", "admin", "provider", "caregiver", "coadmin"],
+      // roles: ["superadmin", "admin", "provider", "caregiver", "coadmin"],
       icon: (
         <i className="menu-icon tf-icons ti ti-calendar menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -206,7 +197,7 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Mileage Log",
       href: "",
-      roles: ["provider", "caregiver", "superadmin", "coadmin"],
+      // roles: ["provider", "caregiver", "superadmin", "coadmin"],
       icon: (
         <i className="menu-icon tf-icons ti ti-calendar menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -223,7 +214,7 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Folders",
       href: "",
-      roles: ["superadmin", "admin", "coadmin"],
+      // roles: ["superadmin", "admin", "coadmin"],
       icon: (
         <i className="menu-icon tf-icons ti ti-folder menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -232,7 +223,7 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Community Integration",
       href: "",
-      roles: ["superadmin", "admin", "provider", "caregiver", "coadmin"],
+      // roles: ["superadmin", "admin", "provider", "caregiver", "coadmin"],
       icon: (
         <i className="menu-icon tf-icons ti ti-bell menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -259,7 +250,7 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Employee Record",
       href: "",
-      roles: ["superadmin", "admin", "coadmin"],
+      // roles: ["superadmin", "admin", "coadmin"],
       icon: (
         <i className="menu-icon tf-icons ti ti-folder menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -280,7 +271,7 @@ const Sidebar = ({ userRole }) => {
     {
       title: "Non-Medical Transportation",
       href: "",
-      roles: ["provider", "caregiver", "superadmin", "coadmin"],
+      // roles: ["provider", "caregiver", "superadmin", "coadmin"],
       icon: (
         <i className="menu-icon tf-icons ti ti-car menu-toggle-icon d-xl-block align-middle"></i>
       ),
@@ -327,8 +318,6 @@ const Sidebar = ({ userRole }) => {
     },
   ];
 
-  // Filtered menu items based on user role
-  const filteredMenu = filterMenuItems(sideBarMenu, userRole);
   const handleClose = (e) => {
     if (menuRef.current && !menuRef.current.contains(e.target)) {
       document.documentElement.classList.remove("layout-menu-expanded");
@@ -354,14 +343,17 @@ const Sidebar = ({ userRole }) => {
     >
       <div className="app-brand">
         <a href="/" className="app-brand-link">
-          <span className="app-brand-logo demo">
+          <span className="app-brand-logo demo d-block">
             <img
               style={{ width: "40px", height: "30px" }}
               src={logo}
               alt="Logo"
             />
           </span>
-          <span className="app-brand-text demo menu-text fw-bold">
+          <span
+            style={{ paddingLeft: "10px", display: "inline-block" }}
+            className="app-brand-text demo d-block menu-text fw-bold"
+          >
             CareLink
           </span>
         </a>
@@ -375,7 +367,7 @@ const Sidebar = ({ userRole }) => {
       </div>
 
       <ul className="menu-inner py-1">
-        {filteredMenu.map((menuItem, index) => (
+        {sideBarMenu.map((menuItem, index) => (
           <li
             className={`menu-item ${
               location.pathname === menuItem.href ? "active" : ""
@@ -400,18 +392,37 @@ const Sidebar = ({ userRole }) => {
                       }`}
                       key={subIndex}
                     >
-                      <Link to={subItem.href} className="menu-link">
+                      <Link
+                        to={
+                          permissions?.includes(subItem.href)
+                            ? subItem.href
+                            : "/not-found"
+                        }
+                        className="menu-link"
+                      >
                         {subItem.icon}
-                        <div>{subItem.title}</div>
+                        <div>
+                          { subItem.title
+                            }
+                        </div>
                       </Link>
                     </li>
                   ))}
                 </ul>
               </>
             ) : (
-              <Link to={menuItem.href} className="menu-link">
+              <Link
+                to={
+                  permissions?.includes(menuItem.href)
+                    ? menuItem.href
+                    : "/not-found"
+                }
+                className="menu-link"
+              >
                 {menuItem.icon}
-                <div>{menuItem.title}</div>
+                <div>
+                  { menuItem.title }
+                </div>
               </Link>
             )}
           </li>

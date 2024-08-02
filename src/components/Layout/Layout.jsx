@@ -16,7 +16,10 @@ const Layout = () => {
   return (
     <div className="layout-wrapper layout-content-navbar  ">
       <div className="layout-container">
-        <Sidebar userRole={data?.payload?.user?.role} />
+        <Sidebar
+          userRole={data?.payload?.user?.role}
+          permissions={data?.payload?.user?.permissions}
+        />
         <div className="layout-page">
           <Navbar />
           <div className="content-wrapper">

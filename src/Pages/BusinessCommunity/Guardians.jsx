@@ -9,6 +9,9 @@ import FullscreenModal from "../../components/Models/FullScreenModel";
 import TableHeader from "../../components/Tables/TableHeader";
 import generateRandomId from "./../../utils/RandomIdGenerator";
 import useFormValidation from "./../../hook/useFormValidation";
+import MultiSelect from "./../../components/FormElement/MultiSelect";
+import curdOption from "./../../utils/CurdOptions";
+import pagesOption from "./../../utils/PagesOptions";
 import {
   useMeQuery,
   useGetAllGuardianQuery,
@@ -68,6 +71,9 @@ const Guardians = () => {
     agreeTerms: false,
     agreePrivacyPolicy: false,
   };
+  const [selectedCurd, setSelectCurd] = useState([]);
+
+  const [selectedPages, setSelectedPages] = useState(["all"]);
   const onSubmit = (data) => {
     const updatedData = {
       ...data,
@@ -77,6 +83,9 @@ const Guardians = () => {
       state: selectedState,
       guardiansID: generateRandomId("guardian"),
       addedBy: addedBy?.payload?.user?._id,
+    
+     permissions: selectedPages.map((item) => item.value),
+          curd: selectedCurd.map((item) => item.value),
     };
     if (editId) {
       updateGuardian({ userId: editId, userData: updatedData });
@@ -105,6 +114,8 @@ const Guardians = () => {
     setSelectedState(rowData.state);
     setSelectedCity(rowData.city);
     setSelectedCounty(rowData.county);
+    setSelectCurd(rowData?.curd?.map((item)=>({label:item,value:item})))
+    setSelectedPages(rowData?.permissions?.map((item)=>({label:item?.slice(1),value:item})))
   };
 
   const handleDelete = (rowData) => {
@@ -378,7 +389,26 @@ const Guardians = () => {
                               </p>
                             )}
                           </div>
-
+                          <div className="mb-3 col-md-6">
+                      <label htmlFor="confirmPassword" className="form-label">
+                        Pages permissions
+                      </label>
+                      <MultiSelect
+                        options={curdOption}
+                        value={selectedCurd}
+                        onChange={setSelectCurd}
+                      />
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="confirmPassword" className="form-label">
+                        Pages permissions
+                      </label>
+                      <MultiSelect
+                        options={pagesOption}
+                        value={selectedPages}
+                        onChange={setSelectedPages}
+                      />
+                    </div>
                           {/* Email input field */}
 
                           {/* Password input field */}
@@ -710,8 +740,27 @@ const Guardians = () => {
                       <p className="text-danger">{updateErrors.zip.message}</p>
                     )}
                   </div>
-
-                  {/* Email input field */}
+                  <div className="mb-3 col-md-6">
+                      <label htmlFor="confirmPassword" className="form-label">
+                        Pages permissions
+                      </label>
+                      <MultiSelect
+                        options={curdOption}
+                        value={selectedCurd}
+                        onChange={setSelectCurd}
+                      />
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="confirmPassword" className="form-label">
+                        Pages permissions
+                      </label>
+                      <MultiSelect
+                        options={pagesOption}
+                        value={selectedPages}
+                        onChange={setSelectedPages}
+                      />
+                    </div>
+                  
 
                   {/* Submit button */}
                   <div className="mb-3 col-md-12">

@@ -21,6 +21,9 @@ import {
 } from "../../Redux/api/UserApi";
 import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
+import MultiSelect from "./../../components/FormElement/MultiSelect";
+import curdOption from "./../../utils/CurdOptions";
+import pagesOption from "./../../utils/PagesOptions";
 const CoAdmin = () => {
   const { data: addedBy } = useMeQuery();
   const { data, refetch } = useGetAllCoadminQuery();
@@ -67,7 +70,13 @@ const CoAdmin = () => {
     agreeTerms: false,
     agreePrivacyPolicy: false,
   };
+
+  const [selectedCurd, setSelectCurd] = useState([]);
+
+  const [selectedPages, setSelectedPages] = useState(["all"]);
+
   const onSubmit = (data) => {
+
     const updatedData = {
       ...data,
       role: "coadmin",
@@ -76,6 +85,8 @@ const CoAdmin = () => {
       state: selectedState,
       coadminID: generateRandomId("coadmin"),
       addedBy: addedBy?.payload?.user?._id,
+      permissions: selectedPages.map((item) => item.value),
+      curd: selectedCurd.map((item) => item.value),
     };
     if (editId) {
       updateUser({ userId: editId, userData: updatedData });
@@ -104,6 +115,8 @@ const CoAdmin = () => {
     setSelectedState(rowData.state);
     setSelectedCity(rowData.city);
     setSelectedCounty(rowData.county);
+    setSelectCurd(rowData?.curd?.map((item)=>({label:item,value:item})))
+setSelectedPages(rowData?.permissions?.map((item)=>({label:item?.slice(1),value:item})))
   };
 
   const handleDelete = (rowData) => {
@@ -445,6 +458,32 @@ const CoAdmin = () => {
                                 </p>
                               )}
                             </div>
+                            <div className="mb-3 col-md-6">
+                              <label
+                                htmlFor="confirmPassword"
+                                className="form-label"
+                              >
+                                Pages permissions
+                              </label>
+                              <MultiSelect
+                                options={curdOption}
+                                value={selectedCurd}
+                                onChange={setSelectCurd}
+                              />
+                            </div>
+                            <div className="mb-3 col-md-6">
+                              <label
+                                htmlFor="confirmPassword"
+                                className="form-label"
+                              >
+                                Pages permissions
+                              </label>
+                              <MultiSelect
+                                options={pagesOption}
+                                value={selectedPages}
+                                onChange={setSelectedPages}
+                              />
+                            </div>
 
                             {/* Terms and Conditions checkbox */}
                             <div className="mb-3 col-md-12">
@@ -721,7 +760,26 @@ const CoAdmin = () => {
                         </p>
                       )}
                     </div>
-
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="confirmPassword" className="form-label">
+                        Pages permissions
+                      </label>
+                      <MultiSelect
+                        options={curdOption}
+                        value={selectedCurd}
+                        onChange={setSelectCurd}
+                      />
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="confirmPassword" className="form-label">
+                        Pages permissions
+                      </label>
+                      <MultiSelect
+                        options={pagesOption}
+                        value={selectedPages}
+                        onChange={setSelectedPages}
+                      />
+                    </div>
                     {/* Email input field */}
 
                     {/* Submit button */}

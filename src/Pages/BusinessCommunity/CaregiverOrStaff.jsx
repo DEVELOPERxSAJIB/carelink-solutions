@@ -11,6 +11,9 @@ import FullscreenModal from "../../components/Models/FullScreenModel";
 import TableHeader from "../../components/Tables/TableHeader";
 import generateRandomId from "./../../utils/RandomIdGenerator";
 import useFormValidation from "./../../hook/useFormValidation";
+import MultiSelect from "./../../components/FormElement/MultiSelect";
+import curdOption from "./../../utils/CurdOptions";
+import pagesOption from "./../../utils/PagesOptions";
 import {
   useMeQuery,
   useGetAllCaregiverQuery,
@@ -71,6 +74,9 @@ const CaregiverOrStaff = () => {
     agreeTerms: false,
     agreePrivacyPolicy: false,
   };
+  const [selectedCurd, setSelectCurd] = useState([]);
+
+  const [selectedPages, setSelectedPages] = useState(["all"]);
   const onSubmit = (data) => {
     const updatedData = {
       ...data,
@@ -80,6 +86,9 @@ const CaregiverOrStaff = () => {
       state: selectedState,
       caregiverID: generateRandomId("caregiver"),
       addedBy: addedBy?.payload?.user?._id,
+
+      permissions: selectedPages.map((item) => item.value),
+      curd: selectedCurd.map((item) => item.value),
     };
     if (editId) {
       updateUser({ userId: editId, userData: updatedData });
@@ -108,6 +117,13 @@ const CaregiverOrStaff = () => {
     setSelectedState(rowData.state);
     setSelectedCity(rowData.city);
     setSelectedCounty(rowData.county);
+    setSelectCurd(rowData?.curd?.map((item) => ({ label: item, value: item })));
+    setSelectedPages(
+      rowData?.permissions?.map((item) => ({
+        label: item?.slice(1),
+        value: item,
+      }))
+    );
   };
 
   const handleDelete = (rowData) => {
@@ -394,7 +410,32 @@ const CaregiverOrStaff = () => {
                                 </p>
                               )}
                             </div>
-
+                            <div className="mb-3 col-md-6">
+                              <label
+                                htmlFor="confirmPassword"
+                                className="form-label"
+                              >
+                                Pages permissions
+                              </label>
+                              <MultiSelect
+                                options={curdOption}
+                                value={selectedCurd}
+                                onChange={setSelectCurd}
+                              />
+                            </div>
+                            <div className="mb-3 col-md-6">
+                              <label
+                                htmlFor="confirmPassword"
+                                className="form-label"
+                              >
+                                Pages permissions
+                              </label>
+                              <MultiSelect
+                                options={pagesOption}
+                                value={selectedPages}
+                                onChange={setSelectedPages}
+                              />
+                            </div>
                             {/* Email input field */}
 
                             {/* Password input field */}
@@ -729,7 +770,26 @@ const CaregiverOrStaff = () => {
                         </p>
                       )}
                     </div>
-
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="confirmPassword" className="form-label">
+                        Pages permissions
+                      </label>
+                      <MultiSelect
+                        options={curdOption}
+                        value={selectedCurd}
+                        onChange={setSelectCurd}
+                      />
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="confirmPassword" className="form-label">
+                        Pages permissions
+                      </label>
+                      <MultiSelect
+                        options={pagesOption}
+                        value={selectedPages}
+                        onChange={setSelectedPages}
+                      />
+                    </div>
                     {/* Email input field */}
 
                     {/* Submit button */}
@@ -784,6 +844,10 @@ const CaregiverOrStaff = () => {
               type="file"
               id="importcsv"
             />
+            import MultiSelect from
+            './../../components/FormElement/MultiSelect'; import curdOption from
+            './../../utils/CurdOptions'; import pagesOption from
+            './../../utils/PagesOptions';
             <button
               style={{ fontSize: "12px" }}
               className="btn btn-warning waves-effect waves-light"

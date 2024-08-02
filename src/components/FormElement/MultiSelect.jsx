@@ -6,6 +6,7 @@ const MultiSelect = ({ options, value, onChange }) => {
   return (
     <Select
       isMulti
+      closeMenuOnSelect={false}
       options={options}
       value={value}
       onChange={onChange}
