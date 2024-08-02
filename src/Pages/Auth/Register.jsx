@@ -13,13 +13,11 @@ import AuthLoader from "../../utils/Loaders/AuthLoader";
 const Register = () => {
   const [processRegister, { isError, error, isSuccess, isLoading }] =
     useProcessRegisterMutation();
-
-  const [selectedRole, setSelectedRole] = useState("caregiver");
   const [selectedState, setSelectedState] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedCounty, setSelectedCounty] = useState(null);
   const initialValues = {
-    role: "",
+    role: "superadmin",
     phone: "",
     address1: "",
     address2: "",
@@ -35,9 +33,7 @@ const Register = () => {
   const onSubmit = (data) => {
     const updatedData = {
       ...data,
-      caregiverID:
-        data.role === "caregiver" ? generateRandomId("caregiver") : "",
-      patientID: data.role === "patient" ? generateRandomId("patient") : "",
+      caregiverID: generateRandomId("superadmin"),
       city: selectedCity,
       county: selectedCounty,
       state: selectedState,
@@ -58,7 +54,6 @@ const Register = () => {
       reset();
       setSelectedCity(null);
       setSelectedCounty(null);
-      setSelectedRole(null);
       setSelectedState(null);
     }
   }, [isSuccess, reset]);
@@ -77,67 +72,21 @@ const Register = () => {
               <form className="from-scrollbar" onSubmit={handleSubmit}>
                 <div className="row mx-5">
                   {/* Role selection dropdown */}
+
                   <div className="mb-3 col-md-12">
-                    <label htmlFor="role" className="form-label fs-5">
-                      Signup As <span className="text-danger">*</span>
-                    </label>
                     <select
                       id="role"
                       name="role"
                       className="form-select"
-                      {...register("role", {
-                        required: "Please select a role.",
-                      })}
-                      onChange={(e) => setSelectedRole(e.target.value)}
-                      required
+                      {...register("role")}
+                      value="superadmin"
+                      disabled
                     >
-                      <option value="">select user</option>
-                      <option value="caregiver">Caregiver</option>
-                      <option value="patient">Patient</option>
+                      <option value="superadmin">your are the owner</option>
                     </select>
-                    {errors.role && (
-                      <p className="text-danger">{errors.role.message}</p>
-                    )}
                   </div>
 
                   {/* Conditional rendering of caregiver details */}
-                  {selectedRole === "caregiver" ? (
-                    <h3>Caregiver Details</h3>
-                  ) : (
-                    <h3>Patient Details</h3>
-                  )}
-                  {selectedRole === "caregiver" && (
-                    <div className="mb-3 col-md-6">
-                      <label htmlFor="caregiverID" className="form-label">
-                        Caregiver ID <span className="text-danger">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="caregiverID"
-                        name="caregiverID"
-                        className="form-control"
-                        value={generateRandomId("caregiver")}
-                        disabled
-                      />
-                    </div>
-                  )}
-
-                  {/* Conditional rendering of patient details */}
-                  {selectedRole === "patient" && (
-                    <div className="mb-3 col-md-6">
-                      <label htmlFor="patientID" className="form-label">
-                        Patient ID <span className="text-danger">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="patientID"
-                        name="patientID"
-                        className="form-control"
-                        value={generateRandomId("patient")}
-                        disabled
-                      />
-                    </div>
-                  )}
 
                   {/* Phone input field */}
                   <div className="mb-3 col-md-6">
