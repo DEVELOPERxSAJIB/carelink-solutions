@@ -589,7 +589,7 @@ const CaregiverOrStaff = () => {
                 </div>
               </>
             </FullscreenModal>
-            ;
+
             {show && (
               <EditModal
                 style={{
@@ -844,10 +844,7 @@ const CaregiverOrStaff = () => {
               type="file"
               id="importcsv"
             />
-            import MultiSelect from
-            './../../components/FormElement/MultiSelect'; import curdOption from
-            './../../utils/CurdOptions'; import pagesOption from
-            './../../utils/PagesOptions';
+ 
             <button
               style={{ fontSize: "12px" }}
               className="btn btn-warning waves-effect waves-light"

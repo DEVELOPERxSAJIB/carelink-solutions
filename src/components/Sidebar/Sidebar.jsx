@@ -367,66 +367,74 @@ const Sidebar = ({ userRole, permissions }) => {
       </div>
 
       <ul className="menu-inner py-1">
-        {sideBarMenu.map((menuItem, index) => (
-          <li
-            className={`menu-item ${
-              location.pathname === menuItem.href ? "active" : ""
-            } ${menuItem.subMenu && activeMenu === index ? "open" : ""}`}
-            key={index}
-          >
-            {menuItem.subMenu && menuItem.subMenu.length > 0 ? (
-              <>
-                <a
-                  href="#"
-                  className="menu-link menu-toggle"
-                  onClick={() => handleSubMenuClick(index)}
-                >
+        {sideBarMenu.map((menuItem, index) => {
+          // Check if the menu item is included in the permissions
+          const hasPermissionForMenuItem = permissions?.includes(menuItem.href);
+
+          if (
+            !hasPermissionForMenuItem &&
+            !menuItem.subMenu?.some((subItem) =>
+              permissions?.includes(subItem.href)
+            )
+          ) {
+            // If the menu item and none of its sub-items have permission, skip rendering
+            return null;
+          }
+
+          return (
+            <li
+              className={`menu-item ${
+                location.pathname === menuItem.href ? "active" : ""
+              } ${menuItem.subMenu && activeMenu === index ? "open" : ""}`}
+              key={index}
+            >
+              {menuItem.subMenu && menuItem.subMenu.length > 0 ? (
+                <>
+                  <a
+                    href="#"
+                    className="menu-link menu-toggle"
+                    onClick={() => handleSubMenuClick(index)}
+                  >
+                    {menuItem.icon}
+                    <div>{menuItem.title}</div>
+                  </a>
+                  <ul className="menu-sub">
+                    {menuItem.subMenu.map((subItem, subIndex) => {
+                      // Check if the submenu item is included in the permissions
+                      const hasPermissionForSubItem = permissions?.includes(
+                        subItem.href
+                      );
+
+                      if (!hasPermissionForSubItem) {
+                        // If the sub-item doesn't have permission, skip rendering
+                        return null;
+                      }
+
+                      return (
+                        <li
+                          className={`menu-item ${
+                            location.pathname === subItem.href ? "active" : ""
+                          }`}
+                          key={subIndex}
+                        >
+                          <Link to={subItem.href} className="menu-link">
+                            {subItem.icon}
+                            <div>{subItem.title}</div>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </>
+              ) : (
+                <Link to={menuItem.href} className="menu-link">
                   {menuItem.icon}
                   <div>{menuItem.title}</div>
-                </a>
-                <ul className="menu-sub">
-                  {menuItem.subMenu.map((subItem, subIndex) => (
-                    <li
-                      className={`menu-item ${
-                        location.pathname === subItem.href ? "active" : ""
-                      }`}
-                      key={subIndex}
-                    >
-                      <Link
-                        to={
-                          permissions?.includes(subItem.href)
-                            ? subItem.href
-                            : "/not-found"
-                        }
-                        className="menu-link"
-                      >
-                        {subItem.icon}
-                        <div>
-                          { subItem.title
-                            }
-                        </div>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            ) : (
-              <Link
-                to={
-                  permissions?.includes(menuItem.href)
-                    ? menuItem.href
-                    : "/not-found"
-                }
-                className="menu-link"
-              >
-                {menuItem.icon}
-                <div>
-                  { menuItem.title }
-                </div>
-              </Link>
-            )}
-          </li>
-        ))}
+                </Link>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </aside>
   );

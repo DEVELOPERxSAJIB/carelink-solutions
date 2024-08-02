@@ -82,7 +82,7 @@ const Register = () => {
                       value="superadmin"
                       disabled
                     >
-                      <option value="superadmin">your are the owner</option>
+                      <option value="superadmin">Individual business</option>
                     </select>
                   </div>
 

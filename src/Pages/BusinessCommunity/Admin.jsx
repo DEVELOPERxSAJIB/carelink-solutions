@@ -566,7 +566,7 @@ const Admin = () => {
               </div>
             </>
           </FullscreenModal>
-          ;
+          
           {show && (
             <EditModal
               style={{
