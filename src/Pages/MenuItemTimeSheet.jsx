@@ -17,8 +17,9 @@ import swal from "sweetalert";
 import EditModal from "./../components/Models/EditModal";
 import DatePicker from "react-datepicker";
 // Function to get the start and end dates of the current week
-
+import { useMeQuery } from "../Redux/api/UserApi";
 const MenuItemTimeSheet = () => {
+  const { data: lgData } = useMeQuery();
   const [editId, setEditId] = useState("");
   const [show, setShow] = useState("");
   const [date, setDate] = useState("");
@@ -158,6 +159,7 @@ const MenuItemTimeSheet = () => {
           </div>
         )}
         <div className="gap-3 d-flex flex-wrap">
+        {lgData?.payload?.user?.curd?.includes("create") &&
           <PopupModal id="addWebTimesheetModal" title="Add Web Timesheet">
             <form onSubmit={handleSubmit} className="w-100">
               {createError?.data?.message && (
@@ -303,6 +305,7 @@ const MenuItemTimeSheet = () => {
               </div>
             </form>
           </PopupModal>
+        }
           {show && (
             <EditModal style={{
               minWidth: "70%",
@@ -470,6 +473,7 @@ const MenuItemTimeSheet = () => {
               <span className="d-none d-sm-inline-block">Reports</span>
             </span>
           </button>
+          {lgData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-warning waves-effect waves-light"
             tabIndex={0}
@@ -481,6 +485,9 @@ const MenuItemTimeSheet = () => {
               <span className="d-none d-sm-inline-block">History</span>
             </span>
           </button>
+          }
+           {lgData?.payload?.user?.curd?.includes("delete") &&
+           
           <button
             style={{ background: "#9fd74d", color: "#fff" }}
             className="btn waves-effect waves-light"
@@ -493,6 +500,8 @@ const MenuItemTimeSheet = () => {
               <span className="d-none d-sm-inline-block">Archive</span>
             </span>
           </button>
+           }
+            {lgData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-secondary waves-effect waves-light"
             tabIndex={0}
@@ -504,6 +513,7 @@ const MenuItemTimeSheet = () => {
               <span className="d-none d-sm-inline-block">Delete Selected</span>
             </span>
           </button>
+            }
           <PopupModal id="Add_Manual_Timesheet" title="Add Manual Timesheet">
             <form onSubmit={handleSubmit2} className="w-100">
               <div className="row">

@@ -1,43 +1,31 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AuthLoader from "../../utils/Loaders/AuthLoader";
 import PageHeader from "../../components/FormElement/PageHeader";
 
 import { useCreatePayerMutation } from "../../Redux/api/PayerApi";
 import Template from "./../../components/FormElement/Template";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { ReactToPrint } from "react-to-print";
- 
+
 const CreatePayers = () => {
-  const componentRef= useRef()
-  const [createPayer, { data, isLoading,isSuccess, error }] = useCreatePayerMutation();
+  const componentRef = useRef();
+  const [createPayer, { data, isLoading, isSuccess, error }] =
+    useCreatePayerMutation();
   const localStoragePatient = JSON.parse(localStorage.getItem("Payer"));
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
   const [template, setTemplate] = useState("");
   const [formData, setFormData] = useState({
-    mbiNumber: localStoragePatient?.mbiNumber
-      ? localStoragePatient?.mbiNumber
-      : "",
+    mbiNumber: "",
     hicNumber: localStoragePatient?.hicNumber
       ? localStoragePatient?.hicNumber
       : "",
-    medicaidNumber: localStoragePatient?.medicaidNumber
-      ? localStoragePatient?.medicaidNumber
-      : "",
-    alternateMedicaidNumber: localStoragePatient?.alternateMedicaidNumber
-      ? localStoragePatient?.alternateMedicaidNumber
-      : "",
-    primaryInsurance: localStoragePatient?.primaryInsurance
-      ? localStoragePatient?.primaryInsurance
-      : "",
-    secondaryInsurance: localStoragePatient?.secondaryInsurance
-      ? localStoragePatient?.secondaryInsurance
-      : "",
-    tertiaryInsurance: localStoragePatient?.tertiaryInsurance
-      ? localStoragePatient?.tertiaryInsurance
-      : "",
-    payerComments: localStoragePatient?.payerComments
-      ? localStoragePatient?.payerComments
-      : "",
+    medicaidNumber: "",
+    alternateMedicaidNumber: "",
+    primaryInsurance: "",
+    secondaryInsurance: "",
+    tertiaryInsurance: "",
+    payerComments: "",
     occurrenceCodes: [
       { code: "", date: "" },
       { code: "", date: "" },
@@ -71,32 +59,14 @@ const CreatePayers = () => {
       "",
       "",
     ],
-    employmentRelated: localStoragePatient?.employmentRelated
-      ? localStoragePatient?.employmentRelated
-      : "",
-    autoAccident: localStoragePatient?.autoAccident
-      ? localStoragePatient?.autoAccident
-      : "",
-    claimCode: localStoragePatient?.claimCode
-      ? localStoragePatient?.claimCode
-      : "",
-    unableToWorkFrom: localStoragePatient?.unableToWorkFrom
-      ? localStoragePatient?.unableToWorkFrom
-      : "",
-    unableToWorkTo: localStoragePatient?.unableToWorkTo
-      ? localStoragePatient?.unableToWorkTo
-      : "",
-    hospitalizationStartDate: localStoragePatient?.hospitalizationStartDate
-      ? localStoragePatient?.hospitalizationStartDate
-      : "",
-    hospitalizationEndDate: localStoragePatient?.hospitalizationEndDate
-      ? localStoragePatient?.hospitalizationEndDate
-      : "",
-    emergencyTreatmentIndicator:
-      localStoragePatient?.emergencyTreatmentIndicator
-        ? localStoragePatient?.emergencyTreatmentIndicator
-        : "",
-    // Add more fields here
+    employmentRelated: "",
+    autoAccident: "",
+    claimCode: "",
+    unableToWorkFrom: "",
+    unableToWorkTo: "",
+    hospitalizationStartDate: "",
+    hospitalizationEndDate: "",
+    emergencyTreatmentIndicator: "",
   });
 
   const handleChange = (field, value) => {
@@ -123,16 +93,24 @@ const CreatePayers = () => {
   useEffect(() => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      payerComments:
-        prevFormData?.payerComments + template?.value ? template?.value : "",
+      payerComments: prevFormData?.payerComments
+        ? prevFormData.payerComments + (template?.value || "")
+        : template?.value || "",
     }));
   }, [template]);
 
-  useEffect(()=>{
-   if(isSuccess){
-    navigate("/payers")
-   }
-  },[isSuccess])
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/payers");
+    }
+  }, [isSuccess]);
+  useEffect(() => {
+    setTemplate(localStoragePatient?.payerComments);
+    if (localStoragePatient) {
+      setFormData(localStoragePatient);
+    }
+  }, []);
+
   if (isLoading) return <AuthLoader />;
   return (
     <form ref={componentRef} onSubmit={handleSubmit} className="card">
@@ -151,8 +129,6 @@ const CreatePayers = () => {
               {error?.data?.message}
             </div>
           )}
-       
-
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingPrimary">
               <button
@@ -336,15 +312,18 @@ const CreatePayers = () => {
             >
               <div className="accordion-body py-2">
                 <div className="row g-3">
-                  <div className="col-md-12">
+                  <div className="col-md-12 hide-on-print">
                     <label className="form-label">Selected Templates:</label>
                     <Template
-                       selectedTemplate={template}
-                       setSelectedTemplate={setTemplate}
+                      selectedTemplate={template}
+                      setSelectedTemplate={setTemplate}
                     />
                   </div>
                   <div className="col-md-12">
-                    <label htmlFor="payerComments" className="form-label">
+                    <label
+                      htmlFor="payerComments"
+                      className="form-label hide-on-print"
+                    >
                       Payer Comments:
                     </label>
                     <textarea
@@ -748,22 +727,28 @@ const CreatePayers = () => {
             <div className="col-md-12 my-4 d-flex gap-3">
               <input
                 type="checkbox"
-                name=""
+                name="emergencyTreatmentIndicator"
                 className="form-check-input"
-                id=""
+                id="emergencyTreatmentIndicator"
+                checked={
+                  formData.emergencyTreatmentIndicator ===
+                  "(HCFA-1500 Form Locator 24C) Emergency Treatment Indicator"
+                }
+                onChange={() =>
+                  handleChange(
+                    "emergencyTreatmentIndicator",
+                    "(HCFA-1500 Form Locator 24C) Emergency Treatment Indicator"
+                  )
+                }
               />
-              <label htmlFor="">
+              <label htmlFor="emergencyTreatmentIndicator">
                 (HCFA-1500 Form Locator 24C) Emergency Treatment Indicator
               </label>
             </div>
           </div>
           <div className="row hide-on-print">
             <div className="col-md-12 d-flex gap-3 mt-5 gap-2">
-              <button
-                className="btn btn-primary"
-                type="submit"
-
-              >
+              <button className="btn btn-primary" type="submit">
                 Save
               </button>
               <button
@@ -781,12 +766,12 @@ const CreatePayers = () => {
                 Save and Exit
               </button>
               <ReactToPrint
-                  trigger={() => (
-                    <button className="btn btn-primary">Print</button>
-                  )}
-                  content={() => componentRef.current}
-                  documentTitle="Patient"
-                />
+                trigger={() => (
+                  <button className="btn btn-primary">Print</button>
+                )}
+                content={() => componentRef.current}
+                documentTitle="Patient"
+              />
             </div>
           </div>
         </div>

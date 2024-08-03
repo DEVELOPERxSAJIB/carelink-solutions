@@ -1,10 +1,4 @@
-// import { useState, useEffect } from "react";
-// import SelectState from "../FormElement/StateSelect";
-// import CountySelect from "./../FormElement/CountySelect";
-// import CitySelect from "./../FormElement/CitySelect";
-import { useCreatePatientMutation } from "../../Redux/api/PatientApi";
-// import AuthLoader from "./../../utils/Loaders/AuthLoader";
-// import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 import SectionAForm from "./SectionA";
 import SectionBForm from "./SectionB";
 import SectionCForm from "./SectionC";
@@ -21,9 +15,17 @@ import SectionMForm from "./SectionM";
 import SectionNForm from "./SectionN";
 import SectionOForm from "./SectionO";
 import SectionQForm from "./SectionQ";
+import { ReactToPrint } from "react-to-print";
+import CreateAdvanceDirectives from "./../../Pages/Patient/CreateAdvanceDirectives";
+import CreateClinicalAndDiagnoses from "./../../Pages/Patient/CreateClinicalAndDiagnoses";
+import CreatePayers from "./../../Pages/Patient/CreatePayers";
+import CreateEmergencyPreparedness from "./../../Pages/Patient/CreateEmergencyPreparedness";
+import CreatePharmacy from "./../../Pages/Patient/CreatePharmacy";
+import CreatePhysicians from "./../../Pages/Patient/CreatePhysicians";
+import CreateReferralInformation from "./../../Pages/Patient/CreateReferralInformation";
+import ContactForm from "./../../Pages/Patient/CreateContact";
 const PatientProfile = () => {
-  const [{ data, isLoading, error, isSuccess }] = useCreatePatientMutation();
-
+  const componentRef = useRef();
   // const [primaryCounty, setPrimaryCounty] = useState("");
   // const [mailingCounty, setMailingCounty] = useState("");
   // const [visitCounty, setVisitCounty] = useState("");
@@ -401,7 +403,7 @@ const PatientProfile = () => {
     //       </h2>
     //       <div
     //         id="collapseOne"
-    //         className="accordion-collapse collapse  show"  
+    //         className="accordion-collapse collapse  show"
     //         aria-labelledby="headingOne"
     //         data-bs-parent="#patientInfoAccordion"
     //       >
@@ -1558,8 +1560,7 @@ const PatientProfile = () => {
     //     </div>
     //   </div>
     // </form>
-    <>
-     
+    <div ref={componentRef}>
       <SectionAForm />
       <SectionBForm />
       <SectionCForm />
@@ -1576,7 +1577,24 @@ const PatientProfile = () => {
       <SectionNForm />
       <SectionOForm />
       <SectionQForm />
-    </>
+      <div className="print-title">
+        <CreatePayers />
+        <CreatePhysicians />
+        <CreateClinicalAndDiagnoses />
+        <CreatePharmacy />
+        <ContactForm />
+        <CreateEmergencyPreparedness />
+        <CreateAdvanceDirectives />
+        <CreateReferralInformation />
+      </div>
+      <ReactToPrint
+        trigger={() => (
+          <button className="btn btn-primary mt-5 hide-on-print">Print patient details</button>
+        )}
+        content={() => componentRef.current}
+        documentTitle="Patient"
+      />
+    </div>
   );
 };
 

@@ -3,9 +3,10 @@ import DataTable from "../../components/Tables/DynamicTable";
 import { useNavigate } from "react-router-dom";
 import FullscreenModal from "../../components/Models/FullScreenModel";
 import TableHeader from '../../components/Tables/TableHeader';
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 
 const ReviewEmailLog = () => {
+  const { data: lgData } = useMeQuery();
 
   const navigate = useNavigate();
   const columns = [
@@ -70,11 +71,12 @@ const ReviewEmailLog = () => {
         <TableHeader title="Review Email Log" className="py-3 pt-5 fs-3 card-header"/>
         <div className="card-body">
           <div className="gap-3 d-flex flex-wrap">
+          {lgData?.payload?.user?.curd?.includes("delete") &&
             <button
-              className="btn btn-secondary ml-auto create-new btn-danger waves-effect waves-light"
-              tabIndex={0}
-              aria-controls="DataTables_Table_0"
-              type="button"
+            className="btn btn-secondary ml-auto create-new btn-danger waves-effect waves-light"
+            tabIndex={0}
+            aria-controls="DataTables_Table_0"
+            type="button"
             >
               <span>
                 <i className="ti ti-trash me-sm-1" />{" "}
@@ -83,6 +85,8 @@ const ReviewEmailLog = () => {
                 </span>
               </span>
             </button>
+            }
+             {lgData?.payload?.user?.curd?.includes("delete") &&
             <button
               className="btn  ml-auto create-new btn-primary waves-effect waves-light"
               tabIndex={0}
@@ -96,6 +100,9 @@ const ReviewEmailLog = () => {
                 </span>
               </span>
             </button>
+             }
+              {lgData?.payload?.user?.curd?.includes("delete") &&
+              
             <button
               className="btn  ml-auto create-new btn-info waves-effect waves-light"
               tabIndex={0}
@@ -109,6 +116,7 @@ const ReviewEmailLog = () => {
                 </span>
               </span>
             </button>
+              }
           </div>
           <div className="mt-5">
             <DataTable

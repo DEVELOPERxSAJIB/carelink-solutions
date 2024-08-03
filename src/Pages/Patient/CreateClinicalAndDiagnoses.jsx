@@ -4,8 +4,7 @@ import { useCreateClinicalDiagnosisMutation } from "../../Redux/api/ClinicalDiag
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import { ReactToPrint } from "react-to-print";
- 
-  
+
 const CreateClinicalAndDiagnoses = () => {
   const componentRef = useRef()
   const [createClinicalDiagnosis, { data, error, isLoading }] =
@@ -16,16 +15,16 @@ const CreateClinicalAndDiagnoses = () => {
   const [template, setTemplate] = useState("");
 
   const initialFormData = {
-    serviceRequired: [],
-    height: {
+    serviceRequired:localStorageClinicalDiagnosis?.serviceRequired|| [],
+    height:localStorageClinicalDiagnosis?.height|| {
       value: "",
       unit: "",
     },
-    weight: {
+    weight:localStorageClinicalDiagnosis?.weight|| {
       value: "",
       unit: "",
     },
-    dmeNeeded: [],
+    dmeNeeded:localStorageClinicalDiagnosis?.dmeNeeded|| [],
     primaryDiagnosis: localStorageClinicalDiagnosis?.primaryDiagnosis || "",
     primaryDiagnosisCode:
       localStorageClinicalDiagnosis?.primaryDiagnosisCode || "",
@@ -35,9 +34,7 @@ const CreateClinicalAndDiagnoses = () => {
     clinicalComments: localStorageClinicalDiagnosis?.clinicalComments || "",
   };
 
-  const [formData, setFormData] = useState(
-    localStorageClinicalDiagnosis || initialFormData
-  );
+  const [formData, setFormData] = useState( initialFormData);
   console.log(formData)
   const handleInputChange = (e, index) => {
     const { name, value, type, checked } = e.target;
@@ -148,7 +145,7 @@ const CreateClinicalAndDiagnoses = () => {
         )}
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <div className="accordion-item">
-            <h2 className="accordion-header" id="headingServiceRequired">
+            <h2 className="accordion-header" id="ClinicalDiagnosisInfoAccordion">
               <button
                 className="accordion-button"
                 type="button"
@@ -251,7 +248,7 @@ const CreateClinicalAndDiagnoses = () => {
           </div>
 
           <div className="accordion-item">
-            <h2 className="accordion-header" id="headingDMENeeded">
+            <h2 className="accordion-header" id="ClinicalDiagnosisInfoAccordion">
               <button
                 className="accordion-button collapsed"
                 type="button"
@@ -304,7 +301,7 @@ const CreateClinicalAndDiagnoses = () => {
           </div>
 
           <div className="accordion-item">
-            <h2 className="accordion-header" id="headingPrimaryDiagnosis">
+            <h2 className="accordion-header" id="ClinicalDiagnosisInfoAccordion">
               <button
                 className="accordion-button collapsed"
                 type="button"
@@ -361,7 +358,7 @@ const CreateClinicalAndDiagnoses = () => {
           </div>
 
           <div className="accordion-item">
-            <h2 className="accordion-header" id="headingOtherDiagnoses">
+            <h2 className="accordion-header" id="ClinicalDiagnosisInfoAccordion">
               <button
                 className="accordion-button collapsed"
                 type="button"
@@ -436,7 +433,7 @@ const CreateClinicalAndDiagnoses = () => {
           </div>
 
           <div className="accordion-item">
-            <h2 className="accordion-header" id="headingClinicalComments">
+            <h2 className="accordion-header" id="ClinicalDiagnosisInfoAccordion">
               <button
                 className="accordion-button collapsed"
                 type="button"
@@ -456,7 +453,7 @@ const CreateClinicalAndDiagnoses = () => {
             >
               <div className="accordion-body py-2">
                 <div className="mb-3">
-                  <label htmlFor="clinicalComments" className="form-label">
+                  <label htmlFor="clinicalComments" className="form-label hide-on-print">
                     Clinical Comments
                   </label>
                   <textarea
@@ -469,8 +466,10 @@ const CreateClinicalAndDiagnoses = () => {
                     rows="3"
                   ></textarea>
                 </div>
+                <div className="hide-on-print">
                 <Template  selectedTemplate={template}
                           setSelectedTemplate={setTemplate} />
+                </div>
               </div>
             </div>
           </div>

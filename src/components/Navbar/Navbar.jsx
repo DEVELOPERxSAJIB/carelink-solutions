@@ -661,8 +661,8 @@ const { data,refetch } = useMeQuery();
                       </div>
                     </div>
                     <div className="flex-grow-1">
-                      <h6 className="mb-0">John Doe</h6>
-                      <small className="text-muted">Admin</small>
+                      <h6 className="mb-0 text-capitalize">{data?.payload?.user?.firstName}  {data?.payload?.user?.lastName}</h6>
+                      <small className="text-muted">{data?.payload?.user?.role}</small>
                     </div>
                   </div>
                 </a>

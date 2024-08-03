@@ -5,15 +5,16 @@ import {
   updateFormData,
 } from "./../../Redux/slices/SectionSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { ReactToPrint } from "react-to-print";
+
 const SectionOForm = () => {
-  const componentRef = useRef();
 
   const dispatch = useDispatch();
   const data = useSelector(getAllSectionState);
-  console.log(data);
+  const localSectionO = JSON.parse(localStorage.getItem("SectionO")) || {};
+
+    
   const [formData, setFormData] = useState({
-    specialTreatmentsAdmission: {
+    specialTreatmentsAdmission:localSectionO?.specialTreatmentsAdmission|| {
       chemotherapy: false,
       radiation: false,
       oxygenTherapy: false,
@@ -27,7 +28,7 @@ const SectionOForm = () => {
       ivAccess: false,
       noneOfTheAbove: false,
     },
-    specialTreatmentsDischarge: {
+    specialTreatmentsDischarge:localSectionO?.specialTreatmentsDischarge|| {
       chemotherapy: false,
       radiation: false,
       oxygenTherapy: false,
@@ -41,9 +42,9 @@ const SectionOForm = () => {
       ivAccess: false,
       noneOfTheAbove: false,
     },
-    covidVaccinationUpToDate: "",
-    influenzaVaccinePeriod: "",
-    influenzaVaccineReceived: "",
+    covidVaccinationUpToDate:localSectionO?.covidVaccinationUpToDate|| "",
+    influenzaVaccinePeriod:localSectionO?.influenzaVaccinePeriod|| "",
+    influenzaVaccineReceived:localSectionO?.influenzaVaccineReceived|| "",
   });
 
   const handleCheckboxChange = (e, section, field) => {
@@ -67,6 +68,7 @@ const SectionOForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateFormData(formData));
+    localStorage.setItem("SectionO", JSON.stringify(formData));
   };
   useEffect(() => {
     setFormData({ ...data });
@@ -93,7 +95,7 @@ const SectionOForm = () => {
             aria-labelledby="headingO"
             data-bs-parent="#accordionSectionO"
           >
-            <div ref={componentRef} className="accordion-body print-area">
+            <div  className="accordion-body print-area">
               {/* O0110. Special Treatments, Procedures, and Programs */}
               <h4 className="print-title">Special Treatments, Procedures, and Programs</h4>
               <div className="mb-3">
@@ -286,13 +288,7 @@ const SectionOForm = () => {
                 <button type="submit" className="btn btn-primary">
                   add
                 </button>
-                <ReactToPrint
-                  trigger={() => (
-                    <button className="btn btn-primary">Print</button>
-                  )}
-                  content={() => componentRef.current}
-                  documentTitle="Patient"
-                />
+               
               </div>
             </div>
           </div>

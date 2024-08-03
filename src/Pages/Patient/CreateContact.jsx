@@ -14,52 +14,74 @@ const ContactForm = () => {
   const [createContact, { data, isLoading, isSuccess, error }] =
     useCreateContactMutation();
   const navigate = useNavigate();
+  const localContactData = JSON.parse(localStorage.getItem("Contact"));
+  console.log(localContactData)
   const [formData, setFormData] = useState({
-    representativeContacted: "",
-    legalRepresentativeOption: "",
-    patientSelectedRepresentativeOption: "",
-    otherDetails: "",
-    physicianNotified: false,
-    patientNotified: false,
-    previousField1: "",
-    previousField2: "",
-    doNotContactCAHPS: false,
-    reasonForNoContact: "",
-    otherReason: "",
-    alternateCAHPSContact: false,
+    representativeContacted: localContactData?.representativeContacted || "",
+    legalRepresentativeOption:
+      localContactData?.legalRepresentativeOption || "",
+    patientSelectedRepresentativeOption:
+      localContactData?.patientSelectedRepresentativeOption || "",
+    otherDetails: localContactData?.otherDetails || "",
+    physicianNotified: localContactData?.physicianNotified || false,
+    patientNotified: localContactData?.patientNotified || false,
+    previousField1: localContactData?.previousField1 || "",
+    previousField2: localContactData?.previousField2 || "",
+    doNotContactCAHPS: localContactData?.doNotContactCAHPS || false,
+    reasonForNoContact: localContactData?.reasonForNoContact || "",
+    otherReason: localContactData?.otherReason || "",
+    alternateCAHPSContact: localContactData?.alternateCAHPSContact || false,
     alternateCAHPSContactDetails: {
-      sameAsPrimaryEmergencyContact: false,
-      firstName: "",
-      lastName: "",
-      relationship: "",
-      mobilePhone: "",
-      alternatePhone: "",
-      email: "",
-      addressLine1: "",
-      addressLine2: "",
-      city: "",
-      state: "",
-      zip: "",
-      county: "",
+      sameAsPrimaryEmergencyContact:
+        localContactData?.alternateCAHPSContactDetails
+          ?.sameAsPrimaryEmergencyContact || false,
+      firstName:
+        localContactData?.alternateCAHPSContactDetails?.firstName || "",
+      lastName: localContactData?.alternateCAHPSContactDetails?.lastName || "",
+      relationship:
+        localContactData?.alternateCAHPSContactDetails?.relationship || "",
+      mobilePhone:
+        localContactData?.alternateCAHPSContactDetails?.mobilePhone || "",
+      alternatePhone:
+        localContactData?.alternateCAHPSContactDetails?.alternatePhone || "",
+      email: localContactData?.alternateCAHPSContactDetails?.email || "",
+      addressLine1:
+        localContactData?.alternateCAHPSContactDetails?.addressLine1 || "",
+      addressLine2:
+        localContactData?.alternateCAHPSContactDetails?.addressLine2 || "",
+      city: localContactData?.alternateCAHPSContactDetails?.city || "",
+      state: localContactData?.alternateCAHPSContactDetails?.state || "",
+      zip: localContactData?.alternateCAHPSContactDetails?.zip || "",
+      county: localContactData?.alternateCAHPSContactDetails?.county || "",
     },
   });
+
   const [emergencyContacts, setEmergencyContacts] = useState({
     primary: {
-      firstName: "",
-      lastName: "",
-      mobilePhone: "",
-      alternatePhone: "",
-      relationship: "",
-      email: "",
-      representative: "Legal Representative",
-      sameAsPatientAddress: false,
-      addressLine1: "",
-      addressLine2: "",
-      city: "",
-      state: "",
-      zip: "",
+      firstName: localContactData?.emergencyContacts?.primary?.firstName || "",
+      lastName: localContactData?.emergencyContacts?.primary?.lastName || "",
+      mobilePhone:
+        localContactData?.emergencyContacts?.primary?.mobilePhone || "",
+      alternatePhone:
+        localContactData?.emergencyContacts?.primary?.alternatePhone || "",
+      relationship:
+        localContactData?.emergencyContacts?.primary?.relationship || "",
+      email: localContactData?.emergencyContacts?.primary?.email || "",
+      representative:
+        localContactData?.emergencyContacts?.primary?.representative ||
+        "Legal Representative",
+      sameAsPatientAddress:
+        localContactData?.emergencyContacts?.primary?.sameAsPatientAddress ||
+        false,
+      addressLine1:
+        localContactData?.emergencyContacts?.primary?.addressLine1 || "",
+      addressLine2:
+        localContactData?.emergencyContacts?.primary?.addressLine2 || "",
+      city: localContactData?.emergencyContacts?.primary?.city || "",
+      state: localContactData?.emergencyContacts?.primary?.state || "",
+      zip: localContactData?.emergencyContacts?.primary?.zip || "",
     },
-    additional: [
+    additional: localContactData?.emergencyContacts?.additional || [
       {
         firstName: "",
         lastName: "",
@@ -86,8 +108,10 @@ const ContactForm = () => {
   const [CAHPSState, setCAHPSState] = useState("");
   const [CAHPSCounty, setCAHPSCounty] = useState("");
   const [selectedTemplate, setSelectedTemplate] = useState("");
-  const [comments, setComments] = useState("");
-  const [remainingCharacters, setRemainingCharacters] = useState(2000);
+  const [comments, setComments] = useState(localContactData?.comments || "");
+  const [remainingCharacters, setRemainingCharacters] = useState(
+    2000 - (localContactData?.comments?.length || 0)
+  );
 
   const handleChange = (type, field, value, index) => {
     if (type === "additional") {
@@ -220,6 +244,93 @@ const ContactForm = () => {
       console.error("Error creating contact:", error);
     }
   };
+  const handleSaveAndContinue = (e) => {
+    e.preventDefault();
+
+    try {
+      const contactData = {
+        ...formData,
+        alternateCAHPSContactDetails: {
+          ...formData.alternateCAHPSContactDetails,
+          city: CAHPSCity,
+          state: CAHPSState,
+          county: CAHPSCounty,
+        },
+        emergencyContacts: {
+          primary: {
+            ...emergencyContacts.primary,
+            city: primaryCity,
+            state: primaryState,
+          },
+          additional: emergencyContacts.additional.map((contact) => ({
+            ...contact,
+            city: additionalCity,
+            state: additionalState,
+          })),
+        },
+        selectedTemplate,
+        comments,
+        remainingCharacters,
+      };
+      localStorage.setItem("Contact", JSON.stringify(contactData));
+      createContact(contactData);
+    } catch (error) {
+      console.error("Error creating contact:", error);
+    }
+  };
+  const handleSaveAndExit = (e) => {
+    e.preventDefault();
+
+    try {
+      const contactData = {
+        ...formData,
+        alternateCAHPSContactDetails: {
+          ...formData.alternateCAHPSContactDetails,
+          city: CAHPSCity,
+          state: CAHPSState,
+          county: CAHPSCounty,
+        },
+        emergencyContacts: {
+          primary: {
+            ...emergencyContacts.primary,
+            city: primaryCity,
+            state: primaryState,
+          },
+          additional: emergencyContacts.additional.map((contact) => ({
+            ...contact,
+            city: additionalCity,
+            state: additionalState,
+          })),
+        },
+        selectedTemplate,
+        comments,
+        remainingCharacters,
+      };
+      localStorage.setItem("Contact", JSON.stringify(contactData));
+    } catch (error) {
+      console.error("Error creating contact:", error);
+    }
+  };
+  useEffect(() => {
+    if (localContactData) {
+      // For primary emergency contact
+      setPrimaryCity(localContactData.emergencyContacts?.primary?.city || "");
+      setPrimaryState(localContactData.emergencyContacts?.primary?.state || "");
+
+      // For additional emergency contact
+      const additionalContact = localContactData.emergencyContacts?.additional?.[0] || {};
+      setAdditionalCity(additionalContact.city || "");
+      setAdditionalState(additionalContact.state || "");
+
+      // For CAHPS contact
+      setCAHPSCity(localContactData.alternateCAHPSContactDetails?.city || "");
+      setCAHPSState(localContactData.alternateCAHPSContactDetails?.state || "");
+      setCAHPSCounty(localContactData.alternateCAHPSContactDetails?.county || "");
+
+      // For selected template
+      setSelectedTemplate(localContactData.selectedTemplate || "");
+    }
+  }, []);
   useEffect(() => {
     setComments((prev) =>
       prev ? prev + selectedTemplate?.value : selectedTemplate?.value
@@ -1523,6 +1634,18 @@ const ContactForm = () => {
             <div className="d-flex align-items-center gap-4 hide-on-print">
               <button type="submit" className="btn btn-primary my-5 text-">
                 submit
+              </button>
+              <button
+                onClick={handleSaveAndContinue}
+                className="btn btn-primary my-5 text-"
+              >
+                Save and continue
+              </button>
+              <button
+                onClick={handleSaveAndExit}
+                className="btn btn-primary my-5 text-"
+              >
+                Save and exit
               </button>
               <ReactToPrint
                 trigger={() => <span className="btn btn-primary">Print</span>}

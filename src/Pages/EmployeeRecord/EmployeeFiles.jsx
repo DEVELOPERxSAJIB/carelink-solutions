@@ -1,7 +1,9 @@
 
 import PopupModal from './../../components/Models/PopupModel';
 import PageHeader from './../../components/FormElement/PageHeader';
+import { useMeQuery } from "../../Redux/api/UserApi";
 const EmployeeFiles = () => {
+  const { data: logData } = useMeQuery();
   return <div>
     <PopupModal title="Employee files" id="employeefiles">
       <form action="">

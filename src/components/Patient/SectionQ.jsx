@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import  { useState, useRef } from "react";
 
 import {
   getAllSectionState,
@@ -9,11 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useCreatePatientMutation } from "../../Redux/api/PatientApi";
 import { useEffect } from "react";
 import { useUpdatePatientMutation } from "../../Redux/api/PatientApi";
-import { ReactToPrint } from "react-to-print";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
-import MainLoader from './../../utils/Loaders/MainLoader';
 const SectionQForm = ({ editId }) => {
-  const componentRef = useRef();
+
 
   const [createPatient, { data, isLoading, error, isSuccess }] =
     useCreatePatientMutation();
@@ -23,13 +21,15 @@ const SectionQForm = ({ editId }) => {
   ] = useUpdatePatientMutation();
   const dispatch = useDispatch();
   const allFormData = useSelector(getAllSectionState);
-  console.log(allFormData, data, error);
+  const localSectionQ = JSON.parse(localStorage.getItem("SectionQ")) || {};
+
+ 
   const [formData, setFormData] = useState({
-    fallsPrevention: "",
-    depressionIntervention: "",
-    painIntervention: "",
-    pressureUlcerPrevention: "",
-    pressureUlcerTreatment: "",
+    fallsPrevention:localSectionQ?.fallsPrevention|| "",
+    depressionIntervention:localSectionQ?.depressionIntervention|| "",
+    painIntervention:localSectionQ?.painIntervention|| "",
+    pressureUlcerPrevention:localSectionQ?.pressureUlcerPrevention|| "",
+    pressureUlcerTreatment:localSectionQ?.pressureUlcerTreatment|| "",
   });
 
   const handleSelectChange = (e) => {
@@ -47,6 +47,7 @@ const SectionQForm = ({ editId }) => {
     } else {
       dispatch(updateFormData(formData));
       createPatient(allFormData);
+      localStorage.setItem("SectionQ", JSON.stringify(formData));
     }
   };
 
@@ -60,6 +61,7 @@ const SectionQForm = ({ editId }) => {
   }, [isSuccess, dispatch, isUpdateSuccess]);
   useEffect(() => {
     setFormData({ ...allFormData });
+    setFormData({ ...localSectionQ });
   }, [allFormData]);
   if (isLoading) return <AuthLoader />;
   return (
@@ -85,7 +87,7 @@ const SectionQForm = ({ editId }) => {
             aria-labelledby="headingQ"
             data-bs-parent="#accordionSectionQ"
           >
-            <div ref={componentRef} className="accordion-body print-area">
+            <div  className="accordion-body print-area">
               {/* M2401. Intervention Synopsis */}
               <h4 className="print-title">
                 Participation in assessment and setting{" "}
@@ -180,18 +182,7 @@ const SectionQForm = ({ editId }) => {
                     <option value="NA">Not Applicable</option>
                   </select>
                 </div>
-                <div className="d-flex align-items-center gap-4 hide-on-print">
-                  <button type="submit" className="btn btn-primary">
-                   {isUpdateLoading ||isLoading ?"...Wait please":"Submit" } 
-                  </button>
-                  <ReactToPrint
-                    trigger={() => (
-                      <button className="btn btn-primary">Print</button>
-                    )}
-                    content={() => componentRef.current}
-                    documentTitle="Patient"
-                  />
-                </div>
+              
               </div>
             </div>
           </div>
@@ -217,6 +208,12 @@ const SectionQForm = ({ editId }) => {
           {updateError?.data?.message}
         </div>
       )}
+        <div className="d-flex align-items-center gap-4 hide-on-print">
+                  <button type="submit" className="btn btn-primary">
+                   {isUpdateLoading ||isLoading ?"...Wait please":"Submit" } 
+                  </button>
+                 
+                </div>
     </form>
   );
 };

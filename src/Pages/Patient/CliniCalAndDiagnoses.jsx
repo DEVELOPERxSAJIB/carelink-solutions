@@ -14,8 +14,9 @@ import EditModal from "./../../components/Models/EditModal";
 import Template from "./../../components/FormElement/Template";
 import swal from "sweetalert";
 import Alert from "./../../components/Alert/Alert";
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 const ClinicalDiagnoses = () => {
+  const { data: logData } = useMeQuery();
   const { data, isLoading, refetch } = useGetAllClinicalDiagnosesQuery(); // Adjust hook name as per your actual hook
   const [
     updateClinicalDiagnosis,
@@ -31,7 +32,6 @@ const ClinicalDiagnoses = () => {
 
   const columns = [
     { field: "_id", header: "ID" },
-
     { field: "primaryDiagnosis", header: "Primary Diagnosis", type: "string" },
     { field: "primaryDiagnosisCode", header: "Diagnosis Code", type: "string" },
     { field: "clinicalComments", header: "Clinical Comments", type: "string" },
@@ -59,7 +59,7 @@ const ClinicalDiagnoses = () => {
     });
   };
   const [template, setTemplate] = useState("");
-  console.log(template);
+
   const initialFormData = {
     serviceRequired: [],
     height: {
@@ -153,11 +153,12 @@ const ClinicalDiagnoses = () => {
     if (template?.value) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        clinicalComments: (prevFormData.clinicalComments || '') + template.value,
+        clinicalComments:
+          (prevFormData.clinicalComments || "") + template.value,
       }));
     }
   }, [template]);
-  
+
   useEffect(() => {
     if (isUpdateSuccess) {
       refetch();
@@ -169,7 +170,7 @@ const ClinicalDiagnoses = () => {
   }, [isUpdateSuccess, isDeleteSuccess]);
   const message = updateData?.message || deleteData?.message || "";
   const errors = updateError?.data?.message || deleteError?.data?.message;
-  
+
   if (isLoading) return <MainLoader />;
   return (
     <div className="card">
@@ -185,31 +186,37 @@ const ClinicalDiagnoses = () => {
             columns={columns}
             fileName="ClinicalDiagnoses"
           />
-          <button
-            className="btn btn-success waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-            onClick={() => navigate("/create-clinical-diagnoses")}
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-1" />
-              <span className="d-none d-sm-inline-block">
-                Add New Clinical Diagnosis
+          {logData?.payload?.user?.curd?.includes("create") && (
+            <button
+              className="btn btn-success waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+              onClick={() => navigate("/create-clinical-diagnoses")}
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-plus me-1" />
+                <span className="d-none d-sm-inline-block">
+                  Add New Clinical Diagnosis
+                </span>
               </span>
-            </span>
-          </button>
-          <button
-            className="btn btn-secondary create-new btn-danger waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-trash me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Delete selected</span>
-            </span>
-          </button>
+            </button>
+          )}
+          {logData?.payload?.user?.curd?.includes("delete") && (
+            <button
+              className="btn btn-secondary create-new btn-danger waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-trash me-sm-1" />{" "}
+                <span className="d-none d-sm-inline-block">
+                  Delete selected
+                </span>
+              </span>
+            </button>
+          )}
         </div>
         <Alert message={message ?? ""} type="success" />
         {show && (

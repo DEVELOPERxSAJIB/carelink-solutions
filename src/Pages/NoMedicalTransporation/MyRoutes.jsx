@@ -13,8 +13,9 @@ import {
   useUpdateRouteMutation,
   useDeleteRouteMutation,
 } from "../../Redux/api/RouteApi.js";
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 const MyRoutes = () => {
+  const { data: logData } = useMeQuery();
   const { data, isLoading, refetch } = useGetAllRoutesQuery();
   const [
     createRoute,
@@ -91,6 +92,8 @@ const MyRoutes = () => {
         <Alert message={updateData?.message} type="success" />
         <Alert message={deleteData?.message} type="success" />
         <div className="gap-3 d-flex flex-wrap">
+        {logData?.payload?.user?.curd?.includes("create") &&
+        
           <FullscreenModal
             className="col-md-5"
             id="addRoute"
@@ -220,6 +223,9 @@ const MyRoutes = () => {
               </div>
             </form>
           </FullscreenModal>
+        }
+          {logData?.payload?.user?.curd?.includes("delete") &&
+          
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -231,6 +237,7 @@ const MyRoutes = () => {
               <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
           </button>
+          }
         </div>
         {show && (
           <EditModal

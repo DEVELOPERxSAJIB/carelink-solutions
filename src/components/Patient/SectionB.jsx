@@ -1,17 +1,16 @@
 
 import { getAllSectionState,updateFormData } from './../../Redux/slices/SectionSlice';
 import { useDispatch ,useSelector} from 'react-redux';
-import { useEffect ,useState,useRef} from 'react';
+import { useEffect ,useState} from 'react';
 
-import { ReactToPrint } from "react-to-print";
 const SectionBForm = () => {
   const dispatch = useDispatch()
   const data = useSelector(getAllSectionState)
-  const componentRef = useRef()
+  const localSectionB = JSON.parse(localStorage.getItem("SectionB"))
   const [formData, setFormData] = useState({
-    hearing: '',
-    vision: '',
-    healthLiteracy: '',
+    hearing: localSectionB?.hearing || '',
+    vision: localSectionB?.vision || '',
+    healthLiteracy: localSectionB?.healthLiteracy || '',
   });
 
   const handleInputChange = (e) => {
@@ -46,10 +45,12 @@ const SectionBForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    localStorage.setItem("SectionB", JSON.stringify(formData));
     dispatch(updateFormData(formData))
   };
   useEffect(()=>{
     setFormData({...data})
+    setFormData({...localSectionB})
     },[data])
   return (
     <form className="mt-5" onSubmit={handleSubmit}>
@@ -73,7 +74,7 @@ const SectionBForm = () => {
             aria-labelledby="headingB"
             data-bs-parent="#sectionBAccordion"
           >
-            <div ref={componentRef} className="accordion-body print-area">
+            <div  className="accordion-body print-area">
               {/* Hearing */}
               <h4 className="print-title">Hearing, Speech, and Vision</h4>
               <div className="mb-3">
@@ -142,13 +143,7 @@ const SectionBForm = () => {
               <button type="submit" className="btn btn-primary">
                 add
               </button>
-              <ReactToPrint
-                    trigger={() => (
-                      <button className="btn btn-primary">Print</button>
-                    )}
-                    content={() => componentRef.current}
-                    documentTitle="Patient"
-                  />
+             
               </div>
             </div>
           </div>

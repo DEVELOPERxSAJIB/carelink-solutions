@@ -162,6 +162,7 @@ const HealthCareProfessional = () => {
       />
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
+        {addedBy?.payload?.user?.curd?.includes("create") &&
           <FullscreenModal
             id="HealthcareProfessionals"
             title="Add New Healthcare Professionals"
@@ -566,6 +567,7 @@ const HealthCareProfessional = () => {
               </div>
             </>
           </FullscreenModal>
+        }
           {show && (
             <EditModal
               style={{
@@ -818,6 +820,7 @@ const HealthCareProfessional = () => {
               <span className="d-none d-sm-inline-block">Export Selected</span>
             </span>
           </button>
+          {addedBy?.payload?.user?.curd?.includes("delete") &&
           <button
             style={{ fontSize: "12px" }}
             className="btn btn-secondary waves-effect waves-light"
@@ -830,6 +833,7 @@ const HealthCareProfessional = () => {
               <span className="d-none d-sm-inline-block">Delete Selected</span>
             </span>
           </button>
+          }
           <button
             style={{ background: "#9fd74d", color: "#fff", fontSize: "12px" }}
             className="btn waves-effect waves-light"

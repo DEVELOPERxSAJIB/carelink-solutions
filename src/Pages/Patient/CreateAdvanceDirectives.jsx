@@ -9,14 +9,15 @@ import { ReactToPrint } from "react-to-print";
 
 const CreateAdvanceDirectives = () => {
   const componentRef = useRef();
+  const localData =JSON.parse(localStorage.getItem("Directive"))
   const [createDirective, { data, isLoading, error, isSuccess }] =
     useCreateDirectiveMutation();
 
   const [template, setTemplate] = useState("");
 
   const initialFormData = {
-    admission: "No",
-    comment: "",
+    admission: localData?.admission?localData?.admission:"No",
+    comment: localData?.comment?localData?.comment:"",
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -42,7 +43,7 @@ const CreateAdvanceDirectives = () => {
     e.preventDefault();
     createDirective(formData);
   };
-  console.log(formData);
+ 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
     createDirective(formData);

@@ -112,7 +112,11 @@ const CreateEmergencyPreparedness = () => {
     formData.county = county;
     localStorage.setItem("Emergency", JSON.stringify(formData));
   };
-
+  useEffect(()=>{
+    setCity(localStorageData?.city)
+setState(localStorageData?.state)
+setCounty(localStorageData?.county)
+  },[])
   useEffect(() => {
     if (addTemplate?.value) {
       setFormData((prev) => ({

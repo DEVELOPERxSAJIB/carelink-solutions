@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import PageHeader from './../../components/FormElement/PageHeader';
 import { useCreateQuestionMutation, useGetQuestionsQuery } from "../../Redux/api/SettingApi";
 import AuthLoader from './../../utils/Loaders/AuthLoader';
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 const PositiveIdentifications = () => {
+  const { data: logData } = useMeQuery();
   const [createQuestion, { isLoading, isSuccess, error }] = useCreateQuestionMutation();
   const { data: serverQuestions } = useGetQuestionsQuery();
 

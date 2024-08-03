@@ -13,8 +13,9 @@ import React, { useEffect, useState } from "react";
 import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
 import Template from "./../../components/FormElement/Template";
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 const Payers = () => {
+  const { data: lgData } = useMeQuery();
   const navigate = useNavigate();
   const { data, isLoading, refetch } = useGetAllPayersQuery();
   const [
@@ -131,32 +132,46 @@ const Payers = () => {
   };
   const handleEdit = (row) => {
     const updatedRow = { ...row };
-  
+
     // Ensure occurrenceSpans dates are formatted correctly
-    updatedRow.occurrenceSpans = updatedRow.occurrenceSpans.map(span => ({
+    updatedRow.occurrenceSpans = updatedRow.occurrenceSpans.map((span) => ({
       ...span,
-      startDate: span.startDate ? new Date(span.startDate).toISOString().substring(0, 10) : "",
-      endDate: span.endDate ? new Date(span.endDate).toISOString().substring(0, 10) : "",
+      startDate: span.startDate
+        ? new Date(span.startDate).toISOString().substring(0, 10)
+        : "",
+      endDate: span.endDate
+        ? new Date(span.endDate).toISOString().substring(0, 10)
+        : "",
     }));
-  
+
     // Ensure occurrenceCodes dates are formatted correctly
-    updatedRow.occurrenceCodes = updatedRow.occurrenceCodes.map(span => ({
+    updatedRow.occurrenceCodes = updatedRow.occurrenceCodes.map((span) => ({
       ...span,
-      date: span.date ? new Date(span.date).toISOString().substring(0, 10) : ""
+      date: span.date ? new Date(span.date).toISOString().substring(0, 10) : "",
     }));
-  
+
     // Update other date fields if they exist
-    updatedRow.unableToWorkFrom = row.unableToWorkFrom ? new Date(row.unableToWorkFrom).toISOString().substring(0, 10) : "";
-    updatedRow.unableToWorkTo = row.unableToWorkTo ? new Date(row.unableToWorkTo).toISOString().substring(0, 10) : "";
-    updatedRow.hospitalizationStartDate = row.hospitalizationStartDate ? new Date(row.hospitalizationStartDate).toISOString().substring(0, 10) : "";
-    updatedRow.hospitalizationEndDate = row.hospitalizationEndDate ? new Date(row.hospitalizationEndDate).toISOString().substring(0, 10) : "";
-    updatedRow.emergencyTreatmentIndicator = row.emergencyTreatmentIndicator ? new Date(row.emergencyTreatmentIndicator).toISOString().substring(0, 10) : "";
-  
+    updatedRow.unableToWorkFrom = row.unableToWorkFrom
+      ? new Date(row.unableToWorkFrom).toISOString().substring(0, 10)
+      : "";
+    updatedRow.unableToWorkTo = row.unableToWorkTo
+      ? new Date(row.unableToWorkTo).toISOString().substring(0, 10)
+      : "";
+    updatedRow.hospitalizationStartDate = row.hospitalizationStartDate
+      ? new Date(row.hospitalizationStartDate).toISOString().substring(0, 10)
+      : "";
+    updatedRow.hospitalizationEndDate = row.hospitalizationEndDate
+      ? new Date(row.hospitalizationEndDate).toISOString().substring(0, 10)
+      : "";
+    updatedRow.emergencyTreatmentIndicator = row.emergencyTreatmentIndicator
+      ? new Date(row.emergencyTreatmentIndicator).toISOString().substring(0, 10)
+      : "";
+
     setShow(true);
     setEditId(row._id);
     setFormData(updatedRow);
   };
-  
+
   useEffect(() => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -186,41 +201,50 @@ const Payers = () => {
             columns={columns}
             fileName="Payer"
           />
-          <button
-            className="btn btn-secondary create-new btn-danger waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-trash me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Delete selected</span>
-            </span>
-          </button>
+          {lgData?.payload?.user?.curd.includes("delete") && (
+            <button
+              className="btn btn-secondary create-new btn-danger waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-trash me-sm-1" />{" "}
+                <span className="d-none d-sm-inline-block">
+                  Delete selected
+                </span>
+              </span>
+            </button>
+          )}
 
-          <button
-            className="btn btn-info waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-archive me-1" />
-              <span className="d-none d-sm-inline-block">Archive </span>
-            </span>
-          </button>
-          <button
-            className="btn btn-success waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-            onClick={() => navigate("/create-payers")}
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-archive me-1" />
-              <span className="d-none d-sm-inline-block">Add New Payer</span>
-            </span>
-          </button>
+          {lgData?.payload?.user?.curd.includes("delete") && (
+            <button
+              className="btn btn-info waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-archive me-1" />
+                <span className="d-none d-sm-inline-block">Archive </span>
+              </span>
+            </button>
+          )}
+
+          {lgData?.payload?.user?.curd.includes("create") && (
+            <button
+              className="btn btn-success waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+              onClick={() => navigate("/create-payers")}
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-archive me-1" />
+                <span className="d-none d-sm-inline-block">Add New Payer</span>
+              </span>
+            </button>
+          )}
         </div>
         <div className="mt-5">
           {updateData?.message && (
@@ -468,8 +492,8 @@ const Payers = () => {
                               Selected Templates:
                             </label>
                             <Template
-                               selectedTemplate={template}
-                               setSelectedTemplate={setTemplate}
+                              selectedTemplate={template}
+                              setSelectedTemplate={setTemplate}
                             />
                           </div>
                           <div className="col-md-12">

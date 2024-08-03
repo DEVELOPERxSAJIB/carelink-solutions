@@ -1,36 +1,37 @@
-import  { useState,useEffect,useRef } from 'react';
+import  { useState,useEffect } from 'react';
 
 import { getAllSectionState,updateFormData } from './../../Redux/slices/SectionSlice';
 import { useDispatch ,useSelector,} from 'react-redux';
-import { ReactToPrint } from "react-to-print";
+
 const SectionDForm = () => {
-  const componentRef = useRef();
-  
 const dispatch = useDispatch()
   const data = useSelector(getAllSectionState)
   console.log(data)
+  const localSectionD = JSON.parse(localStorage.getItem("SectionD")) || {};
+
+  // Initialize formData state with default values or data from localSectionD
   const [formData, setFormData] = useState({
-    patientMoodUnderstood: '',
-    littleInterestPresence: '',
-    littleInterestFrequency: '',
-    feelingDownPresence: '',
-    feelingDownFrequency: '',
-    troubleSleepingPresence: '',
-    troubleSleepingFrequency: '',
-    feelingTiredPresence: '',
-    feelingTiredFrequency: '',
-    poorAppetitePresence: '',
-    poorAppetiteFrequency: '',
-    feelingBadPresence: '',
-    feelingBadFrequency: '',
-    troubleConcentratingPresence: '',
-    troubleConcentratingFrequency: '',
-    movingSlowlyPresence: '',
-    movingSlowlyFrequency: '',
-    thoughtsOfHarmingPresence: '',
-    thoughtsOfHarmingFrequency: '',
-    totalSeverityScore: '',
-    socialIsolation: ''
+    patientMoodUnderstood: localSectionD?.patientMoodUnderstood || '',
+    littleInterestPresence: localSectionD?.littleInterestPresence || '',
+    littleInterestFrequency: localSectionD?.littleInterestFrequency || '',
+    feelingDownPresence: localSectionD?.feelingDownPresence || '',
+    feelingDownFrequency: localSectionD?.feelingDownFrequency || '',
+    troubleSleepingPresence: localSectionD?.troubleSleepingPresence || '',
+    troubleSleepingFrequency: localSectionD?.troubleSleepingFrequency || '',
+    feelingTiredPresence: localSectionD?.feelingTiredPresence || '',
+    feelingTiredFrequency: localSectionD?.feelingTiredFrequency || '',
+    poorAppetitePresence: localSectionD?.poorAppetitePresence || '',
+    poorAppetiteFrequency: localSectionD?.poorAppetiteFrequency || '',
+    feelingBadPresence: localSectionD?.feelingBadPresence || '',
+    feelingBadFrequency: localSectionD?.feelingBadFrequency || '',
+    troubleConcentratingPresence: localSectionD?.troubleConcentratingPresence || '',
+    troubleConcentratingFrequency: localSectionD?.troubleConcentratingFrequency || '',
+    movingSlowlyPresence: localSectionD?.movingSlowlyPresence || '',
+    movingSlowlyFrequency: localSectionD?.movingSlowlyFrequency || '',
+    thoughtsOfHarmingPresence: localSectionD?.thoughtsOfHarmingPresence || '',
+    thoughtsOfHarmingFrequency: localSectionD?.thoughtsOfHarmingFrequency || '',
+    totalSeverityScore: localSectionD?.totalSeverityScore || '',
+    socialIsolation: localSectionD?.socialIsolation || ''
   });
 
   const handleInputChange = (e) => {
@@ -43,10 +44,12 @@ const dispatch = useDispatch()
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    localStorage.setItem("SectionD", JSON.stringify(formData));
       dispatch(updateFormData(formData))
   };
   useEffect(()=>{
     setFormData({...data})
+    setFormData({...localSectionD})
     },[data])
   return (
     <form className="mt-5" onSubmit={handleSubmit}>
@@ -70,7 +73,7 @@ const dispatch = useDispatch()
             aria-labelledby="headingD"
             data-bs-parent="#sectionDAccordion"
           >
-            <div ref={componentRef} className="accordion-body print-area">
+            <div className="accordion-body print-area">
               {/* Patient Mood Interview */}
               <h4 className="print-title">Mood</h4>
               <div className="mb-3">
@@ -507,13 +510,7 @@ const dispatch = useDispatch()
                  <button type="submit" className="btn btn-primary">
                    add
                  </button>
-                 <ReactToPrint
-                   trigger={() => (
-                     <button className="btn btn-primary">Print</button>
-                   )}
-                   content={() => componentRef.current}
-                   documentTitle="Patient"
-                 />
+                 
                </div>
             </div>
           </div>

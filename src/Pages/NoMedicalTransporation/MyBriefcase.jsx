@@ -4,30 +4,9 @@ import Accordion from './../../components/Tables/Accordion';
 import TableHeader from './../../components/Tables/TableHeader';
 import PopupModal from './../../components/Models/PopupModel';
 import PageHeader from './../../components/FormElement/PageHeader';
-
-// Function to get the start and end dates of the current week
-const getCurrentWeekDateRange = () => {
-  const now = new Date();
-  const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-  const endOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
-
-  const formatDate = (date) => {
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      weekday: "short",
-    };
-    return date.toLocaleDateString("en-US", options);
-  };
-
-  return {
-    start: formatDate(startOfWeek),
-    end: formatDate(endOfWeek),
-  };
-};
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 const MyBriefcase = () => {
+  const { data: logData } = useMeQuery();
   const columns = [
     { field: 'sno', header: 'S.No' },
     { field: 'briefcaseName', header: 'My Briefcase Name' },
@@ -86,6 +65,7 @@ const MyBriefcase = () => {
       <TableHeader title="Mange My Briefcase" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
+        {logData?.payload?.user?.curd?.includes("create") &&
           <PopupModal id="addNewBriefcase" title="Add new ">
             <form action="">
               <div className="card">
@@ -99,6 +79,8 @@ const MyBriefcase = () => {
               </div>
             </form>
           </PopupModal>
+        }
+          {logData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -110,6 +92,7 @@ const MyBriefcase = () => {
               <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
           </button>
+          }
         
         </div>
         <div className="mt-5">

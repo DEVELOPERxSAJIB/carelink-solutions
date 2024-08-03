@@ -1,56 +1,64 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllSectionState,
   updateFormData,
 } from "./../../Redux/slices/SectionSlice";
 import { useEffect } from "react";
-import { ReactToPrint } from "react-to-print";
+
 const CreatePatient2 = () => {
   const dispatch = useDispatch();
-  const componentRef = useRef();
+
   const data = useSelector(getAllSectionState);
+  const localSectionA = JSON.parse(localStorage.getItem("SectionA"));
+  console.log(localSectionA)
   const [formData, setFormData] = useState({
-    npi: "",
-    cmsCertificationNumber: "",
-    branchState: "",
-    branchIdNumber: "",
-    patientIdNumber: "",
-    startOfCareDate: "",
-    resumptionOfCareDate: "",
-    patientFirstName: "",
-    patientMiddleInitial: "",
-    patientLastName: "",
-    patientSuffix: "",
-    patientStateOfResidence: "",
-    patientZipCode: "",
-    socialSecurityNumber: "",
-    medicareNumber: "",
-    medicaidNumber: "",
-    gender: "",
-    birthDate: "",
-    ethnicity: [],
-    race: [],
-    paymentSources: [],
-    preferredLanguage: "",
-    needInterpreter: "",
-    disciplineOfPersonCompletingAssessment: "",
-    dateAssessmentCompleted: "",
-    reasonForAssessment: "",
-    dischargeTransferDeathDate: "",
-    dateOfPhysicianOrderedSOC: "",
-    dateOfReferral: "",
-    transportation: [],
-    inpatientFacilityDischargedFrom: [],
-    inpatientDischargeDate: "",
-    emergentCare: "",
-    reasonForEmergentCare: [],
-    inpatientFacilityAdmittedTo: "",
-    dischargeDisposition: "",
-    medicationListProvided: "",
-    routeMedicationListTransmission: [],
-    medicationListProvidedToPatient: "",
-    routeMedicationListTransmissionToPatient: "",
+    npi: localSectionA?.npi || "",
+    cmsCertificationNumber: localSectionA?.cmsCertificationNumber || "",
+    branchState: localSectionA?.branchState || "",
+    branchIdNumber: localSectionA?.branchIdNumber || "",
+    patientIdNumber: localSectionA?.patientIdNumber || "",
+    startOfCareDate: localSectionA?.startOfCareDate || "",
+    resumptionOfCareDate: localSectionA?.resumptionOfCareDate || "",
+    patientFirstName: localSectionA?.patientFirstName || "",
+    patientMiddleInitial: localSectionA?.patientMiddleInitial || "",
+    patientLastName: localSectionA?.patientLastName || "",
+    patientSuffix: localSectionA?.patientSuffix || "",
+    patientStateOfResidence: localSectionA?.patientStateOfResidence || "",
+    patientZipCode: localSectionA?.patientZipCode || "",
+    socialSecurityNumber: localSectionA?.socialSecurityNumber || "",
+    medicareNumber: localSectionA?.medicareNumber || "",
+    medicaidNumber: localSectionA?.medicaidNumber || "",
+    gender: localSectionA?.gender || "",
+    birthDate: localSectionA?.birthDate || "",
+    ethnicity: localSectionA?.ethnicity || [],
+    race: localSectionA?.race || [],
+    paymentSources: localSectionA?.paymentSources || [],
+    preferredLanguage: localSectionA?.preferredLanguage || "",
+    needInterpreter: localSectionA?.needInterpreter || "",
+    disciplineOfPersonCompletingAssessment:
+      localSectionA?.disciplineOfPersonCompletingAssessment || "",
+    dateAssessmentCompleted: localSectionA?.dateAssessmentCompleted || "",
+    reasonForAssessment: localSectionA?.reasonForAssessment || "",
+    dischargeTransferDeathDate: localSectionA?.dischargeTransferDeathDate || "",
+    dateOfPhysicianOrderedSOC: localSectionA?.dateOfPhysicianOrderedSOC || "",
+    dateOfReferral: localSectionA?.dateOfReferral || "",
+    transportation: localSectionA?.transportation || [],
+    inpatientFacilityDischargedFrom:
+      localSectionA?.inpatientFacilityDischargedFrom || [],
+    inpatientDischargeDate: localSectionA?.inpatientDischargeDate || "",
+    emergentCare: localSectionA?.emergentCare || "",
+    reasonForEmergentCare: localSectionA?.reasonForEmergentCare || [],
+    inpatientFacilityAdmittedTo:
+      localSectionA?.inpatientFacilityAdmittedTo || "",
+    dischargeDisposition: localSectionA?.dischargeDisposition || "",
+    medicationListProvided: localSectionA?.medicationListProvided || "",
+    routeMedicationListTransmission:
+      localSectionA?.routeMedicationListTransmission || [],
+    medicationListProvidedToPatient:
+      localSectionA?.medicationListProvidedToPatient || "",
+    routeMedicationListTransmissionToPatient:
+      localSectionA?.routeMedicationListTransmissionToPatient || "",
   });
 
   const handleInputChange = (e) => {
@@ -85,15 +93,19 @@ const CreatePatient2 = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateFormData(formData));
+    localStorage.setItem("SectionA", JSON.stringify(formData));
   };
   useEffect(() => {
     setFormData({ ...data });
+    setFormData({...localSectionA})
   }, [data]);
 
   return (
     <form className="mt-5" onSubmit={handleSubmit}>
       <div className="accordion" id="administrativeInfoAccordion">
         <div className="accordion-item">
+          <h2 className="print-title">Patient Details</h2>
+          <h4 className="print-title">Administrative Information</h4>
           <h2 className="accordion-header" id="headingAdmin">
             <button
               className="accordion-button"
@@ -112,12 +124,9 @@ const CreatePatient2 = () => {
             aria-labelledby="headingAdmin"
             data-bs-parent="#administrativeInfoAccordion"
           >
-        
-            <div ref={componentRef} className="accordion-body print-area p-4">
+            <div className="accordion-body print-area p-4">
               {/* Fields */}
 
-              <h2 className="print-title">Patient Details</h2>
-              <h4 className="print-title">Administrative Information</h4>
               <div className="row mb-3">
                 <div className="col-md-6">
                   <label htmlFor="npi" className="form-label">
@@ -831,16 +840,8 @@ const CreatePatient2 = () => {
                 <button type="submit" className="btn btn-primary">
                   add
                 </button>
-                <ReactToPrint
-                  trigger={() => (
-                    <button className="btn btn-primary">Print</button>
-                  )}
-                  content={() => componentRef.current}
-                  documentTitle="Patient"
-                />
               </div>
             </div>
-           
           </div>
         </div>
       </div>

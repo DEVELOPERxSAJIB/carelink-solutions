@@ -2,22 +2,23 @@ import  { useState,useEffect,useRef } from 'react';
 
 import { getAllSectionState,updateFormData } from './../../Redux/slices/SectionSlice';
 import { useDispatch ,useSelector} from 'react-redux';
-import { ReactToPrint } from "react-to-print";
+
 const SectionEForm = () => {
-  const componentRef = useRef();
+ 
   
 const dispatch = useDispatch()
   const data = useSelector(getAllSectionState)
-  console.log(data)
+  const localSectionE = JSON.parse(localStorage.getItem("SectionE")) || {};
+
   const [formData, setFormData] = useState({
-    memoryDeficit: false,
-    impairedDecisionMaking: false,
-    verbalDisruption: false,
-    physicalAggression: false,
-    disruptiveBehavior: false,
-    delusionalBehavior: false,
-    noneOfTheAbove: false,
-    disruptiveBehaviorFrequency: '',
+    memoryDeficit:localSectionE?.memoryDeficit|| false,
+    impairedDecisionMaking:localSectionE?.impairedDecisionMaking|| false,
+    verbalDisruption:localSectionE?.verbalDisruption|| false,
+    physicalAggression:localSectionE?.physicalAggression|| false,
+    disruptiveBehavior:localSectionE?.disruptiveBehavior|| false,
+    delusionalBehavior:localSectionE?.delusionalBehavior|| false,
+    noneOfTheAbove:localSectionE?.noneOfTheAbove|| false,
+    disruptiveBehaviorFrequency:localSectionE?.disruptiveBehaviorFrequency|| '',
   });
 
   const handleInputChange = (e) => {
@@ -30,9 +31,11 @@ const dispatch = useDispatch()
   const handleSubmit = (e) => {
     e.preventDefault();
       dispatch(updateFormData(formData))
+    localStorage.setItem("SectionE", JSON.stringify(formData));
   };
   useEffect(()=>{
     setFormData({...data})
+    setFormData({...localSectionE})
     },[data])
   return (
     <form onSubmit={handleSubmit}>
@@ -56,7 +59,7 @@ const dispatch = useDispatch()
             aria-labelledby="headingE"
             data-bs-parent="#accordionSectionE"
           >
-            <div ref={componentRef} className="accordion-body print-area">
+            <div  className="accordion-body print-area">
 
               {/* M1740: Cognitive, Behavioral, and Psychiatric Symptoms */}
               <h4 className="print-title">Behavior</h4>
@@ -183,13 +186,7 @@ const dispatch = useDispatch()
                  <button type="submit" className="btn btn-primary">
                    add
                  </button>
-                 <ReactToPrint
-                   trigger={() => (
-                     <button className="btn btn-primary">Print</button>
-                   )}
-                   content={() => componentRef.current}
-                   documentTitle="Patient"
-                 />
+                
                </div>
             </div>
           </div>

@@ -1,19 +1,17 @@
-import { useState, useEffect, useRef } from "react";
-
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getAllSectionState,
   updateFormData,
 } from "./../../Redux/slices/SectionSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { ReactToPrint } from "react-to-print";
-const SectionGGForm = () => {
-  const componentRef = useRef();
 
+const SectionGGForm = () => {
   const dispatch = useDispatch();
   const data = useSelector(getAllSectionState);
-  console.log(data);
+  const localSectionGG = JSON.parse(localStorage.getItem("SectionGG")) ;
+
   const [formData, setFormData] = useState({
-    gg0100: {
+    gg0100:  {
       selfCare: "",
       indoorMobility: "",
       stairs: "",
@@ -36,7 +34,7 @@ const SectionGGForm = () => {
       lowerBodyDressing: "",
       puttingOnTakingOffFootwear: "",
     },
-    gg0170: {
+    gg0170:  {
       rollLeftRight: "",
       sitToLying: "",
       lyingToSitting: "",
@@ -58,6 +56,15 @@ const SectionGGForm = () => {
     },
   });
 
+  useEffect(() => {
+    if (data) {
+      setFormData((prevData) => ({
+        ...prevData,
+        ...data,
+      }));
+    }
+  }, [data]);
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     const [section, field] = name.split(".");
@@ -70,13 +77,18 @@ const SectionGGForm = () => {
       },
     }));
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateFormData(formData));
+    localStorage.setItem("SectionGG", JSON.stringify(formData));
   };
-  useEffect(() => {
-    setFormData({ ...data });
-  }, [data]);
+  useEffect(()=>{
+    setFormData({...data})
+    if(localSectionGG){
+      setFormData(localSectionGG)
+    }
+  },[data])
   return (
     <form onSubmit={handleSubmit}>
       <div className="accordion" id="accordionSectionGG">
@@ -95,10 +107,10 @@ const SectionGGForm = () => {
           </h2>
           <div
             id="collapseGG"
-            className="accordion-collapse collapse  show"  
+            className="accordion-collapse collapse  show"
             aria-labelledby="headingGG"
           >
-            <div ref={componentRef} className="accordion-body print-area">
+            <div className="accordion-body print-area">
               {/* GG0100 */}
               <h4 className="print-title">Functional Abilities</h4>
               <div className="mb-3">
@@ -297,13 +309,6 @@ const SectionGGForm = () => {
                 <button type="submit" className="btn btn-primary">
                   add
                 </button>
-                <ReactToPrint
-                  trigger={() => (
-                    <button className="btn btn-primary">Print</button>
-                  )}
-                  content={() => componentRef.current}
-                  documentTitle="Patient"
-                />
               </div>
             </div>
           </div>

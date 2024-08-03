@@ -14,6 +14,7 @@ import useFormValidation from "./../../hook/useFormValidation";
 import MultiSelect from "./../../components/FormElement/MultiSelect";
 import curdOption from "./../../utils/CurdOptions";
 import pagesOption from "./../../utils/PagesOptions";
+
 import {
   useMeQuery,
   useGetAllAdminQuery,
@@ -22,13 +23,13 @@ import {
 } from "../../Redux/api/UserApi";
 import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
-
 import {
   registrationSchema,
   updateregistrationSchema,
 } from "../../utils/validationSchemas";
 
 const Admin = () => {
+  const { data: logData } = useMeQuery();
   const { data: addedBy } = useMeQuery();
   const { data, refetch } = useGetAllAdminQuery();
   const [
@@ -87,8 +88,8 @@ const Admin = () => {
       state: selectedState,
       adminID: generateRandomId("admin"),
       addedBy: addedBy?.payload?.user?._id,
-     permissions: selectedPages.map((item) => item.value),
-          curd: selectedCurd.map((item) => item.value),
+      permissions: selectedPages.map((item) => item.value),
+      curd: selectedCurd.map((item) => item.value),
     };
     if (editId) {
       updateUser({ userId: editId, userData: updatedData });
@@ -117,8 +118,13 @@ const Admin = () => {
     setSelectedState(rowData.state);
     setSelectedCity(rowData.city);
     setSelectedCounty(rowData.county);
-    setSelectCurd(rowData?.curd?.map((item)=>({label:item,value:item})))
-    setSelectedPages(rowData?.permissions?.map((item)=>({label:item?.slice(1),value:item})))
+    setSelectCurd(rowData?.curd?.map((item) => ({ label: item, value: item })));
+    setSelectedPages(
+      rowData?.permissions?.map((item) => ({
+        label: item?.slice(1),
+        value: item,
+      }))
+    );
   };
 
   const handleDelete = (rowData) => {
@@ -394,25 +400,31 @@ const Admin = () => {
                             )}
                           </div>
                           <div className="mb-3 col-md-6">
-                      <label htmlFor="confirmPassword" className="form-label">
-                        Pages permissions
-                      </label>
-                      <MultiSelect
-                        options={curdOption}
-                        value={selectedCurd}
-                        onChange={setSelectCurd}
-                      />
-                    </div>
-                    <div className="mb-3 col-md-6">
-                      <label htmlFor="confirmPassword" className="form-label">
-                        Pages permissions
-                      </label>
-                      <MultiSelect
-                        options={pagesOption}
-                        value={selectedPages}
-                        onChange={setSelectedPages}
-                      />
-                    </div>
+                            <label
+                              htmlFor="confirmPassword"
+                              className="form-label"
+                            >
+                              Pages permissions
+                            </label>
+                            <MultiSelect
+                              options={curdOption}
+                              value={selectedCurd}
+                              onChange={setSelectCurd}
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              htmlFor="confirmPassword"
+                              className="form-label"
+                            >
+                              Pages permissions
+                            </label>
+                            <MultiSelect
+                              options={pagesOption}
+                              value={selectedPages}
+                              onChange={setSelectedPages}
+                            />
+                          </div>
                           {/* Email input field */}
 
                           {/* Password input field */}
@@ -566,7 +578,7 @@ const Admin = () => {
               </div>
             </>
           </FullscreenModal>
-          
+
           {show && (
             <EditModal
               style={{
@@ -748,25 +760,25 @@ const Admin = () => {
 
                   {/* Email input field */}
                   <div className="mb-3 col-md-6">
-                      <label htmlFor="confirmPassword" className="form-label">
-                        Pages permissions
-                      </label>
-                      <MultiSelect
-                        options={curdOption}
-                        value={selectedCurd}
-                        onChange={setSelectCurd}
-                      />
-                    </div>
-                    <div className="mb-3 col-md-6">
-                      <label htmlFor="confirmPassword" className="form-label">
-                        Pages permissions
-                      </label>
-                      <MultiSelect
-                        options={pagesOption}
-                        value={selectedPages}
-                        onChange={setSelectedPages}
-                      />
-                    </div>
+                    <label htmlFor="confirmPassword" className="form-label">
+                      Pages permissions
+                    </label>
+                    <MultiSelect
+                      options={curdOption}
+                      value={selectedCurd}
+                      onChange={setSelectCurd}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-6">
+                    <label htmlFor="confirmPassword" className="form-label">
+                      Pages permissions
+                    </label>
+                    <MultiSelect
+                      options={pagesOption}
+                      value={selectedPages}
+                      onChange={setSelectedPages}
+                    />
+                  </div>
                   {/* Submit button */}
                   <div className="mb-3 col-md-12">
                     <button
@@ -818,10 +830,7 @@ const Admin = () => {
             className="d-none"
             type="file"
             id="importcsv"
-          />import curdOption from './../../utils/CurdOptions';
-import MultiSelect from './../../components/FormElement/MultiSelect';
-import pagesOption from './../../utils/PagesOptions';
-
+          />
           <button
             style={{ fontSize: "12px" }}
             className="btn btn-warning waves-effect waves-light"
@@ -835,36 +844,41 @@ import pagesOption from './../../utils/PagesOptions';
               <span className=" d-sm-inline-block">Export Selected</span>
             </span>
           </button>
-          <button
-            style={{ fontSize: "12px" }}
-            className="btn btn-secondary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-            onClick={handleDeleteSelected}
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-trash me-sm-1" />{" "}
-              <span className=" d-sm-inline-block">Delete Selected</span>
-            </span>
-          </button>
-          <button
-            style={{
-              background: "#bd646e",
-              color: "#fff",
-              fontSize: "12px",
-            }}
-            className="btn waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-            onClick={() => navigate("/employee-payroll")}
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className=" d-sm-inline-block">Payroll</span>
-            </span>
-          </button>
+          {logData?.payload?.user?.curd?.includes("delete") && (
+            <button
+              style={{ fontSize: "12px" }}
+              className="btn btn-secondary waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+              onClick={handleDeleteSelected}
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-trash me-sm-1" />{" "}
+                <span className=" d-sm-inline-block">Delete Selected</span>
+              </span>
+            </button>
+          )}
+          {logData?.payload?.user?.curd?.includes("create") && (
+            <button
+              style={{
+                background: "#bd646e",
+                color: "#fff",
+                fontSize: "12px",
+              }}
+              className="btn waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+              onClick={() => navigate("/employee-payroll")}
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-plus me-sm-1" />{" "}
+                <span className=" d-sm-inline-block">Payroll</span>
+              </span>
+            </button>
+          )}
+
           <button
             style={{
               background: "#9fd74d",
@@ -909,18 +923,22 @@ import pagesOption from './../../utils/PagesOptions';
               <span className=" d-sm-inline-block">Earning</span>
             </span>
           </button>
-          <button
-            onClick={() => navigate("/assign-all-individual")}
-            className="btn btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus"></i>
-              <span className=" d-sm-inline-block">Assign All Individual</span>
-            </span>
-          </button>
+          {logData?.payload?.user?.curd?.includes("create") && (
+            <button
+              onClick={() => navigate("/assign-all-individual")}
+              className="btn btn-primary waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-plus"></i>
+                <span className=" d-sm-inline-block">
+                  Assign All Individual
+                </span>
+              </span>
+            </button>
+          )}
         </div>
         <div className="mt-5 w-100">
           {updateData?.message && (

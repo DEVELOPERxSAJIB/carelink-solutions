@@ -2,20 +2,21 @@ import  { useState,useEffect ,useRef} from 'react';
 
 import { getAllSectionState,updateFormData } from './../../Redux/slices/SectionSlice';
 import { useDispatch ,useSelector,} from 'react-redux';
-import { ReactToPrint } from "react-to-print";
+
 const SectionFForm = () => {
-  const componentRef = useRef();
+  
   
 const dispatch = useDispatch()
   const data = useSelector(getAllSectionState)
-  console.log(data)
+  const localSectionF = JSON.parse(localStorage.getItem("SectionF")) || {};
+
   const [formData, setFormData] = useState({
-    livingArrangement: '',
-    assistanceAvailability: '',
-    adlAssistance: '',
-    medicationAssistance: '',
-    medicalProceduresAssistance: '',
-    supervisionSafetyAssistance: '',
+    livingArrangement:localSectionF?.livingArrangement|| '',
+    assistanceAvailability:localSectionF?.assistanceAvailability|| '',
+    adlAssistance:localSectionF?.adlAssistance|| '',
+    medicationAssistance:localSectionF?.medicationAssistance|| '',
+    medicalProceduresAssistance:localSectionF?.medicalProceduresAssistance|| '',
+    supervisionSafetyAssistance:localSectionF?.supervisionSafetyAssistance|| '',
   });
 
   const handleInputChange = (e) => {
@@ -28,9 +29,11 @@ const dispatch = useDispatch()
   const handleSubmit = (e) => {
     e.preventDefault();
       dispatch(updateFormData(formData))
+      localStorage.setItem("SectionF", JSON.stringify(formData));
   };
   useEffect(()=>{
     setFormData({...data})
+    setFormData({...localSectionF})
     },[data])
   return (
     <form onSubmit={handleSubmit}>
@@ -54,7 +57,7 @@ const dispatch = useDispatch()
             aria-labelledby="headingF"
             data-bs-parent="#accordionSectionF"
           >
-            <div ref={componentRef} className="accordion-body print-area">
+            <div className="accordion-body print-area">
 
               {/* M1100: Patient Living Situation */}
               <h4 className="print-title">Preferences for Customary Routine and Activities</h4>
@@ -188,13 +191,7 @@ const dispatch = useDispatch()
                  <button type="submit" className="btn btn-primary">
                    add
                  </button>
-                 <ReactToPrint
-                   trigger={() => (
-                     <button className="btn btn-primary">Print</button>
-                   )}
-                   content={() => componentRef.current}
-                   documentTitle="Patient"
-                 />
+                
                </div>
             </div>
           </div>

@@ -2,22 +2,24 @@ import  { useState,useEffect,useRef } from 'react';
 
 import { getAllSectionState,updateFormData } from './../../Redux/slices/SectionSlice';
 import { useDispatch ,useSelector} from 'react-redux';
-import { ReactToPrint } from "react-to-print";
+
 const SectionGForm = () => {
-  const componentRef = useRef();
+
   
 const dispatch = useDispatch()
   const data = useSelector(getAllSectionState)
-  console.log(data)
+  const localSectionG = JSON.parse(localStorage.getItem("SectionG")) || {};
+
+
   const [formData, setFormData] = useState({
-    grooming: '',
-    upperBodyDressing: '',
-    lowerBodyDressing: '',
-    bathing: '',
-    toiletTransferring: '',
-    toiletingHygiene: '',
-    transferring: '',
-    ambulationLocomotion: '',
+    grooming: localSectionG?.grooming||'',
+    upperBodyDressing: localSectionG?.upperBodyDressing||'',
+    lowerBodyDressing: localSectionG?.lowerBodyDressing||'',
+    bathing: localSectionG?.bathing||'',
+    toiletTransferring: localSectionG?.toiletTransferring||'',
+    toiletingHygiene: localSectionG?.toiletingHygiene||'',
+    transferring: localSectionG?.transferring||'',
+    ambulationLocomotion: localSectionG?.ambulationLocomotion||'',
   });
 
   const handleInputChange = (e) => {
@@ -30,9 +32,11 @@ const dispatch = useDispatch()
   const handleSubmit = (e) => {
     e.preventDefault();
       dispatch(updateFormData(formData))
+      localStorage.setItem("SectionG", JSON.stringify(formData));
   };
   useEffect(()=>{
     setFormData({...data})
+    setFormData({...localSectionG})
     },[data])
   return (
     <form onSubmit={handleSubmit}>
@@ -56,7 +60,7 @@ const dispatch = useDispatch()
             aria-labelledby="headingG"
             data-bs-parent="#accordionSectionG"
           >
-            <div ref={componentRef} className="accordion-body print-area">
+            <div className="accordion-body print-area">
               {/* M1800: Grooming */
               }
               <h4 className="print-title">Functional status</h4>
@@ -599,13 +603,7 @@ const dispatch = useDispatch()
                  <button type="submit" className="btn btn-primary">
                    add
                  </button>
-                 <ReactToPrint
-                   trigger={() => (
-                     <button className="btn btn-primary">Print</button>
-                   )}
-                   content={() => componentRef.current}
-                   documentTitle="Patient"
-                 />
+                 
                </div>
             </div>
           </div>

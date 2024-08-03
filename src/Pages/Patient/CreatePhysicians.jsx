@@ -1,4 +1,4 @@
-import { useState, useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import CitySelect from "../../components/FormElement/CitySelect";
 import StateSelect from "./../../components/FormElement/StateSelect";
@@ -7,32 +7,34 @@ import { useCreatePhysicianMutation } from "../../Redux/api/PhysicianApi";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import { useNavigate } from "react-router-dom";
 import { ReactToPrint } from "react-to-print";
- 
 
 const CreatePhysicians = () => {
-  const componentRef = useRef()
+  const componentRef = useRef();
   const navigate = useNavigate();
+  const localPhysician = JSON.parse(localStorage.getItem("Physician"));
+  console.log(localPhysician);
   const [createPhysician, { data, isLoading, error, isSuccess }] =
     useCreatePhysicianMutation();
   const [formData, setFormData] = useState({
-    npiNumber: "",
-    firstName: "",
-    mi: "",
-    lastName: "",
-    taxonomyCode: "",
-    credentials: "",
-    npiNo: null,
-    medicaidProviderIdentifier: "",
-    addressLine1: "",
-    addressLine2: "",
-    city: "",
-    state: "",
-    zip: "",
-    primaryPhone: "",
-    alternatePhone: "",
-    deliveryMethod: "",
-    fax: "",
-    email: "",
+    npiNumber: localPhysician?.npiNumber || "",
+    firstName: localPhysician?.firstName || "",
+    mi: localPhysician?.mi || "",
+    lastName: localPhysician?.lastName || "",
+    taxonomyCode: localPhysician?.taxonomyCode || "",
+    credentials: localPhysician?.credentials || "",
+    npiNo: localPhysician?.npiNo || null,
+    medicaidProviderIdentifier:
+      localPhysician?.medicaidProviderIdentifier || "",
+    addressLine1: localPhysician?.addressLine1 || "",
+    addressLine2: localPhysician?.addressLine2 || "",
+    city: localPhysician?.city || "",
+    state: localPhysician?.state || "",
+    zip: localPhysician?.zip || "",
+    primaryPhone: localPhysician?.primaryPhone || "",
+    alternatePhone: localPhysician?.alternatePhone || "",
+    deliveryMethod: localPhysician?.deliveryMethod || "",
+    fax: localPhysician?.fax || "",
+    email: localPhysician?.email || "",
   });
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
@@ -43,14 +45,24 @@ const CreatePhysicians = () => {
       [name]: value,
     });
   };
-  const [formError, setFormError] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    setFormError("");
     formData.city = city;
     formData.state = state;
     createPhysician(formData);
+  };
+  const handleSaveAndContinue = (e) => {
+    e.preventDefault();
+    formData.city = city;
+    formData.state = state;
+    createPhysician(formData);
+    localStorage.setItem("Physician", JSON.stringify(formData));
+  };
+  const handleSaveAndExit = (e) => {
+    e.preventDefault();
+    formData.city = city;
+    formData.state = state;
+    localStorage.setItem("Physician", JSON.stringify(formData));
   };
   useEffect(() => {
     if (isSuccess) {
@@ -77,6 +89,10 @@ const CreatePhysicians = () => {
       });
     }
   }, [isSuccess]);
+  useEffect(()=>{
+    setState(localPhysician?.state || "")
+    setCity(localPhysician?.city || "")
+  },[])
   if (isLoading) return <AuthLoader />;
   return (
     <div ref={componentRef} className="card mt-4">
@@ -96,9 +112,7 @@ const CreatePhysicians = () => {
             {error?.data?.message}
           </div>
         )}
-        {formError && (
-          <div className="alert alert-danger text-center">{formError}</div>
-        )}
+
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className=" col-md-6">
@@ -325,7 +339,9 @@ const CreatePhysicians = () => {
                 onChange={handleChange}
               >
                 {/* "AxxessPhysicianPortal", "Email", "Phone", "Fax", "Courier", "Other" */}
-                <option className="hide-on-print" value="">Select delivery method</option>
+                <option className="hide-on-print" value="">
+                  Select delivery method
+                </option>
                 <option value="AxxessPhysicianPortal">
                   AxxessPhysicianPortal
                 </option>
@@ -371,16 +387,29 @@ const CreatePhysicians = () => {
             <button type="submit" className="btn btn-primary mr-2">
               Save
             </button>
+            <button
+              onClick={handleSaveAndContinue}
+              type="submit"
+              className="btn btn-primary mr-2"
+            >
+              Save and continue
+            </button>
+            <button
+              onClick={handleSaveAndExit}
+              type="submit"
+              className="btn btn-primary mr-2"
+            >
+              Save and exit
+            </button>
             <button type="button" className="btn btn-secondary">
               Exit
             </button>
+
             <ReactToPrint
-                  trigger={() => (
-                    <span className="btn btn-primary">Print</span>
-                  )}
-                  content={() => componentRef.current}
-                  documentTitle="Patient"
-                />
+              trigger={() => <span className="btn btn-primary">Print</span>}
+              content={() => componentRef.current}
+              documentTitle="Patient"
+            />
           </div>
         </form>
       </div>

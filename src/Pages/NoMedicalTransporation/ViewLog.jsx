@@ -14,8 +14,9 @@ import { useGetAllInspectionsQuery } from "../../Redux/api/InspectionApi.js";
 import { useGetAllRoutesQuery } from "../../Redux/api/RouteApi.js";
 import EditModal from "./../../components/Models/EditModal";
 import MainLoader from "./../../utils/Loaders/MainLoader";
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 const VehicleViewLog = () => {
+  const { data: logData } = useMeQuery();
   const { data, isLoading, refetch } = useGetAllTripsQuery();
   const { data: inspections } = useGetAllInspectionsQuery();
   const { data: routes } = useGetAllRoutesQuery();
@@ -278,6 +279,8 @@ const VehicleViewLog = () => {
       <Alert message={deleteData?.message} type="success" />
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
+        {logData?.payload?.user?.curd?.includes("create") &&
+        
           <FullscreenModal
             className="col-md-6"
             id="recordTrip"
@@ -449,6 +452,7 @@ const VehicleViewLog = () => {
               </div>
             </form>
           </FullscreenModal>
+        }
           <button
             className="btn btn-sm btn-primary waves-effect waves-light"
             tabIndex={0}
@@ -460,6 +464,8 @@ const VehicleViewLog = () => {
               <span className=" d-sm-inline-block">Reports</span>
             </span>
           </button>
+          {logData?.payload?.user?.curd?.includes("delete") &&
+          
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -471,6 +477,9 @@ const VehicleViewLog = () => {
               <span className=" d-sm-inline-block">Delete selected</span>
             </span>
           </button>
+          }
+            {logData?.payload?.user?.curd?.includes("delete") &&
+            
           <button
             className="btn btn-warning waves-effect waves-light"
             tabIndex={0}
@@ -482,6 +491,7 @@ const VehicleViewLog = () => {
               <span className=" d-sm-inline-block">History</span>
             </span>
           </button>
+            }
         </div>
         <div className="mt-5">
           <DataTable

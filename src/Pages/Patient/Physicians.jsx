@@ -14,7 +14,9 @@ import { useState, useEffect } from "react";
 import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
 import Alert from "./../../components/Alert/Alert";
+import { useMeQuery } from "../../Redux/api/UserApi";
 const Physicians = () => {
+  const { data: lgData } = useMeQuery();
   const { data, isLoading, error, refetch } = useGetAllPhysiciansQuery();
   const [
     updatePhysician,
@@ -137,6 +139,8 @@ const Physicians = () => {
             columns={columns}
             fileName="Physician"
           />
+           {lgData?.payload?.user?.curd?.includes("delete") &&
+           
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -148,7 +152,8 @@ const Physicians = () => {
               <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
           </button>
-
+           }
+ {lgData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-info waves-effect waves-light"
             tabIndex={0}
@@ -160,6 +165,8 @@ const Physicians = () => {
               <span className="d-none d-sm-inline-block">Archive </span>
             </span>
           </button>
+ }
+  {lgData?.payload?.user?.curd?.includes("create") &&
           <button
             className="btn btn-success waves-effect waves-light"
             tabIndex={0}
@@ -174,6 +181,7 @@ const Physicians = () => {
               </span>
             </span>
           </button>
+  }
         </div>
         {show && (
           <EditModal

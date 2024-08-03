@@ -1,6 +1,8 @@
 
 import DataTable from './../../components/Tables/DynamicTable';
+import { useMeQuery } from "../../Redux/api/UserApi";
 const Permissions = () => {
+  const { data: logData } = useMeQuery();
   // Define columns for the UserTable
   const columns = [
     { header: 'S.No', field: 'id' },

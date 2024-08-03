@@ -1,19 +1,19 @@
-import { useState ,useEffect,useRef} from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCreatePharmacyMutation } from "../../Redux/api/PharmacyApi";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import CitySelect from "./../../components/FormElement/CitySelect";
 import { ReactToPrint } from "react-to-print";
- 
- 
+
 const CreatePharmacy = () => {
-  const componentRef = useRef()
+  const componentRef = useRef();
   const [createPharmacy, { data, isLoading, error }] =
     useCreatePharmacyMutation();
-    const localStorageData = JSON.parse(localStorage.getItem("Pharmacy"))
+  const localStorageData = JSON.parse(localStorage.getItem("Pharmacy"));
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
+
   const initialFormData = {
     pharmacyName: localStorageData?.pharmacyName || "",
     addressLine1: localStorageData?.addressLine1 || "",
@@ -27,7 +27,9 @@ const CreatePharmacy = () => {
     email: localStorageData?.email || "",
     faxNumber: localStorageData?.faxNumber || "",
     comment: localStorageData?.comment || "",
-    additionalPharmacies: localStorageData?.additionalPharmacies || [{ name: "" }],
+    additionalPharmacies: localStorageData?.additionalPharmacies || [
+      { name: "" },
+    ],
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -72,30 +74,32 @@ const CreatePharmacy = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-      console.log(formData);
-      formData.city = city;
-      formData.state = state;
-      createPharmacy(formData);
-      localStorage.removeItem("Pharmacy")
-    
-    
+    formData.city = city;
+    formData.state = state;
+    createPharmacy(formData);
+    localStorage.removeItem("Pharmacy");
   };
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
+    formData.city = city;
+    formData.state = state;
     localStorage.setItem("Pharmacy", JSON.stringify(formData));
     createPharmacy(formData);
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
+    formData.city = city;
+    formData.state = state;
     localStorage.setItem("Pharmacy", JSON.stringify(formData));
   };
+
   useEffect(()=>{
- setCity(localStorageData?.city?localStorageData?.city:"")
- setState(localStorageData?.state?localStorageData?.state:"")
-  },[localStorageData])
+    setState(localStorageData?.state || "")
+    setCity(localStorageData?.city || "")
+  },[])
   if (isLoading) return <AuthLoader />;
   return (
-    <form ref={componentRef}  onSubmit={handleSubmit} className="card">
+    <form ref={componentRef} onSubmit={handleSubmit} className="card">
       <div className="card-body">
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <PageHeader title="Pharmacy" className="card-header fs-3" />
@@ -109,7 +113,7 @@ const CreatePharmacy = () => {
               {error?.data?.message}
             </div>
           )}
-         
+
           {/* Pharmacy Information */}
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingPharmacyInfo">
@@ -378,12 +382,10 @@ const CreatePharmacy = () => {
             save and exit
           </button>
           <ReactToPrint
-                  trigger={() => (
-                    <span className="btn btn-primary">Print</span>
-                  )}
-                  content={() => componentRef.current}
-                  documentTitle="Patient"
-                />
+            trigger={() => <span className="btn btn-primary">Print</span>}
+            content={() => componentRef.current}
+            documentTitle="Patient"
+          />
         </div>
       </div>
     </form>

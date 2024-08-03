@@ -2,13 +2,14 @@ import  { useState,useEffect,useRef } from 'react';
 
 import { getAllSectionState,updateFormData } from './../../Redux/slices/SectionSlice';
 import { useDispatch ,useSelector} from 'react-redux';
-import { ReactToPrint } from "react-to-print";
+
 const SectionNForm = () => {
-  const componentRef = useRef();
+
  
-const dispatch = useDispatch()
-  const data = useSelector(getAllSectionState)
-  console.log(data)
+  const dispatch = useDispatch();
+  const data = useSelector(getAllSectionState);
+  const localSectionN = JSON.parse(localStorage.getItem("SectionN")) || {};
+
   const [formData, setFormData] = useState({
     highRiskDrugs: {
       antipsychotic: { isTaking: false, indicationNoted: false },
@@ -27,8 +28,20 @@ const dispatch = useDispatch()
     managementInjectableMedications: ''
   });
 
+  useEffect(() => {
+    // Merge data from localStorage and Redux state
+    setFormData(prevData => ({
+      ...prevData,
+      ...localSectionN,
+      highRiskDrugs: {
+        ...prevData.highRiskDrugs,
+        ...localSectionN.highRiskDrugs
+      }
+    }));
+  }, [data]);
+
   const handleCheckboxChange = (e, drugClass, field) => {
-    setFormData((prevData) => ({
+    setFormData(prevData => ({
       ...prevData,
       highRiskDrugs: {
         ...prevData.highRiskDrugs,
@@ -42,7 +55,7 @@ const dispatch = useDispatch()
 
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setFormData(prevData => ({
       ...prevData,
       [name]: value
     }));
@@ -50,11 +63,9 @@ const dispatch = useDispatch()
 
   const handleSubmit = (e) => {
     e.preventDefault();
-      dispatch(updateFormData(formData))
+    dispatch(updateFormData(formData));
+    localStorage.setItem("SectionN", JSON.stringify(formData));
   };
-  useEffect(()=>{
-    setFormData({...data})
-    },[data])
   return (
     <form onSubmit={ handleSubmit }>
       <div className="accordion" id="accordionSectionN">
@@ -77,7 +88,7 @@ const dispatch = useDispatch()
             aria-labelledby="headingN"
             data-bs-parent="#accordionSectionN"
           >
-            <div ref={componentRef} className="accordion-body print-area">
+            <div  className="accordion-body print-area">
               {/* N0415. High-Risk Drug Classes: Use and Indication */}
               <h4 className="print-title">Medications</h4>
               <div className="mb-3">
@@ -334,13 +345,7 @@ const dispatch = useDispatch()
                  <button type="submit" className="btn btn-primary">
                    add
                  </button>
-                 <ReactToPrint
-                   trigger={() => (
-                     <button className="btn btn-primary">Print</button>
-                   )}
-                   content={() => componentRef.current}
-                   documentTitle="Patient"
-                 />
+                
                </div>
             </div>
           </div>

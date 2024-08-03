@@ -50,6 +50,15 @@ const Sidebar = ({ userRole, permissions }) => {
       subMenu: [{ title: "Co-Admins", href: "/coadmins", icon: "" }],
     },
     {
+      title: "Manage sub-users",
+      href: "",
+      // roles: ["superadmin"],
+      icon: (
+        <i className="menu-icon tf-icons ti ti-users menu-toggle-icon d-xl-block align-middle"></i>
+      ),
+      subMenu: [{ title: "sub-users", href: "/sub-users", icon: "" }],
+    },
+    {
       title: "Add New Mileage",
       href: "/add-new-mileage",
       // roles: ["provider", "superadmin"],
@@ -269,6 +278,23 @@ const Sidebar = ({ userRole, permissions }) => {
       ],
     },
     {
+      title: "No Medical Transporation",
+      href: "",
+      // roles: ["superadmin", "admin", "coadmin"],
+      icon: (
+        <i className="menu-icon tf-icons ti ti-folder menu-toggle-icon d-xl-block align-middle"></i>
+      ),
+      subMenu: [
+        { title: "My vehicles", href: "/my-vehicles", icon: "" },
+        { title: "My Routes", href:         "/my-routes", icon: "" },
+        { title: "Add Vehicles Inspection", href:         "/add-vehicle-inspection", icon: "" },
+        { title: "View Vehicle Inspection", href:         "/view-vehicle-inspection", icon: "" },
+        { title: "View Log", href:         "/vehicle-view-log", icon: "" },
+        { title: "My Briefcase", href:         "/my-briefcase", icon: "" },
+
+      ],
+    },
+    {
       title: "Non-Medical Transportation",
       href: "",
       // roles: ["provider", "caregiver", "superadmin", "coadmin"],
@@ -377,7 +403,7 @@ const Sidebar = ({ userRole, permissions }) => {
               permissions?.includes(subItem.href)
             )
           ) {
-            // If the menu item and none of its sub-items have permission, skip rendering
+            
             return null;
           }
 

@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { useMeQuery } from "../../Redux/api/UserApi";
+import { Link } from "react-router-dom";
 const DataTable = ({
   columns,
   data,
@@ -8,6 +10,7 @@ const DataTable = ({
   onDelete,
   onEdit,
 }) => {
+  const { data: lgData } = useMeQuery();
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(20); // Default rows per page
   const [searchTerm, setSearchTerm] = useState("");
@@ -338,20 +341,33 @@ const DataTable = ({
                   >
                     <i className="ti ti-dots-vertical ti-md"></i>
                   </button>
+                  {console.log(row)}
                   {dropdownOpen[rowIndex] ? (
                     <div className="dropdown-menu show">
-                      <button
-                        className="dropdown-item"
-                        onClick={() => onDelete(row)}
-                      >
-                        Delete
-                      </button>
-                      <button
-                        className="dropdown-item"
-                        onClick={() => onEdit(row)}
-                      >
-                        Edit
-                      </button>
+                      {lgData?.payload?.user?.curd.includes("read") && (
+                        <Link
+                          className="dropdown-item"
+                          to={`/${tableName}/${row?._id}`}
+                        >
+                          view
+                        </Link>
+                      )}
+                      {lgData?.payload?.user?.curd.includes("delete") && (
+                        <button
+                          className="dropdown-item"
+                          onClick={() => onDelete(row)}
+                        >
+                          Delete
+                        </button>
+                      )}
+                      {lgData?.payload?.user?.curd.includes("edit") && (
+                        <button
+                          className="dropdown-item"
+                          onClick={() => onEdit(row)}
+                        >
+                          Edit
+                        </button>
+                      )}
                     </div>
                   ) : null}
                 </td>

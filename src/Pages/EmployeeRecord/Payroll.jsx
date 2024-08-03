@@ -3,7 +3,7 @@ import DataTable from "./../../components/Tables/DynamicTable";
 import ExportButton from "./../../components/Buttons/ExportButton";
 import { useNavigate } from "react-router-dom";
 import TableHeader from "./../../components/Tables/TableHeader";
-// Function to get the start and end dates of the current week
+import { useMeQuery } from "../../Redux/api/UserApi";
 const getCurrentWeekDateRange = () => {
   const now = new Date();
   const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
@@ -18,7 +18,7 @@ const getCurrentWeekDateRange = () => {
     };
     return date.toLocaleDateString("en-US", options);
   };
-
+  
   return {
     start: formatDate(startOfWeek),
     end: formatDate(endOfWeek),
@@ -27,6 +27,7 @@ const getCurrentWeekDateRange = () => {
 
 const EmployeePayroll = () => {
   const { start, end } = getCurrentWeekDateRange();
+  const { data: logData } = useMeQuery();
   const navigate = useNavigate();
   const columns = [
     { header: "S.No", field: "serialNumber" },

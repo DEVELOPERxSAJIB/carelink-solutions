@@ -13,8 +13,9 @@ import {
   useUpdateFolderMutation,
   useDeleteFolderMutation,
 } from "../../Redux/api/FolderApi";
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 const Folders = () => {
+  const { data: logData } = useMeQuery();
   const [show, setShow] = useState(false);
   const [editId, setEditId] = useState(false);
   const [
@@ -102,6 +103,8 @@ const Folders = () => {
       <div className="card-body">
         <Alert message={message} type="success" />
         <div className="gap-3 d-flex flex-wrap">
+        {logData?.payload?.user?.curd?.includes("create") &&
+        
           <PopupModal title="Add Folder" id="addFolder">
             <Alert message={message} type="success" />
             <Alert message={errors} type="danger" />
@@ -116,6 +119,7 @@ const Folders = () => {
               <button className="mt-4 btn btn-primary">Save</button>
             </form>
           </PopupModal>
+        }
           {show && (
             <EditModal
               onClose={setShow}
@@ -140,6 +144,8 @@ const Folders = () => {
               </form>
             </EditModal>
           )}
+            {logData?.payload?.user?.curd?.includes("delete") &&
+            
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -151,6 +157,9 @@ const Folders = () => {
               <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
           </button>
+            }
+              {logData?.payload?.user?.curd?.includes("delete") &&
+              
           <button
             className="btn btn-warning waves-effect waves-light"
             tabIndex={0}
@@ -162,6 +171,8 @@ const Folders = () => {
               <span className="d-none d-sm-inline-block">History</span>
             </span>
           </button>
+              }
+                {logData?.payload?.user?.curd?.includes("create") &&
           <button
             className="btn btn-info waves-effect waves-light"
             tabIndex={0}
@@ -173,6 +184,7 @@ const Folders = () => {
               <span className="d-none d-sm-inline-block">Archive </span>
             </span>
           </button>
+                }
         </div>
         <div className="mt-5">
           <DataTable

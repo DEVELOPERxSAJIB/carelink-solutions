@@ -1,46 +1,45 @@
-import { useState, useEffect,useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllSectionState, updateFormData } from './../../Redux/slices/SectionSlice';
 
-import { ReactToPrint } from "react-to-print";
 const SectionKForm = () => {
- const componentRef = useRef();
- 
   const dispatch = useDispatch();
   const data = useSelector(getAllSectionState);
+  const localSectionK = JSON.parse(localStorage.getItem("SectionK")) || {};
 
   const [formData, setFormData] = useState({
-    height: '',
-    weight: '',
+    height: localSectionK?.height ?? '',
+    weight: localSectionK?.weight ?? '',
     nutritionalApproachesOnAdmission: {
-      parenteralIVFeeding: false,
-      feedingTube: false,
-      mechanicallyAlteredDiet: false,
-      therapeuticDiet: false,
-      none: false,
+      parenteralIVFeeding: localSectionK?.nutritionalApproachesOnAdmission?.parenteralIVFeeding ?? false,
+      feedingTube: localSectionK?.nutritionalApproachesOnAdmission?.feedingTube ?? false,
+      mechanicallyAlteredDiet: localSectionK?.nutritionalApproachesOnAdmission?.mechanicallyAlteredDiet ?? false,
+      therapeuticDiet: localSectionK?.nutritionalApproachesOnAdmission?.therapeuticDiet ?? false,
+      none: localSectionK?.nutritionalApproachesOnAdmission?.none ?? false,
     },
     nutritionalApproachesLast7Days: {
-      parenteralIVFeeding: false,
-      feedingTube: false,
-      mechanicallyAlteredDiet: false,
-      therapeuticDiet: false,
-      none: false,
+      parenteralIVFeeding: localSectionK?.nutritionalApproachesLast7Days?.parenteralIVFeeding ?? false,
+      feedingTube: localSectionK?.nutritionalApproachesLast7Days?.feedingTube ?? false,
+      mechanicallyAlteredDiet: localSectionK?.nutritionalApproachesLast7Days?.mechanicallyAlteredDiet ?? false,
+      therapeuticDiet: localSectionK?.nutritionalApproachesLast7Days?.therapeuticDiet ?? false,
+      none: localSectionK?.nutritionalApproachesLast7Days?.none ?? false,
     },
     nutritionalApproachesAtDischarge: {
-      parenteralIVFeeding: false,
-      feedingTube: false,
-      mechanicallyAlteredDiet: false,
-      therapeuticDiet: false,
-      none: false,
+      parenteralIVFeeding: localSectionK?.nutritionalApproachesAtDischarge?.parenteralIVFeeding ?? false,
+      feedingTube: localSectionK?.nutritionalApproachesAtDischarge?.feedingTube ?? false,
+      mechanicallyAlteredDiet: localSectionK?.nutritionalApproachesAtDischarge?.mechanicallyAlteredDiet ?? false,
+      therapeuticDiet: localSectionK?.nutritionalApproachesAtDischarge?.therapeuticDiet ?? false,
+      none: localSectionK?.nutritionalApproachesAtDischarge?.none ?? false,
     },
-    feedingOrEating: '',
+    feedingOrEating: localSectionK?.feedingOrEating ?? '',
   });
 
   useEffect(() => {
     if (data) {
-      setFormData({
+      setFormData((prevData) => ({
+        ...prevData,
         ...data
-      });
+      }));
     }
   }, [data]);
 
@@ -67,6 +66,7 @@ const SectionKForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateFormData(formData));
+    localStorage.setItem("SectionK", JSON.stringify(formData));
   };
 
   return (
@@ -91,11 +91,9 @@ const SectionKForm = () => {
             aria-labelledby="headingK"
             data-bs-parent="#accordionSectionK"
           >
-            <div ref={componentRef} className="accordion-body print-area">
+            <div className="accordion-body print-area">
               {/* Height and Weight */}
-              <h4 className="print-title">
-                Swallowing/Nutritional Status
-              </h4>
+              <h4 className="print-title">Swallowing/Nutritional Status</h4>
               <div className="mb-3">
                 <label htmlFor="height" className="form-label">M1060. Height (in inches)</label>
                 <input
@@ -138,7 +136,7 @@ const SectionKForm = () => {
                     <div key={value} className="form-check">
                       <input
                         id={`onAdmission-${value}`}
-                        name="nutritionalApproachesOnAdmission"
+                        name={`nutritionalApproachesOnAdmission-${value}`}
                         type="checkbox"
                         checked={formData.nutritionalApproachesOnAdmission[value] || false}
                         onChange={handleInputChange}
@@ -161,7 +159,7 @@ const SectionKForm = () => {
                     <div key={value} className="form-check">
                       <input
                         id={`last7Days-${value}`}
-                        name="nutritionalApproachesLast7Days"
+                        name={`nutritionalApproachesLast7Days-${value}`}
                         type="checkbox"
                         checked={formData.nutritionalApproachesLast7Days[value] || false}
                         onChange={handleInputChange}
@@ -184,7 +182,7 @@ const SectionKForm = () => {
                     <div key={value} className="form-check">
                       <input
                         id={`atDischarge-${value}`}
-                        name="nutritionalApproachesAtDischarge"
+                        name={`nutritionalApproachesAtDischarge-${value}`}
                         type="checkbox"
                         checked={formData.nutritionalApproachesAtDischarge[value] || false}
                         onChange={handleInputChange}
@@ -217,15 +215,8 @@ const SectionKForm = () => {
               </div>
               <div className="d-flex align-items-center gap-4 hide-on-print">
                 <button type="submit" className="btn btn-primary">
-                  add
+                  Add
                 </button>
-                <ReactToPrint
-                  trigger={() => (
-                    <button className="btn btn-primary">Print</button>
-                  )}
-                  content={() => componentRef.current}
-                  documentTitle="Patient"
-                />
               </div>
             </div>
           </div>

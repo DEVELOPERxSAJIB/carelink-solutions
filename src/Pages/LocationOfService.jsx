@@ -14,8 +14,9 @@ import StateSelect from "../components/FormElement/StateSelect";
 import CitySelect from "../components/FormElement/CitySelect";
 import AuthLoader from "./../utils/Loaders/AuthLoader";
 import EditModal from "./../components/Models/EditModal";
-
+import { useMeQuery } from "../Redux/api/UserApi.js";
 const LocationOfService = () => {
+  const { data: lgData } = useMeQuery();
   const [
     createLocation,
     { data: createData, isSuccess: isCreateSuccess, error: createError },
@@ -101,7 +102,7 @@ const LocationOfService = () => {
         state,
       };
       updateLocation({ locationId: editId, locationData: data });
-      resetForm()
+      resetForm();
     } else {
       const data = {
         ...formData,
@@ -109,7 +110,7 @@ const LocationOfService = () => {
         state,
       };
       createLocation(data);
-      resetForm()
+      resetForm();
     }
   };
 
@@ -157,106 +158,117 @@ const LocationOfService = () => {
           </div>
         )}
         <div className="gap-3 d-flex flex-wrap">
-          <PopupModal title="Add Service Location" id="newaddServiceLocation">
-            <form onSubmit={handleSubmit}>
-              {createError?.data?.message && (
-                <div className="alert alert-danger text-center">
-                  {createError?.data?.message}
+          {lgData?.payload?.user?.curd?.includes("create") && (
+            <PopupModal title="Add Service Location" id="newaddServiceLocation">
+              <form onSubmit={handleSubmit}>
+                {createError?.data?.message && (
+                  <div className="alert alert-danger text-center">
+                    {createError?.data?.message}
+                  </div>
+                )}
+                {createData?.message && (
+                  <div className="alert alert-success text-center">
+                    {createData.message}
+                  </div>
+                )}
+                <div className="mb-3">
+                  <label htmlFor="address1" className="form-label">
+                    Address1
+                  </label>
+                  <input
+                    type="text"
+                    id="address1"
+                    name="address1"
+                    className="form-control"
+                    value={formData.address1}
+                    onChange={handleChange}
+                    placeholder="Enter Address1"
+                  />
                 </div>
-              )}
-              {createData?.message && (
-                <div className="alert alert-success text-center">
-                  {createData.message}
+                <div className="mb-3">
+                  <label htmlFor="address2" className="form-label">
+                    Address2
+                  </label>
+                  <input
+                    type="text"
+                    id="address2"
+                    name="address2"
+                    className="form-control"
+                    value={formData.address2}
+                    onChange={handleChange}
+                    placeholder="Enter Address2"
+                  />
                 </div>
-              )}
-              <div className="mb-3">
-                <label htmlFor="address1" className="form-label">
-                  Address1
-                </label>
-                <input
-                  type="text"
-                  id="address1"
-                  name="address1"
-                  className="form-control"
-                  value={formData.address1}
-                  onChange={handleChange}
-                  placeholder="Enter Address1"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="address2" className="form-label">
-                  Address2
-                </label>
-                <input
-                  type="text"
-                  id="address2"
-                  name="address2"
-                  className="form-control"
-                  value={formData.address2}
-                  onChange={handleChange}
-                  placeholder="Enter Address2"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="city" className="form-label">
-                  City
-                </label>
-                <CitySelect
-                  stateCode={state}
-                  selectedCity={city}
-                  setSelectedCity={setCity}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="state" className="form-label">
-                  State
-                </label>
-                <StateSelect
-                  selectedState={state}
-                  setSelectedState={setState}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="zip" className="form-label">
-                  Zip Code
-                </label>
-                <input
-                  type="text"
-                  id="zip"
-                  name="zip"
-                  className="form-control"
-                  value={formData.zip}
-                  onChange={handleChange}
-                  placeholder="Enter Zip Code"
-                />
-              </div>
-              <div className="d-grid">
-                <button type="submit" className="btn btn-primary">
-                  Add Service Location
-                </button>
-              </div>
-            </form>
-          </PopupModal>
+                <div className="mb-3">
+                  <label htmlFor="city" className="form-label">
+                    City
+                  </label>
+                  <CitySelect
+                    stateCode={state}
+                    selectedCity={city}
+                    setSelectedCity={setCity}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="state" className="form-label">
+                    State
+                  </label>
+                  <StateSelect
+                    selectedState={state}
+                    setSelectedState={setState}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="zip" className="form-label">
+                    Zip Code
+                  </label>
+                  <input
+                    type="text"
+                    id="zip"
+                    name="zip"
+                    className="form-control"
+                    value={formData.zip}
+                    onChange={handleChange}
+                    placeholder="Enter Zip Code"
+                  />
+                </div>
 
-          <button
-            className="btn btn-secondary create-new btn-danger waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span>
-              <i className="ti ti-trash me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Delete selected</span>
-            </span>
-          </button>
+                <div className="d-grid">
+                  <button type="submit" className="btn btn-primary">
+                    Add Service Location
+                  </button>
+                </div>
+              </form>
+            </PopupModal>
+          )}
+
+          {lgData?.payload?.user?.curd?.includes("delete") && (
+            <button
+              className="btn btn-secondary create-new btn-danger waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span>
+                <i className="ti ti-trash me-sm-1" />{" "}
+                <span className="d-none d-sm-inline-block">
+                  Delete selected
+                </span>
+              </span>
+            </button>
+          )}
         </div>
         {show && (
-          <EditModal style={{
-            minWidth: "70%",
-            maxWidth: "70%",
-            maxHeight: "80vh",
-            overflowY: "scroll",
-          }} show={show} onClose={setShow}>
+          <EditModal
+            style={{
+              minWidth: "70%",
+              maxWidth: "70%",
+              maxHeight: "80vh",
+              overflowY: "scroll",
+            }}
+            show={show}
+            onClose={setShow}
+          >
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="address1" className="form-label">

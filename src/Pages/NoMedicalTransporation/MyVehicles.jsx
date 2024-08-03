@@ -14,8 +14,9 @@ import {
   useDeleteVehicleMutation,
 } from "../../Redux/api/VehicleApi.js";
 // Function to get the start and end dates of the current week
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 const MyVehicles = () => {
+  const { data: logData } = useMeQuery();
   const { data, isLoading, refetch } = useGetAllVehiclesQuery();
   const [createVehicle, { data: createData, error: createError, isSuccess }] =
     useCreateVehicleMutation();
@@ -118,6 +119,8 @@ const MyVehicles = () => {
       <Alert message={deleteData?.message} type="success" />
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
+        {logData?.payload?.user?.curd?.includes("create") &&
+        
           <FullscreenModal
             className="col-md-7"
             id="addVehicle"
@@ -288,6 +291,9 @@ const MyVehicles = () => {
               </div>
             </form>
           </FullscreenModal>
+        }
+          {logData?.payload?.user?.curd?.includes("create") &&
+          
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -299,6 +305,7 @@ const MyVehicles = () => {
               <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
           </button>
+          }
         </div>
         {show && (
           <EditModal

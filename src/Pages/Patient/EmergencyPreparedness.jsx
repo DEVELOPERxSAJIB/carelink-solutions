@@ -16,16 +16,10 @@ import EditModal from "./../../components/Models/EditModal";
 import Template from "./../../components/FormElement/Template";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import Alert from './../../components/Alert/Alert';
-import { ReactToPrint } from "react-to-print";
- 
- <ReactToPrint
-                  trigger={() => (
-                    <span className="btn btn-primary">Print</span>
-                  )}
-                  content={() => componentRef.current}
-                  documentTitle="Patient"
-                />
+
+import { useMeQuery } from "../../Redux/api/UserApi";
 const EmergencyPreparedness = () => {
+  const { data: logData } = useMeQuery();              
   const { data, isLoading,refetch } = useGetAllEmergenciesQuery(); // Adjust hook name as per your actual hook
   const [updateEmergency, { data: updateData, isSuccess: isUpdateSuccess,error:updateError }] =
     useUpdateEmergencyMutation(); // Adjust hook name as per your actual hook
@@ -236,6 +230,8 @@ const EmergencyPreparedness = () => {
             columns={columns}
             fileName="Emergency prepared"
           />
+            {logData?.payload?.user?.curd?.includes("create") &&
+            
           <button
             className="btn btn-success waves-effect waves-light"
             tabIndex={0}
@@ -250,6 +246,8 @@ const EmergencyPreparedness = () => {
               </span>
             </span>
           </button>
+            }
+              {logData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -261,6 +259,7 @@ const EmergencyPreparedness = () => {
               <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
           </button>
+              }
         </div>
         {show && (
           <EditModal style={{

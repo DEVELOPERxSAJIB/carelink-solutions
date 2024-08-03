@@ -1,7 +1,9 @@
 import { useState } from "react";
 import DataTable from "./../../components/Tables/DynamicTable";
 import PageHeader from './../../components/FormElement/PageHeader';
+import { useMeQuery } from "../../Redux/api/UserApi";
 const ManageUnassignedShift = () => {
+  const { data: logData } = useMeQuery();
   const [individual, setIndividual] = useState("");
   const data = [
     {

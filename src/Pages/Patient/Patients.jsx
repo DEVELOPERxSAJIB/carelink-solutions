@@ -32,9 +32,10 @@ import SectionNForm from "../../components/Patient/SectionN";
 import SectionOForm from "../../components/Patient/SectionO";
 import SectionQForm from "../../components/Patient/SectionQ";
 import { updateFormData } from "./../../Redux/slices/SectionSlice";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import { useMeQuery } from "../../Redux/api/UserApi";
 const Patients = () => {
+  const { data: lgData } = useMeQuery();
   const dispatch = useDispatch();
   const { data, isLoading, refetch } = useGetAllPatientsQuery();
   const [
@@ -938,45 +939,51 @@ const Patients = () => {
                 columns={columns}
                 fileName="Patient"
               />
-              <button
-                className="btn btn-secondary create-new btn-danger waves-effect waves-light"
-                tabIndex={0}
-                aria-controls="DataTables_Table_0"
-                type="button"
-              >
-                <span className="d-flex align-items-center">
-                  <i className="ti ti-trash me-sm-1" />{" "}
-                  <span className="d-none d-sm-inline-block">
-                    Delete selected
+              {lgData?.payload?.user?.curd?.includes("delete") && (
+                <button
+                  className="btn btn-secondary create-new btn-danger waves-effect waves-light"
+                  tabIndex={0}
+                  aria-controls="DataTables_Table_0"
+                  type="button"
+                >
+                  <span className="d-flex align-items-center">
+                    <i className="ti ti-trash me-sm-1" />{" "}
+                    <span className="d-none d-sm-inline-block">
+                      Delete selected
+                    </span>
                   </span>
-                </span>
-              </button>
+                </button>
+              )}
 
-              <button
-                className="btn btn-info waves-effect waves-light"
-                tabIndex={0}
-                aria-controls="DataTables_Table_0"
-                type="button"
-              >
-                <span className="d-flex align-items-center">
-                  <i className="ti ti-archive me-1" />
-                  <span className="d-none d-sm-inline-block">Archive </span>
-                </span>
-              </button>
-              <button
-                className="btn btn-success waves-effect waves-light"
-                tabIndex={0}
-                aria-controls="DataTables_Table_0"
-                type="button"
-                onClick={() => navigate("/create-new-patient")}
-              >
-                <span className="d-flex align-items-center">
-                  <i className="ti ti-archive me-1" />
-                  <span className="d-none d-sm-inline-block">
-                    Add New Patient
+              {lgData?.payload?.user?.curd?.includes("create") && (
+                <button
+                  className="btn btn-info waves-effect waves-light"
+                  tabIndex={0}
+                  aria-controls="DataTables_Table_0"
+                  type="button"
+                >
+                  <span className="d-flex align-items-center">
+                    <i className="ti ti-archive me-1" />
+                    <span className="d-none d-sm-inline-block">Archive </span>
                   </span>
-                </span>
-              </button>
+                </button>
+              )}
+              {lgData?.payload?.user?.curd?.includes("create") && (
+                <button
+                  className="btn btn-success waves-effect waves-light"
+                  tabIndex={0}
+                  aria-controls="DataTables_Table_0"
+                  type="button"
+                  onClick={() => navigate("/create-new-patient")}
+                >
+                  <span className="d-flex align-items-center">
+                    <i className="ti ti-archive me-1" />
+                    <span className="d-none d-sm-inline-block">
+                      Add New Patient
+                    </span>
+                  </span>
+                </button>
+              )}
             </div>
             {show && (
               <EditModal

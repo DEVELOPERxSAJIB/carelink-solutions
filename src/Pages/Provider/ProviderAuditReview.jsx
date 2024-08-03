@@ -5,11 +5,11 @@ import { MdOutlineMail } from "react-icons/md";
 import useFormFields from "./../../hook/useFormHook";
 import FullscreenModal from "./../../components/Models/FullScreenModel";
 import PickDate from './../../components/FormElement/DatePicker';
-import {Link} from "react-router-dom"
 import TableHeader from './../../components/Tables/TableHeader';
 
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 const ProviderAuditReview = () => {
+  const { data: lgData } = useMeQuery();
 
   const navigate = useNavigate();
   const columns = [
@@ -77,6 +77,7 @@ const ProviderAuditReview = () => {
       <TableHeader title="Review Module" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
+        {lgData?.payload?.user?.curd?.includes("create") &&
           <FullscreenModal
             className="col-md-7"
             title="Add Review"
@@ -194,7 +195,10 @@ const ProviderAuditReview = () => {
               </div>
             </form>
           </FullscreenModal>
+        }
+         {lgData?.payload?.user?.curd?.includes("delete") &&
           <button
+
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
             aria-controls="DataTables_Table_0"
@@ -205,6 +209,8 @@ const ProviderAuditReview = () => {
               <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
           </button>
+         }
+         
           <button
             className="btn btn-secondary waves-effect waves-light"
             tabIndex={0}
@@ -216,6 +222,7 @@ const ProviderAuditReview = () => {
               <span className="d-none d-sm-inline-block">Reports</span>
             </span>
           </button>
+          {lgData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-warning waves-effect waves-light"
             tabIndex={0}
@@ -227,6 +234,8 @@ const ProviderAuditReview = () => {
               <span className="d-none d-sm-inline-block">History</span>
             </span>
           </button>
+          }
+           {lgData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-info waves-effect waves-light"
             tabIndex={0}
@@ -238,6 +247,7 @@ const ProviderAuditReview = () => {
               <span className="d-none d-sm-inline-block">Archive</span>
             </span>
           </button>
+           }
           <button
           onClick={()=>navigate("/review-email-log")}
             className="btn btn-danger waves-effect waves-light"

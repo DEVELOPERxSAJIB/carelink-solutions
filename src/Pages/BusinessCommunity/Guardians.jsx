@@ -160,6 +160,7 @@ const Guardians = () => {
       <TableHeader title="Guardians" className="py-3 pt-5 fs-3 card-header" />
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
+          {addedBy?.payload?.user?.curd?.includes("create") &&
           <FullscreenModal
             id="addnewcoguardians"
             title="Add New guardians"
@@ -562,6 +563,7 @@ const Guardians = () => {
               </div>
             </>
           </FullscreenModal>
+          }
           {show && (
             <EditModal
               style={{
@@ -813,6 +815,7 @@ const Guardians = () => {
               <span className="d-none d-sm-inline-block">Export Selected</span>
             </span>
           </button>
+          {addedBy?.payload?.user?.curd?.includes("delete") &&
           <button
             style={{ fontSize: "12px" }}
             className="btn btn-secondary waves-effect waves-light"
@@ -825,6 +828,7 @@ const Guardians = () => {
               <span className="d-none d-sm-inline-block">Delete Selected</span>
             </span>
           </button>
+          }
           <button
             style={{ background: "#9fd74d", color: "#fff", fontSize: "12px" }}
             className="btn waves-effect waves-light"

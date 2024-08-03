@@ -5,13 +5,15 @@ import {
   updateFormData,
 } from "./../../Redux/slices/SectionSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { ReactToPrint } from "react-to-print";
+
 const SectionMForm = () => {
-  const componentRef = useRef();
+
 
   const dispatch = useDispatch();
   const data = useSelector(getAllSectionState);
-  console.log(data);
+  const localSectionM = JSON.parse(localStorage.getItem("SectionM")) || {};
+
+ 
   const [formData, setFormData] = useState({
     unhealedPressureUlcer: "",
     oldestStage2PressureUlcer: "",
@@ -41,9 +43,11 @@ const SectionMForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateFormData(formData));
+    localStorage.setItem("SectionM", JSON.stringify(formData));
   };
   useEffect(() => {
     setFormData({ ...data });
+    setFormData({ ...localSectionM });
   }, [data]);
   return (
     <form onSubmit={handleSubmit}>
@@ -67,7 +71,7 @@ const SectionMForm = () => {
             aria-labelledby="headingM"
             data-bs-parent="#accordionSectionM"
           >
-            <div ref={componentRef} className="accordion-body print-area">
+            <div  className="accordion-body print-area">
               {/* M1306 */}
               <h4 className="print-title">Skin Conditions</h4>
               <div className="mb-3">
@@ -433,13 +437,7 @@ const SectionMForm = () => {
                 <button type="submit" className="btn btn-primary">
                   add
                 </button>
-                <ReactToPrint
-                  trigger={() => (
-                    <button className="btn btn-primary">Print</button>
-                  )}
-                  content={() => componentRef.current}
-                  documentTitle="Patient"
-                />
+               
               </div>
             </div>
           </div>

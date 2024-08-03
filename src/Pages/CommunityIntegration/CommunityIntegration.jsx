@@ -23,8 +23,9 @@ const getCurrentWeekDateRange = () => {
     end: formatDate(endOfWeek),
   };
 };
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 const CommunityIntegration = () => {
+  const { data: logData } = useMeQuery();
   const { start, end } = getCurrentWeekDateRange();
   const navigate = useNavigate();
 
@@ -74,6 +75,7 @@ const CommunityIntegration = () => {
       <TableHeader title="List of Activity" className="py-3 pt-5 fs-3 card-header"/>
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
+          {logData?.payload?.user?.curd?.includes("create") &&
           <button
           onClick={()=>navigate("/create-new-individual")}
             className="btn btn-sm btn-primary waves-effect waves-light"
@@ -86,6 +88,9 @@ const CommunityIntegration = () => {
               <span className="d-none d-sm-inline-block">Add New</span>
             </span>
           </button>
+          }
+          {logData?.payload?.user?.curd?.includes("create") &&
+          
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -97,6 +102,8 @@ const CommunityIntegration = () => {
               <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
           </button>
+          }
+          {logData?.payload?.user?.curd?.includes("create") &&
           <button
             className="btn btn-warning waves-effect waves-light"
             tabIndex={0}
@@ -108,6 +115,8 @@ const CommunityIntegration = () => {
               <span className="d-none d-sm-inline-block">History</span>
             </span>
           </button>
+          }
+            {logData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-info waves-effect waves-light"
             tabIndex={0}
@@ -121,6 +130,7 @@ const CommunityIntegration = () => {
               </span>
             </span>
           </button>
+            }
         </div>
         <div className="mt-5">
           <DataTable

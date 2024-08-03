@@ -1,34 +1,32 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {
   getAllSectionState,
   updateFormData,
 } from "./../../Redux/slices/SectionSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { ReactToPrint } from "react-to-print";
 const SectionCForm = () => {
   const dispatch = useDispatch();
   const data = useSelector(getAllSectionState);
-  const componentRef = useRef();
 
+  const localSectionC = JSON.parse(localStorage.getItem("SectionC"))
   const [formData, setFormData] = useState({
-    interviewConducted: "",
-    repetitionOfThreeWords: "",
-    temporalOrientationYear: "",
-    temporalOrientationMonth: "",
-    temporalOrientationDay: "",
-    recallSock: "",
-    recallBlue: "",
-    recallBed: "",
-    bimsSummaryScore: "",
-    deliriumMentalStatusChange: "",
-    deliriumInattention: "",
-    deliriumDisorganizedThinking: "",
-    deliriumAlteredConsciousness: "",
-    cognitiveFunctioning: "",
-    whenConfused: "",
-    whenAnxious: "",
+    interviewConducted: localSectionC?.interviewConducted || "",
+    repetitionOfThreeWords: localSectionC?.repetitionOfThreeWords || "",
+    temporalOrientationYear: localSectionC?.temporalOrientationYear || "",
+    temporalOrientationMonth: localSectionC?.temporalOrientationMonth || "",
+    temporalOrientationDay: localSectionC?.temporalOrientationDay || "",
+    recallSock: localSectionC?.recallSock || "",
+    recallBlue: localSectionC?.recallBlue || "",
+    recallBed: localSectionC?.recallBed || "",
+    bimsSummaryScore: localSectionC?.bimsSummaryScore || "",
+    deliriumMentalStatusChange: localSectionC?.deliriumMentalStatusChange || "",
+    deliriumInattention: localSectionC?.deliriumInattention || "",
+    deliriumDisorganizedThinking: localSectionC?.deliriumDisorganizedThinking || "",
+    deliriumAlteredConsciousness: localSectionC?.deliriumAlteredConsciousness || "",
+    cognitiveFunctioning: localSectionC?.cognitiveFunctioning || "",
+    whenConfused: localSectionC?.whenConfused || "",
+    whenAnxious: localSectionC?.whenAnxious || "",
   });
-
   const handleInputChange = (e) => {
     const { name, value, type, checked, options } = e.target;
     if (type === "checkbox") {
@@ -36,6 +34,7 @@ const SectionCForm = () => {
         ...prevFormData,
         [name]: checked ? value : "",
       }));
+      
     } else if (type === "radio") {
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -61,9 +60,11 @@ const SectionCForm = () => {
     e.preventDefault();
     console.log(formData);
     dispatch(updateFormData(formData));
+    localStorage.setItem("SectionC", JSON.stringify(formData));
   };
   useEffect(() => {
     setFormData({ ...data });
+    setFormData({...localSectionC})
   }, [data]);
   return (
     <form className="mt-5" onSubmit={handleSubmit}>
@@ -87,7 +88,7 @@ const SectionCForm = () => {
             aria-labelledby="headingC"
             data-bs-parent="#sectionCAccordion"
           >
-            <div ref={componentRef} className="accordion-body print-area">
+            <div className="accordion-body print-area">
               {/* Interview Conducted */}
               <h4 className="print-title">Cognitive Patterns</h4>
               <div className="mb-3">
@@ -451,13 +452,7 @@ const SectionCForm = () => {
                 <button type="submit" className="btn btn-primary">
                   add
                 </button>
-                <ReactToPrint
-                  trigger={() => (
-                    <button className="btn btn-primary">Print</button>
-                  )}
-                  content={() => componentRef.current}
-                  documentTitle="Patient"
-                />
+              
               </div>
             </div>
           </div>

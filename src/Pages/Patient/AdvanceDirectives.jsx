@@ -13,8 +13,10 @@ import swal from "sweetalert";
 import EditModal from "./../../components/Models/EditModal";
 import Template from "./../../components/FormElement/Template";
 import Alert from "./../../components/Alert/Alert";
+import { useMeQuery } from "../../Redux/api/UserApi";
 const AdvanceDirectives = () => {
   const { data, isLoading, refetch } = useGetAllDirectivesQuery();
+  const { data: lgData } = useMeQuery();
   const [
     updateDirective,
     { data: updateData, isSuccess: isUpdateSuccess, error: updateError },
@@ -206,45 +208,50 @@ const AdvanceDirectives = () => {
                 columns={columns}
                 fileName="Advance Care Plan/Admission"
               />
-              <button
-                className="btn btn-secondary create-new btn-danger waves-effect waves-light"
-                tabIndex={0}
-                aria-controls="DataTables_Table_0"
-                type="button"
-              >
-                <span className="d-flex align-items-center">
-                  <i className="ti ti-trash me-sm-1" />{" "}
-                  <span className="d-none d-sm-inline-block">
-                    Delete selected
+              {lgData?.payload?.user?.curd.includes("delete") && (
+                <button
+                  className="btn btn-secondary create-new btn-danger waves-effect waves-light"
+                  tabIndex={0}
+                  aria-controls="DataTables_Table_0"
+                  type="button"
+                >
+                  <span className="d-flex align-items-center">
+                    <i className="ti ti-trash me-sm-1" />{" "}
+                    <span className="d-none d-sm-inline-block">
+                      Delete selected
+                    </span>
                   </span>
-                </span>
-              </button>
-
-              <button
-                className="btn btn-info waves-effect waves-light"
-                tabIndex={0}
-                aria-controls="DataTables_Table_0"
-                type="button"
-              >
-                <span className="d-flex align-items-center">
-                  <i className="ti ti-archive me-1" />
-                  <span className="d-none d-sm-inline-block">Archive </span>
-                </span>
-              </button>
-              <button
-                className="btn btn-success waves-effect waves-light"
-                tabIndex={0}
-                aria-controls="DataTables_Table_0"
-                type="button"
-                onClick={() => navigate("/create-advance-directives")}
-              >
-                <span className="d-flex align-items-center">
-                  <i className="ti ti-archive me-1" />
-                  <span className="d-none d-sm-inline-block">
-                    Add New advance directives
+                </button>
+              )}
+              {lgData?.payload?.user?.curd.includes("delete") && (
+                <button
+                  className="btn btn-info waves-effect waves-light"
+                  tabIndex={0}
+                  aria-controls="DataTables_Table_0"
+                  type="button"
+                >
+                  <span className="d-flex align-items-center">
+                    <i className="ti ti-archive me-1" />
+                    <span className="d-none d-sm-inline-block">Archive </span>
                   </span>
-                </span>
-              </button>
+                </button>
+              )}
+              {lgData?.payload?.user?.curd.includes("create") && (
+                <button
+                  className="btn btn-success waves-effect waves-light"
+                  tabIndex={0}
+                  aria-controls="DataTables_Table_0"
+                  type="button"
+                  onClick={() => navigate("/create-advance-directives")}
+                >
+                  <span className="d-flex align-items-center">
+                    <i className="ti ti-archive me-1" />
+                    <span className="d-none d-sm-inline-block">
+                      Add New advance directives
+                    </span>
+                  </span>
+                </button>
+              )}
             </div>
             <div className="mt-5">
               <DataTable

@@ -1,34 +1,33 @@
-import { useState,useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import CitySelect from "../../components/FormElement/CitySelect";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import { useCreateReferralMutation } from "../../Redux/api/ReferalInformation";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { ReactToPrint } from "react-to-print";
- 
 
 const CreateReferralInformation = () => {
-  const componentRef = useRef()
-  const [createReferral, { data, error, isLoading,isSuccess }] =
+  const componentRef = useRef();
+  const [createReferral, { data, error, isLoading, isSuccess }] =
     useCreateReferralMutation();
+  const localReferralData = JSON.parse(localStorage.getItem("Referral"));
   const [formData, setFormData] = useState({
-    city: "",
-    state: "",
     referringPhysician: "",
     npi: "",
-    certifyingPhysician: "",
+    certifyingPhysician:  "",
     faceToFaceEvaluation: "",
-    attendingPhysician: "",
-    admissionSource: "",
+    attendingPhysician:  "",
+    admissionSource:  "",
     nameOfReferralSource: "",
-    referralDate: "",
-    inquiryDate: "",
-    communityLiaison: "",
+    referralDate:  "",
+    inquiryDate:  "",
+    communityLiaison:  "",
     internalReferralSource: "",
     facilityReferralSource: "",
-    typeOfInpatientAdmission: "",
+    typeOfInpatientAdmission:  "",
   });
+
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   // Function to handle input changes
@@ -58,23 +57,33 @@ const CreateReferralInformation = () => {
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
+    formData.city = city;
+    formData.state = state;
     localStorage.setItem("Referral", JSON.stringify(formData));
     createReferral(formData);
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
+    formData.city = city;
+    formData.state = state;
     localStorage.setItem("Referral", JSON.stringify(formData));
   };
-  const navigate = useNavigate()
-  useEffect(()=>{
-   if(isSuccess){
-    navigate("/referral-information")
-   }
-  },[isSuccess])
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/referral-information");
+    }
+  }, [isSuccess]);
+  useEffect(() => {
+    setCity(localReferralData?.city || "");
+    setState(localReferralData?.state || "");
+    setFormData({...localReferralData})
+  }, []);
+  
   if (isLoading) return <AuthLoader />;
   return (
     <div ref={componentRef} className="card">
-      <PageHeader title="Referral Information" className="card-header fs-3" />
+      <PageHeader title="Referral Information" className="card-header fs-3 " />
       <div className="card-header">
         {data?.message && (
           <div className="alert alert-success text-center">{data?.message}</div>
@@ -432,12 +441,10 @@ const CreateReferralInformation = () => {
                 save and exit
               </button>
               <ReactToPrint
-                  trigger={() => (
-                    <span className="btn btn-primary">Print</span>
-                  )}
-                  content={() => componentRef.current}
-                  documentTitle="Patient"
-                />
+                trigger={() => <span className="btn btn-primary">Print</span>}
+                content={() => componentRef.current}
+                documentTitle="Patient"
+              />
             </div>
           </div>
         </form>

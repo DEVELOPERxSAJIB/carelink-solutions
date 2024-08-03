@@ -1,8 +1,9 @@
 import React from "react";
 import DataTable from "./../../components/Tables/DynamicTable";
 import TableHeader from "./../../components/Tables/TableHeader";
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 const AssignAllIndividual = () => {
+  const { data: logData } = useMeQuery();
   const columns3 = [
     { field: "id", header: "S.No" },
     { field: "name", header: "Individual" },

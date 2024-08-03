@@ -17,8 +17,9 @@ import MainLoader from "./../../utils/Loaders/MainLoader";
 import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
 import Alert from "./../../components/Alert/Alert";
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 const Contact = () => {
+  const { data: logData } = useMeQuery();
   const { data, isLoading, refetch } = useGetAllContactsQuery();
   const [
     updateContact,
@@ -388,6 +389,7 @@ const Contact = () => {
             columns={columns}
             fileName="Patient"
           />
+            {logData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -399,7 +401,8 @@ const Contact = () => {
               <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
           </button>
-
+            }
+  {logData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-info waves-effect waves-light"
             tabIndex={0}
@@ -411,6 +414,8 @@ const Contact = () => {
               <span className="d-none d-sm-inline-block">Archive </span>
             </span>
           </button>
+  }
+    {logData?.payload?.user?.curd?.includes("create") &&
           <button
             className="btn btn-success waves-effect waves-light"
             tabIndex={0}
@@ -423,6 +428,7 @@ const Contact = () => {
               <span className="d-none d-sm-inline-block">Add New Contact</span>
             </span>
           </button>
+    }
         </div>
         {show && (
           <EditModal

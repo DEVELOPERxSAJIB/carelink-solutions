@@ -12,10 +12,11 @@ import { useState, useEffect } from "react";
 import EditModal from "./../../components/Models/EditModal";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import CitySelect from "./../../components/FormElement/CitySelect";
-
+import {useMeQuery} from "../../Redux/api/UserApi"
 import swal from "sweetalert";
 import Alert from "./../../components/Alert/Alert";
 const Pharmacy = () => {
+  const {data:lgData} = useMeQuery()
   const { data, isLoading, refetch } = useGetAllPharmaciesQuery();
   const [
     updatePharmacy,
@@ -159,7 +160,7 @@ const Pharmacy = () => {
             columns={columns}
             fileName="Pharmacy"
           />
-          <button
+          {lgData?.payload?.user?.curd.includes("create") && (<button
             className="btn btn-success waves-effect waves-light"
             tabIndex={0}
             aria-controls="DataTables_Table_0"
@@ -170,8 +171,8 @@ const Pharmacy = () => {
               <i className="ti ti-plus me-1" />
               <span className="d-none d-sm-inline-block">Add New Pharmacy</span>
             </span>
-          </button>
-          <button
+          </button>)}
+          {lgData?.payload?.user?.curd.includes("delete") && (<button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
             aria-controls="DataTables_Table_0"
@@ -181,7 +182,8 @@ const Pharmacy = () => {
               <i className="ti ti-trash me-sm-1" />{" "}
               <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
-          </button>
+          </button>)}
+          
         </div>
         {show && (
           <EditModal onClose={setShow}

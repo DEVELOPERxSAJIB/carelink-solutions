@@ -16,7 +16,9 @@ import StateSelect from "./../../components/FormElement/StateSelect";
 import EditModal from "./../../components/Models/EditModal";
 import swal  from "sweetalert";
 import Alert from "./../../components/Alert/Alert";
+import { useMeQuery } from "../../Redux/api/UserApi";
 const ReferralInformation = () => {
+  const { data: lgData } = useMeQuery();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [editId, setEditId] = useState("");
@@ -501,6 +503,7 @@ console.log(formData.faceToFaceEvaluation)
             columns={columns}
             fileName="Referral information"
           />
+           {lgData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -512,7 +515,9 @@ console.log(formData.faceToFaceEvaluation)
               <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
           </button>
+           }
 
+ {lgData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-info waves-effect waves-light"
             tabIndex={0}
@@ -524,6 +529,8 @@ console.log(formData.faceToFaceEvaluation)
               <span className="d-none d-sm-inline-block">Archive </span>
             </span>
           </button>
+ }
+  {lgData?.payload?.user?.curd?.includes("create") &&
           <button
             className="btn btn-success waves-effect waves-light"
             tabIndex={0}
@@ -536,6 +543,7 @@ console.log(formData.faceToFaceEvaluation)
               <span className="d-none d-sm-inline-block">Add New Referral</span>
             </span>
           </button>
+  }
         </div>
         <div className="mt-5">
           <DataTable

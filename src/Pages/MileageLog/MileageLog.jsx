@@ -14,8 +14,9 @@ import {
   useUpdateMileageLogMutation,
   useDeleteMileageLogMutation,
 } from "../../Redux/api/MileAgeLogApi.js";
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 const MileageLog = () => {
+  const { data: logData } = useMeQuery();
   const [startDate, setStartDate] = useState(new Date());
   const [selected, setSelected] = useState("");
   const [show, setShow] = useState(false);
@@ -136,6 +137,8 @@ const MileageLog = () => {
         )}
 
         <div className="gap-3 d-flex flex-wrap">
+        {logData?.payload?.user?.curd?.includes("create") &&
+        
           <button
             onClick={() => navigate("/add-new-mileage")}
             className="btn btn-sm btn-primary waves-effect waves-light"
@@ -148,6 +151,8 @@ const MileageLog = () => {
               <span className="d-none d-sm-inline-block">Add New</span>
             </span>
           </button>
+        }
+          {logData?.payload?.user?.curd?.includes("create") &&
           <button
             style={{ background: "#9fd74d", color: "#fff" }}
             className="btn waves-effect waves-light"
@@ -160,6 +165,8 @@ const MileageLog = () => {
               <span className="d-none d-sm-inline-block">Reports</span>
             </span>
           </button>
+          }
+            {logData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-secondary create-new btn-danger waves-effect waves-light"
             tabIndex={0}
@@ -171,6 +178,8 @@ const MileageLog = () => {
               <span className="d-none d-sm-inline-block">Delete selected</span>
             </span>
           </button>
+            }
+              {logData?.payload?.user?.curd?.includes("delete") &&
           <button
             className="btn btn-warning waves-effect waves-light"
             tabIndex={0}
@@ -182,6 +191,9 @@ const MileageLog = () => {
               <span className="d-none d-sm-inline-block">History</span>
             </span>
           </button>
+              }
+                {logData?.payload?.user?.curd?.includes("delete") &&
+                
           <button
             className="btn btn-info waves-effect waves-light"
             tabIndex={0}
@@ -193,6 +205,7 @@ const MileageLog = () => {
               <span className="d-none d-sm-inline-block">Archive </span>
             </span>
           </button>
+                }
         </div>
         {show && (
           <EditModal style={{

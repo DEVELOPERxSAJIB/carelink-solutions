@@ -12,9 +12,10 @@ import SingleSearchSelect from "./../../components/FormElement/SingleSearchSelec
 import useFormFields from "./../../hook/useFormHook";
 import Alert from "./../../components/Alert/Alert";
 import MainLoader from "./../../utils/Loaders/MainLoader";
-
+import { useMeQuery } from "../../Redux/api/UserApi";
 // Function to get the start and end dates of the current week
 const ViewVehicleInspection = () => {
+  const { data: logData } = useMeQuery();
   const navigate = useNavigate();
   const { data, isLoading, refetch } = useGetAllInspectionsQuery();
   const [
@@ -131,22 +132,21 @@ const ViewVehicleInspection = () => {
     setShow(true);
     setEditId(row._id);
     console.log(row.transport);
-  
+
     if (row.transport) {
       setTransport({ value: row.transport, label: row.transport });
     } else {
       setTransport({ value: "", label: "" });
     }
-  
+
     console.log({ value: row.transport, label: row.transport });
-  
+
     const updateRow = { ...row };
     updateRow.inspectionDate = new Date(updateRow.inspectionDate)
       .toISOString()
       .slice(0, 10);
     setFormData(updateRow);
   };
-  
 
   const handleDelete = (row) => {
     deleteInspection(row._id);
@@ -432,51 +432,59 @@ const ViewVehicleInspection = () => {
       )}
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
-          <button
-            onClick={() => navigate("/add-vehicle-inspection")}
-            className="btn btn-sm btn-primary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-sm-1" />{" "}
-              <span className=" d-sm-inline-block">Add New</span>
-            </span>
-          </button>
-          <button
-            className="btn btn-secondary create-new btn-danger waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-trash me-sm-1" />{" "}
-              <span className=" d-sm-inline-block">Delete selected</span>
-            </span>
-          </button>
-          <button
-            className="btn btn-warning waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-history me-1"></i>{" "}
-              <span className=" d-sm-inline-block">History</span>
-            </span>
-          </button>
-          <button
-            className="btn btn-info waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-archive me-1" />
-              <span className=" d-sm-inline-block">Archive </span>
-            </span>
-          </button>
+          {logData?.payload?.user?.curd?.includes("create") && (
+            <button
+              onClick={() => navigate("/add-vehicle-inspection")}
+              className="btn btn-sm btn-primary waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-plus me-sm-1" />{" "}
+                <span className=" d-sm-inline-block">Add New</span>
+              </span>
+            </button>
+          )}
+          {logData?.payload?.user?.curd?.includes("create") && (
+            <button
+              className="btn btn-secondary create-new btn-danger waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-trash me-sm-1" />{" "}
+                <span className=" d-sm-inline-block">Delete selected</span>
+              </span>
+            </button>
+          )}
+          {logData?.payload?.user?.curd?.includes("create") && (
+            <button
+              className="btn btn-warning waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-history me-1"></i>{" "}
+                <span className=" d-sm-inline-block">History</span>
+              </span>
+            </button>
+          )}
+          {logData?.payload?.user?.curd?.includes("create") && (
+            <button
+              className="btn btn-info waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-archive me-1" />
+                <span className=" d-sm-inline-block">Archive </span>
+              </span>
+            </button>
+          )}
         </div>
         <div className="mt-5">
           <DataTable
