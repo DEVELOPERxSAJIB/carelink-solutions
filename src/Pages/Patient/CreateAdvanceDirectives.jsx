@@ -3,21 +3,24 @@ import { useCreateDirectiveMutation } from "../../Redux/api/DirectiveApi";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import Template from "./../../components/FormElement/Template";
-import { useNavigate } from "react-router-dom";
 // useCreateDirectiveMutation
 import { ReactToPrint } from "react-to-print";
-
+import {
+  getAllSectionStepState,
+  updateSteps,
+} from "./../../Redux/slices/SectionStep.js";
+import { useSelector, useDispatch } from "react-redux";
 const CreateAdvanceDirectives = () => {
   const componentRef = useRef();
-  const localData =JSON.parse(localStorage.getItem("Directive"))
+  const localData = JSON.parse(localStorage.getItem("Directive"));
   const [createDirective, { data, isLoading, error, isSuccess }] =
     useCreateDirectiveMutation();
 
   const [template, setTemplate] = useState("");
 
   const initialFormData = {
-    admission: localData?.admission?localData?.admission:"No",
-    comment: localData?.comment?localData?.comment:"",
+    admission: localData?.admission ? localData?.admission : "No",
+    comment: localData?.comment ? localData?.comment : "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -41,17 +44,30 @@ const CreateAdvanceDirectives = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createDirective(formData);
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if (patientId) {
+      formData.patientId = allSteps.patientId;
+      createDirective(formData);
+      localStorage.removeItem("Directive");
+    }
   };
- 
+
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    createDirective(formData);
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if (patientId) {
+      formData.patientId = allSteps.patientId;
+      createDirective(formData);
+    }
     localStorage.setItem("Directive", JSON.stringify(formData));
   };
 
   const handleSaveAndExit = (e) => {
     e.preventDefault();
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if (patientId) {
+      formData.patientId = allSteps.patientId;
+    }
     localStorage.setItem("Directive", JSON.stringify(formData));
   };
 
@@ -63,21 +79,22 @@ const CreateAdvanceDirectives = () => {
       }));
     }
   }, [template]);
-  const navigate = useNavigate();
+  const allSteps = useSelector(getAllSectionStepState);
+  const dispatch = useDispatch();
   useEffect(() => {
     if (isSuccess) {
-      navigate("/advance-directives");
+      dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
     }
   }, [isSuccess]);
   if (isLoading) return <AuthLoader />;
 
   return (
-    <form ref={componentRef} onSubmit={handleSubmit} className="card">
+    <form ref={componentRef} onSubmit={handleSubmit} className="card w-100">
       <PageHeader
         title="Advance Care Plan/Admission"
         className="card-header fs-3"
       />
-      <div className="card-body">
+      <div className="card-body w-100">
         {data?.message && (
           <div className="alert alert-success text-center">{data.message}</div>
         )}

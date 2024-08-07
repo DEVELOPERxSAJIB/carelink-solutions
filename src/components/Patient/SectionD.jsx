@@ -6,7 +6,7 @@ import { useDispatch ,useSelector,} from 'react-redux';
 const SectionDForm = () => {
 const dispatch = useDispatch()
   const data = useSelector(getAllSectionState)
-  console.log(data)
+  //console.log(data)
   const localSectionD = JSON.parse(localStorage.getItem("SectionD")) || {};
 
   // Initialize formData state with default values or data from localSectionD

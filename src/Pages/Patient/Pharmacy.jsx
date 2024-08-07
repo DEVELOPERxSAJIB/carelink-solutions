@@ -31,7 +31,7 @@ const Pharmacy = () => {
   const navigate = useNavigate();
 
   const handleDelete = (row) => {
-    console.log(row);
+    //console.log(row);
     swal({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -127,7 +127,7 @@ const Pharmacy = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    //console.log(formData);
     formData.city = city;
     formData.state = state;
     updatePharmacy({ pharmacyId: editId, pharmacyData: formData });

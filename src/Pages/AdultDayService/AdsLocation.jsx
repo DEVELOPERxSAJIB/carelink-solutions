@@ -97,7 +97,7 @@ const AdsLocation = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Implement your form submission logic here
-    console.log("Form Data:", formData);
+    //console.log("Form Data:", formData);
     resetForm();
    
   };

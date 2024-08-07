@@ -80,7 +80,7 @@ const VehicleViewLog = () => {
       resetForm();
     }
   };
-  console.log(formData);
+  //console.log(formData);
   useEffect(() => {
     if (isCreateSuccess) {
       refetch();

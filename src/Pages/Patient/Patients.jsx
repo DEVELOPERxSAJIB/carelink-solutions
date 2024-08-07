@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import SelectState from "../../components/FormElement/StateSelect";
 import CountySelect from "../../components/FormElement/CountySelect";
 import CitySelect from "../../components/FormElement/CitySelect";
+import { useGetAllPatientsQuery } from "../../Redux/api/PatientApi";
 import {
   useUpdatePatientMutation,
   useDeletePatientMutation,
@@ -9,8 +10,7 @@ import {
 
 import ExportButton from "../../components/Buttons/ExportButton";
 import TableHeader from "../../components/Tables/TableHeader";
-import { useGetAllPatientsQuery } from "../../Redux/api/PatientApi";
-import { useNavigate } from "react-router-dom";
+
 import MainLoader from "../../utils/Loaders/MainLoader";
 import EditModal from "../../components/Models/EditModal";
 import DataTable from "../../components/Tables/DynamicTable";
@@ -32,103 +32,48 @@ import SectionNForm from "../../components/Patient/SectionN";
 import SectionOForm from "../../components/Patient/SectionO";
 import SectionQForm from "../../components/Patient/SectionQ";
 import { updateFormData } from "./../../Redux/slices/SectionSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useMeQuery } from "../../Redux/api/UserApi";
+import FullscreenModal from "./../../components/Models/FullScreenModel";
+import CreatePatient from "./CreatePatient";
+import CreatePayers from "./CreatePayers";
+import CreateClinicalAndDiagnoses from "./CreateClinicalAndDiagnoses";
+import CreatePharmacy from "./CreatePharmacy";
+import ContactForm from "./CreateContact";
+import CreateEmergencyPreparedness from "./CreateEmergencyPreparedness";
+import CreateAdvanceDirectives from "./CreateAdvanceDirectives";
+import CreateReferralInformation from "./CreateReferralInformation";
+
+import {
+  getAllSectionStepState,
+  updateSteps,
+} from "./../../Redux/slices/SectionStep";
+import CreatePhysicians from "./CreatePhysicians";
+import EditPayer from "./../../components/Patient/EditPayer";
+import EditPhysicians from "./../../components/Patient/EditPhysicians";
+import EditClinicalDiagnoses from "./../../components/Patient/EditClinicalDiagnoses";
+import EditPharmacy from "./../../components/Patient/EditPharmacy";
+import EditContract from "./../../components/Patient/EditContract";
+import EditEmergencyPreparedness from "./../../components/Patient/EditEmergencyPreparedness";
+import EditAdvanceDirectives from "./../../components/Patient/EditAdvanceDirectives";
+import EditReferralInformation from "./../../components/Patient/EditReferralInformation";
 const Patients = () => {
   const { data: lgData } = useMeQuery();
   const dispatch = useDispatch();
-  const { data, isLoading, refetch } = useGetAllPatientsQuery();
+  const allSteps = useSelector(getAllSectionStepState);
+  const [editId, setEditId] = useState("");
+
   const [
     deletePatient,
     { data: deleteData, isSuccess: isDeleteSuccess, error: deleteError },
   ] = useDeletePatientMutation();
+  const { data, isLoading, refetch } = useGetAllPatientsQuery(editId);
   const [show, setShow] = useState(false);
-  const [editId, setEditId] = useState("");
-  // const [primaryCounty, setPrimaryCounty] = useState("");
-  // const [mailingCounty, setMailingCounty] = useState("");
-  // const [visitCounty, setVisitCounty] = useState("");
-  // const [primaryState, setPrimaryState] = useState("");
-  // const [mailingState, setMailingState] = useState("");
-  // const [visitState, setVisitState] = useState("");
-  // const [primaryCity, setPrimaryCity] = useState("");
-  // const [mailingCity, setMailingCity] = useState("");
-  // const [visitCity, setVisitCity] = useState("");
-
-  // const initialState = {
-  //   firstName: "",
-  //   middleInitial: "",
-  //   lastName: "",
-  //   gender: "",
-  //   dateOfBirth: "",
-  //   socialSecurityNumber: "",
-  //   maritalStatus: "",
-  //   mobilePhone: "",
-  //   alternatePhone: "",
-  //   emailAddress: "",
-  //   clinicalManager: "",
-  //   caseManager: "",
-  //   clinician: "",
-  //   branch: "",
-  //   patientIdMrn: "",
-  //   defaultServiceLocation: "",
-  //   primaryAddress1: "",
-  //   primaryAddress2: "",
-  //   primaryZip: "",
-  //   primaryZip4: "",
-  //   primaryCity: primaryCity,
-  //   primaryCounty: primaryCounty,
-  //   primaryState: primaryState,
-  //   mailingSameAsPrimary: false,
-  //   mailingAddress1: "",
-  //   mailingAddress2: "",
-  //   mailingZip: "",
-  //   mailingZip4: "",
-  //   mailingCity: mailingCity,
-  //   mailingCounty: mailingCounty,
-  //   mailingState: mailingState,
-  //   visitAddress1: "",
-  //   visitAddress2: "",
-  //   visitZip: "",
-  //   visitZip4: "",
-  //   visitCity: visitCity,
-  //   visitCounty: visitCounty,
-  //   visitState: visitState,
-  //   origin: [],
-  //   race: [],
-  //   preferredLanguage: "",
-  //   additionalLanguages: ["", "", ""],
-  //   needInterpreter: "",
-  //   paymentSource: [],
-  //   privateInsurance: "",
-  //   privateManagedCare: "",
-  //   selfPay: "",
-  //   unknownPaymentSource: "",
-  //   otherSpecify: "",
-  //   facility: [],
-  //   episodeTiming: "",
-  //   startOfCareDate: "",
-  //   episodeStartDate: "",
-  //   episode: [],
-  // };
-
-  // const [formData, setFormData] = useState(initialState);
 
   const handleEdit = (rowData) => {
     setEditId(rowData._id);
     setShow(true);
     dispatch(updateFormData({ ...rowData }));
-    // setPrimaryCounty(rowData.primaryCounty);
-    // setMailingCounty(rowData.mailingCounty);
-    // setVisitCounty(rowData.visitCounty);
-    // setPrimaryState(rowData.primaryState);
-    // setMailingState(rowData.mailingState);
-    // setVisitState(rowData.visitState);
-    // setPrimaryCity(rowData.primaryCity);
-    // setMailingCity(rowData.mailingCity);
-    // setVisitCity(rowData.visitCity);
-    // setFormData({
-    //   ...rowData,
-    // });
   };
   const handleDelete = (rowData) => {
     swal({
@@ -143,205 +88,6 @@ const Patients = () => {
       }
     });
   };
-  // const handleInputChange = (e, index) => {
-  //   const { name, value, type, checked } = e.target;
-  //   setFormData((prevFormData) => {
-  //     if (type === "checkbox") {
-  //       if (Array.isArray(prevFormData[name])) {
-  //         const updatedArray = checked
-  //           ? [...prevFormData[name], value]
-  //           : prevFormData[name].filter((item) => item !== value);
-  //         return {
-  //           ...prevFormData,
-  //           [name]: updatedArray,
-  //         };
-  //       } else {
-  //         return {
-  //           ...prevFormData,
-  //           [name]: checked ? value : "",
-  //         };
-  //       }
-  //     } else if (type === "radio") {
-  //       return {
-  //         ...prevFormData,
-  //         [name]: value,
-  //       };
-  //     } else if (name === "additionalLanguages") {
-  //       const updatedLanguages = [...prevFormData.additionalLanguages];
-  //       updatedLanguages[index] = value;
-  //       return {
-  //         ...prevFormData,
-  //         additionalLanguages: updatedLanguages,
-  //       };
-  //     } else {
-  //       return {
-  //         ...prevFormData,
-  //         [name]: value,
-  //       };
-  //     }
-  //   });
-  // };
-
-  // const raceOptions = [
-  //   { id: "white", label: "White", value: "White" },
-  //   {
-  //     id: "blackAfricanAmerican",
-  //     label: "Black or African American",
-  //     value: "Black or African American",
-  //   },
-  //   {
-  //     id: "americanIndian",
-  //     label: "American Indian or Alaska Native",
-  //     value: "American Indian or Alaska Native",
-  //   },
-  //   { id: "asianIndian", label: "Asian Indian", value: "Asian Indian" },
-  //   { id: "chinese", label: "Chinese", value: "Chinese" },
-  //   { id: "filipino", label: "Filipino", value: "Filipino" },
-  //   { id: "japanese", label: "Japanese", value: "Japanese" },
-  //   { id: "korean", label: "Korean", value: "Korean" },
-  //   { id: "vietnamese", label: "Vietnamese", value: "Vietnamese" },
-  //   { id: "otherAsian", label: "Other Asian", value: "Other Asian" },
-  //   {
-  //     id: "nativeHawaiian",
-  //     label: "Native Hawaiian",
-  //     value: "Native Hawaiian",
-  //   },
-  //   {
-  //     id: "guamanianChamorro",
-  //     label: "Guamanian or Chamorro",
-  //     value: "Guamanian or Chamorro",
-  //   },
-  //   { id: "samoan", label: "Samoan", value: "Samoan" },
-  //   {
-  //     id: "otherPacificIslander",
-  //     label: "Other Pacific Islander",
-  //     value: "Other Pacific Islander",
-  //   },
-  //   {
-  //     id: "unableToRespondRace",
-  //     label: "Patient unable to respond",
-  //     value: "Patient unable to respond",
-  //   },
-  //   {
-  //     id: "declineToRespondRace",
-  //     label: "Patient declines to respond",
-  //     value: "Patient declines to respond",
-  //   },
-  //   {
-  //     id: "noneOfTheAbove",
-  //     label: "None of the above",
-  //     value: "None of the above",
-  //   },
-  // ];
-
-  // const originOptions = [
-  //   {
-  //     id: "origin1",
-  //     value: "Hispanic, Latino/a, or Spanish Origin",
-  //     label: "No, not of Hispanic, Latino/a, or Spanish origin",
-  //   },
-  //   {
-  //     id: "origin2",
-  //     value: "Mexican, Mexican American, Chicano/a",
-  //     label: "Yes, Mexican, Mexican American, Chicano/a",
-  //   },
-  //   { id: "origin3", value: "Puerto Rican", label: "Yes, Puerto Rican" },
-  //   { id: "origin4", value: "Cuban", label: "Yes, Cuban" },
-  //   {
-  //     id: "origin5",
-  //     value: "Another Hispanic, Latino, or Spanish origin",
-  //     label: "Yes, another Hispanic, Latino, or Spanish origin",
-  //   },
-  //   {
-  //     id: "origin6",
-  //     value: "Patient unable to respond",
-  //     label: "Patient unable to respond",
-  //   },
-  //   {
-  //     id: "origin7",
-  //     value: "Patient declines to respond",
-  //     label: "Patient declines to respond",
-  //   },
-  // ];
-
-  // const paymentOptions = [
-  //   {
-  //     id: "medicare-fee-for-service",
-  //     label: "Medicare (traditional fee-for-service)",
-  //   },
-  //   { id: "medicare-hmo", label: "Medicare (HMO/Managed Care)" },
-  //   {
-  //     id: "medicaid-fee-for-service",
-  //     label: "Medicaid (traditional fee-for-service)",
-  //   },
-  //   { id: "medicaid-hmo", label: "Medicaid (HMO/Managed Care)" },
-  //   { id: "workers-compensation", label: "Workers' Compensation" },
-  //   {
-  //     id: "title-programs",
-  //     label: "Title Programs (e.g., Title III, V, or XX)",
-  //   },
-  //   {
-  //     id: "other-government",
-  //     label: "Other government (for example, TriCare, VA)",
-  //   },
-  //   { id: "private-insurance", label: "Private insurance" },
-  //   { id: "private-hmo", label: "Private HMO/ managed care" },
-  //   { id: "self-pay", label: "Self-pay" },
-  //   { id: "unknown", label: "Unknown" },
-  //   { id: "other", label: "Other (Specify)" },
-  // ];
-
-  // const facilityOptions = [
-  //   { id: "nf", label: "Long-term nursing facility (NF)" },
-  //   { id: "snf", label: "Skilled nursing facility (SNF/TCU)" },
-  //   { id: "ipps", label: "Short-stay acute hospital (IPPS)" },
-  //   { id: "ltch", label: "Long-term care hospital (LTCH)" },
-  //   { id: "irf", label: "Inpatient rehabilitation hospital or unit (IRF)" },
-  //   { id: "psychiatric", label: "Psychiatric hospital or unit" },
-  //   { id: "other", label: "Other" },
-  // ];
-
-  // const actionsOptions = [
-  //   { id: "episode", label: "Create episode & schedule visit after saving" },
-  //   {
-  //     id: "oasisStartCare",
-  //     label: "Create episode & schedule OASIS Start of Care visit after saving",
-  //   },
-  //   {
-  //     id: "therapyEvaluation",
-  //     label: "Create episode and schedule therapy evaluation",
-  //   },
-  //   {
-  //     id: "nonOasisStartCare",
-  //     label:
-  //       "Create episode and schedule non-OASIS Start of Care visit after saving",
-  //   },
-  // ];
-
-  // useEffect(() => {
-  //   setFormData((prevFormData) => ({
-  //     ...prevFormData,
-  //     primaryCity,
-  //     primaryCounty,
-  //     primaryState,
-  //     mailingCity,
-  //     mailingCounty,
-  //     mailingState,
-  //     visitCity,
-  //     visitCounty,
-  //     visitState,
-  //   }));
-  // }, [
-  //   primaryCity,
-  //   primaryCounty,
-  //   primaryState,
-  //   mailingCity,
-  //   mailingCounty,
-  //   mailingState,
-  //   visitCity,
-  //   visitCounty,
-  //   visitState,
-  // ]);
 
   const columns = [
     { field: "npi", header: "NPI" },
@@ -902,14 +648,14 @@ const Patients = () => {
     { field: "pressureUlcerTreatment", header: "Pressure Ulcer Treatment" },
   ];
 
-  const navigate = useNavigate();
-
+  const handleStep = (step) => {
+    dispatch(updateSteps({ ...allSteps, steps: step }));
+  };
   useEffect(() => {
     if (isDeleteSuccess) {
       refetch();
     }
   }, [isDeleteSuccess, refetch]);
-
   return (
     <>
       {isLoading ? (
@@ -969,49 +715,616 @@ const Patients = () => {
                 </button>
               )}
               {lgData?.payload?.user?.curd?.includes("create") && (
-                <button
-                  className="btn btn-success waves-effect waves-light"
-                  tabIndex={0}
-                  aria-controls="DataTables_Table_0"
-                  type="button"
-                  onClick={() => navigate("/create-new-patient")}
+                <FullscreenModal
+                  className="col-md-12"
+                  style={{
+                    minWidth: "100vw",
+                    minHeight: "60vh",
+                    overflowY: "scroll",
+                  }}
+                  title={`Add New Patient`}
                 >
-                  <span className="d-flex align-items-center">
-                    <i className="ti ti-archive me-1" />
-                    <span className="d-none d-sm-inline-block">
-                      Add New Patient
-                    </span>
-                  </span>
-                </button>
+                  <div className="from-scrollbar">
+                    <div className="d-flex align-items-center flex-wrap gap-1 mb-5 justify-content-center">
+                      <div
+                        className="step"
+                        data-target="#account-details-modern"
+                      >
+                        <button
+                          onClick={() => handleStep(0)}
+                          type="button"
+                          className={`btn ${
+                            allSteps.steps === 0
+                              ? "btn-primary"
+                              : "btn-secondary"
+                          } btn-sm px-1 `}
+                        >
+                          <span
+                            className="bs-stepper-circle bg-light text-primary"
+                            style={{ fontSize: "10px" }}
+                          >
+                            0
+                          </span>
+                          <span className="bs-stepper-label">
+                            <span
+                              className="bs-stepper-title"
+                              style={{ fontSize: "10px" }}
+                            >
+                              Demographics
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                      <div className="line">
+                        <i className="ti ti-chevron-right" />
+                      </div>
+                      <div className="step" data-target="#personal-info-modern">
+                        <button
+                          onClick={() => handleStep(1)}
+                          type="button"
+                          className={`btn ${
+                            allSteps.steps === 1
+                              ? "btn-primary"
+                              : "btn-secondary"
+                          } btn-sm px-1 `}
+                        >
+                          <span
+                            className="bs-stepper-circle bg-light text-primary"
+                            style={{ fontSize: "10px" }}
+                          >
+                            1
+                          </span>
+                          <span className="bs-stepper-label">
+                            <span
+                              className="bs-stepper-title"
+                              style={{ fontSize: "10px" }}
+                            >
+                              Payers
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                      <div className="line">
+                        <i className="ti ti-chevron-right" />
+                      </div>
+                      <div className="step" data-target="#social-links-modern">
+                        <button
+                          onClick={() => handleStep(2)}
+                          type="button"
+                          className={`btn ${
+                            allSteps.steps === 2
+                              ? "btn-primary"
+                              : "btn-secondary"
+                          } btn-sm px-1 `}
+                        >
+                          <span
+                            className="bs-stepper-circle bg-light text-primary"
+                            style={{ fontSize: "10px" }}
+                          >
+                            2
+                          </span>
+                          <span className="bs-stepper-label">
+                            <span
+                              className="bs-stepper-title"
+                              style={{ fontSize: "10px" }}
+                            >
+                              Physicians
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                      <div className="line">
+                        <i className="ti ti-chevron-right" />
+                      </div>
+                      <div className="step" data-target="#personal-info-modern">
+                        <button
+                          onClick={() => handleStep(3)}
+                          type="button"
+                          className={`btn ${
+                            allSteps.steps === 3
+                              ? "btn-primary"
+                              : "btn-secondary"
+                          } btn-sm px-1 `}
+                        >
+                          <span
+                            className="bs-stepper-circle bg-light text-primary"
+                            style={{ fontSize: "10px" }}
+                          >
+                            3
+                          </span>
+                          <span className="bs-stepper-label">
+                            <span
+                              className="bs-stepper-title"
+                              style={{ fontSize: "10px" }}
+                            >
+                              clinical diagnoses
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                      <div className="line">
+                        <i className="ti ti-chevron-right" />
+                      </div>
+                      <div className="step" data-target="#personal-info-modern">
+                        <button
+                          onClick={() => handleStep(4)}
+                          type="button"
+                          className={`btn ${
+                            allSteps.steps === 4
+                              ? "btn-primary"
+                              : "btn-secondary"
+                          } btn-sm px-1 `}
+                        >
+                          <span
+                            className="bs-stepper-circle bg-light text-primary"
+                            style={{ fontSize: "10px" }}
+                          >
+                            4
+                          </span>
+                          <span className="bs-stepper-label">
+                            <span
+                              className="bs-stepper-title"
+                              style={{ fontSize: "10px" }}
+                            >
+                              Pharmacy
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                      <div className="line">
+                        <i className="ti ti-chevron-right" />
+                      </div>
+                      <div
+                        onClick={() => handleStep(5)}
+                        className="step"
+                        data-target="#personal-info-modern"
+                      >
+                        <button
+                          type="button"
+                          className={`btn ${
+                            allSteps.steps === 5
+                              ? "btn-primary"
+                              : "btn-secondary"
+                          } btn-sm px-1 `}
+                        >
+                          <span
+                            className="bs-stepper-circle bg-light text-primary"
+                            style={{ fontSize: "10px" }}
+                          >
+                            5
+                          </span>
+                          <span className="bs-stepper-label">
+                            <span
+                              className="bs-stepper-title"
+                              style={{ fontSize: "10px" }}
+                            >
+                              Contract
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                      <div className="line">
+                        <i className="ti ti-chevron-right" />
+                      </div>
+                      <div
+                        onClick={() => handleStep(6)}
+                        className="step"
+                        data-target="#personal-info-modern"
+                      >
+                        <button
+                          type="button"
+                          className={`btn ${
+                            allSteps.steps === 6
+                              ? "btn-primary"
+                              : "btn-secondary"
+                          } btn-sm px-1 `}
+                        >
+                          <span
+                            className="bs-stepper-circle bg-light text-primary"
+                            style={{ fontSize: "10px" }}
+                          >
+                            6
+                          </span>
+                          <span className="bs-stepper-label">
+                            <span
+                              className="bs-stepper-title"
+                              style={{ fontSize: "10px" }}
+                            >
+                              Emergency preparedness
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                      <div className="line">
+                        <i className="ti ti-chevron-right" />
+                      </div>
+                      <div className="step" data-target="#personal-info-modern">
+                        <button
+                          onClick={() => handleStep(7)}
+                          type="button"
+                          className={`btn ${
+                            allSteps.steps === 7
+                              ? "btn-primary"
+                              : "btn-secondary"
+                          } btn-sm px-1 `}
+                        >
+                          <span
+                            className="bs-stepper-circle bg-light text-primary"
+                            style={{ fontSize: "10px" }}
+                          >
+                            7
+                          </span>
+                          <span className="bs-stepper-label">
+                            <span
+                              className="bs-stepper-title"
+                              style={{ fontSize: "10px" }}
+                            >
+                              Advance Directives
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                      <div className="line">
+                        <i className="ti ti-chevron-right" />
+                      </div>
+                      <div className="step" data-target="#personal-info-modern">
+                        <button
+                          onClick={() => handleStep(8)}
+                          type="button"
+                          className={`btn ${
+                            allSteps.steps === 8
+                              ? "btn-primary"
+                              : "btn-secondary"
+                          } btn-sm px-1 `}
+                        >
+                          <span
+                            className="bs-stepper-circle bg-light text-primary"
+                            style={{ fontSize: "10px" }}
+                          >
+                            8
+                          </span>
+                          <span className="bs-stepper-label">
+                            <span
+                              className="bs-stepper-title"
+                              style={{ fontSize: "10px" }}
+                            >
+                              Referral information
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {allSteps?.steps === 0 && <CreatePatient />}
+                    {allSteps?.steps === 1 && <CreatePayers />}
+                    {allSteps?.steps === 2 && <CreatePhysicians />}
+                    {allSteps?.steps === 3 && <CreateClinicalAndDiagnoses />}
+                    {allSteps?.steps === 4 && <CreatePharmacy />}
+                    {allSteps?.steps === 5 && <ContactForm />}
+                    {allSteps?.steps === 6 && <CreateEmergencyPreparedness />}
+                    {allSteps?.steps === 7 && <CreateAdvanceDirectives />}
+                    {allSteps?.steps === 8 && <CreateReferralInformation />}
+                  </div>
+                </FullscreenModal>
               )}
             </div>
             {show && (
               <EditModal
                 style={{
-                  minWidth: "70%",
-                  maxWidth: "70%",
+                  minWidth: "90%",
+                  maxWidth: "90%",
                   maxHeight: "90vh",
                   overflow: "hidden",
                   overflowY: "scroll",
                 }}
                 onClose={setShow}
               >
-                <SectionAForm />
-                <SectionBForm />
-                <SectionCForm />
-                <SectionDForm />
-                <SectionEForm />
-                <SectionFForm />
-                <SectionGForm />
-                <SectionGGForm />
-                <SectionHForm />
-                <SectionIForm />
-                <SectionJForm />
-                <SectionKForm />
-                <SectionMForm />
-                <SectionNForm />
-                <SectionOForm />
-                <SectionQForm editId={editId} />
+                <div className="d-flex align-items-center flex-wrap gap-1 mb-5 justify-content-center">
+                  <div className="step" data-target="#account-details-modern">
+                    <button
+                      onClick={() => handleStep(0)}
+                      type="button"
+                      className={`btn ${
+                        allSteps.steps === 0 ? "btn-primary" : "btn-secondary"
+                      } btn-sm px-1 `}
+                    >
+                      <span
+                        className="bs-stepper-circle bg-light text-primary"
+                        style={{ fontSize: "10px" }}
+                      >
+                        0
+                      </span>
+                      <span className="bs-stepper-label">
+                        <span
+                          className="bs-stepper-title"
+                          style={{ fontSize: "10px" }}
+                        >
+                          Demographics
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                  <div className="line">
+                    <i className="ti ti-chevron-right" />
+                  </div>
+                  <div className="step" data-target="#personal-info-modern">
+                    <button
+                      onClick={() => handleStep(1)}
+                      type="button"
+                      className={`btn ${
+                        allSteps.steps === 1 ? "btn-primary" : "btn-secondary"
+                      } btn-sm px-1 `}
+                    >
+                      <span
+                        className="bs-stepper-circle bg-light text-primary"
+                        style={{ fontSize: "10px" }}
+                      >
+                        1
+                      </span>
+                      <span className="bs-stepper-label">
+                        <span
+                          className="bs-stepper-title"
+                          style={{ fontSize: "10px" }}
+                        >
+                          Payers
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                  <div className="line">
+                    <i className="ti ti-chevron-right" />
+                  </div>
+                  <div className="step" data-target="#social-links-modern">
+                    <button
+                      onClick={() => handleStep(2)}
+                      type="button"
+                      className={`btn ${
+                        allSteps.steps === 2 ? "btn-primary" : "btn-secondary"
+                      } btn-sm px-1 `}
+                    >
+                      <span
+                        className="bs-stepper-circle bg-light text-primary"
+                        style={{ fontSize: "10px" }}
+                      >
+                        2
+                      </span>
+                      <span className="bs-stepper-label">
+                        <span
+                          className="bs-stepper-title"
+                          style={{ fontSize: "10px" }}
+                        >
+                          Physicians
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                  <div className="line">
+                    <i className="ti ti-chevron-right" />
+                  </div>
+                  <div className="step" data-target="#personal-info-modern">
+                    <button
+                      onClick={() => handleStep(3)}
+                      type="button"
+                      className={`btn ${
+                        allSteps.steps === 3 ? "btn-primary" : "btn-secondary"
+                      } btn-sm px-1 `}
+                    >
+                      <span
+                        className="bs-stepper-circle bg-light text-primary"
+                        style={{ fontSize: "10px" }}
+                      >
+                        3
+                      </span>
+                      <span className="bs-stepper-label">
+                        <span
+                          className="bs-stepper-title"
+                          style={{ fontSize: "10px" }}
+                        >
+                          clinical diagnoses
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                  <div className="line">
+                    <i className="ti ti-chevron-right" />
+                  </div>
+                  <div className="step" data-target="#personal-info-modern">
+                    <button
+                      onClick={() => handleStep(4)}
+                      type="button"
+                      className={`btn ${
+                        allSteps.steps === 4 ? "btn-primary" : "btn-secondary"
+                      } btn-sm px-1 `}
+                    >
+                      <span
+                        className="bs-stepper-circle bg-light text-primary"
+                        style={{ fontSize: "10px" }}
+                      >
+                        4
+                      </span>
+                      <span className="bs-stepper-label">
+                        <span
+                          className="bs-stepper-title"
+                          style={{ fontSize: "10px" }}
+                        >
+                          Pharmacy
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                  <div className="line">
+                    <i className="ti ti-chevron-right" />
+                  </div>
+                  <div
+                    onClick={() => handleStep(5)}
+                    className="step"
+                    data-target="#personal-info-modern"
+                  >
+                    <button
+                      type="button"
+                      className={`btn ${
+                        allSteps.steps === 5 ? "btn-primary" : "btn-secondary"
+                      } btn-sm px-1 `}
+                    >
+                      <span
+                        className="bs-stepper-circle bg-light text-primary"
+                        style={{ fontSize: "10px" }}
+                      >
+                        5
+                      </span>
+                      <span className="bs-stepper-label">
+                        <span
+                          className="bs-stepper-title"
+                          style={{ fontSize: "10px" }}
+                        >
+                          Contract
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                  <div className="line">
+                    <i className="ti ti-chevron-right" />
+                  </div>
+                  <div
+                    onClick={() => handleStep(6)}
+                    className="step"
+                    data-target="#personal-info-modern"
+                  >
+                    <button
+                      type="button"
+                      className={`btn ${
+                        allSteps.steps === 6 ? "btn-primary" : "btn-secondary"
+                      } btn-sm px-1 `}
+                    >
+                      <span
+                        className="bs-stepper-circle bg-light text-primary"
+                        style={{ fontSize: "10px" }}
+                      >
+                        6
+                      </span>
+                      <span className="bs-stepper-label">
+                        <span
+                          className="bs-stepper-title"
+                          style={{ fontSize: "10px" }}
+                        >
+                          Emergency preparedness
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                  <div className="line">
+                    <i className="ti ti-chevron-right" />
+                  </div>
+                  <div className="step" data-target="#personal-info-modern">
+                    <button
+                      onClick={() => handleStep(7)}
+                      type="button"
+                      className={`btn ${
+                        allSteps.steps === 7 ? "btn-primary" : "btn-secondary"
+                      } btn-sm px-1 `}
+                    >
+                      <span
+                        className="bs-stepper-circle bg-light text-primary"
+                        style={{ fontSize: "10px" }}
+                      >
+                        7
+                      </span>
+                      <span className="bs-stepper-label">
+                        <span
+                          className="bs-stepper-title"
+                          style={{ fontSize: "10px" }}
+                        >
+                          Advance Directives
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                  <div className="line">
+                    <i className="ti ti-chevron-right" />
+                  </div>
+                  <div className="step" data-target="#personal-info-modern">
+                    <button
+                      onClick={() => handleStep(8)}
+                      type="button"
+                      className={`btn ${
+                        allSteps.steps === 8 ? "btn-primary" : "btn-secondary"
+                      } btn-sm px-1 `}
+                    >
+                      <span
+                        className="bs-stepper-circle bg-light text-primary"
+                        style={{ fontSize: "10px" }}
+                      >
+                        8
+                      </span>
+                      <span className="bs-stepper-label">
+                        <span
+                          className="bs-stepper-title"
+                          style={{ fontSize: "10px" }}
+                        >
+                          Referral information
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+
+                {allSteps?.steps === 0 && (
+                  <>
+                    <SectionAForm />
+                    <SectionBForm />
+                    <SectionCForm />
+                    <SectionDForm />
+                    <SectionEForm />
+                    <SectionFForm />
+                    <SectionGForm />
+                    <SectionGGForm />
+                    <SectionHForm />
+                    <SectionIForm />
+                    <SectionJForm />
+                    <SectionKForm />
+                    <SectionMForm />
+                    <SectionNForm />
+                    <SectionOForm />
+                    <SectionQForm editId={editId} />
+                  </>
+                )}
+
+                {allSteps?.steps === 1 && (
+                  <EditPayer patientId={editId} />
+                )}
+                {allSteps?.steps === 2 && (
+                  <EditPhysicians
+                    patientId={editId}
+                  />
+                )}
+                {allSteps?.steps === 3 && (
+                  <EditClinicalDiagnoses
+                  patientId={editId}
+                  />
+                )}
+                {allSteps?.steps === 4 && (
+                  <EditPharmacy
+                  patientId={editId}
+                  />
+                )}
+                {allSteps?.steps === 5 && (
+                  <EditContract  patientId={editId} />
+                )}
+                {allSteps?.steps === 6 && (
+                  <EditEmergencyPreparedness
+                  patientId={editId}
+                  />
+                )}
+                {allSteps?.steps === 7 && (
+                  <EditAdvanceDirectives
+                  patientId={editId}
+                  />
+                )}
+                {allSteps?.steps === 8 && (
+                  <EditReferralInformation
+                  patientId={editId}
+                  />
+                )}
               </EditModal>
             )}
             <div className="mt-5">

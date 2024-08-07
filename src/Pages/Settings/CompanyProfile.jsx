@@ -9,7 +9,6 @@ import AuthLoader from './../../utils/Loaders/AuthLoader';
 const CompanyProfile = () => {
   const [createCompany,{data,isLoading,isSuccess,error}]=useCreateCompanyMutation()
   const {data:companyProfile,refetch}=useCompanyProfileGetByIdQuery()
-console.log(companyProfile)
   const [selectedCounty, setSelectedCounty] = useState([]);
   const [selectedState, setSelectedState] = useState("");
   const [citySelected, setCitySelected] = useState("");
@@ -43,7 +42,7 @@ console.log(companyProfile)
     data.city= citySelected;
     data.state= selectedState;
     data.county= selectedCounty;
-    console.log(data);
+    //console.log(data);
     createCompany(data)
   };
 

@@ -81,7 +81,7 @@ const SupportEmployment = () => {
   const handleSubmit2 = (e) => {
     e.preventDefault();
     // Implement your form submission logic here
-    console.log("Form Data:", formData);
+    //console.log("Form Data:", formData);
     resetForm();
   };
   return (

@@ -109,7 +109,7 @@ const PositiveIdentifications = () => {
   };
 
   const handleSubmit = () => {
-    console.log(formData);
+    //console.log(formData);
     createQuestion({formData}); // Assuming createQuestion handles submission correctly
   };
 if(isLoading) return <AuthLoader/>

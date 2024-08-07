@@ -7,7 +7,7 @@ import { useMeQuery } from "../../Redux/api/UserApi";
 const Layout = () => {
   const location = useLocation();
   const { data } = useMeQuery();
-  console.log(data);
+  //console.log(data);
   useEffect(() => {
     if (location.pathname !== "/login" && location.pathname !== "/register") {
       localStorage.setItem("pathName", location.pathname);

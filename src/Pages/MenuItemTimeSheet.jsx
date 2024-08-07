@@ -30,7 +30,7 @@ const MenuItemTimeSheet = () => {
     { data: createData, isSuccess: isCreateSuccess, error: createError },
   ] = useCreateTimeSheetMutation();
   const { data, isLoading, refetch } = useGetAllTimeSheetsQuery();
-  console.log(data);
+  //console.log(data);
   const [
     updateTimeSheet,
     { data: updateData, isSuccess: isUpdateSuccess, error: updateError },
@@ -88,7 +88,7 @@ const MenuItemTimeSheet = () => {
     setEditId(rowData._id);
     setShow(true);
     setDate(rowData.dateOfService)
-    console.log(rowData);
+    //console.log(rowData);
     setFormData({
       individual: rowData.individual?._id,
       clockInTime: rowData.clockInTime,

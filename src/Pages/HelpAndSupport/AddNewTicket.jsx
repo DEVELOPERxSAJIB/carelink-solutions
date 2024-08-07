@@ -84,7 +84,7 @@ const AddNewTicket = () => {
       if (result.error) {
         console.error("Error creating ticket:", result.error);
       } else {
-        console.log("Ticket created successfully:", result.data);
+        //console.log("Ticket created successfully:", result.data);
       }
     } catch (error) {
       console.error("Unexpected error creating ticket:", error);

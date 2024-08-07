@@ -131,7 +131,7 @@ const ViewVehicleInspection = () => {
   const handleEdit = (row) => {
     setShow(true);
     setEditId(row._id);
-    console.log(row.transport);
+    //console.log(row.transport);
 
     if (row.transport) {
       setTransport({ value: row.transport, label: row.transport });
@@ -139,7 +139,7 @@ const ViewVehicleInspection = () => {
       setTransport({ value: "", label: "" });
     }
 
-    console.log({ value: row.transport, label: row.transport });
+    //console.log({ value: row.transport, label: row.transport });
 
     const updateRow = { ...row };
     updateRow.inspectionDate = new Date(updateRow.inspectionDate)

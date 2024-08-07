@@ -5,6 +5,10 @@ import {
   updateFormData,
   resetForm,
 } from "./../../Redux/slices/SectionSlice";
+
+import {getAllSectionStepState,
+  updateSteps,updatePatientId
+} from "./../../Redux/slices/SectionStep.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useCreatePatientMutation } from "../../Redux/api/PatientApi";
 import { useEffect } from "react";
@@ -12,7 +16,8 @@ import { useUpdatePatientMutation } from "../../Redux/api/PatientApi";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 const SectionQForm = ({ editId }) => {
 
-
+const allSteps = useSelector(getAllSectionStepState)
+console.log(allSteps)
   const [createPatient, { data, isLoading, error, isSuccess }] =
     useCreatePatientMutation();
   const [
@@ -52,13 +57,15 @@ const SectionQForm = ({ editId }) => {
   };
 
   useEffect(() => {
+    const patientId = JSON.parse(localStorage.getItem("patient"))?._id||null
     if (isSuccess) {
       dispatch(resetForm());
+      dispatch(updateSteps({...allSteps,steps:allSteps?.steps+1}));
+      dispatch(updatePatientId({...allSteps,patientId:data?.payload?._id}));
+      localStorage.setItem("patient",JSON.stringify(data?.payload))
     }
-    if (isUpdateSuccess) {
-      window.location.reload();
-    }
-  }, [isSuccess, dispatch, isUpdateSuccess]);
+    dispatch(updatePatientId({...allSteps,patientId:patientId}));
+  }, [isSuccess, dispatch, isUpdateSuccess,data?.payload]);
   useEffect(() => {
     setFormData({ ...allFormData });
     setFormData({ ...localSectionQ });

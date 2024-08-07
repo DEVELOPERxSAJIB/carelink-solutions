@@ -634,7 +634,7 @@ const Payers = () => {
                           {formData?.occurrenceSpans &&
                             formData?.occurrenceSpans?.map((span, index) => (
                               <React.Fragment key={`occurrenceSpan-${index}`}>
-                                {console.log(span.code)}
+                                
                                 <div className="col-md-4">
                                   <label
                                     htmlFor={`occurrenceSpan${index + 1}Code`}

@@ -94,6 +94,7 @@ import ReferralInformation from './../Pages/Patient/ReferralInformation';
 import UserActivation from '../Pages/UserActivation';
 import CreateNewProvider from '../Pages/Provider/CreateNewProvider';
 import Admin from '../Pages/BusinessCommunity/Admin';
+import SinglePatient from './../Pages/Patient/SinglePatient';
 
 const privateRouter = [
   {
@@ -158,6 +159,10 @@ const privateRouter = [
           {
             path: "/patient",
             element: <Patients />,
+          },
+          {
+            path: "/patients/:id",
+            element: <SinglePatient />,
           },
           {
             path: "/review-email-log",

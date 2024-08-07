@@ -7,10 +7,17 @@ import StateSelect from "./../../components/FormElement/StateSelect";
 import CountySelect from "./../../components/FormElement/CountySelect";
 import CitySelect from "../../components/FormElement/CitySelect";
 import { ReactToPrint } from "react-to-print";
-
+import {
+  getAllSectionStepState,
+  updateSteps,
+} from "./../../Redux/slices/SectionStep.js";
+import { useSelector, useDispatch } from "react-redux";
 const CreateEmergencyPreparedness = () => {
+  const allSteps = useSelector(getAllSectionStepState);
+  const dispatch = useDispatch();
+
   const componentRef = useRef();
-  const [createEmergency, { data, isLoading, error }] =
+  const [createEmergency, { data, isLoading, error, isSuccess }] =
     useCreateEmergencyMutation();
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -93,6 +100,11 @@ const CreateEmergencyPreparedness = () => {
     formData.city = city;
     formData.state = state;
     formData.county = county;
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if(patientId){
+      formData.patientId= allSteps.patientId
+      localStorage.removeItem("Emergency");
+    }
     createEmergency(formData);
   };
 
@@ -101,8 +113,12 @@ const CreateEmergencyPreparedness = () => {
     formData.city = city;
     formData.state = state;
     formData.county = county;
-    createEmergency(formData);
-    localStorage.setItem("Emergency", JSON.stringify(formData));
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if(patientId){
+      formData.patientId= allSteps.patientId
+      createEmergency(formData);
+      localStorage.setItem("Emergency", JSON.stringify(formData));
+    }
   };
 
   const handleSaveAndExit = (e) => {
@@ -110,13 +126,17 @@ const CreateEmergencyPreparedness = () => {
     formData.city = city;
     formData.state = state;
     formData.county = county;
-    localStorage.setItem("Emergency", JSON.stringify(formData));
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if(patientId){
+      formData.patientId= allSteps.patientId
+      localStorage.setItem("Emergency", JSON.stringify(formData));
+    }
   };
-  useEffect(()=>{
-    setCity(localStorageData?.city)
-setState(localStorageData?.state)
-setCounty(localStorageData?.county)
-  },[])
+  useEffect(() => {
+    setCity(localStorageData?.city);
+    setState(localStorageData?.state);
+    setCounty(localStorageData?.county);
+  }, []);
   useEffect(() => {
     if (addTemplate?.value) {
       setFormData((prev) => ({
@@ -136,7 +156,13 @@ setCounty(localStorageData?.county)
       }));
     }
   }, [template?.value]);
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
+    }
+  }, [isSuccess]);
   if (isLoading) return <AuthLoader />;
+
   return (
     <form ref={componentRef} onSubmit={handleSubmit} className="card">
       <div className="card-body">

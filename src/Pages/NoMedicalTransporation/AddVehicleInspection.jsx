@@ -34,7 +34,7 @@ const AddVehicleInspection = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     formData.transport=transport.value
-    console.log("Inspection Data:", formData);
+    //console.log("Inspection Data:", formData);
     createInspection(formData);
   };
 

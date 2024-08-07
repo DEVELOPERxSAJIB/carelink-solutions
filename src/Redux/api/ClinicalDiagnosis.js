@@ -9,6 +9,13 @@ export const ClinicalDiagnosisApi = rootApi.injectEndpoints({
         { type: "ClinicalDiagnosis", id: _id },
       ],
     }),
+    // Query endpoint to get a clinical diagnosis by ID
+    getClinicalDiagnosisByPatientId: builder.query({
+      query: (diagnosisId) => `clinical/single/${diagnosisId}`,
+      providesTags: (result, error, _id) => [
+        { type: "ClinicalDiagnosis", id: _id },
+      ],
+    }),
 
     // Mutation endpoint to create a new clinical diagnosis
     createClinicalDiagnosis: builder.mutation({
@@ -61,4 +68,5 @@ export const {
   useGetAllClinicalDiagnosesQuery,
   useUpdateClinicalDiagnosisMutation,
   useDeleteClinicalDiagnosisMutation,
+  useGetClinicalDiagnosisByPatientIdQuery,
 } = ClinicalDiagnosisApi;

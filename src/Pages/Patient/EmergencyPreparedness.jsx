@@ -131,7 +131,7 @@ const EmergencyPreparedness = () => {
     setState(row.state)
     setCounty(row.county)
   };
-  console.log(formData)
+  //console.log(formData)
   const handleDelete = (rowData) => {
     swal({
       title: "Are you sure?",
@@ -180,7 +180,7 @@ const EmergencyPreparedness = () => {
     formData.state = state;
     formData.county = county;
     updateEmergency({ emergencyId: editId, emergencyData: formData });
-    console.log(formData);
+    //console.log(formData);
   };
 
   useEffect(() => {

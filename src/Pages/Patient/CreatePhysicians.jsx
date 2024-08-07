@@ -7,12 +7,18 @@ import { useCreatePhysicianMutation } from "../../Redux/api/PhysicianApi";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import { useNavigate } from "react-router-dom";
 import { ReactToPrint } from "react-to-print";
-
+import {
+  getAllSectionStepState,
+  updateSteps,
+} from "./../../Redux/slices/SectionStep.js";
+import { useSelector, useDispatch } from "react-redux";
 const CreatePhysicians = () => {
+  const allSteps = useSelector(getAllSectionStepState);
+  const dispatch = useDispatch();
+
   const componentRef = useRef();
-  const navigate = useNavigate();
   const localPhysician = JSON.parse(localStorage.getItem("Physician"));
-  console.log(localPhysician);
+  //console.log(localPhysician);
   const [createPhysician, { data, isLoading, error, isSuccess }] =
     useCreatePhysicianMutation();
   const [formData, setFormData] = useState({
@@ -49,24 +55,38 @@ const CreatePhysicians = () => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    createPhysician(formData);
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if (patientId) {
+      formData.patientId = allSteps.patientId;
+      localStorage.removeItem("Physician");
+      createPhysician(formData);
+    }
   };
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    createPhysician(formData);
-    localStorage.setItem("Physician", JSON.stringify(formData));
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if (patientId) {
+      formData.patientId = allSteps.patientId;
+      localStorage.setItem("Physician", JSON.stringify(formData));
+      createPhysician(formData);
+    }
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    localStorage.setItem("Physician", JSON.stringify(formData));
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if (patientId) {
+      formData.patientId = allSteps.patientId;
+      localStorage.setItem("Physician", JSON.stringify(formData));
+      createPhysician(formData);
+    }
   };
   useEffect(() => {
     if (isSuccess) {
-      navigate("/physicians");
+      dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
       setFormData({
         npiNumber: "",
         firstName: "",
@@ -89,11 +109,12 @@ const CreatePhysicians = () => {
       });
     }
   }, [isSuccess]);
-  useEffect(()=>{
-    setState(localPhysician?.state || "")
-    setCity(localPhysician?.city || "")
-  },[])
+  useEffect(() => {
+    setState(localPhysician?.state || "");
+    setCity(localPhysician?.city || "");
+  }, []);
   if (isLoading) return <AuthLoader />;
+
   return (
     <div ref={componentRef} className="card mt-4">
       <PageHeader title="New Physician" className="card-header fs-3" />

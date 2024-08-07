@@ -4,8 +4,24 @@ import io from "socket.io-client";
 import avatar from "../../src/assets/img/avatars/7.png";
 import calling from "../assets/audio/ringing-151670.mp3";
 import endCall from "../assets/audio/end-call-120633.mp3";
-
+import { useGetAllUsersQuery, useMeQuery } from "../Redux/api/UserApi";
+import moment from "moment";
+import {
+  useCreateChatMutation,
+  useGetAllChatsQuery,
+} from "../Redux/api/ChatApi";
 const PushNotes = () => {
+  const [chatUser, setChatUser] = useState(null);
+  const { data: lgData } = useMeQuery();
+  const { data: users, refetch: userRefetch } = useGetAllUsersQuery();
+  const {
+    data: chats,
+    refetch,
+    isLoading: isChatLoading,
+  } = useGetAllChatsQuery(chatUser?._id);
+
+  const [createChat, { data: newChat, isSuccess: isNewChatSuccess, error }] =
+    useCreateChatMutation();
   const [count, setCount] = useState(1);
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
   const [isVideoEnabled, setIsVideoEnabled] = useState(true);
@@ -21,7 +37,8 @@ const PushNotes = () => {
   const callingSoundRef = useRef(new Audio());
   const endCallSoundRef = useRef(new Audio());
   const roomRef = useRef("room1");
-
+  const [activeUsers, setActiveUsers] = useState([]);
+  const [chatImage, setChatImage] = useState(null);
   useEffect(() => {
     // Fetch available cameras
     navigator.mediaDevices.enumerateDevices().then((devices) => {
@@ -36,8 +53,11 @@ const PushNotes = () => {
 
     // Initialize the socket connection
     socketRef.current = io("http://localhost:5050");
-    socketRef.current.emit("join_room", roomRef.current);
-
+    socketRef.current.emit("setActiveUser", lgData?.payload?.user);
+    socketRef.current.on("getActiveUser", (data) => {
+      //console.log(data);
+      setActiveUsers(data);
+    });
     // Set up media stream and WebRTC connection
     const constraints = {
       video: { deviceId: { exact: selectedCamera } },
@@ -92,6 +112,9 @@ const PushNotes = () => {
         peerConnectionRef.current.addIceCandidate(
           new RTCIceCandidate(candidate)
         );
+      });
+      socketRef.current.on("setActiveUser", (data) => {
+        //console.log(data);
       });
 
       socketRef.current.on("message", (message) => {
@@ -168,18 +191,6 @@ const PushNotes = () => {
     }
   };
 
-  const handleSendMessage = (e) => {
-    e.preventDefault();
-    if (message.trim()) {
-      socketRef.current.emit("message", { room: roomRef.current, message });
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { sender: "You", text: message },
-      ]);
-      setMessage("");
-    }
-  };
-
   const playSound = (audioRef, src, loop) => {
     if (audioRef.current) {
       audioRef.current.src = src; // Set the source dynamically
@@ -198,12 +209,33 @@ const PushNotes = () => {
     }
   };
 
-  const handleSubmit = () => {};
+  const handleChatCreate = (data) => {
+    //console.log(data);
+    localStorage.setItem("ChatUser", JSON.stringify(data));
+    setChatUser(data);
+  };
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    const form_data = new FormData();
+    form_data.append("chat", message);
+    form_data.append("receiverId", chatUser?._id);
+    if (chatImage) {
+      form_data.append("chat-image", chatImage);
+    }
 
+    createChat(form_data);
+  };
+  useEffect(() => {
+    refetch();
+  }, [chatUser]);
+  useEffect(() => {
+    const localChatData = JSON.parse(localStorage.getItem("ChatUser"));
+    setChatUser(localChatData);
+  }, [chatUser]);
   return (
     <div className="row">
       <div className="col-12 d-flex justify-content-center">
-        <PopupModal title="Add Note" id="Add_Note">
+        {/* <PopupModal title="Add Note" id="Add_Note">
           <form onSubmit={handleSubmit}>
             {count === 1 && (
               <>
@@ -401,24 +433,8 @@ const PushNotes = () => {
               </>
             )}
           </form>
-        </PopupModal>
+        </PopupModal> */}
       </div>
-
-      {/* <div>
-          <div>
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <button onClick={handleSendMessage}>Send</button>
-          </div>
-          <div>
-            {messages.map((msg, index) => (
-              <p key={index}>{msg}</p>
-            ))}
-          </div>
-        </div> */}
 
       <div className="container-xxl flex-grow-1 container-p-y">
         <div></div>
@@ -619,73 +635,49 @@ const PushNotes = () => {
                   <li className="chat-contact-list-item chat-contact-list-item-title mt-0">
                     <h5 className="text-primary mb-0">Chats</h5>
                   </li>
-                  <li className="chat-contact-list-item chat-list-item-0 d-none">
-                    <h6 className=" mb-0">No Chats Found</h6>
-                  </li>
-                  <li className="chat-contact-list-item mb-1">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar avatar-online">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <div className="d-flex justify-content-between align-items-center">
-                          <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                            Waldemar Mannering
-                          </h6>
-                          <small className="">5 Minutes</small>
-                        </div>
-                        <small className="chat-contact-status text-truncate">
-                          Refer friends. Get rewards.
-                        </small>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="chat-contact-list-item active mb-1">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar avatar-offline">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <div className="d-flex justify-content-between align-items-center">
-                          <h6 className="chat-contact-name text-truncate fw-normal m-0">
-                            Felecia Rower
-                          </h6>
-                          <small className="">30 Minutes</small>
-                        </div>
-                        <small className="chat-contact-status text-truncate">
-                          I will purchase it for sure. 👍
-                        </small>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="chat-contact-list-item mb-0">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar avatar-busy">
-                        <span className="avatar-initial rounded-circle bg-label-success">
-                          CM
-                        </span>
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <div className="d-flex justify-content-between align-items-center">
-                          <h6 className="chat-contact-name text-truncate fw-normal m-0">
-                            Calvin Moore
-                          </h6>
-                          <small className="">1 Day</small>
-                        </div>
-                        <small className="chat-contact-status text-truncate">
-                          If it takes long you can mail inbox user
-                        </small>
-                      </div>
-                    </a>
-                  </li>
+                  {users?.payload?.users?.length > 0 ? (
+                    <>
+                      {users?.payload?.users?.map((item, index) => {
+                        return (
+                          <li
+                            key={index}
+                            className="chat-contact-list-item mb-1"
+                          >
+                            <a className="d-flex align-items-center">
+                              <div className="flex-shrink-0 avatar avatar-online">
+                                <img
+                                  src={avatar}
+                                  alt="Avatar"
+                                  className="rounded-circle"
+                                />
+                              </div>
+                              <div className="chat-contact-info flex-grow-1 ms-4">
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <h6 className="chat-contact-name text-truncate m-0 fw-normal">
+                                    {item?.userInfo?.firstName}
+                                    {item?.userInfo?.lastName}
+                                  </h6>
+                                  <small className="">
+                                    {moment(item?.createdAt).fromNow()}
+                                  </small>
+                                </div>
+                                <small className="chat-contact-status text-truncate">
+                                  {item?.lastMsg?.message?.text}
+                                </small>
+                              </div>
+                            </a>
+                          </li>
+
+                          // avatar avatar-busy
+                          // avatar avatar-offline
+                        );
+                      })}
+                    </>
+                  ) : (
+                    <li className="chat-contact-list-item chat-list-item-0 d-none">
+                      <h6 className=" mb-0">No Chats Found</h6>
+                    </li>
+                  )}
                 </ul>
                 {/* Contacts */}
                 <ul
@@ -698,449 +690,291 @@ const PushNotes = () => {
                   <li className="chat-contact-list-item contact-list-item-0 d-none">
                     <h6 className=" mb-0">No Contacts Found</h6>
                   </li>
-                  <li className="chat-contact-list-item">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Natalie Maxwell
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          UI/UX Designer
-                        </small>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="chat-contact-list-item">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Jess Cook
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          Business Analyst
-                        </small>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="chat-contact-list-item">
-                    <a className="d-flex align-items-center">
-                      <div className="avatar d-block flex-shrink-0">
-                        <span className="avatar-initial rounded-circle bg-label-primary">
-                          LM
-                        </span>
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Louie Mason
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          Resource Manager
-                        </small>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="chat-contact-list-item">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Krystal Norton
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          Business Executive
-                        </small>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="chat-contact-list-item">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Stacy Garrison
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          Marketing Ninja
-                        </small>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="chat-contact-list-item">
-                    <a className="d-flex align-items-center">
-                      <div className="avatar d-block flex-shrink-0">
-                        <span className="avatar-initial rounded-circle bg-label-success">
-                          CM
-                        </span>
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Calvin Moore
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          UX Engineer
-                        </small>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="chat-contact-list-item">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Mary Giles
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          Account Department
-                        </small>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="chat-contact-list-item">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Waldemar Mannering
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          AWS Support
-                        </small>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="chat-contact-list-item">
-                    <a className="d-flex align-items-center">
-                      <div className="avatar d-block flex-shrink-0">
-                        <span className="avatar-initial rounded-circle bg-label-danger">
-                          AJ
-                        </span>
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Amy Johnson
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          Frontend Developer
-                        </small>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="chat-contact-list-item">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Felecia Rower
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          Cloud Engineer
-                        </small>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="chat-contact-list-item mb-0">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          William Stephens
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          Backend Developer
-                        </small>
-                      </div>
-                    </a>
-                  </li>
+                  {users?.payload?.users?.map((item, index) => {
+                    return (
+                      <li
+                        key={index}
+                        onClick={() => handleChatCreate(item?.userInfo)}
+                        className="chat-contact-list-item mb-0"
+                      >
+                        <a className="d-flex align-items-center">
+                          <div className="flex-shrink-0 avatar">
+                            <img
+                              src={avatar}
+                              alt="Avatar"
+                              className="rounded-circle"
+                            />
+                          </div>
+                          <div className="chat-contact-info flex-grow-1 ms-4">
+                            <h6 className="chat-contact-name text-truncate m-0 fw-normal">
+                              {item?.userInfo?.firstName} {""}
+                              {item?.userInfo?.lastName}
+                            </h6>
+                            <small className="chat-contact-status text-truncate">
+                              {item?.userInfo?.role}
+                            </small>
+                          </div>
+                        </a>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
             {/* /Chat contacts */}
             {/* Chat History */}
-            <div className="col app-chat-history">
-              <div className="chat-history-wrapper">
-                <div className="chat-history-header border-bottom">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div className="d-flex overflow-hidden align-items-center">
-                      <i
-                        className="ti ti-menu-2 ti-lg cursor-pointer d-lg-none d-block me-4"
-                        data-bs-toggle="sidebar"
-                        data-overlay=""
-                        data-target="#app-chat-contacts"
-                      />
-                      <div className="flex-shrink-0 avatar avatar-online">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
+            {chatUser && (
+              <div className="col app-chat-history">
+                <div className="chat-history-wrapper">
+                  <div className="chat-history-header border-bottom">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div className="d-flex overflow-hidden align-items-center">
+                        <i
+                          className="ti ti-menu-2 ti-lg cursor-pointer d-lg-none d-block me-4"
                           data-bs-toggle="sidebar"
                           data-overlay=""
-                          data-target="#app-chat-sidebar-right"
+                          data-target="#app-chat-contacts"
                         />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="m-0 fw-normal">Felecia Rower</h6>
-                        <small className="user-status text-body">
-                          NextJS developer
-                        </small>
-                      </div>
-                    </div>
-                    <div className="d-flex gap-3 align-items-center">
-                      <PopupModal
-                        style={{ minWidth: "500px", maxHeight: "80vh" }}
-                        title={
-                          <i
-                            className={`ti ti-video ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill ${
-                              isVideoEnabled ? "" : ""
-                            }`}
+                        <div className="flex-shrink-0 avatar avatar-online">
+                          <img
+                            src={avatar}
+                            alt="Avatar"
+                            className="rounded-circle"
+                            data-bs-toggle="sidebar"
+                            data-overlay=""
+                            data-target="#app-chat-sidebar-right"
                           />
-                        }
-                        id="video"
-                      >
-                        <div className="modal-body">
-                          <video
-                            style={{ width: "100%" }}
-                            ref={localVideoRef}
-                            autoPlay
-                            playsInline
-                            muted
-                          ></video>
-                          <video
-                            style={{ width: "100%" }}
-                            ref={remoteVideoRef}
-                            autoPlay
-                            playsInline
-                            className="d-none"
-                          ></video>
-                          <div className="d-flex gap-3">
-                            <button
-                              onClick={toggleAudio}
-                              className={`btn ${
-                                isAudioEnabled ? "btn-success" : "btn-warning"
-                              } btn-secondary`}
-                            >
-                              <i
-                                className={`ti ${
-                                  isAudioEnabled
-                                    ? "ti-microphone"
-                                    : "ti-microphone-off"
-                                } ti-md`}
-                              ></i>
-                            </button>
-                            <button
-                              onClick={toggleVideo}
-                              className={`btn ${
-                                isVideoEnabled ? "btn-primary" : "btn-secondary"
-                              } btn-secondary`}
-                            >
-                              <i
-                                className={`ti ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill ${
-                                  isVideoEnabled ? "ti-video" : "ti-video-off "
-                                }`}
-                              ></i>
-                            </button>
-                            <select
-                              onChange={handleCameraChange}
-                              value={selectedCamera}
-                              className="form-select w-50"
-                            >
-                              {availableCameras.map((camera) => (
-                                <option
-                                  key={camera.deviceId}
-                                  value={camera.deviceId}
-                                >
-                                  {camera.label || `Camera ${camera.deviceId}`}
-                                </option>
-                              ))}
-                            </select>
-                            {isVideoEnabled && (
-                              <button
-                                onClick={handleEndCall}
-                                className="btn btn-danger"
-                              >
-                                <i className="ti ti-phone-off"></i>
-                              </button>
-                            )}
-                          </div>
                         </div>
-                      </PopupModal>
-
-                      {/* Audio Call Modal */}
-                      <PopupModal
-                        style={{ minWidth: "500px", maxHeight: "80vh" }}
-                        title={
-                          <i
-                            className={`ti ti-phone ti-md cursor-pointer d-inline-flex me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill ${
-                              isAudioEnabled ? "" : ""
-                            }`}
-                          />
-                        }
-                        id="audio"
-                      >
-                        <div className="modal-body">
-                          <p>{isVideoEnabled ? "Calling..." : "Call End"}</p>
-                          <div className="d-flex gap-3">
-                            <button
-                              onClick={toggleAudio}
-                              className={`btn ${
-                                isAudioEnabled ? "btn-success" : "btn-warning"
-                              } btn-secondary`}
-                            >
-                              <i
-                                className={`ti ${
-                                  isAudioEnabled
-                                    ? "ti-microphone"
-                                    : "ti-microphone-off"
-                                } ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill`}
-                              ></i>
-                            </button>
-                            <button
-                              onClick={toggleVideo}
-                              className={`btn ${
-                                isVideoEnabled ? "btn-primary" : "btn-secondary"
-                              } btn-secondary`}
-                            >
-                              <i
-                                className={`ti ${
+                        <div className="chat-contact-info flex-grow-1 ms-4">
+                          <h6 className="m-0 fw-normal">
+                            {chatUser?.firstName}
+                            {chatUser?.lastName}
+                          </h6>
+                          <small className="user-status text-body">
+                            {chatUser?.role}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="d-flex gap-3 align-items-center">
+                        <PopupModal
+                          style={{ minWidth: "500px", maxHeight: "80vh" }}
+                          title={
+                            <i
+                              className={`ti ti-video ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill ${
+                                isVideoEnabled ? "" : ""
+                              }`}
+                            />
+                          }
+                          id="video"
+                        >
+                          <div className="modal-body">
+                            <video
+                              style={{ width: "100%" }}
+                              ref={localVideoRef}
+                              autoPlay
+                              playsInline
+                              muted
+                            ></video>
+                            <video
+                              style={{ width: "100%" }}
+                              ref={remoteVideoRef}
+                              autoPlay
+                              playsInline
+                              className="d-none"
+                            ></video>
+                            <div className="d-flex gap-3">
+                              <button
+                                onClick={toggleAudio}
+                                className={`btn ${
+                                  isAudioEnabled ? "btn-success" : "btn-warning"
+                                } btn-secondary`}
+                              >
+                                <i
+                                  className={`ti ${
+                                    isAudioEnabled
+                                      ? "ti-microphone"
+                                      : "ti-microphone-off"
+                                  } ti-md`}
+                                ></i>
+                              </button>
+                              <button
+                                onClick={toggleVideo}
+                                className={`btn ${
                                   isVideoEnabled
-                                    ? "ti ti-phone"
-                                    : "ti ti-phone-off "
-                                } ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill`}
-                              ></i>
-                            </button>
-                            {isVideoEnabled && (
-                              <button
-                                onClick={handleEndCall}
-                                className="btn btn-danger"
+                                    ? "btn-primary"
+                                    : "btn-secondary"
+                                } btn-secondary`}
                               >
-                                <i className="ti ti-phone-off ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill"></i>
+                                <i
+                                  className={`ti ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill ${
+                                    isVideoEnabled
+                                      ? "ti-video"
+                                      : "ti-video-off "
+                                  }`}
+                                ></i>
                               </button>
-                            )}
+                              <select
+                                onChange={handleCameraChange}
+                                value={selectedCamera}
+                                className="form-select w-50"
+                              >
+                                {availableCameras.map((camera) => (
+                                  <option
+                                    key={camera.deviceId}
+                                    value={camera.deviceId}
+                                  >
+                                    {camera.label ||
+                                      `Camera ${camera.deviceId}`}
+                                  </option>
+                                ))}
+                              </select>
+                              {isVideoEnabled && (
+                                <button
+                                  onClick={handleEndCall}
+                                  className="btn btn-danger"
+                                >
+                                  <i className="ti ti-phone-off"></i>
+                                </button>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </PopupModal>
+                        </PopupModal>
 
-                      {/* Calling and Call-End Sounds */}
-                      <audio ref={callingSoundRef} />
-                      <audio ref={endCallSoundRef} />
+                        {/* Audio Call Modal */}
+                        <PopupModal
+                          style={{ minWidth: "500px", maxHeight: "80vh" }}
+                          title={
+                            <i
+                              className={`ti ti-phone ti-md cursor-pointer d-inline-flex me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill ${
+                                isAudioEnabled ? "" : ""
+                              }`}
+                            />
+                          }
+                          id="audio"
+                        >
+                          <div className="modal-body">
+                            <p>{isVideoEnabled ? "Calling..." : "Call End"}</p>
+                            <div className="d-flex gap-3">
+                              <button
+                                onClick={toggleAudio}
+                                className={`btn ${
+                                  isAudioEnabled ? "btn-success" : "btn-warning"
+                                } btn-secondary`}
+                              >
+                                <i
+                                  className={`ti ${
+                                    isAudioEnabled
+                                      ? "ti-microphone"
+                                      : "ti-microphone-off"
+                                  } ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill`}
+                                ></i>
+                              </button>
+                              <button
+                                onClick={toggleVideo}
+                                className={`btn ${
+                                  isVideoEnabled
+                                    ? "btn-primary"
+                                    : "btn-secondary"
+                                } btn-secondary`}
+                              >
+                                <i
+                                  className={`ti ${
+                                    isVideoEnabled
+                                      ? "ti ti-phone"
+                                      : "ti ti-phone-off "
+                                  } ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill`}
+                                ></i>
+                              </button>
+                              {isVideoEnabled && (
+                                <button
+                                  onClick={handleEndCall}
+                                  className="btn btn-danger"
+                                >
+                                  <i className="ti ti-phone-off ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill"></i>
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        </PopupModal>
 
-                      <i className="ti ti-search ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill" />
-                      <div className="dropdown">
-                        <button
-                          className="btn btn-sm btn-icon btn-text-secondary text-white rounded-pill dropdown-toggle hide-arrow"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="true"
-                          id="chat-header-actions"
-                        >
-                          <i className="ti ti-dots-vertical ti-md" />
-                        </button>
-                        <div
-                          className="dropdown-menu dropdown-menu-end"
-                          aria-labelledby="chat-header-actions"
-                        >
-                          <a
-                            className="dropdown-item"
-                            href="javascript:void(0);"
+                        {/* Calling and Call-End Sounds */}
+                        {/* <audio ref={callingSoundRef} />
+                      <audio ref={endCallSoundRef} /> */}
+
+                        <i className="ti ti-search ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill" />
+                        <div className="dropdown">
+                          <button
+                            className="btn btn-sm btn-icon btn-text-secondary text-white rounded-pill dropdown-toggle hide-arrow"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="true"
+                            id="chat-header-actions"
                           >
-                            View Contact
-                          </a>
-                          <a
-                            className="dropdown-item"
-                            href="javascript:void(0);"
+                            <i className="ti ti-dots-vertical ti-md" />
+                          </button>
+                          <div
+                            className="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="chat-header-actions"
                           >
-                            Mute Notifications
-                          </a>
-                          <a
-                            className="dropdown-item"
-                            href="javascript:void(0);"
-                          >
-                            Block Contact
-                          </a>
-                          <a
-                            className="dropdown-item"
-                            href="javascript:void(0);"
-                          >
-                            Clear Chat
-                          </a>
-                          <a
-                            className="dropdown-item"
-                            href="javascript:void(0);"
-                          >
-                            Report
-                          </a>
+                            <a
+                              className="dropdown-item"
+                              href="javascript:void(0);"
+                            >
+                              View Contact
+                            </a>
+                            <a
+                              className="dropdown-item"
+                              href="javascript:void(0);"
+                            >
+                              Mute Notifications
+                            </a>
+                            <a
+                              className="dropdown-item"
+                              href="javascript:void(0);"
+                            >
+                              Block Contact
+                            </a>
+                            <a
+                              className="dropdown-item"
+                              href="javascript:void(0);"
+                            >
+                              Clear Chat
+                            </a>
+                            <a
+                              className="dropdown-item"
+                              href="javascript:void(0);"
+                            >
+                              Report
+                            </a>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="chat-history-body ">
-                  <ul className="list-unstyled chat-history chat-scrollbar">
-                    {messages?.length > 0
-                      ? messages?.map((item, index) => {
+                  <div className="chat-history-body ">
+                    <ul className="list-unstyled chat-history chat-scrollbar">
+                      {chats?.chats?.length > 0 ? (
+                        chats?.chats?.map((item, index) => {
                           return (
                             <li
                               key={index}
                               className={`chat-message ${
-                                index % 2 ? "chat-message-right" : ""
+                                item?.senderId === chatUser?._id
+                                  ? "chat-message-right"
+                                  : ""
                               } `}
                             >
                               <div className="d-flex overflow-hidden">
                                 <div className="chat-message-wrapper flex-grow-1">
                                   <div className="chat-message-text">
-                                    <p className="mb-0">{item}</p>
+                                    <p className="mb-0">
+                                      {item?.message?.text}
+                                    </p>
                                   </div>
                                   <div className="text-end  mt-1">
                                     <i className="ti ti-checks ti-16px text-success me-1" />
-                                    <small>10:00 AM</small>
+                                    <small>
+                                      {moment(item?.createdAt).fromNow()}
+                                    </small>
                                   </div>
                                 </div>
                                 <div className="user-avatar flex-shrink-0 ms-4">
@@ -1156,46 +990,53 @@ const PushNotes = () => {
                             </li>
                           );
                         })
-                      : "No Chat"}
-                  </ul>
-                </div>
-                {/* Chat message form */}
-                <div className="chat-history-footer shadow-xs">
-                  <form className="form-send-message d-flex justify-content-between align-items-center">
-                    <input
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      className="form-control message-input border-0 me-4 shadow-none"
-                      placeholder="Type your message here..."
-                    />
-                    <div className="message-actions d-flex justify-center align-items-center">
-                      <label
-                        htmlFor="attach-doc"
-                        className="form-label d-block mb-0"
-                      >
-                        <i className="speech-to-text ti ti-microphone ti-md btn btn-sm btn-text-secondary btn-icon rounded-pill cursor-pointer text-heading" />
-                      </label>
-                      <label
-                        htmlFor="attach-doc"
-                        className="form-label  d-flex align-items-center mb-0"
-                      >
-                        <i className="ti ti-paperclip ti-md cursor-pointer btn btn-sm btn-text-secondary btn-icon rounded-pill mx-1 text-heading" />
-                        <input type="file" id="attach-doc" hidden="true" />
-                      </label>
-                      <button
-                        onClick={handleSendMessage}
-                        className="btn btn-primary d-flex send-msg-btn"
-                      >
-                        <span className="align-middle d-md-inline-block d-none">
-                          Send
-                        </span>
-                        <i className="ti ti-send ti-16px ms-md-2 ms-0" />
-                      </button>
-                    </div>
-                  </form>
+                      ) : (
+                        <p className="text-center">No Chat</p>
+                      )}
+                    </ul>
+                  </div>
+                  {/* Chat message form */}
+                  <div className="chat-history-footer shadow-xs">
+                    <form
+                      onSubmit={handleSendMessage}
+                      className="form-send-message d-flex justify-content-between align-items-center"
+                    >
+                      <input
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        className="form-control message-input border-0 me-4 shadow-none"
+                        placeholder="Type your message here..."
+                      />
+                      <div className="message-actions d-flex justify-center align-items-center">
+                        <label
+                          htmlFor="attach-doc"
+                          className="form-label d-block mb-0"
+                        >
+                          <i className="speech-to-text ti ti-microphone ti-md btn btn-sm btn-text-secondary btn-icon rounded-pill cursor-pointer text-heading" />
+                        </label>
+                        <label
+                          htmlFor="attach-doc"
+                          className="form-label  d-flex align-items-center mb-0"
+                        >
+                          <i className="ti ti-paperclip ti-md cursor-pointer btn btn-sm btn-text-secondary btn-icon rounded-pill mx-1 text-heading" />
+                          <input type="file" id="attach-doc" hidden="true" />
+                        </label>
+                        <button
+                          type="submit"
+                          className="btn btn-primary d-flex send-msg-btn"
+                        >
+                          <span className="align-middle d-md-inline-block d-none">
+                            Send
+                          </span>
+                          <i className="ti ti-send ti-16px ms-md-2 ms-0" />
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+
             {/* /Chat History */}
             {/* Sidebar Right */}
             <div

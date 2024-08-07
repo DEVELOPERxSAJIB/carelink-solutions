@@ -67,7 +67,7 @@ const MyRoutes = () => {
 
   const [formData, handleChange, setFormData, resetForm] =
     useFormFields(initialState);
-  console.log(formData);
+  //console.log(formData);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editId) {

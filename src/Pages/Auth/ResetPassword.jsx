@@ -9,7 +9,7 @@ import {useState,useEffect} from "react"
 const ResetPassword = () => {
   const params = useParams()
   const navigate = useNavigate()
-  console.log(params)
+  //console.log(params)
 const [resetPassword,{data,isLoading,isSuccess,error}] =useResetPasswordMutation()
  const [newPassword,setNewPassword]=useState("")
  const [confirmNewPassword,setConfirmNewPassword]=useState("")

@@ -251,7 +251,7 @@ const Contact = () => {
         comments,
         remainingCharacters,
       };
-      console.log(contactData);
+      //console.log(contactData);
       updateContact({ contactId: editId, contactData });
     } catch (error) {
       console.error("Error creating contact:", error);
@@ -264,7 +264,7 @@ const Contact = () => {
   }, [selectedTemplate]);
   const navigate = useNavigate();
   const handleEdit = (row) => {
-    console.log(row);
+    //console.log(row);
     setShow(true);
     setEditId(row._id);
     setFormData({

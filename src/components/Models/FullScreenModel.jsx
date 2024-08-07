@@ -16,7 +16,7 @@ const FullscreenModal = ({ title, children, id, className ,style}) => {
         <div className="modal-dialog modal-fullscreen " role="document">
           <div className="modal-content">
             <div
-              style={style?style:{ minHeight: "80vh",minWidth:"60vw" }}
+              style={style?style:{ minHeight: "60vh",minWidth:"60vw"}}
               className="row d-flex justify-content-center  align-items-center"
             >
               <div className={` ${className ? className : "col-md-4"}`}>

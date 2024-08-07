@@ -79,7 +79,7 @@
 }
 
 .react-datepicker-wrapper {
-  display: !important !important;
+  display: block !important;
 }
 
 .layout-menu {
@@ -380,6 +380,9 @@
   display: none !important;
   text-align: center !important;
 }
+.patient-body {
+  display: none !important;
+}
 @media print {
   html,
   body {
@@ -388,6 +391,9 @@
     margin: 0 !important;
     padding: 0 !important;
     overflow: hidden;
+  }
+  .patient-body {
+    display: block !important;
   }
   .table {
     width: 100% !important;
@@ -417,6 +423,7 @@
   .extra-padding2 {
     padding-top: 100px;
   }
+
   select {
     appearance: none !important;
     border-top: none !important;
@@ -472,4 +479,8 @@
   #print-content {
     display: block !important;
   }
+}
+
+.hrClass {
+  padding: 0 !important;
 }

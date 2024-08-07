@@ -4,10 +4,15 @@ import StateSelect from "./../../components/FormElement/StateSelect";
 import { useCreateReferralMutation } from "../../Redux/api/ReferalInformation";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
-import { useNavigate } from "react-router-dom";
 import { ReactToPrint } from "react-to-print";
-
+import {
+  getAllSectionStepState,
+  updateSteps,
+} from "./../../Redux/slices/SectionStep.js";
+import { useSelector, useDispatch } from "react-redux";
 const CreateReferralInformation = () => {
+  const allSteps = useSelector(getAllSectionStepState);
+  const dispatch = useDispatch();
   const componentRef = useRef();
   const [createReferral, { data, error, isLoading, isSuccess }] =
     useCreateReferralMutation();
@@ -15,17 +20,17 @@ const CreateReferralInformation = () => {
   const [formData, setFormData] = useState({
     referringPhysician: "",
     npi: "",
-    certifyingPhysician:  "",
+    certifyingPhysician: "",
     faceToFaceEvaluation: "",
-    attendingPhysician:  "",
-    admissionSource:  "",
+    attendingPhysician: "",
+    admissionSource: "",
     nameOfReferralSource: "",
-    referralDate:  "",
-    inquiryDate:  "",
-    communityLiaison:  "",
+    referralDate: "",
+    inquiryDate: "",
+    communityLiaison: "",
     internalReferralSource: "",
     facilityReferralSource: "",
-    typeOfInpatientAdmission:  "",
+    typeOfInpatientAdmission: "",
   });
 
   const [city, setCity] = useState("");
@@ -51,36 +56,50 @@ const CreateReferralInformation = () => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    console.log(formData);
-    createReferral(formData);
+    const patientId = JSON.parse(localStorage.getItem("patient"));
+    if (patientId) {
+      formData.patientId = allSteps.patientId;
+      createReferral(formData);
+      localStorage.removeItem("Referral");
+    }
   };
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    localStorage.setItem("Referral", JSON.stringify(formData));
-    createReferral(formData);
+    const patientId = JSON.parse(localStorage.getItem("patient"));
+    if (patientId) {
+      formData.patientId = allSteps.patientId;
+      localStorage.setItem("Referral", JSON.stringify(formData));
+      createReferral(formData);
+    }
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    localStorage.setItem("Referral", JSON.stringify(formData));
+    const patientId = JSON.parse(localStorage.getItem("patient"));
+    if (patientId) {
+      formData.patientId = allSteps.patientId;
+      localStorage.setItem("Referral", JSON.stringify(formData));
+      createReferral(formData);
+    }
   };
-  const navigate = useNavigate();
+
   useEffect(() => {
     if (isSuccess) {
-      navigate("/referral-information");
+      dispatch(updateSteps({ ...allSteps, steps: 0 }));
     }
   }, [isSuccess]);
   useEffect(() => {
     setCity(localReferralData?.city || "");
     setState(localReferralData?.state || "");
-    setFormData({...localReferralData})
+    setFormData({ ...localReferralData });
   }, []);
-  
+
   if (isLoading) return <AuthLoader />;
+
   return (
     <div ref={componentRef} className="card">
       <PageHeader title="Referral Information" className="card-header fs-3 " />

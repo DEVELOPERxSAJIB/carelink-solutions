@@ -5,10 +5,14 @@ import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import CitySelect from "./../../components/FormElement/CitySelect";
 import { ReactToPrint } from "react-to-print";
-
+import {getAllSectionStepState,
+  updateSteps,
+} from "./../../Redux/slices/SectionStep.js";
+import {useSelector,
+  useDispatch} from "react-redux"
 const CreatePharmacy = () => {
   const componentRef = useRef();
-  const [createPharmacy, { data, isLoading, error }] =
+  const [createPharmacy, { data, isLoading, error,isSuccess }] =
     useCreatePharmacyMutation();
   const localStorageData = JSON.parse(localStorage.getItem("Pharmacy"));
   const [state, setState] = useState("");
@@ -76,27 +80,49 @@ const CreatePharmacy = () => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    createPharmacy(formData);
-    localStorage.removeItem("Pharmacy");
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if(patientId){
+      formData.patientId= allSteps.patientId
+      createPharmacy(formData);
+      localStorage.removeItem("Pharmacy");
+    }
   };
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
+    const patientId =JSON.parse(localStorage.getItem("patient"))
     formData.city = city;
     formData.state = state;
-    localStorage.setItem("Pharmacy", JSON.stringify(formData));
-    createPharmacy(formData);
+    if(patientId){
+      formData.patientId= allSteps.patientId
+      createPharmacy(formData);
+      localStorage.setItem("Pharmacy", JSON.stringify(formData));
+    }
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    localStorage.setItem("Pharmacy", JSON.stringify(formData));
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if(patientId){
+      formData.patientId= allSteps.patientId
+      createPharmacy(formData);
+      localStorage.setItem("Pharmacy", JSON.stringify(formData));
+    }
   };
 
   useEffect(()=>{
     setState(localStorageData?.state || "")
     setCity(localStorageData?.city || "")
   },[])
+
+   const allSteps = useSelector(getAllSectionStepState)
+   const dispatch = useDispatch()
+   
+  useEffect(()=>{
+    if(isSuccess){
+      dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
+    }
+  },[isSuccess])
   if (isLoading) return <AuthLoader />;
   return (
     <form ref={componentRef} onSubmit={handleSubmit} className="card">

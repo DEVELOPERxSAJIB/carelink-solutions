@@ -3,7 +3,7 @@ const PopupModal = ({ id, title, children,style }) => {
 
   const handleClose = () => {
     // Implement your close logic here
-    console.log('Modal closed');
+    //console.log('Modal closed');
   };
 
   return (

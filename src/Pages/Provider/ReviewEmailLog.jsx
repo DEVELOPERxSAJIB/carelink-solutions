@@ -63,7 +63,7 @@ const ReviewEmailLog = () => {
 
   const handleSave = () => {
     // Handle form submission logic here
-    console.log("Form data:", formData);
+    //console.log("Form data:", formData);
   };
   return (
     <>

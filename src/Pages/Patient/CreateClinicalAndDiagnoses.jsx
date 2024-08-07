@@ -1,13 +1,17 @@
-import { useState, useEffect ,useRef} from "react";
+import { useState, useEffect, useRef } from "react";
 import Template from "./../../components/FormElement/Template";
 import { useCreateClinicalDiagnosisMutation } from "../../Redux/api/ClinicalDiagnosis";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import { ReactToPrint } from "react-to-print";
-
+import {
+  getAllSectionStepState,
+  updateSteps,
+} from "./../../Redux/slices/SectionStep.js";
+import { useSelector, useDispatch } from "react-redux";
 const CreateClinicalAndDiagnoses = () => {
-  const componentRef = useRef()
-  const [createClinicalDiagnosis, { data, error, isLoading }] =
+  const componentRef = useRef();
+  const [createClinicalDiagnosis, { data, error, isLoading, isSuccess }] =
     useCreateClinicalDiagnosisMutation();
   const localStorageClinicalDiagnosis = JSON.parse(
     localStorage.getItem("ClinicalDiagnosis")
@@ -15,16 +19,16 @@ const CreateClinicalAndDiagnoses = () => {
   const [template, setTemplate] = useState("");
 
   const initialFormData = {
-    serviceRequired:localStorageClinicalDiagnosis?.serviceRequired|| [],
-    height:localStorageClinicalDiagnosis?.height|| {
+    serviceRequired: localStorageClinicalDiagnosis?.serviceRequired || [],
+    height: localStorageClinicalDiagnosis?.height || {
       value: "",
       unit: "",
     },
-    weight:localStorageClinicalDiagnosis?.weight|| {
+    weight: localStorageClinicalDiagnosis?.weight || {
       value: "",
       unit: "",
     },
-    dmeNeeded:localStorageClinicalDiagnosis?.dmeNeeded|| [],
+    dmeNeeded: localStorageClinicalDiagnosis?.dmeNeeded || [],
     primaryDiagnosis: localStorageClinicalDiagnosis?.primaryDiagnosis || "",
     primaryDiagnosisCode:
       localStorageClinicalDiagnosis?.primaryDiagnosisCode || "",
@@ -34,14 +38,13 @@ const CreateClinicalAndDiagnoses = () => {
     clinicalComments: localStorageClinicalDiagnosis?.clinicalComments || "",
   };
 
-  const [formData, setFormData] = useState( initialFormData);
-  console.log(formData)
+  const [formData, setFormData] = useState(initialFormData);
+  //console.log(formData)
   const handleInputChange = (e, index) => {
     const { name, value, type, checked } = e.target;
     const isCheckbox = type === "checkbox";
 
     if (name.startsWith("serviceRequired")) {
-
       setFormData((prevData) => ({
         ...prevData,
         serviceRequired: isCheckbox
@@ -51,7 +54,6 @@ const CreateClinicalAndDiagnoses = () => {
           : prevData.serviceRequired,
       }));
     } else if (name.startsWith("dmeNeeded")) {
-
       setFormData((prevData) => ({
         ...prevData,
         dmeNeeded: isCheckbox
@@ -104,36 +106,56 @@ const CreateClinicalAndDiagnoses = () => {
 
   const handleAdmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    createClinicalDiagnosis(formData);
-    localStorage.removeItem("ClinicalDiagnosis");
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if(patientId){
+      formData.patientId= allSteps.patientId
+      createClinicalDiagnosis(formData);
+      localStorage.removeItem("ClinicalDiagnosis");
+    }
   };
 
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if(patientId){
+      formData.patientId= allSteps.patientId
+      createClinicalDiagnosis(formData);
+      localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
+    }
   };
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
-    createClinicalDiagnosis(formData);
+    const patientId =JSON.parse(localStorage.getItem("patient"))
+    if(patientId){
+      formData.patientId= allSteps.patientId
+      createClinicalDiagnosis(formData);
+      localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
+    }
   };
 
- 
+  const allSteps = useSelector(getAllSectionStepState);
+  const dispatch = useDispatch();
+  
   useEffect(() => {
     if (template?.value) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        clinicalComments: (prevFormData.clinicalComments || '') + template.value,
+        clinicalComments:
+          (prevFormData.clinicalComments || "") + template.value,
       }));
     }
   }, [template]);
+  useEffect(() => {
+    if(isSuccess){
+      dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
+    }
+  }, [isSuccess]);
   if (isLoading) return <AuthLoader />;
 
   return (
-    <form ref={componentRef} onSubmit={handleAdmit} className="card">
-      <div className="card-body">
+    <form ref={componentRef} onSubmit={handleAdmit} className="card w-100">
+      <div className="card-body w-100">
         <PageHeader title="Clinical/Diagnosis" className="card-header fs-3" />
         {data?.message && (
           <div className="alert alert-success text-center">{data?.message}</div>
@@ -145,7 +167,10 @@ const CreateClinicalAndDiagnoses = () => {
         )}
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <div className="accordion-item">
-            <h2 className="accordion-header" id="ClinicalDiagnosisInfoAccordion">
+            <h2
+              className="accordion-header"
+              id="ClinicalDiagnosisInfoAccordion"
+            >
               <button
                 className="accordion-button"
                 type="button"
@@ -248,7 +273,10 @@ const CreateClinicalAndDiagnoses = () => {
           </div>
 
           <div className="accordion-item">
-            <h2 className="accordion-header" id="ClinicalDiagnosisInfoAccordion">
+            <h2
+              className="accordion-header"
+              id="ClinicalDiagnosisInfoAccordion"
+            >
               <button
                 className="accordion-button collapsed"
                 type="button"
@@ -282,14 +310,13 @@ const CreateClinicalAndDiagnoses = () => {
                 ].map((dme) => (
                   <div className="form-check" key={dme}>
                     <input
-                    type="checkbox"
-                    id={dme}
-                    name="dmeNeeded"
-                    value={dme}
-                    checked={formData.dmeNeeded.includes(dme)}
-                    onChange={handleInputChange}
+                      type="checkbox"
+                      id={dme}
+                      name="dmeNeeded"
+                      value={dme}
+                      checked={formData.dmeNeeded.includes(dme)}
+                      onChange={handleInputChange}
                       className="form-check-input"
-                    
                     />
                     <label className="form-check-label" htmlFor={dme}>
                       {dme}
@@ -301,7 +328,10 @@ const CreateClinicalAndDiagnoses = () => {
           </div>
 
           <div className="accordion-item">
-            <h2 className="accordion-header" id="ClinicalDiagnosisInfoAccordion">
+            <h2
+              className="accordion-header"
+              id="ClinicalDiagnosisInfoAccordion"
+            >
               <button
                 className="accordion-button collapsed"
                 type="button"
@@ -358,7 +388,10 @@ const CreateClinicalAndDiagnoses = () => {
           </div>
 
           <div className="accordion-item">
-            <h2 className="accordion-header" id="ClinicalDiagnosisInfoAccordion">
+            <h2
+              className="accordion-header"
+              id="ClinicalDiagnosisInfoAccordion"
+            >
               <button
                 className="accordion-button collapsed"
                 type="button"
@@ -416,7 +449,7 @@ const CreateClinicalAndDiagnoses = () => {
                         className="btn btn-danger"
                         onClick={() => handleRemoveDiagnosis(index)}
                       >
-                        Remove 
+                        Remove
                       </button>
                     </div>
                   </div>
@@ -433,7 +466,10 @@ const CreateClinicalAndDiagnoses = () => {
           </div>
 
           <div className="accordion-item">
-            <h2 className="accordion-header" id="ClinicalDiagnosisInfoAccordion">
+            <h2
+              className="accordion-header"
+              id="ClinicalDiagnosisInfoAccordion"
+            >
               <button
                 className="accordion-button collapsed"
                 type="button"
@@ -453,7 +489,10 @@ const CreateClinicalAndDiagnoses = () => {
             >
               <div className="accordion-body py-2">
                 <div className="mb-3">
-                  <label htmlFor="clinicalComments" className="form-label hide-on-print">
+                  <label
+                    htmlFor="clinicalComments"
+                    className="form-label hide-on-print"
+                  >
                     Clinical Comments
                   </label>
                   <textarea
@@ -467,8 +506,10 @@ const CreateClinicalAndDiagnoses = () => {
                   ></textarea>
                 </div>
                 <div className="hide-on-print">
-                <Template  selectedTemplate={template}
-                          setSelectedTemplate={setTemplate} />
+                  <Template
+                    selectedTemplate={template}
+                    setSelectedTemplate={setTemplate}
+                  />
                 </div>
               </div>
             </div>
@@ -493,12 +534,10 @@ const CreateClinicalAndDiagnoses = () => {
             save
           </button>
           <ReactToPrint
-                  trigger={() => (
-                    <span className="btn btn-primary">Print</span>
-                  )}
-                  content={() => componentRef.current}
-                  documentTitle="Patient"
-                />
+            trigger={() => <span className="btn btn-primary">Print</span>}
+            content={() => componentRef.current}
+            documentTitle="Patient"
+          />
         </div>
       </div>
     </form>

@@ -8,14 +8,21 @@ import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import Template from "./../../components/FormElement/Template";
 import { useNavigate } from "react-router-dom";
 import { ReactToPrint } from "react-to-print";
-
+import {
+  getAllSectionStepState,
+  updateSteps,
+} from "./../../Redux/slices/SectionStep.js";
+import { useSelector, useDispatch } from "react-redux";
 const ContactForm = () => {
+  const allSteps = useSelector(getAllSectionStepState);
+  const dispatch = useDispatch();
+
   const componentRef = useRef();
   const [createContact, { data, isLoading, isSuccess, error }] =
     useCreateContactMutation();
   const navigate = useNavigate();
   const localContactData = JSON.parse(localStorage.getItem("Contact"));
-  console.log(localContactData)
+  //console.log(localContactData)
   const [formData, setFormData] = useState({
     representativeContacted: localContactData?.representativeContacted || "",
     legalRepresentativeOption:
@@ -212,7 +219,7 @@ const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const patientId = JSON.parse(localStorage.getItem("patient"));
     try {
       const contactData = {
         ...formData,
@@ -238,15 +245,18 @@ const ContactForm = () => {
         comments,
         remainingCharacters,
       };
-      console.log(contactData);
-      createContact(contactData);
+      if (patientId) {
+        contactData.patientId = allSteps.patientId;
+        createContact(contactData);
+        localStorage.removeItem("Contact");
+      }
     } catch (error) {
       console.error("Error creating contact:", error);
     }
   };
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-
+    const patientId = JSON.parse(localStorage.getItem("patient"));
     try {
       const contactData = {
         ...formData,
@@ -272,15 +282,18 @@ const ContactForm = () => {
         comments,
         remainingCharacters,
       };
-      localStorage.setItem("Contact", JSON.stringify(contactData));
-      createContact(contactData);
+      if (patientId) {
+        contactData.patientId = allSteps.patientId;
+        createContact(contactData);
+        localStorage.setItem("Contact", JSON.stringify(contactData));
+      }
     } catch (error) {
       console.error("Error creating contact:", error);
     }
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-
+    const patientId = JSON.parse(localStorage.getItem("patient"));
     try {
       const contactData = {
         ...formData,
@@ -306,7 +319,10 @@ const ContactForm = () => {
         comments,
         remainingCharacters,
       };
-      localStorage.setItem("Contact", JSON.stringify(contactData));
+      if (patientId) {
+        contactData.patientId = allSteps.patientId;
+        localStorage.setItem("Contact", JSON.stringify(contactData));
+      }
     } catch (error) {
       console.error("Error creating contact:", error);
     }
@@ -318,14 +334,17 @@ const ContactForm = () => {
       setPrimaryState(localContactData.emergencyContacts?.primary?.state || "");
 
       // For additional emergency contact
-      const additionalContact = localContactData.emergencyContacts?.additional?.[0] || {};
+      const additionalContact =
+        localContactData.emergencyContacts?.additional?.[0] || {};
       setAdditionalCity(additionalContact.city || "");
       setAdditionalState(additionalContact.state || "");
 
       // For CAHPS contact
       setCAHPSCity(localContactData.alternateCAHPSContactDetails?.city || "");
       setCAHPSState(localContactData.alternateCAHPSContactDetails?.state || "");
-      setCAHPSCounty(localContactData.alternateCAHPSContactDetails?.county || "");
+      setCAHPSCounty(
+        localContactData.alternateCAHPSContactDetails?.county || ""
+      );
 
       // For selected template
       setSelectedTemplate(localContactData.selectedTemplate || "");
@@ -338,10 +357,11 @@ const ContactForm = () => {
   }, [selectedTemplate]);
   useEffect(() => {
     if (isSuccess) {
-      navigate("/contacts");
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
     }
   }, [isSuccess]);
   if (isLoading) return <AuthLoader />;
+
   return (
     <form ref={componentRef} onSubmit={handleSubmit} className="card">
       <PageHeader title="Contact" className="card-header fs-3" />

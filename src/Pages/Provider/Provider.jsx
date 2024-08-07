@@ -34,7 +34,7 @@ const Provider = () => {
 
   const { data: addedBy } = useMeQuery();
   const { data, refetch } = useGetAllProviderQuery();
-  console.log(data);
+  //console.log(data);
   const [
     updateUser,
     {

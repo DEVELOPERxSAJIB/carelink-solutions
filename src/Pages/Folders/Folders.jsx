@@ -48,7 +48,7 @@ const Folders = () => {
     setShow(true);
     setEditId(row._id);
     setFormData({ ...row });
-    console.log({ ...row });
+    //console.log({ ...row });
   };
 
   const handleDelete = (row) => {

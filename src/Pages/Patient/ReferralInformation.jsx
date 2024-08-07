@@ -72,7 +72,7 @@ const ReferralInformation = () => {
   });
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-console.log(formData.faceToFaceEvaluation)
+//console.log(formData.faceToFaceEvaluation)
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === "checkbox") {
@@ -263,7 +263,7 @@ console.log(formData.faceToFaceEvaluation)
                           type="date"
                           value={date?date:formData.faceToFaceEvaluation}
                         />
-                      {console.log(date)}
+                 
                       </div>
                     )}
                   </div>

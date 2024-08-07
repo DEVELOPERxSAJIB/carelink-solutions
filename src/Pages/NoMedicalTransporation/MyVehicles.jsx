@@ -96,7 +96,7 @@ const MyVehicles = () => {
     if (editId) {
       updateVehicle({vehicleId:editId,vehicleData:formData});
     } else {
-      console.log(formData);
+      //console.log(formData);
       createVehicle(formData);
       resetForm();
     }

@@ -77,7 +77,7 @@ const AdvanceDirectives = () => {
     }
   }, [template]);
   const handleDelete = (row) => {
-    console.log(row);
+    //console.log(row);
     swal({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -91,7 +91,7 @@ const AdvanceDirectives = () => {
     });
   };
   const handleEdit = (row) => {
-    console.log(row);
+    //console.log(row);
     setEditId(row._id);
     setShow(true);
     setFormData({ ...row });

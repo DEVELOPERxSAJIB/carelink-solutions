@@ -27,7 +27,7 @@ const SubUsers = () => {
   ] = useCreateSubUserMutation();
   const { data: lgData } = useMeQuery();
   const { data, isLoading, error, refetch } = useGetAllSubUsersQuery();
-  console.log(data);
+  //console.log(data);
   const [
     updateSubUser,
     { data: updateData, isSuccess: isUpdateSuccess, error: updateError },

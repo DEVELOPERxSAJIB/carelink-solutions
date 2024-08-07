@@ -39,7 +39,7 @@ const ClinicalDiagnoses = () => {
     { field: "createdAt", header: "Created At", type: "date" },
   ];
   const handleEdit = (row) => {
-    console.log(row);
+    //console.log(row);
     setShow(true);
     setEditId(row._id);
     setFormData({ ...row });
@@ -145,7 +145,7 @@ const ClinicalDiagnoses = () => {
 
   const handleAdmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    //console.log(formData);
     updateClinicalDiagnosis({ diagnosisId: editId, diagnosisData: formData });
   };
 

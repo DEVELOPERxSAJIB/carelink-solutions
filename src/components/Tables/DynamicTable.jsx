@@ -341,7 +341,7 @@ const DataTable = ({
                   >
                     <i className="ti ti-dots-vertical ti-md"></i>
                   </button>
-                  {console.log(row)}
+          
                   {dropdownOpen[rowIndex] ? (
                     <div className="dropdown-menu show">
                       {lgData?.payload?.user?.curd.includes("read") && (

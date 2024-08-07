@@ -3,9 +3,9 @@ import PageHeader from "./../../components/FormElement/PageHeader";
 
 const CreatePatient = () => {
   return (
-    <div className="card">
+    <div className="card w-100">
       <PageHeader title="Patient details" className="card-header fs-3" />
-      <div className="card-body">
+      <div className="card-body w-100">
         <PatientProfile />
       </div>
     </div>

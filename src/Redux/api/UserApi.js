@@ -6,6 +6,10 @@ export const UserApi = rootApi.injectEndpoints({
       query: (userId) => `auth/${userId}`,
       providesTags: (result, error, _id) => [{ type: "User", id: _id }],
     }),
+    getAllUsers: builder.query({
+      query: () => `auth`,
+      providesTags: (result, error, _id) => [{ type: "User", id: _id }],
+    }),
     getAllAdmin: builder.query({
       query: () => `auth/admin`,
       providesTags: (result, error, _id) => [{ type: "User", id: _id }],
@@ -254,4 +258,5 @@ export const {
   useActivateUserMutation,
   useRoleBasedUserQuery,
   useDeleteRoleBasedUserMutation,
+  useGetAllUsersQuery,
 } = UserApi;

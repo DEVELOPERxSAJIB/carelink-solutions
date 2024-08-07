@@ -4,16 +4,22 @@ import PageHeader from "../../components/FormElement/PageHeader";
 
 import { useCreatePayerMutation } from "../../Redux/api/PayerApi";
 import Template from "./../../components/FormElement/Template";
-import { useNavigate } from "react-router-dom";
 import { ReactToPrint } from "react-to-print";
+
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getAllSectionStepState,
+  updateSteps,
+} from "./../../Redux/slices/SectionStep.js";
 
 const CreatePayers = () => {
   const componentRef = useRef();
   const [createPayer, { data, isLoading, isSuccess, error }] =
     useCreatePayerMutation();
   const localStoragePatient = JSON.parse(localStorage.getItem("Payer"));
-
-  const navigate = useNavigate();
+  const allSteps = useSelector(getAllSectionStepState);
+  console.log(allSteps);
+  const dispatch = useDispatch();
   const [template, setTemplate] = useState("");
   const [formData, setFormData] = useState({
     mbiNumber: "",
@@ -77,18 +83,30 @@ const CreatePayers = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    createPayer(formData);
-    localStorage.setItem("Payer", JSON.stringify(formData));
+    const patientId = JSON.parse(localStorage.getItem("patient"));
+    if (patientId) {
+      formData.patientId = allSteps.patientId;
+      localStorage.removeItem("Payer");
+      createPayer(formData);
+    }
   };
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    localStorage.setItem("Payer", JSON.stringify(formData));
-    createPayer(formData);
+    const patientId = JSON.parse(localStorage.getItem("patient"));
+    if (patientId) {
+      formData.patientId = allSteps.patientId;
+      localStorage.setItem("Payer", JSON.stringify(formData));
+      createPayer(formData);
+    }
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    localStorage.setItem("Payer", JSON.stringify(formData));
+    const patientId = JSON.parse(localStorage.getItem("patient"));
+    if (patientId) {
+      formData.patientId = allSteps.patientId;
+      localStorage.setItem("Payer", JSON.stringify(formData));
+    }
   };
   useEffect(() => {
     setFormData((prevFormData) => ({
@@ -101,9 +119,10 @@ const CreatePayers = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate("/payers");
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
     }
   }, [isSuccess]);
+  console.log(error)
   useEffect(() => {
     setTemplate(localStoragePatient?.payerComments);
     if (localStoragePatient) {
@@ -112,6 +131,7 @@ const CreatePayers = () => {
   }, []);
 
   if (isLoading) return <AuthLoader />;
+
   return (
     <form ref={componentRef} onSubmit={handleSubmit} className="card">
       <PageHeader title="Payer Information" className="card-header fs-3" />

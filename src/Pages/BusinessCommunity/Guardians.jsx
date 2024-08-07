@@ -28,7 +28,7 @@ import {
 const Guardians = () => {
   const { data: addedBy } = useMeQuery();
   const { data, refetch } = useGetAllGuardianQuery();
-  console.log(data);
+  //console.log(data);
   const [
     updateGuardian,
     {

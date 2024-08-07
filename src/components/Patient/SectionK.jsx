@@ -101,7 +101,7 @@ const SectionKForm = () => {
                   name="height"
                   type="number"
                   className="form-control"
-                  value={formData.height}
+                  value={formData?.height}
                   onChange={handleInputChange}
                   step="0.1"
                 />
@@ -114,7 +114,7 @@ const SectionKForm = () => {
                   name="weight"
                   type="number"
                   className="form-control"
-                  value={formData.weight}
+                  value={formData?.weight}
                   onChange={handleInputChange}
                   step="0.1"
                 />
@@ -138,7 +138,7 @@ const SectionKForm = () => {
                         id={`onAdmission-${value}`}
                         name={`nutritionalApproachesOnAdmission-${value}`}
                         type="checkbox"
-                        checked={formData.nutritionalApproachesOnAdmission[value] || false}
+                        checked={formData?.nutritionalApproachesOnAdmission[value] || false}
                         onChange={handleInputChange}
                         className="form-check-input"
                       />
@@ -161,7 +161,7 @@ const SectionKForm = () => {
                         id={`last7Days-${value}`}
                         name={`nutritionalApproachesLast7Days-${value}`}
                         type="checkbox"
-                        checked={formData.nutritionalApproachesLast7Days[value] || false}
+                        checked={formData?.nutritionalApproachesLast7Days[value] || false}
                         onChange={handleInputChange}
                         className="form-check-input"
                       />
@@ -184,7 +184,7 @@ const SectionKForm = () => {
                         id={`atDischarge-${value}`}
                         name={`nutritionalApproachesAtDischarge-${value}`}
                         type="checkbox"
-                        checked={formData.nutritionalApproachesAtDischarge[value] || false}
+                        checked={formData?.nutritionalApproachesAtDischarge[value] || false}
                         onChange={handleInputChange}
                         className="form-check-input"
                       />
@@ -201,7 +201,7 @@ const SectionKForm = () => {
                   id="feedingOrEating"
                   name="feedingOrEating"
                   className="form-select"
-                  value={formData.feedingOrEating}
+                  value={formData?.feedingOrEating}
                   onChange={handleInputChange}
                 >
                   <option value="">Select...</option>

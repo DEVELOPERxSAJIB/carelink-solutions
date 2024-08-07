@@ -44,7 +44,7 @@ const SectionBForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    //console.log(formData);
     localStorage.setItem("SectionB", JSON.stringify(formData));
     dispatch(updateFormData(formData))
   };
