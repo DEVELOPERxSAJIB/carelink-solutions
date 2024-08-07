@@ -1,8 +1,7 @@
 import { useCompanyProfileGetByIdQuery } from "../../Redux/api/SettingApi";
 import { useMeQuery } from "../../Redux/api/UserApi";
-
 import { useGetPatientByIdQuery } from "../../Redux/api/PatientApi";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useGetDirectiveByPatientIdQuery } from "../../Redux/api/DirectiveApi";
 import { useGetClinicalDiagnosisByPatientIdQuery } from "../../Redux/api/ClinicalDiagnosis";
 import { useGetContactByPatientIdQuery } from "../../Redux/api/Contact";
@@ -13,8 +12,6 @@ import { useGetPhysicianByPatientIdQuery } from "../../Redux/api/PhysicianApi";
 import { useGetReferralByPatientIdQuery } from "../../Redux/api/ReferalInformation";
 import { useParams } from "react-router-dom";
 import PdfHeader from "./PdfHeader";
-import { ReactToPrint } from "react-to-print";
-
 const SinglePatient = () => {
   const { data } = useMeQuery();
   const { id } = useParams();
@@ -42,6 +39,9 @@ const SinglePatient = () => {
     singlePhysician?.payload?.physician,
     singleReferral?.payload?.referral
   );
+  const handlePrint = () => {
+    window.print();
+  };
 
   useEffect(() => {
     setFormData({ ...patient?.payload });
@@ -69,19 +69,16 @@ const SinglePatient = () => {
     singlePhysician?.payload?.physician,
     singleReferral?.payload?.referral,
   ]);
-const componentRef= useRef()
+
   return (
     <div>
-      <ReactToPrint
-        trigger={() => (
-          <button className="btn btn-primary mt-5 hide-on-print">
-            Patient Profile
-          </button>
-        )}
-        content={() => componentRef.current}
-        documentTitle="Patient"
-      />
-      <div ref={componentRef}  className="layout-page w-100 patient-body">
+      <button
+        onClick={handlePrint}
+        className="hide-on-print btn btn-primary my-5 ml-auto"
+      >
+        Patient profile
+      </button>
+      <div className="layout-page w-100">
         {/* Navbar */}
 
         {/* / Navbar */}
