@@ -484,3 +484,10 @@
 .hrClass {
   padding: 0 !important;
 }
+
+.user-profile-header.d-flex.flex-column.flex-lg-row.text-sm-start.text-center.mb-5 {
+	margin-top: -35px;
+}
+.layout-wrapper:not(.layout-horizontal) .layout-navbar .dropdown-menu[data-bs-popper] {
+	top: 100%;
+}

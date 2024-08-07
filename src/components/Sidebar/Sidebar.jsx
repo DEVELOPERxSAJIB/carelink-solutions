@@ -286,12 +286,19 @@ const Sidebar = ({ userRole, permissions }) => {
       ),
       subMenu: [
         { title: "My vehicles", href: "/my-vehicles", icon: "" },
-        { title: "My Routes", href:         "/my-routes", icon: "" },
-        { title: "Add Vehicles Inspection", href:         "/add-vehicle-inspection", icon: "" },
-        { title: "View Vehicle Inspection", href:         "/view-vehicle-inspection", icon: "" },
-        { title: "View Log", href:         "/vehicle-view-log", icon: "" },
-        { title: "My Briefcase", href:         "/my-briefcase", icon: "" },
-
+        { title: "My Routes", href: "/my-routes", icon: "" },
+        {
+          title: "Add Vehicles Inspection",
+          href: "/add-vehicle-inspection",
+          icon: "",
+        },
+        {
+          title: "View Vehicle Inspection",
+          href: "/view-vehicle-inspection",
+          icon: "",
+        },
+        { title: "View Log", href: "/vehicle-view-log", icon: "" },
+        { title: "My Briefcase", href: "/my-briefcase", icon: "" },
       ],
     },
     {
@@ -368,7 +375,7 @@ const Sidebar = ({ userRole, permissions }) => {
       }`}
     >
       <div className="app-brand">
-        <a href="/" className="app-brand-link">
+        <Link to="/" className="app-brand-link">
           <span className="app-brand-logo demo d-block">
             <img
               style={{ width: "40px", height: "30px" }}
@@ -382,7 +389,7 @@ const Sidebar = ({ userRole, permissions }) => {
           >
             CareLink
           </span>
-        </a>
+        </Link>
         <a
           href="#"
           className="layout-menu-toggle menu-link text-large ms-auto"
@@ -403,7 +410,6 @@ const Sidebar = ({ userRole, permissions }) => {
               permissions?.includes(subItem.href)
             )
           ) {
-            
             return null;
           }
 

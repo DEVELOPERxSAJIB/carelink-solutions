@@ -95,6 +95,8 @@ import UserActivation from '../Pages/UserActivation';
 import CreateNewProvider from '../Pages/Provider/CreateNewProvider';
 import Admin from '../Pages/BusinessCommunity/Admin';
 import SinglePatient from './../Pages/Patient/SinglePatient';
+import MyProfile from '../Pages/Profiles/MyProfile';
+import Settings from '../Pages/Profiles/Settings';
 
 const privateRouter = [
   {
@@ -475,6 +477,14 @@ const privateRouter = [
           {
             path: "/referral-information",
             element: <ReferralInformation/>,
+          },
+          {
+            path: "/my-profile",
+            element: <MyProfile />,
+          },
+          {
+            path: "/profile-settings",
+            element: <Settings />,
           },
           {
             path: "/*",

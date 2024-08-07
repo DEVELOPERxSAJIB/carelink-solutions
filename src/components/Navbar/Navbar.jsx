@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import avatar from "../../assets/img/avatars/1.png";
 import { useLogOutUserMutation } from "../../Redux/api/UserApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthLoader from "../../utils/Loaders/AuthLoader";
 import { useMeQuery } from "../../Redux/api/UserApi";
 const Navbar = () => {
   const navigate = useNavigate();
-  const [logOutUser,isSuccess,isLoading] = useLogOutUserMutation();
-const { data,refetch } = useMeQuery();
+  const [logOutUser, isSuccess, isLoading] = useLogOutUserMutation();
+  const { data, refetch } = useMeQuery();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] =
     useState(false);
@@ -33,7 +33,7 @@ const { data,refetch } = useMeQuery();
   };
   const handleLogout = () => {
     logOutUser();
-    refetch()
+    refetch();
   };
 
   const handleClose = (e) => {
@@ -633,24 +633,31 @@ const { data,refetch } = useMeQuery();
           {/* User */}
           <li className="nav-item navbar-dropdown dropdown-user dropdown">
             <a
-              onClick={toggleDropdown}
-              className={`nav-link dropdown-toggle hide-arrow p-0 ${
-                isDropdownOpen ? "show" : ""
-              }`}
-              href="#"
+              className="nav-link dropdown-toggle hide-arrow"
               data-bs-toggle="dropdown"
             >
               <div className="avatar avatar-online">
-                <img src={avatar} alt className="rounded-circle" />
+                <img
+                  src={
+                    avatar
+                      ? avatar
+                      : "https://static.vecteezy.com/system/resources/previews/007/069/364/original/3d-user-icon-in-a-minimalistic-style-user-symbol-for-your-website-design-logo-app-ui-vector.jpg"
+                  }
+                  alt={"User Avatar"}
+                  className="h-full rounded-circle"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
             </a>
+
             <ul
               className={`dropdown-menu dropdown-menu-end ${
                 isDropdownOpen ? "show" : ""
               }`}
             >
               <li>
-                <a
+                <Link
+                  to={"/my-profile"}
                   className="dropdown-item mt-0"
                   href="pages-account-settings-account.html"
                 >
@@ -661,29 +668,38 @@ const { data,refetch } = useMeQuery();
                       </div>
                     </div>
                     <div className="flex-grow-1">
-                      <h6 className="mb-0 text-capitalize">{data?.payload?.user?.firstName}  {data?.payload?.user?.lastName}</h6>
-                      <small className="text-muted">{data?.payload?.user?.role}</small>
+                      <h6 className="mb-0 text-capitalize">
+                        {data?.payload?.user?.firstName}{" "}
+                        {data?.payload?.user?.lastName}
+                      </h6>
+                      <small className="text-muted">
+                        {data?.payload?.user?.role}
+                      </small>
                     </div>
                   </div>
-                </a>
+                </Link>
               </li>
               <li>
                 <div className="dropdown-divider my-1 mx-n2" />
               </li>
               <li>
-                <a className="dropdown-item" href="pages-profile-user.html">
+                <Link
+                  to={"/my-profile"}
+                  className="dropdown-item"
+                  href="pages-profile-user.html"
+                >
                   <i className="ti ti-user me-3 ti-md" />
                   <span className="align-middle">My Profile</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link to="/profile-settings"
                   className="dropdown-item"
                   href="pages-account-settings-account.html"
                 >
                   <i className="ti ti-settings me-3 ti-md" />
                   <span className="align-middle">Settings</span>
-                </a>
+                </Link>
               </li>
               <li>
                 <a
@@ -716,9 +732,7 @@ const { data,refetch } = useMeQuery();
               </li>
               <li onClick={handleLogout}>
                 <div className="d-grid px-2 pt-2 pb-1">
-                  <button
-                    className="btn btn-sm btn-danger d-flex"
-                  >
+                  <button className="btn btn-sm btn-danger d-flex">
                     <small className="align-middle">Logout</small>
                     <i className="ti ti-logout ms-2 ti-14px" />
                   </button>
