@@ -22,7 +22,7 @@ const CreatePhysicians = () => {
   const [createPhysician, { data, isLoading, error, isSuccess }] =
     useCreatePhysicianMutation();
   const [formData, setFormData] = useState({
-    npiNumber: localPhysician?.npiNumber || "",
+    npiNo: localPhysician?.npiNo || "",
     firstName: localPhysician?.firstName || "",
     mi: localPhysician?.mi || "",
     lastName: localPhysician?.lastName || "",
@@ -88,13 +88,12 @@ const CreatePhysicians = () => {
     if (isSuccess) {
       dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
       setFormData({
-        npiNumber: "",
+        npiNo: "",
         firstName: "",
         mi: "",
         lastName: "",
         taxonomyCode: "",
         credentials: "",
-        npiNo: null,
         medicaidProviderIdentifier: "",
         addressLine1: "",
         addressLine2: "",
@@ -137,16 +136,16 @@ const CreatePhysicians = () => {
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className=" col-md-6">
-              <label className="form-label my-2" htmlFor="npiNumber">
+              <label className="form-label my-2" htmlFor="npiNo">
                 NPI Number:
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="npiNumber"
-                name="npiNumber"
+                id="npiNo"
+                name="npiNo"
                 placeholder="Enter NPI Number"
-                value={formData.npiNumber}
+                value={formData.npiNo}
                 onChange={handleChange}
               />
             </div>

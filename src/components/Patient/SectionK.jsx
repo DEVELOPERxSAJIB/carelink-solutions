@@ -65,7 +65,7 @@ const SectionKForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateFormData(formData));
+    dispatch(updateFormData({...formData}));
     localStorage.setItem("SectionK", JSON.stringify(formData));
   };
 

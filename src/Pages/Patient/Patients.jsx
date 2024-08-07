@@ -724,7 +724,7 @@ const Patients = () => {
                   }}
                   title={`Add New Patient`}
                 >
-                  <div className="from-scrollbar">
+                  <div style={{maxHeight:"60vh",minHeight:"70vh",overflowY:"scroll"}}>
                     <div className="d-flex align-items-center flex-wrap gap-1 mb-5 justify-content-center">
                       <div
                         className="step"

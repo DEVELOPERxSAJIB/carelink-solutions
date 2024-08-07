@@ -61,6 +61,25 @@ const CreateReferralInformation = () => {
       formData.patientId = allSteps.patientId;
       createReferral(formData);
       localStorage.removeItem("Referral");
+      localStorage.removeItem("patient")
+      localStorage.removeItem("SectionA")
+      localStorage.removeItem("SectionB")
+      localStorage.removeItem("SectionC")
+      localStorage.removeItem("SectionD")
+      localStorage.removeItem("SectionE")
+      localStorage.removeItem("SectionF")
+      localStorage.removeItem("SectionG")
+      localStorage.removeItem("SectionGG")
+      localStorage.removeItem("SectionH")
+      localStorage.removeItem("SectionI")
+      localStorage.removeItem("SectionJ")
+      localStorage.removeItem("SectionK")
+      localStorage.removeItem("SectionL")
+      localStorage.removeItem("SectionM")
+      localStorage.removeItem("SectionN")
+      localStorage.removeItem("SectionO")
+      localStorage.removeItem("SectionP")
+      localStorage.removeItem("SectionQ")
     }
   };
 
@@ -73,6 +92,26 @@ const CreateReferralInformation = () => {
       formData.patientId = allSteps.patientId;
       localStorage.setItem("Referral", JSON.stringify(formData));
       createReferral(formData);
+      localStorage.removeItem("patient")
+      localStorage.removeItem("patient")
+      localStorage.removeItem("SectionA")
+      localStorage.removeItem("SectionB")
+      localStorage.removeItem("SectionC")
+      localStorage.removeItem("SectionD")
+      localStorage.removeItem("SectionE")
+      localStorage.removeItem("SectionF")
+      localStorage.removeItem("SectionG")
+      localStorage.removeItem("SectionGG")
+      localStorage.removeItem("SectionH")
+      localStorage.removeItem("SectionI")
+      localStorage.removeItem("SectionJ")
+      localStorage.removeItem("SectionK")
+      localStorage.removeItem("SectionL")
+      localStorage.removeItem("SectionM")
+      localStorage.removeItem("SectionN")
+      localStorage.removeItem("SectionO")
+      localStorage.removeItem("SectionP")
+      localStorage.removeItem("SectionQ")
     }
   };
   const handleSaveAndExit = (e) => {
@@ -84,12 +123,32 @@ const CreateReferralInformation = () => {
       formData.patientId = allSteps.patientId;
       localStorage.setItem("Referral", JSON.stringify(formData));
       createReferral(formData);
+      localStorage.removeItem("patient")
+      localStorage.removeItem("SectionA")
+      localStorage.removeItem("SectionB")
+      localStorage.removeItem("SectionC")
+      localStorage.removeItem("SectionD")
+      localStorage.removeItem("SectionE")
+      localStorage.removeItem("SectionF")
+      localStorage.removeItem("SectionG")
+      localStorage.removeItem("SectionGG")
+      localStorage.removeItem("SectionH")
+      localStorage.removeItem("SectionI")
+      localStorage.removeItem("SectionJ")
+      localStorage.removeItem("SectionK")
+      localStorage.removeItem("SectionL")
+      localStorage.removeItem("SectionM")
+      localStorage.removeItem("SectionN")
+      localStorage.removeItem("SectionO")
+      localStorage.removeItem("SectionP")
+      localStorage.removeItem("SectionQ")
     }
   };
 
   useEffect(() => {
     if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: 0 }));
+      localStorage.removeItem("patient")
     }
   }, [isSuccess]);
   useEffect(() => {

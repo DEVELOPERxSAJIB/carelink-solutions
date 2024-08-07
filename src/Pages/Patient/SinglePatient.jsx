@@ -78,7 +78,7 @@ const SinglePatient = () => {
       >
         Patient profile
       </button>
-      <div className="layout-page w-100">
+      <div className="layout-page w-100 patient-body">
         {/* Navbar */}
 
         {/* / Navbar */}

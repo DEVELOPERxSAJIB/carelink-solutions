@@ -1,4 +1,4 @@
-import  { useState, useRef } from "react";
+import { useState, useRef } from "react";
 
 import {
   getAllSectionState,
@@ -6,8 +6,10 @@ import {
   resetForm,
 } from "./../../Redux/slices/SectionSlice";
 
-import {getAllSectionStepState,
-  updateSteps,updatePatientId
+import {
+  getAllSectionStepState,
+  updateSteps,
+  updatePatientId,
 } from "./../../Redux/slices/SectionStep.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useCreatePatientMutation } from "../../Redux/api/PatientApi";
@@ -15,26 +17,30 @@ import { useEffect } from "react";
 import { useUpdatePatientMutation } from "../../Redux/api/PatientApi";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 const SectionQForm = ({ editId }) => {
+  const allSteps = useSelector(getAllSectionStepState);
 
-const allSteps = useSelector(getAllSectionStepState)
-console.log(allSteps)
   const [createPatient, { data, isLoading, error, isSuccess }] =
-    useCreatePatientMutation();
+  useCreatePatientMutation();
   const [
     updatePatient,
-    { data: updateData, isSuccess: isUpdateSuccess,isLoading:isUpdateLoading, error: updateError },
+    {
+      data: updateData,
+      isSuccess: isUpdateSuccess,
+      isLoading: isUpdateLoading,
+      error: updateError,
+    },
   ] = useUpdatePatientMutation();
   const dispatch = useDispatch();
   const allFormData = useSelector(getAllSectionState);
+  console.log(allFormData)
   const localSectionQ = JSON.parse(localStorage.getItem("SectionQ")) || {};
 
- 
   const [formData, setFormData] = useState({
-    fallsPrevention:localSectionQ?.fallsPrevention|| "",
-    depressionIntervention:localSectionQ?.depressionIntervention|| "",
-    painIntervention:localSectionQ?.painIntervention|| "",
-    pressureUlcerPrevention:localSectionQ?.pressureUlcerPrevention|| "",
-    pressureUlcerTreatment:localSectionQ?.pressureUlcerTreatment|| "",
+    fallsPrevention: localSectionQ?.fallsPrevention || "",
+    depressionIntervention: localSectionQ?.depressionIntervention || "",
+    painIntervention: localSectionQ?.painIntervention || "",
+    pressureUlcerPrevention: localSectionQ?.pressureUlcerPrevention || "",
+    pressureUlcerTreatment: localSectionQ?.pressureUlcerTreatment || "",
   });
 
   const handleSelectChange = (e) => {
@@ -57,15 +63,16 @@ console.log(allSteps)
   };
 
   useEffect(() => {
-    const patientId = JSON.parse(localStorage.getItem("patient"))?._id||null
+    const patientId = JSON.parse(localStorage.getItem("patient"))?._id || null;
+    console.log(patientId)
     if (isSuccess) {
       dispatch(resetForm());
-      dispatch(updateSteps({...allSteps,steps:allSteps?.steps+1}));
-      dispatch(updatePatientId({...allSteps,patientId:data?.payload?._id}));
-      localStorage.setItem("patient",JSON.stringify(data?.payload))
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      dispatch(updatePatientId({ ...allSteps, patientId: data?.payload?._id }));
+      localStorage.setItem("patient", JSON.stringify(data?.payload));
     }
-    dispatch(updatePatientId({...allSteps,patientId:patientId}));
-  }, [isSuccess, dispatch, isUpdateSuccess,data?.payload]);
+    dispatch(updatePatientId({ ...allSteps, patientId: patientId }));
+  }, [isSuccess, dispatch, isUpdateSuccess, data?.payload]);
   useEffect(() => {
     setFormData({ ...allFormData });
     setFormData({ ...localSectionQ });
@@ -90,11 +97,11 @@ console.log(allSteps)
 
           <div
             id="collapseQ"
-            className="accordion-collapse collapse  show"  
+            className="accordion-collapse collapse  show"
             aria-labelledby="headingQ"
             data-bs-parent="#accordionSectionQ"
           >
-            <div  className="accordion-body print-area">
+            <div className="accordion-body print-area">
               {/* M2401. Intervention Synopsis */}
               <h4 className="print-title">
                 Participation in assessment and setting{" "}
@@ -189,7 +196,6 @@ console.log(allSteps)
                     <option value="NA">Not Applicable</option>
                   </select>
                 </div>
-              
               </div>
             </div>
           </div>
@@ -215,12 +221,11 @@ console.log(allSteps)
           {updateError?.data?.message}
         </div>
       )}
-        <div className="d-flex align-items-center gap-4 hide-on-print">
-                  <button type="submit" className="btn btn-primary">
-                   {isUpdateLoading ||isLoading ?"...Wait please":"Submit" } 
-                  </button>
-                 
-                </div>
+      <div className="d-flex align-items-center gap-4 hide-on-print">
+        <button type="submit" className="btn btn-primary">
+          {isUpdateLoading || isLoading ? "...Wait please" : "Submit"}
+        </button>
+      </div>
     </form>
   );
 };

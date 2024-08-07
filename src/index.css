@@ -176,7 +176,7 @@
 }
 
 .from-scrollbar::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for WebKit */
+  display: block; /* Hide scrollbar for WebKit */
 }
 /* For screens smaller than 480px (common mobile breakpoint) */
 .chat-scrollbar {
