@@ -167,7 +167,7 @@ const CreateClinicalAndDiagnoses = () => {
   return (
     <form ref={componentRef} onSubmit={handleAdmit} className="card w-100">
       <div className="card-body w-100">
-        <PageHeader title="Clinical/Diagnosis" className="card-header fs-3" />
+        <PageHeader title="Clinical/Diagnosis" className="card-header fs-3" back={false}/>
 
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <div className="accordion-item">

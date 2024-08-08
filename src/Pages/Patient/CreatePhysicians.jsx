@@ -130,7 +130,7 @@ const CreatePhysicians = () => {
 
   return (
     <div ref={componentRef} className="card mt-4 w-100">
-      <PageHeader title="New Physician" className="card-header fs-3" />
+      <PageHeader title="New Physician" className="card-header fs-3" back={false} />
 
       <div className="card-body">
         <div className="row">

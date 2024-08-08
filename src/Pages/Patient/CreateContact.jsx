@@ -379,7 +379,7 @@ const ContactForm = () => {
 
   return (
     <form ref={componentRef} onSubmit={handleSubmit} className="card w-100">
-      <PageHeader title="Contact" className="card-header fs-3" />
+      <PageHeader title="Contact" className="card-header fs-3" back={false} />
 
       <div className="card-body">
         <div className="accordion" id="emergencyContactsAccordion">

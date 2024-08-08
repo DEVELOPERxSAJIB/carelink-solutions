@@ -184,7 +184,7 @@ const CreateEmergencyPreparedness = () => {
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <PageHeader
             title="Emergency Preparedness"
-            className="card-header fs-3"
+            className="card-header fs-3" back={false}
           />
          
 

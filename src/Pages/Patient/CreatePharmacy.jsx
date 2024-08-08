@@ -143,7 +143,7 @@ const CreatePharmacy = () => {
     <form ref={componentRef} onSubmit={handleSubmit} className="card w-100">
       <div className="card-body">
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
-          <PageHeader title="Pharmacy" className="card-header fs-3" />
+          <PageHeader title="Pharmacy" className="card-header fs-3"  back={false}/>
           
 
           {/* Pharmacy Information */}

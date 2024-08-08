@@ -131,7 +131,7 @@ const CreateReferralInformation = () => {
 
   return (
     <div ref={componentRef} className="card w-100">
-      <PageHeader title="Referral Information" className="card-header fs-3 " />
+      <PageHeader title="Referral Information" className="card-header fs-3 " back={false} />
       <div className="card-header"></div>
       <div className="card-body">
         <form onSubmit={handleSubmit}>
