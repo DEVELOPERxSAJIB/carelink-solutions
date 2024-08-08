@@ -61,14 +61,14 @@ const SinglePatient = () => {
   return (
     <div  ref={componentRef}>
       <ReactToPrint
-        trigger={() => <span className="btn btn-primary">Patient Profile</span>}
+        trigger={() => <span className="btn btn-primary hide-on-print">Patient Profile</span>}
         content={() => componentRef.current}
         documentTitle="Patient"
       />
       <div
         style={{ fontSize: "10px" }}
     
-        className="layout-page w-100 "
+        className="layout-page w-100 patient-body "
       >
         {/* Navbar */}
         {/* patient-body */}

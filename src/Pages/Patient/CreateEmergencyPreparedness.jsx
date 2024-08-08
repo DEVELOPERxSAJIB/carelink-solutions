@@ -179,7 +179,7 @@ const CreateEmergencyPreparedness = () => {
   if (isLoading) return <AuthLoader />;
 
   return (
-    <form ref={componentRef} onSubmit={handleSubmit} className="card">
+    <form ref={componentRef} onSubmit={handleSubmit} className="card w-100">
       <div className="card-body">
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <PageHeader

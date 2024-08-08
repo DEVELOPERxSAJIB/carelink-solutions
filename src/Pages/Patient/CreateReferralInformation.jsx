@@ -130,7 +130,7 @@ const CreateReferralInformation = () => {
   if (isLoading) return <AuthLoader />;
 
   return (
-    <div ref={componentRef} className="card">
+    <div ref={componentRef} className="card w-100">
       <PageHeader title="Referral Information" className="card-header fs-3 " />
       <div className="card-header"></div>
       <div className="card-body">

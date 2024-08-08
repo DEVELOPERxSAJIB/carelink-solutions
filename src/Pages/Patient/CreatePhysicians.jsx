@@ -129,7 +129,7 @@ const CreatePhysicians = () => {
   if (isLoading) return <AuthLoader />;
 
   return (
-    <div ref={componentRef} className="card mt-4">
+    <div ref={componentRef} className="card mt-4 w-100">
       <PageHeader title="New Physician" className="card-header fs-3" />
 
       <div className="card-body">

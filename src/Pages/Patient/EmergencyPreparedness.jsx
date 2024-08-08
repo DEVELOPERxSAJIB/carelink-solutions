@@ -216,7 +216,7 @@ const EmergencyPreparedness = () => {
   if (isLoading) return <AuthLoader />;
 
   return (
-    <div className="card">
+    <div className="card w-100">
       <TableHeader
         title="Emergency prepared list"
         className="py-3 pt-5 fs-3 card-header"

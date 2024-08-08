@@ -378,7 +378,7 @@ const ContactForm = () => {
   if (isLoading) return <AuthLoader />;
 
   return (
-    <form ref={componentRef} onSubmit={handleSubmit} className="card">
+    <form ref={componentRef} onSubmit={handleSubmit} className="card w-100">
       <PageHeader title="Contact" className="card-header fs-3" />
 
       <div className="card-body">
