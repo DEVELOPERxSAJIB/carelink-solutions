@@ -132,13 +132,14 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="npi" className="form-label">
                     M0018. National Provider Identifier (NPI):
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <input
                     type="text"
                     className="form-control"
                     id="npi"
                     name="npi"
-                    placeholder="Enter NPI"
+                    placeholder="Enter NPI Number"
                     value={formData.npi}
                     onChange={handleInputChange}
                   />
@@ -149,6 +150,7 @@ const CreatePatient2 = () => {
                     className="form-label"
                   >
                     M0010. CMS Certification Number:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <input
                     type="text"
@@ -166,6 +168,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="branchState" className="form-label">
                     M0014. Branch State:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <input
                     type="text"
@@ -180,6 +183,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="branchIdNumber" className="form-label">
                     M0016. Branch ID Number:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <input
                     type="text"
@@ -197,6 +201,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="patientIdNumber" className="form-label">
                     M0020. Patient ID Number:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <input
                     type="text"
@@ -211,6 +216,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="startOfCareDate" className="form-label">
                     M0030. Start of Care Date:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <input
                     type="date"
@@ -243,6 +249,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="patientFirstName" className="form-label">
                     M0040. Patient First Name:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <input
                     type="text"
@@ -274,6 +281,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="patientLastName" className="form-label">
                     M0040. Patient Last Name:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <input
                     type="text"
@@ -308,6 +316,7 @@ const CreatePatient2 = () => {
                     className="form-label"
                   >
                     M0050. Patient State of Residence:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <input
                     type="text"
@@ -322,6 +331,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="patientZipCode" className="form-label">
                     M0060. Patient ZIP Code:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <input
                     type="text"
@@ -339,6 +349,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="socialSecurityNumber" className="form-label">
                     M0065. Social Security Number:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <input
                     type="text"
@@ -384,6 +395,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="gender" className="form-label">
                     M0080. Gender:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <select
                     id="gender"
@@ -404,6 +416,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="birthDate" className="form-label">
                     M0090. Birth Date:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <input
                     type="date"
@@ -420,6 +433,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="ethnicity" className="form-label">
                     M0100. Ethnicity:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <select
                     id="ethnicity"
@@ -441,6 +455,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="race" className="form-label">
                     M0100. Race:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <select
                     id="race"
@@ -470,6 +485,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="paymentSources" className="form-label">
                     M0200. Payment Sources:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <select
                     id="paymentSources"
@@ -488,6 +504,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="preferredLanguage" className="form-label">
                     M0210. Preferred Language:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <input
                     type="text"
@@ -622,6 +639,7 @@ const CreatePatient2 = () => {
                 <div className="col-md-6">
                   <label htmlFor="transportation" className="form-label">
                     M0290. Transportation:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <select
                     id="transportation"
@@ -647,6 +665,7 @@ const CreatePatient2 = () => {
                     className="form-label"
                   >
                     M0300. Inpatient Facility Discharged From:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <select
                     id="inpatientFacilityDischargedFrom"
@@ -777,6 +796,7 @@ const CreatePatient2 = () => {
                     className="form-label"
                   >
                     M0370. Route of Medication List Transmission:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <select
                     id="routeMedicationListTransmission"
@@ -820,6 +840,7 @@ const CreatePatient2 = () => {
                     className="form-label"
                   >
                     M0390. Route of Medication List Transmission to Patient:
+                    <span className="text-danger">{" "}*</span>
                   </label>
                   <select
                     id="routeMedicationListTransmissionToPatient"
