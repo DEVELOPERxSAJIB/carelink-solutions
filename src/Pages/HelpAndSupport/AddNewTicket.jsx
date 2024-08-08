@@ -10,6 +10,7 @@ import {
 import MainLoader from "../../utils/Loaders/MainLoader";
 import { useEffect, useState } from "react";
 import swal from "sweetalert"
+import { showToast } from './../../utils/Toastify';
 
 const AddNewTicket = () => {
   const { data, isLoading, refetch } = useGetAllTicketsQuery();
@@ -106,7 +107,13 @@ const AddNewTicket = () => {
       refetch();
     }
   }, [deleteSuccess, isSuccess, refetch]);
-
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    error?.data?.message,
+    data?.message,
+  ]);
   return (
     <>
       {isLoading ? (
@@ -126,16 +133,7 @@ const AddNewTicket = () => {
                 onSave={handleSubmit}
               >
               <div className="row">
-                {createData?.message && (
-                  <div className="alert alert-success text-center">
-                    {createData?.message}
-                  </div>
-                )}
-                {error?.data?.message && (
-                  <div className="alert alert-danger text-center">
-                    {error?.data?.message}
-                  </div>
-                )}
+             
               </div>
                 <form
                   className="w-100 from-scrollbar px-3"

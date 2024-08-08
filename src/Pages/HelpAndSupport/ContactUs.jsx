@@ -1,7 +1,8 @@
 import PageHeader from "./../../components/FormElement/PageHeader";
 import useFormFields from "../../hook/useFormHook";
 import { useCreateContactSupportApiMutation } from "../../Redux/api/ContactSupportApi";
-
+import { showToast } from './../../utils/Toastify';
+import {useEffect} from "react"
 const ContactUs = () => {
   const [createContactSupportApi, { data, error, isLoading }] =
     useCreateContactSupportApiMutation();
@@ -20,22 +21,18 @@ const ContactUs = () => {
     createContactSupportApi(formData);
     resetForm();
   };
+  useEffect(() => {
 
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    error?.data?.message,
+    data?.message,
+  ]);
   return (
     <div>
       <div className="card mb-6">
-        <div className="row">
-          {data?.message && (
-            <div className="alert alert-success text-center">
-              {data?.message}
-            </div>
-          )}
-          {error?.data?.message && (
-            <div className="alert alert-danger text-center">
-              {error?.data?.message}
-            </div>
-          )}
-        </div>
+
         <PageHeader title="Contact Us" className="card-header fs-3" />
         <form onSubmit={handleSubmit} className="card-body">
           <div className="row g-6">

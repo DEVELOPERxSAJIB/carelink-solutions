@@ -12,6 +12,7 @@ import {
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
+import { showToast } from './../../utils/Toastify';
 const CreateEmergencyPreparedness = () => {
   const allSteps = useSelector(getAllSectionStepState);
   const dispatch = useDispatch();
@@ -101,9 +102,11 @@ const CreateEmergencyPreparedness = () => {
     formData.state = state;
     formData.county = county;
     const patientId =JSON.parse(localStorage.getItem("patient"))
-    if(patientId){
-      formData.patientId= allSteps.patientId
+    if(patientId?._id){
+      formData.patientId= allSteps.patientId || patientId?._id
       localStorage.removeItem("Emergency");
+    }else{
+      showToast("error","Patient id required")
     }
     createEmergency(formData);
   };
@@ -114,10 +117,12 @@ const CreateEmergencyPreparedness = () => {
     formData.state = state;
     formData.county = county;
     const patientId =JSON.parse(localStorage.getItem("patient"))
-    if(patientId){
-      formData.patientId= allSteps.patientId
+    if(patientId?._id){
+      formData.patientId= allSteps.patientId || patientId?._id
       createEmergency(formData);
       localStorage.setItem("Emergency", JSON.stringify(formData));
+    }else{
+      showToast("error","Patient id required")
     }
   };
 
@@ -127,9 +132,11 @@ const CreateEmergencyPreparedness = () => {
     formData.state = state;
     formData.county = county;
     const patientId =JSON.parse(localStorage.getItem("patient"))
-    if(patientId){
-      formData.patientId= allSteps.patientId
+    if(patientId?._id){
+      formData.patientId= allSteps.patientId || patientId?._id
       localStorage.setItem("Emergency", JSON.stringify(formData));
+    }else{
+      showToast("error","Patient id required")
     }
   };
   useEffect(() => {
@@ -161,6 +168,14 @@ const CreateEmergencyPreparedness = () => {
       dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
     }
   }, [isSuccess]);
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+
+    error?.data?.message,
+    data?.message,
+  ]);
   if (isLoading) return <AuthLoader />;
 
   return (
@@ -171,16 +186,7 @@ const CreateEmergencyPreparedness = () => {
             title="Emergency Preparedness"
             className="card-header fs-3"
           />
-          {data?.message && (
-            <div className="alert alert-success text-center">
-              {data.message}
-            </div>
-          )}
-          {error?.data?.message && (
-            <div className="alert alert-danger text-center">
-              {error.data.message}
-            </div>
-          )}
+         
 
           {/* Emergency Triage Information */}
           <div className="accordion-item">

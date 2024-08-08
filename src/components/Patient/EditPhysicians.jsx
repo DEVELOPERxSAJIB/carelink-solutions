@@ -4,6 +4,7 @@ import CitySelect from "../../components/FormElement/CitySelect";
 import StateSelect from "./../../components/FormElement/StateSelect";
 
 import { useUpdatePhysicianMutation } from "../../Redux/api/PhysicianApi";
+import { showToast } from './../../utils/Toastify';
 const EditPhysicians = ({ patientId }) => {
   const { data: singlePhysician } = useGetPhysicianByPatientIdQuery(patientId);
   console.log(singlePhysician);
@@ -53,19 +54,15 @@ const EditPhysicians = ({ patientId }) => {
     formData.state = state;
     updatePhysician({ physicianId: editId, physicianData: formData });
   };
+  useEffect(() => {
+    showToast("success", updateData?.message)
+    showToast("error", updateError?.data?.message)
+ }, [updateData?.message,
+   updateError?.data?.message]);
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        {updateData?.message && (
-          <div className="text-center alert-success alert">
-            {updateData?.message}
-          </div>
-        )}
-        {updateError?.data?.message && (
-          <div className="alert alert-close alert-danger text-center">
-            {updateError?.data?.message}
-          </div>
-        )}
+       
         <div className="row">
           <div className=" col-md-6">
             <label className="form-label my-2" htmlFor="npiNumber">

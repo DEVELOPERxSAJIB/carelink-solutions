@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
+import { showToast } from "./../../utils/Toastify";
 
 const SubUsers = () => {
   const [editId, setEditId] = useState("");
@@ -115,6 +116,18 @@ const SubUsers = () => {
       setShow(false);
     }
   }, [isDeleteSuccess, isCreateSuccess, isUpdateSuccess]);
+  useEffect(() => {
+    showToast("success", deleteData?.message);
+    showToast("success", createData?.message);
+    showToast("success", updateData?.message);
+    showToast("error", updateError?.data?.message);
+    showToast("error", createError?.data?.message);
+    showToast("error", error?.data?.message);
+  }, [
+    deleteData?.message,updateData?.message,createData?.message,createError?.data?.message,
+    updateError?.data?.message,
+    error?.data?.message,
+  ]);
   if (isLoading) return <AuthLoader />;
   return (
     <div className="card">
@@ -123,45 +136,11 @@ const SubUsers = () => {
         className="py-3 pt-5 fs-3 card-header"
       />
       <div className="card-body">
-        {createData?.message && (
-          <div className="alert alert-success text-center">
-            {createData.message}
-          </div>
-        )}
-        {updateData?.message && (
-          <div className="alert alert-success text-center">
-            {updateData.message}
-          </div>
-        )}
-        {deleteData?.message && (
-          <div className="alert alert-success text-center">
-            {deleteData.message}
-          </div>
-        )}
-        {error?.data?.message && (
-          <div className="alert alert-danger text-center">
-            {error?.data?.message}
-          </div>
-        )}
-        {updateError?.data?.message && (
-          <div className="alert alert-danger text-center">
-            {updateError?.data?.message}
-          </div>
-        )}
-        {deleteError?.data?.message && (
-          <div className="alert alert-danger text-center">
-            {deleteError?.data?.message}
-          </div>
-        )}
         <div className="gap-3 d-flex flex-wrap">
           {lgData?.payload?.user?.curd?.includes("create") && (
             <FullscreenModal id="addnewsubuser" title="Add New Sub-User">
               <form onSubmit={handleSubmit} className="w-100">
-                {createError?.data?.message && (
-                  <div className="alert alert-danger text-center">
-                    {createError?.data.message}
-                  </div>
-                )}
+                
                 <div className="mb-3 w-100">
                   <label htmlFor="gender" className="form-label">
                     Gender <span className="text-danger">*</span>
@@ -334,20 +313,21 @@ const SubUsers = () => {
               </form>
             </EditModal>
           )}
-          {lgData?.payload?.user?.curd?.includes("delete") && (  <button
-            className="btn btn-secondary create-new btn-danger waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span>
-              <i className="ti ti-trash me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">
-                Delete all selected
+          {lgData?.payload?.user?.curd?.includes("delete") && (
+            <button
+              className="btn btn-secondary create-new btn-danger waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span>
+                <i className="ti ti-trash me-sm-1" />{" "}
+                <span className="d-none d-sm-inline-block">
+                  Delete all selected
+                </span>
               </span>
-            </span>
-          </button>)}
-        
+            </button>
+          )}
         </div>
         <div className="mt-5">
           <DataTable

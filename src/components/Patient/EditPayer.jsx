@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useUpdatePayerMutation } from "../../Redux/api/PayerApi";
 import Template from "./../FormElement/Template";
 import { useGetPayerByPatientIdQuery } from "../../Redux/api/PayerApi";
-
+import { showToast } from "./../../utils/Toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateSteps,
+  getAllSectionStepState,
+} from "./../../Redux/slices/SectionStep.js";
 const EditPayer = ({ patientId }) => {
   const { data: singlePayer } = useGetPayerByPatientIdQuery(patientId);
-  console.log(singlePayer?.payload?.payer);
-  const [updatePayer, { data: updateData, isSuccess, error: updateError }] =
+  const dispatch = useDispatch();
+  const allSteps = useSelector(getAllSectionStepState);
+  const [updatePayer, { data: updateData, isSuccess:isUpdateSuccess, error: updateError }] =
     useUpdatePayerMutation();
 
   const [template, setTemplate] = useState("");
@@ -130,29 +136,22 @@ const EditPayer = ({ patientId }) => {
         prevFormData?.payerComments + template?.value ? template?.value : "",
     }));
   }, [template]);
+  useEffect(() => {
+    showToast("success", updateData?.message);
+    showToast("error", updateError?.data?.message);
+  }, [updateData?.message, updateError?.data?.message]);
 
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+    }
+  }, [isUpdateSuccess]);
   return (
     <div>
       <form onSubmit={handleSubmit} className="card">
-        {updateData?.message && (
-          <div className="text-center alert-success alert">
-            {updateData?.message}
-          </div>
-        )}
-        {updateError?.data?.message && (
-          <div className="alert alert-close alert-danger text-center">
-            {updateError?.data?.message}
-          </div>
-        )}
         <div className="card-body">
           <div className="accordion" id="payerAccordion">
             {/* Primary Emergency Contact */}
-
-            {updateError?.data?.message && (
-              <div className="alert alert-close alert-danger text-center">
-                {updateError?.data?.message}
-              </div>
-            )}
 
             <div className="accordion-item">
               <h2 className="accordion-header" id="headingPrimary">

@@ -7,6 +7,7 @@ import Template from "./../../components/FormElement/Template";
 import { ReactToPrint } from "react-to-print";
 
 import { useSelector, useDispatch } from "react-redux";
+import { showToast } from './../../utils/Toastify';
 import {
   getAllSectionStepState,
   updateSteps,
@@ -18,7 +19,6 @@ const CreatePayers = () => {
     useCreatePayerMutation();
   const localStoragePatient = JSON.parse(localStorage.getItem("Payer"));
   const allSteps = useSelector(getAllSectionStepState);
-  console.log(allSteps);
   const dispatch = useDispatch();
   const [template, setTemplate] = useState("");
   const [formData, setFormData] = useState({
@@ -84,28 +84,37 @@ const CreatePayers = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId) {
-      formData.patientId = allSteps.patientId;
-      localStorage.removeItem("Payer");
+    console.log(patientId?._id)
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId  ||patientId?._id;
       createPayer(formData);
+      localStorage.removeItem("Payer");
+    }else{
+      showToast("error","Patient id required")
     }
   };
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
     const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId) {
-      formData.patientId = allSteps.patientId;
+    console.log(patientId?._id)
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId ||patientId?._id;
       localStorage.setItem("Payer", JSON.stringify(formData));
       createPayer(formData);
+    }else{
+      showToast("error","Patient id required")
     }
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
     const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId) {
-      formData.patientId = allSteps.patientId;
+    console.log(patientId?._id)
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId ||patientId?._id;
       localStorage.setItem("Payer", JSON.stringify(formData));
+    }else{
+      showToast("error","Patient id required")
     }
   };
   useEffect(() => {
@@ -129,7 +138,13 @@ const CreatePayers = () => {
       setFormData(localStoragePatient);
     }
   }, []);
-
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    error?.data?.message,
+    data?.message,
+  ]);
   if (isLoading) return <AuthLoader />;
 
   return (
@@ -139,16 +154,7 @@ const CreatePayers = () => {
       <div className="card-body">
         <div className="accordion" id="payerAccordion">
           {/* Primary Emergency Contact */}
-          {data?.message && (
-            <div className="alert alert-close alert-success text-center">
-              {data?.message}
-            </div>
-          )}
-          {error?.data?.message && (
-            <div className="alert alert-close alert-danger text-center">
-              {error?.data?.message}
-            </div>
-          )}
+          
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingPrimary">
               <button

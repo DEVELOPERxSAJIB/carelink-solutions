@@ -6,6 +6,7 @@ import {useResetPasswordMutation}from "../../Redux/api/UserApi"
 import AuthLoader from "../../utils/Loaders/AuthLoader"
 import {useParams,useNavigate}from "react-router-dom"
 import {useState,useEffect} from "react"
+import { showToast } from './../../utils/Toastify';
 const ResetPassword = () => {
   const params = useParams()
   const navigate = useNavigate()
@@ -21,6 +22,13 @@ const [resetPassword,{data,isLoading,isSuccess,error}] =useResetPasswordMutation
      navigate("/login")
     }
   },[isSuccess,navigate])
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    error?.data?.message,
+    data?.message,
+  ]);
   if(isLoading)return <AuthLoader/>
   return (
     <div className="authentication-wrapper authentication-cover">
@@ -109,8 +117,7 @@ const [resetPassword,{data,isLoading,isSuccess,error}] =useResetPasswordMutation
               <button className="btn btn-primary d-grid w-100 mb-6">
                 Set new password
               </button>
-              {error?.data?.message&& <div className="alert alert-danger">{error?.data?.message}</div>} 
-             {data?.message&& <div className="alert alert-success">{data?.message}</div>} 
+              
               <div className="text-center">
                 <Link to="/login">
                   <i className="ti ti-chevron-left scaleX-n1-rtl me-1_5" />

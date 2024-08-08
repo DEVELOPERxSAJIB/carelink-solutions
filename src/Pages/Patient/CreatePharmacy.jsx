@@ -8,6 +8,7 @@ import { ReactToPrint } from "react-to-print";
 import {getAllSectionStepState,
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
+import { showToast } from './../../utils/Toastify';
 import {useSelector,
   useDispatch} from "react-redux"
 const CreatePharmacy = () => {
@@ -81,10 +82,12 @@ const CreatePharmacy = () => {
     formData.city = city;
     formData.state = state;
     const patientId =JSON.parse(localStorage.getItem("patient"))
-    if(patientId){
-      formData.patientId= allSteps.patientId
+    if(patientId?._id ||allSteps?.patientId){
+      formData.patientId= allSteps.patientId ||patientId?._id
       createPharmacy(formData);
       localStorage.removeItem("Pharmacy");
+    }else{
+      showToast("error","Patient id required")
     }
   };
   const handleSaveAndContinue = (e) => {
@@ -92,10 +95,12 @@ const CreatePharmacy = () => {
     const patientId =JSON.parse(localStorage.getItem("patient"))
     formData.city = city;
     formData.state = state;
-    if(patientId){
-      formData.patientId= allSteps.patientId
+    if(patientId?._id||allSteps?.patientId){
+      formData.patientId= allSteps.patientId ||patientId?._id
       createPharmacy(formData);
       localStorage.setItem("Pharmacy", JSON.stringify(formData));
+    }else{
+      showToast("error","Patient id required")
     }
   };
   const handleSaveAndExit = (e) => {
@@ -103,10 +108,12 @@ const CreatePharmacy = () => {
     formData.city = city;
     formData.state = state;
     const patientId =JSON.parse(localStorage.getItem("patient"))
-    if(patientId){
-      formData.patientId= allSteps.patientId
+    if(patientId?._id ||allSteps?.patientId){
+      formData.patientId= allSteps?.patientId||patientId?._id
       createPharmacy(formData);
       localStorage.setItem("Pharmacy", JSON.stringify(formData));
+    }else{
+      showToast("error","Patient id required")
     }
   };
 
@@ -123,22 +130,21 @@ const CreatePharmacy = () => {
       dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
     }
   },[isSuccess])
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+
+    error?.data?.message,
+    data?.message,
+  ]);
   if (isLoading) return <AuthLoader />;
   return (
     <form ref={componentRef} onSubmit={handleSubmit} className="card">
       <div className="card-body">
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <PageHeader title="Pharmacy" className="card-header fs-3" />
-          {data?.message && (
-            <div className="alert alert-success text-center">
-              {data?.message}
-            </div>
-          )}
-          {error?.data?.message && (
-            <div className="alert alert-danger text-center">
-              {error?.data?.message}
-            </div>
-          )}
+          
 
           {/* Pharmacy Information */}
           <div className="accordion-item">

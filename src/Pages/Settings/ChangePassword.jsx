@@ -1,8 +1,9 @@
-import  { useState } from 'react';
+import  { useState,useEffect } from 'react';
 import PageHeader from './../../components/FormElement/PageHeader';
 import { useUpdatePasswordLoggedMutation } from "../../Redux/api/UserApi";
 import useFormValidation from './../../hook/useFormValidation';
 import {changePasswordSchema}from "../../utils/validationSchemas"
+import { showToast } from './../../utils/Toastify';
 const ChangePassword = () => {
   const [updatePasswordLogged, {data, isLoading, isSuccess, error }] = useUpdatePasswordLoggedMutation();
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -27,7 +28,13 @@ const ChangePassword = () => {
   };
 
   const { register, handleSubmit, reset, formState: { errors } } = useFormValidation(initialValues, changePasswordSchema, formData);
-
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    error?.data?.message,
+    data?.message,
+  ]);
   return (
     <div className="bs-stepper-content card">
       <form onSubmit={handleSubmit}>
@@ -104,8 +111,7 @@ const ChangePassword = () => {
               </div>
               {errors.confirmNewPassword && <div className="invalid-feedback">{errors.confirmNewPassword.message}</div>}
             </div>
-            {data?.message&&<div className="alert alert-success text-center">{data?.message}</div>}
-            {error?.data?.message&&<div className="alert alert-danger text-center">{error?.data?.message}</div>}
+            
             <button
               type="submit"
               className="btn btn-primary waves-effect waves-light mt-3"

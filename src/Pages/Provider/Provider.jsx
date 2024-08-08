@@ -182,16 +182,7 @@ const Provider = () => {
             >
               <>
                 <div className="d-flex flex-column justify-content-center align-items-center">
-                  {data?.message && (
-                    <div className=" text-center alert alert-success w-100">
-                      {data?.message}
-                    </div>
-                  )}
-                  {error && (
-                    <div className=" text-center alert alert-success w-100">
-                      {error?.data?.message}
-                    </div>
-                  )}
+                  
                   <div className="row justify-content-center d-flex align-items-center">
                     <div className="col-md-12">
                       <div className="card-body">
@@ -570,16 +561,7 @@ const Provider = () => {
                               </button>
                             </div>
 
-                            {/* Error message */}
-                            {isError && (
-                              <div
-                                className="alert alert-danger text-center"
-                                role="alert"
-                              >
-                                {error?.data?.message ||
-                                  "Failed to register. Please try again later."}
-                              </div>
-                            )}
+                            
 
                             {/* Success message */}
                           </div>
@@ -802,18 +784,7 @@ const Provider = () => {
                     </button>
                   </div>
 
-                  {/* Error message */}
-                  {isError && (
-                    <div
-                      className="alert alert-danger text-center"
-                      role="alert"
-                    >
-                      {error?.data?.message ||
-                        "Failed to register. Please try again later."}
-                    </div>
-                  )}
-
-                  {/* Success message */}
+                 
                 </div>
               </form>
             </EditModal>
@@ -853,21 +824,7 @@ const Provider = () => {
           )}
         </div>
         <div className="mt-5">
-          {deleteData?.message && (
-            <div className="alert alert-success text-center">
-              {deleteData?.message}
-            </div>
-          )}
-          {updateData?.message && (
-            <div className="alert alert-success text-center">
-              {updateData?.message}
-            </div>
-          )}
-          {updateError?.data?.message && (
-            <div className="alert alert-success text-center">
-              {updateError?.data?.message}
-            </div>
-          )}
+          
           <DataTable
             columns={columns}
             data={Array.isArray(data?.payload?.users) ? data.payload.users : []}

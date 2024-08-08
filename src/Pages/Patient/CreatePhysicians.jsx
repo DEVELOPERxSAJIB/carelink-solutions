@@ -5,13 +5,14 @@ import StateSelect from "./../../components/FormElement/StateSelect";
 
 import { useCreatePhysicianMutation } from "../../Redux/api/PhysicianApi";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
-import { useNavigate } from "react-router-dom";
+
 import { ReactToPrint } from "react-to-print";
 import {
   getAllSectionStepState,
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
+import { showToast } from './../../utils/Toastify';
 const CreatePhysicians = () => {
   const allSteps = useSelector(getAllSectionStepState);
   const dispatch = useDispatch();
@@ -28,7 +29,6 @@ const CreatePhysicians = () => {
     lastName: localPhysician?.lastName || "",
     taxonomyCode: localPhysician?.taxonomyCode || "",
     credentials: localPhysician?.credentials || "",
-    npiNo: localPhysician?.npiNo || null,
     medicaidProviderIdentifier:
       localPhysician?.medicaidProviderIdentifier || "",
     addressLine1: localPhysician?.addressLine1 || "",
@@ -56,10 +56,12 @@ const CreatePhysicians = () => {
     formData.city = city;
     formData.state = state;
     const patientId =JSON.parse(localStorage.getItem("patient"))
-    if (patientId) {
-      formData.patientId = allSteps.patientId;
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId ||patientId?._id;
       localStorage.removeItem("Physician");
       createPhysician(formData);
+    }else{
+      showToast("error","Patient id required")
     }
   };
   const handleSaveAndContinue = (e) => {
@@ -67,10 +69,12 @@ const CreatePhysicians = () => {
     formData.city = city;
     formData.state = state;
     const patientId =JSON.parse(localStorage.getItem("patient"))
-    if (patientId) {
-      formData.patientId = allSteps.patientId;
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId ||patientId?._id;
       localStorage.setItem("Physician", JSON.stringify(formData));
       createPhysician(formData);
+    }else{
+      showToast("error","Patient id required")
     }
   };
   const handleSaveAndExit = (e) => {
@@ -78,10 +82,12 @@ const CreatePhysicians = () => {
     formData.city = city;
     formData.state = state;
     const patientId =JSON.parse(localStorage.getItem("patient"))
-    if (patientId) {
-      formData.patientId = allSteps.patientId;
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId ||patientId?._id;
       localStorage.setItem("Physician", JSON.stringify(formData));
       createPhysician(formData);
+    }else{
+      showToast("error","Patient id required")
     }
   };
   useEffect(() => {
@@ -112,6 +118,14 @@ const CreatePhysicians = () => {
     setState(localPhysician?.state || "");
     setCity(localPhysician?.city || "");
   }, []);
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+
+    error?.data?.message,
+    data?.message,
+  ]);
   if (isLoading) return <AuthLoader />;
 
   return (
@@ -124,14 +138,7 @@ const CreatePhysicians = () => {
             <h6>Search Physician</h6>
           </div>
         </div>
-        {data?.message && (
-          <div className="alert alert-success text-center">{data?.message}</div>
-        )}
-        {error?.data?.message && (
-          <div className="alert alert-danger text-center">
-            {error?.data?.message}
-          </div>
-        )}
+      
 
         <form onSubmit={handleSubmit}>
           <div className="row">

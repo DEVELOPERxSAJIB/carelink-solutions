@@ -1,10 +1,11 @@
-import {useState}from "react"
+import {useState,useEffect}from "react"
 import photo1 from "../../assets/img/illustrations/auth-forgot-password-illustration-light.png"
 import photo2 from "../../assets/img/illustrations/bg-shape-image-light.png"
 import logo from "../../../public/logo.jpg"
 import {Link} from "react-router-dom"
 import {useForgotPasswordMutation}from "../../Redux/api/UserApi"
 import AuthLoader from "../../utils/Loaders/AuthLoader"
+import { showToast } from './../../utils/Toastify';
 const ForgetPassword = () => {
   const [forgotPassword,{isLoading,isSuccess,error,data}]=useForgotPasswordMutation()
 const [email,setEmail]=useState("")
@@ -15,6 +16,13 @@ const [email,setEmail]=useState("")
   const handleEmail=(e)=>{
     setEmail(e.target.value)
   }
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    error?.data?.message,
+    data?.message,
+  ]);
   if(isLoading)return <AuthLoader/>
   return (
     <>
@@ -80,8 +88,7 @@ const [email,setEmail]=useState("")
                   Send Reset Link
                 </button>
               </form>
-             {error?.data?.message&& <div className="alert alert-danger">{error?.data?.message}</div>} 
-             {data?.message&& <div className="alert alert-success">{data?.message}</div>} 
+            
               <div className="text-center">
                 <Link
                   to="/login"

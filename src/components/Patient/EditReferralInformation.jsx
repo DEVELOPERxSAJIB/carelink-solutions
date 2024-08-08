@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 import CitySelect from "../../components/FormElement/CitySelect";
 import StateSelect from "./../../components/FormElement/StateSelect";
+import { showToast } from './../../utils/Toastify';
 
 const EditReferralInformation = ({ patientId }) => {
   const { data: singleReferral } = useGetReferralByPatientIdQuery(patientId);
@@ -74,20 +75,15 @@ const EditReferralInformation = ({ patientId }) => {
     // if (isUpdateSuccess) {
     // }
   }, [isUpdateSuccess]);
+  useEffect(() => {
+    showToast("success", updateData?.message)
+    showToast("error", updateError?.data?.message)
+ }, [updateData?.message,
+   updateError?.data?.message]);
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        {/* City */}
-        {updateData?.message && (
-          <div className="text-center alert-success alert">
-            {updateData?.message}
-          </div>
-        )}
-        {updateError?.data?.message && (
-          <div className="alert alert-close alert-danger text-center">
-            {updateError?.data?.message}
-          </div>
-        )}
+        
         <div className="row">
           <div className="mb-3 col-md-6">
             <label htmlFor="city" className="form-label">

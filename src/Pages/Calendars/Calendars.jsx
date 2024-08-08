@@ -11,6 +11,7 @@ import {
 } from "../../Redux/api/CalendarApi";
 import { useEffect } from "react";
 import MainLoader from "../../utils/Loaders/MainLoader";
+import { showToast } from './../../utils/Toastify';
 
 
 const Calendars = () => {
@@ -63,7 +64,12 @@ const Calendars = () => {
       refetch();
     }
   }, [isDeleteSuccess, isSuccess, refetch, resetForm]);
-
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("error", createData?.message);
+  }, [
+    error?.data?.message,createData,
+  ]);
   return (
     <>
       {isLoading && <MainLoader />}
@@ -82,16 +88,7 @@ const Calendars = () => {
               onSave={handleSubmit}
             >
               <div className="row">
-                {createData?.message && (
-                  <div className="alert alert-success text-center">
-                    {data?.message}
-                  </div>
-                )}
-                {error?.data?.message && (
-                  <div className="alert alert-danger text-center">
-                    {error?.data?.message}
-                  </div>
-                )}
+              
               </div>
               <form
                 className="w-100 from-scrollbar px-3"

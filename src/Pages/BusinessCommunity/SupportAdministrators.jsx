@@ -20,6 +20,7 @@ import {
 } from "../../Redux/api/UserApi";
 import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
+import { showToast } from './../../utils/Toastify';
 import {
   registrationSchema,
   updateregistrationSchema,
@@ -153,7 +154,17 @@ const SupportAdministrators = () => {
       refetch();
     }
   }, [isSuccess, reset, isUpdateSuccess, isDeleteSuccess, refetch]);
-
+  useEffect(() => {
+    showToast("success", updateData?.message);
+    showToast("error", updateError?.data?.message);
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    updateData?.message,
+    updateError?.data?.message,
+    error?.data?.message,
+    data?.message,
+  ]);
   return (
     <div className="card">
       <TableHeader title="Timesheet" className="py-3 pt-5 fs-3 card-header" />
@@ -168,16 +179,7 @@ const SupportAdministrators = () => {
           >
             <>
               <div className="d-flex flex-column w-100 justify-content-center align-items-center">
-                {data?.message && (
-                  <div className="text-center alert alert-success w-100">
-                    {data?.message}
-                  </div>
-                )}
-                {error && (
-                  <div className="text-center alert alert-success w-100">
-                    {error?.data?.message}
-                  </div>
-                )}
+              
                 <div className="row justify-content-center d-flex align-items-center">
                   <div className="col-md-12">
                     <div className="card-body">

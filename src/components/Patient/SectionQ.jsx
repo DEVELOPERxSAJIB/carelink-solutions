@@ -16,25 +16,25 @@ import { useCreatePatientMutation } from "../../Redux/api/PatientApi";
 import { useEffect } from "react";
 import { useUpdatePatientMutation } from "../../Redux/api/PatientApi";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
+import { showToast } from "./../../utils/Toastify";
 const SectionQForm = ({ editId }) => {
   const allSteps = useSelector(getAllSectionStepState);
-
   const [createPatient, { data, isLoading, error, isSuccess }] =
-  useCreatePatientMutation();
-  const [
-    updatePatient,
-    {
-      data: updateData,
-      isSuccess: isUpdateSuccess,
-      isLoading: isUpdateLoading,
-      error: updateError,
-    },
-  ] = useUpdatePatientMutation();
-  const dispatch = useDispatch();
-  const allFormData = useSelector(getAllSectionState);
-  console.log(allFormData)
-  const localSectionQ = JSON.parse(localStorage.getItem("SectionQ")) || {};
+    useCreatePatientMutation();
 
+    const [
+      updatePatient,
+      {
+        data: updateData,
+        isSuccess: isUpdateSuccess,
+        isLoading: isUpdateLoading,
+        error: updateError,
+      },
+    ] = useUpdatePatientMutation();
+    const dispatch = useDispatch();
+    const allFormData = useSelector(getAllSectionState);
+
+  const localSectionQ = JSON.parse(localStorage.getItem("SectionQ"));
   const [formData, setFormData] = useState({
     fallsPrevention: localSectionQ?.fallsPrevention || "",
     depressionIntervention: localSectionQ?.depressionIntervention || "",
@@ -42,7 +42,6 @@ const SectionQForm = ({ editId }) => {
     pressureUlcerPrevention: localSectionQ?.pressureUlcerPrevention || "",
     pressureUlcerTreatment: localSectionQ?.pressureUlcerTreatment || "",
   });
-
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -64,7 +63,6 @@ const SectionQForm = ({ editId }) => {
 
   useEffect(() => {
     const patientId = JSON.parse(localStorage.getItem("patient"))?._id || null;
-    console.log(patientId)
     if (isSuccess) {
       dispatch(resetForm());
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
@@ -75,8 +73,19 @@ const SectionQForm = ({ editId }) => {
   }, [isSuccess, dispatch, isUpdateSuccess, data?.payload]);
   useEffect(() => {
     setFormData({ ...allFormData });
-    setFormData({ ...localSectionQ });
   }, [allFormData]);
+
+  useEffect(() => {
+    showToast("success", updateData?.message);
+    showToast("error", updateError?.data?.message);
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    updateData?.message,
+    updateError?.data?.message,
+    error?.data?.message,
+    data?.message,
+  ]);
   if (isLoading) return <AuthLoader />;
   return (
     <form onSubmit={handleSubmit}>
@@ -201,26 +210,7 @@ const SectionQForm = ({ editId }) => {
           </div>
         </div>
       </div>
-      {data?.message && (
-        <div className="alert text-center mt-5 alert-success w-100">
-          {data?.message}
-        </div>
-      )}
-      {error?.data?.message && (
-        <div className="alert text-center mt-5 alert-danger w-100">
-          {error?.data?.message}
-        </div>
-      )}
-      {updateData?.message && (
-        <div className="alert text-center mt-5 alert-success w-100">
-          {updateData?.message}
-        </div>
-      )}
-      {updateError?.data?.message && (
-        <div className="alert text-center mt-5 alert-danger w-100">
-          {updateError?.data?.message}
-        </div>
-      )}
+
       <div className="d-flex align-items-center gap-4 hide-on-print">
         <button type="submit" className="btn btn-primary">
           {isUpdateLoading || isLoading ? "...Wait please" : "Submit"}

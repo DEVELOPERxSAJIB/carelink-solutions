@@ -85,9 +85,6 @@ const SectionGGForm = () => {
   };
   useEffect(()=>{
     setFormData({...data})
-    if(localSectionGG){
-      setFormData(localSectionGG)
-    }
   },[data])
   return (
     <form onSubmit={handleSubmit}>

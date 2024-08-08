@@ -5,6 +5,7 @@ import {
   useGetNotificationsQuery,
 } from "../../Redux/api/SettingApi.js";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
+import { showToast } from './../../utils/Toastify';
 
 const Notifications = () => {
   const [activeIndex, setActiveIndex] = useState(null); // State to track active accordion item
@@ -133,14 +134,22 @@ const Notifications = () => {
     setSettings(updatedSettings);
     createNotification({ settings: updatedSettings });
   };
+  useEffect(() => {
+
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+
+    error?.data?.message,
+    data?.message,
+  ]);
   if (isLoading) return <AuthLoader />;
   return (
     <div className="card">
       <PageHeader title="Notification" className="card-header fs-3" />
      
       <div className="card-body p-4">
-      {data?.message && <div className='alert alert-success'>{data?.message}</div>}
-      {error?.data?.message && <div className='alert alert-success'>{error?.data?.message}</div>}
+      
         <div className="accordion mt-4" id="accordionExample">
           {Object.entries(settings).map(([section, items], index) => (
             <div

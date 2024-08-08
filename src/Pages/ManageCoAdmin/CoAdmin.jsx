@@ -24,6 +24,7 @@ import swal from "sweetalert";
 import MultiSelect from "./../../components/FormElement/MultiSelect";
 import curdOption from "./../../utils/CurdOptions";
 import pagesOption from "./../../utils/PagesOptions";
+import { showToast } from './../../utils/Toastify';
 
 const CoAdmin = () => {
   const { data: addedBy } = useMeQuery();
@@ -161,7 +162,15 @@ const CoAdmin = () => {
       refetch();
     }
   }, [isSuccess, reset, isUpdateSuccess, isDeleteSuccess, refetch]);
-
+  useEffect(() => {
+    showToast("success", updateData?.message);
+    showToast("error", updateError?.data?.message);
+    showToast("error", error?.data?.message);
+  }, [
+    updateData?.message,
+    updateError?.data?.message,
+    error?.data?.message,
+  ]);
   return (
     <>
       <div className="card">
@@ -180,14 +189,7 @@ const CoAdmin = () => {
               >
                 <>
                   <div className="d-flex justify-content-center align-items-center">
-                    {/* {data?.message && (
-                    <div className="alert alert-success">{data?.message}</div>
-                  )}
-                  {error && (
-                    <div className="alert alert-success">
-                      {error?.data?.message}
-                    </div>
-                  )} */}
+                  
                     <div className="row justify-content-center d-flex align-items-center">
                       <div className="col-md-12">
                         <div className="card-body">
@@ -587,16 +589,7 @@ const CoAdmin = () => {
                                 </button>
                               </div>
 
-                              {/* Error message */}
-                              {isError && (
-                                <div
-                                  className="alert alert-danger text-center"
-                                  role="alert"
-                                >
-                                  {error?.data?.message ||
-                                    "Failed to register. Please try again later."}
-                                </div>
-                              )}
+                              
 
                               {/* Success message */}
                             </div>
@@ -822,16 +815,7 @@ const CoAdmin = () => {
                       </button>
                     </div>
 
-                    {/* Error message */}
-                    {isError && (
-                      <div
-                        className="alert alert-danger text-center"
-                        role="alert"
-                      >
-                        {error?.data?.message ||
-                          "Failed to register. Please try again later."}
-                      </div>
-                    )}
+                   
 
                     {/* Success message */}
                   </div>

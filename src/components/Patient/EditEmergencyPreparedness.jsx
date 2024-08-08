@@ -4,13 +4,16 @@ import CitySelect from "../../components/FormElement/CitySelect";
 import CountySelect from "../../components/FormElement/CountySelect";
 
 import { useUpdateEmergencyMutation } from "../../Redux/api/EmergencyApi"; // Adjust the import path as per your actual API setup
-
+import { useDispatch, useSelector } from "react-redux";
 import Template from "./../../components/FormElement/Template";
 import StateSelect from "./../../components/FormElement/StateSelect";
-
+import { showToast } from "./../../utils/Toastify";
+import {
+  updateSteps,
+  getAllSectionStepState,
+} from "./../../Redux/slices/SectionStep.js";
 const EditEmergencyPreparedness = ({ patientId }) => {
-  const { data: singleEmergency } = useGetEmergencyByPatientIdQuery(patientId);
-  console.log(singleEmergency); // Adjust hook name as per your actual hook
+  const { data: singleEmergency } = useGetEmergencyByPatientIdQuery(patientId);// Adjust hook name as per your actual hook
   const [
     updateEmergency,
     { data: updateData, isSuccess: isUpdateSuccess, error: updateError },
@@ -112,20 +115,21 @@ const EditEmergencyPreparedness = ({ patientId }) => {
     // if (isUpdateSuccess) {
     // }
   }, [isUpdateSuccess]);
+  useEffect(() => {
+    showToast("success", updateData?.message);
+    showToast("error", updateError?.data?.message);
+  }, [updateData?.message, updateError?.data?.message]);
 
+  const dispatch = useDispatch();
+  const allSteps = useSelector(getAllSectionStepState);
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+    }
+  }, [isUpdateSuccess]);
   return (
     <div>
       <form onSubmit={handleSubmit} className="card">
-        {updateData?.message && (
-          <div className="text-center alert-success alert">
-            {updateData?.message}
-          </div>
-        )}
-        {updateError?.data?.message && (
-          <div className="alert alert-close alert-danger text-center">
-            {updateError?.data?.message}
-          </div>
-        )}
         <div className="card-body">
           <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
             {/* Emergency Triage Information */}

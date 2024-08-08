@@ -47,7 +47,6 @@ const SectionMForm = () => {
   };
   useEffect(() => {
     setFormData({ ...data });
-    setFormData({ ...localSectionM });
   }, [data]);
   return (
     <form onSubmit={handleSubmit}>

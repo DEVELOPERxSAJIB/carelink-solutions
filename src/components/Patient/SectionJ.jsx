@@ -79,9 +79,7 @@ const SectionJForm = () => {
   };
   useEffect(() => {
     setFormData({ ...data });
-    if(localSectionJ){
-      setFormData(localSectionJ);
-    }
+
   }, [data]);
   return (
     <form onSubmit={handleSubmit}>

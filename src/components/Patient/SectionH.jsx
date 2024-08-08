@@ -32,7 +32,6 @@ const SectionHForm = () => {
   };
   useEffect(() => {
     setFormData({ ...data });
-    setFormData({ ...localSectionH });
   }, [data]);
   return (
     <form onSubmit={handleSubmit}>

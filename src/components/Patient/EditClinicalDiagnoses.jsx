@@ -5,11 +5,18 @@ import { useState, useEffect } from "react";
 import { useUpdateClinicalDiagnosisMutation } from "../../Redux/api/ClinicalDiagnosis"; // Adjust the import path as per your actual API setup
 
 import Template from "./../../components/FormElement/Template";
+import { showToast } from "./../../utils/Toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateSteps,
+  getAllSectionStepState,
+} from "./../../Redux/slices/SectionStep.js";
 
 const EditClinicalDiagnoses = ({ patientId }) => {
   const { data: singleClinical } =
     useGetClinicalDiagnosisByPatientIdQuery(patientId);
-  console.log(singleClinical);
+  const dispatch = useDispatch();
+  const allSteps = useSelector(getAllSectionStepState);
   const [
     updateClinicalDiagnosis,
     { data: updateData, isSuccess: isUpdateSuccess, error: updateError },
@@ -125,20 +132,17 @@ const EditClinicalDiagnoses = ({ patientId }) => {
       }));
     }
   }, [template]);
+
+  useEffect(() => {
+    dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+  }, [isUpdateSuccess]);
+  useEffect(() => {
+    showToast("success", updateData?.message);
+    showToast("error", updateError?.data?.message);
+  }, [updateData?.message, updateError?.data?.message]);
   return (
     <div>
-      {" "}
       <form onSubmit={handleAdmit} className="card">
-        {updateData?.message && (
-          <div className="text-center alert-success alert">
-            {updateData?.message}
-          </div>
-        )}
-        {updateError?.data?.message && (
-          <div className="alert alert-close alert-danger text-center">
-            {updateError?.data?.message}
-          </div>
-        )}
         <div className="card-body">
           <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
             <div className="accordion-item">
@@ -283,7 +287,7 @@ const EditClinicalDiagnoses = ({ patientId }) => {
                         id={dme}
                         name="dmeNeeded"
                         value={dme}
-                        checked={formData?.dmeNeeded?.includes(dme)||false}
+                        checked={formData?.dmeNeeded?.includes(dme) || false}
                         onChange={handleInputChange}
                         className="form-check-input"
                       />

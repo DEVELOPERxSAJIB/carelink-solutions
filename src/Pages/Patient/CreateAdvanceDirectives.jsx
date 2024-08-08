@@ -10,6 +10,7 @@ import {
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
+import { showToast } from './../../utils/Toastify';
 const CreateAdvanceDirectives = () => {
   const componentRef = useRef();
   const localData = JSON.parse(localStorage.getItem("Directive"));
@@ -45,18 +46,20 @@ const CreateAdvanceDirectives = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const patientId =JSON.parse(localStorage.getItem("patient"))
-    if (patientId) {
-      formData.patientId = allSteps.patientId;
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId ||patientId?._id;
       createDirective(formData);
       localStorage.removeItem("Directive");
+    }else{
+      showToast("error","Patient id required")
     }
   };
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
     const patientId =JSON.parse(localStorage.getItem("patient"))
-    if (patientId) {
-      formData.patientId = allSteps.patientId;
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId ||patientId?._id;
       createDirective(formData);
     }
     localStorage.setItem("Directive", JSON.stringify(formData));
@@ -65,8 +68,8 @@ const CreateAdvanceDirectives = () => {
   const handleSaveAndExit = (e) => {
     e.preventDefault();
     const patientId =JSON.parse(localStorage.getItem("patient"))
-    if (patientId) {
-      formData.patientId = allSteps.patientId;
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId ||patientId?._id;
     }
     localStorage.setItem("Directive", JSON.stringify(formData));
   };
@@ -86,6 +89,13 @@ const CreateAdvanceDirectives = () => {
       dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
     }
   }, [isSuccess]);
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    error?.data?.message,
+    data?.message,
+  ]);
   if (isLoading) return <AuthLoader />;
 
   return (
@@ -95,14 +105,7 @@ const CreateAdvanceDirectives = () => {
         className="card-header fs-3"
       />
       <div className="card-body w-100">
-        {data?.message && (
-          <div className="alert alert-success text-center">{data.message}</div>
-        )}
-        {error?.data?.message && (
-          <div className="alert alert-danger text-center">
-            {error.data.message}
-          </div>
-        )}
+        
         <div className="row">
           <div className="col-md-12">
             <label htmlFor="admission" className="form-label">

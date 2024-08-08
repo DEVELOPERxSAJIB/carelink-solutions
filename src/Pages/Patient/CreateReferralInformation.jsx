@@ -10,6 +10,7 @@ import {
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
+import { showToast } from "./../../utils/Toastify";
 const CreateReferralInformation = () => {
   const allSteps = useSelector(getAllSectionStepState);
   const dispatch = useDispatch();
@@ -57,29 +58,11 @@ const CreateReferralInformation = () => {
     formData.city = city;
     formData.state = state;
     const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId) {
-      formData.patientId = allSteps.patientId;
+    if (patientId?._id ||allSteps.patientId) {
+      formData.patientId = allSteps.patientId || patientId?._id;
       createReferral(formData);
-      localStorage.removeItem("Referral");
-      localStorage.removeItem("patient")
-      localStorage.removeItem("SectionA")
-      localStorage.removeItem("SectionB")
-      localStorage.removeItem("SectionC")
-      localStorage.removeItem("SectionD")
-      localStorage.removeItem("SectionE")
-      localStorage.removeItem("SectionF")
-      localStorage.removeItem("SectionG")
-      localStorage.removeItem("SectionGG")
-      localStorage.removeItem("SectionH")
-      localStorage.removeItem("SectionI")
-      localStorage.removeItem("SectionJ")
-      localStorage.removeItem("SectionK")
-      localStorage.removeItem("SectionL")
-      localStorage.removeItem("SectionM")
-      localStorage.removeItem("SectionN")
-      localStorage.removeItem("SectionO")
-      localStorage.removeItem("SectionP")
-      localStorage.removeItem("SectionQ")
+    } else {
+      showToast("error", "Patient id required");
     }
   };
 
@@ -88,30 +71,12 @@ const CreateReferralInformation = () => {
     formData.city = city;
     formData.state = state;
     const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId) {
-      formData.patientId = allSteps.patientId;
+    if (patientId?._id ||allSteps.patientId) {
+      formData.patientId = allSteps.patientId || patientId?._id;
       localStorage.setItem("Referral", JSON.stringify(formData));
       createReferral(formData);
-      localStorage.removeItem("patient")
-      localStorage.removeItem("patient")
-      localStorage.removeItem("SectionA")
-      localStorage.removeItem("SectionB")
-      localStorage.removeItem("SectionC")
-      localStorage.removeItem("SectionD")
-      localStorage.removeItem("SectionE")
-      localStorage.removeItem("SectionF")
-      localStorage.removeItem("SectionG")
-      localStorage.removeItem("SectionGG")
-      localStorage.removeItem("SectionH")
-      localStorage.removeItem("SectionI")
-      localStorage.removeItem("SectionJ")
-      localStorage.removeItem("SectionK")
-      localStorage.removeItem("SectionL")
-      localStorage.removeItem("SectionM")
-      localStorage.removeItem("SectionN")
-      localStorage.removeItem("SectionO")
-      localStorage.removeItem("SectionP")
-      localStorage.removeItem("SectionQ")
+    } else {
+      showToast("error", "Patient id required");
     }
   };
   const handleSaveAndExit = (e) => {
@@ -119,36 +84,38 @@ const CreateReferralInformation = () => {
     formData.city = city;
     formData.state = state;
     const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId) {
-      formData.patientId = allSteps.patientId;
+    if (patientId?._id ||allSteps.patientId) {
+      formData.patientId = allSteps.patientId || patientId?._id;
       localStorage.setItem("Referral", JSON.stringify(formData));
       createReferral(formData);
-      localStorage.removeItem("patient")
-      localStorage.removeItem("SectionA")
-      localStorage.removeItem("SectionB")
-      localStorage.removeItem("SectionC")
-      localStorage.removeItem("SectionD")
-      localStorage.removeItem("SectionE")
-      localStorage.removeItem("SectionF")
-      localStorage.removeItem("SectionG")
-      localStorage.removeItem("SectionGG")
-      localStorage.removeItem("SectionH")
-      localStorage.removeItem("SectionI")
-      localStorage.removeItem("SectionJ")
-      localStorage.removeItem("SectionK")
-      localStorage.removeItem("SectionL")
-      localStorage.removeItem("SectionM")
-      localStorage.removeItem("SectionN")
-      localStorage.removeItem("SectionO")
-      localStorage.removeItem("SectionP")
-      localStorage.removeItem("SectionQ")
+    } else {
+      showToast("error", "Patient id required");
     }
   };
 
   useEffect(() => {
     if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: 0 }));
-      localStorage.removeItem("patient")
+      localStorage.removeItem("Referral");
+      localStorage.removeItem("patient");
+      localStorage.removeItem("SectionA");
+      localStorage.removeItem("SectionB");
+      localStorage.removeItem("SectionC");
+      localStorage.removeItem("SectionD");
+      localStorage.removeItem("SectionE");
+      localStorage.removeItem("SectionF");
+      localStorage.removeItem("SectionG");
+      localStorage.removeItem("SectionGG");
+      localStorage.removeItem("SectionH");
+      localStorage.removeItem("SectionI");
+      localStorage.removeItem("SectionJ");
+      localStorage.removeItem("SectionK");
+      localStorage.removeItem("SectionL");
+      localStorage.removeItem("SectionM");
+      localStorage.removeItem("SectionN");
+      localStorage.removeItem("SectionO");
+      localStorage.removeItem("SectionP");
+      localStorage.removeItem("SectionQ");
     }
   }, [isSuccess]);
   useEffect(() => {
@@ -156,22 +123,16 @@ const CreateReferralInformation = () => {
     setState(localReferralData?.state || "");
     setFormData({ ...localReferralData });
   }, []);
-
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [error?.data?.message, data?.message]);
   if (isLoading) return <AuthLoader />;
 
   return (
     <div ref={componentRef} className="card">
       <PageHeader title="Referral Information" className="card-header fs-3 " />
-      <div className="card-header">
-        {data?.message && (
-          <div className="alert alert-success text-center">{data?.message}</div>
-        )}
-        {error?.data?.message && (
-          <div className="alert alert-danger text-center">
-            {error?.data?.message}
-          </div>
-        )}
-      </div>
+      <div className="card-header"></div>
       <div className="card-body">
         <form onSubmit={handleSubmit}>
           {/* City */}

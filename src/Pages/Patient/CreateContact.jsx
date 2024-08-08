@@ -13,6 +13,7 @@ import {
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
+import { showToast } from './../../utils/Toastify';
 const ContactForm = () => {
   const allSteps = useSelector(getAllSectionStepState);
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const ContactForm = () => {
   const componentRef = useRef();
   const [createContact, { data, isLoading, isSuccess, error }] =
     useCreateContactMutation();
-  const navigate = useNavigate();
+
   const localContactData = JSON.parse(localStorage.getItem("Contact"));
   //console.log(localContactData)
   const [formData, setFormData] = useState({
@@ -245,10 +246,12 @@ const ContactForm = () => {
         comments,
         remainingCharacters,
       };
-      if (patientId) {
-        contactData.patientId = allSteps.patientId;
+      if (patientId?._id) {
+        contactData.patientId = allSteps.patientId ||patientId?._id;
         createContact(contactData);
         localStorage.removeItem("Contact");
+      }else{
+        showToast("error","Patient id required")
       }
     } catch (error) {
       console.error("Error creating contact:", error);
@@ -282,10 +285,12 @@ const ContactForm = () => {
         comments,
         remainingCharacters,
       };
-      if (patientId) {
-        contactData.patientId = allSteps.patientId;
+      if (patientId?._id) {
+        contactData.patientId = allSteps.patientId ||patientId?._id;
         createContact(contactData);
         localStorage.setItem("Contact", JSON.stringify(contactData));
+      }else{
+        showToast("error","Patient id required")
       }
     } catch (error) {
       console.error("Error creating contact:", error);
@@ -319,9 +324,11 @@ const ContactForm = () => {
         comments,
         remainingCharacters,
       };
-      if (patientId) {
-        contactData.patientId = allSteps.patientId;
+      if (patientId?._id) {
+        contactData.patientId = allSteps.patientId ||patientId?._id;
         localStorage.setItem("Contact", JSON.stringify(contactData));
+      }else{
+        showToast("error","Patient id required")
       }
     } catch (error) {
       console.error("Error creating contact:", error);
@@ -360,6 +367,14 @@ const ContactForm = () => {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
     }
   }, [isSuccess]);
+  useEffect(() => {
+
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    error?.data?.message,
+    data?.message,
+  ]);
   if (isLoading) return <AuthLoader />;
 
   return (
@@ -369,16 +384,7 @@ const ContactForm = () => {
       <div className="card-body">
         <div className="accordion" id="emergencyContactsAccordion">
           {/* Primary Emergency Contact */}
-          {data?.message && (
-            <div className="alert alert-success text-center">
-              {data?.message}
-            </div>
-          )}
-          {error?.data?.message && (
-            <div className="alert alert-danger text-center">
-              {error?.data?.message}
-            </div>
-          )}
+         
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingPrimary">
               <button

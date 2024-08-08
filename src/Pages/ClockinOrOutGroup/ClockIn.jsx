@@ -8,6 +8,7 @@ import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import { useNavigate } from "react-router-dom";
 import { useCreateClockMutation } from "../../Redux/api/ClockApi";
 import { useGetAllSubUsersQuery } from "../../Redux/api/SubUserApi.js";
+import { showToast } from './../../utils/Toastify';
 const ClockIn = () => {
   const [ multiValue,setMultiValue] = useState([]);
 
@@ -52,6 +53,13 @@ const ClockIn = () => {
       navigate("/view-log");
     }
   }, [isSuccess]);
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    error?.data?.message,
+    data?.message,
+  ]);
   if (isLoading) return <AuthLoader />;
   return (
     <div>
@@ -60,15 +68,7 @@ const ClockIn = () => {
           title="Add Group Clock In Sheet"
           className="card-header fs-3"
         />
-        {data?.message && (
-          <div className="alert alert-success text-center">{data.message}</div>
-        )}
-
-        {error?.data?.message && (
-          <div className="alert alert-danger text-center">
-            {error?.data?.message}
-          </div>
-        )}
+     
 
         <form onSubmit={handleSubmit} className="card-body">
           <div className="row g-6">

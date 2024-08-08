@@ -14,7 +14,7 @@ import useFormValidation from "./../../hook/useFormValidation";
 import MultiSelect from "./../../components/FormElement/MultiSelect";
 import curdOption from "./../../utils/CurdOptions";
 import pagesOption from "./../../utils/PagesOptions";
-
+import { showToast } from "../../utils/Toastify";
 import {
   useMeQuery,
   useGetAllAdminQuery,
@@ -164,7 +164,18 @@ const Admin = () => {
       refetch();
     }
   }, [isSuccess, reset, isUpdateSuccess, isDeleteSuccess, refetch]);
-
+  useEffect(() => {
+    showToast("success", updateData?.message);
+    showToast("success", deleteData?.message);
+    showToast("error", updateError?.data?.message);
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    updateData?.message,
+    updateError?.data?.message,
+    error?.data?.message,
+    data?.message,deleteData?.message
+  ]);
   return (
     <div className="card">
       <TableHeader title="Our Admins" className="py-3 pt-5 fs-3 card-header" />
@@ -178,16 +189,6 @@ const Admin = () => {
           >
             <>
               <div className="d-flex flex-column w-100 justify-content-center align-items-center">
-                {data?.message && (
-                  <div className="alert text-center alert-success w-100">
-                    {data?.message}
-                  </div>
-                )}
-                {error && (
-                  <div className="alert text-center alert-success w-100">
-                    {error?.data?.message}
-                  </div>
-                )}
                 <div className="row justify-content-center d-flex align-items-center">
                   <div className="col-md-12">
                     <div className="card-body">
@@ -941,26 +942,7 @@ const Admin = () => {
           )}
         </div>
         <div className="mt-5 w-100">
-          {updateData?.message && (
-            <div className="alert text-center alert-success w-100 text-center">
-              {updateData?.message}
-            </div>
-          )}
-          {updateError?.data?.message && (
-            <div className="alert text-center alert-danger w-100 text-center">
-              {updateError?.data?.message}
-            </div>
-          )}
-          {deleteData?.message && (
-            <div className="alert text-center alert-success w-100 text-center">
-              {deleteData?.message}
-            </div>
-          )}
-          {deleteError?.data?.message && (
-            <div className="alert text-center alert-danger w-100 text-center">
-              {deleteError?.data?.message}
-            </div>
-          )}
+        
           <DataTable
             columns={columns}
             data={data?.payload?.users ?? []}

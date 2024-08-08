@@ -50,16 +50,7 @@ const CreateNewProvider = () => {
         <div className="card-body">
           <form onSubmit={handleSubmit} className="w-100  px-3">
             <div className="row">
-              {data?.message && (
-                <div className="alert alert-success text-center">
-                  {data?.message}
-                </div>
-              )}
-              {error?.data?.message && (
-                <div className="alert alert-danger text-center">
-                  {error?.data?.message}
-                </div>
-              )}
+              
             </div>
             <div className="row">
               <div className="col-md-6 mb-3">

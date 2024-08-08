@@ -9,6 +9,7 @@ import {
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
+import { showToast } from "./../../utils/Toastify";
 const CreateClinicalAndDiagnoses = () => {
   const componentRef = useRef();
   const [createClinicalDiagnosis, { data, error, isLoading, isSuccess }] =
@@ -106,37 +107,43 @@ const CreateClinicalAndDiagnoses = () => {
 
   const handleAdmit = (e) => {
     e.preventDefault();
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if(patientId){
-      formData.patientId= allSteps.patientId
+    const patientId = JSON.parse(localStorage.getItem("patient"));
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId ||patientId?._id;
       createClinicalDiagnosis(formData);
       localStorage.removeItem("ClinicalDiagnosis");
+    }else{
+      showToast("error","Patient id required")
     }
   };
 
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if(patientId){
-      formData.patientId= allSteps.patientId
+    const patientId = JSON.parse(localStorage.getItem("patient"));
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId ||patientId?._id;
       createClinicalDiagnosis(formData);
       localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
+    }else{
+      showToast("error","Patient id required")
     }
   };
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if(patientId){
-      formData.patientId= allSteps.patientId
+    const patientId = JSON.parse(localStorage.getItem("patient"));
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId ||patientId?._id;
       createClinicalDiagnosis(formData);
       localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
+    }else{
+      showToast("error","Patient id required")
     }
   };
 
   const allSteps = useSelector(getAllSectionStepState);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (template?.value) {
       setFormData((prevFormData) => ({
@@ -147,24 +154,21 @@ const CreateClinicalAndDiagnoses = () => {
     }
   }, [template]);
   useEffect(() => {
-    if(isSuccess){
-      dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
+    if (isSuccess) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
     }
   }, [isSuccess]);
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [error?.data?.message, data?.message]);
   if (isLoading) return <AuthLoader />;
 
   return (
     <form ref={componentRef} onSubmit={handleAdmit} className="card w-100">
       <div className="card-body w-100">
         <PageHeader title="Clinical/Diagnosis" className="card-header fs-3" />
-        {data?.message && (
-          <div className="alert alert-success text-center">{data?.message}</div>
-        )}
-        {error?.data?.message && (
-          <div className="alert alert-danger text-center">
-            {error?.data?.message}
-          </div>
-        )}
+
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <div className="accordion-item">
             <h2

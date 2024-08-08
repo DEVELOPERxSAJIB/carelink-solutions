@@ -14,6 +14,7 @@ import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
 import Template from "./../../components/FormElement/Template";
 import { useMeQuery } from "../../Redux/api/UserApi";
+import { showToast } from "./../../utils/Toastify";
 const Payers = () => {
   const { data: lgData } = useMeQuery();
   const navigate = useNavigate();
@@ -188,6 +189,19 @@ const Payers = () => {
       refetch();
     }
   }, [isUpdateSuccess, isDeleteSuccess]);
+  useEffect(() => {
+    showToast("success", deleteData?.message);
+    showToast("success", updateData?.message);
+    showToast("error", updateError?.data?.message);
+
+    showToast("success", data?.message);
+  }, [
+    deleteData?.message,
+    updateData?.message,
+    data?.message,
+    updateError?.data?.message,
+    data?.message,
+  ]);
   if (isLoading) return <MainLoader />;
 
   return (
@@ -246,18 +260,7 @@ const Payers = () => {
             </button>
           )}
         </div>
-        <div className="mt-5">
-          {updateData?.message && (
-            <div className="text-center alert-success alert">
-              {updateData?.message}
-            </div>
-          )}
-          {deleteData?.message && (
-            <div className="text-center alert-success alert">
-              {deleteData?.message}
-            </div>
-          )}
-        </div>
+        <div className="mt-5"></div>
         {show && (
           <EditModal
             title="Edit payer"
@@ -272,14 +275,6 @@ const Payers = () => {
             <form onSubmit={handleSubmit} className="card">
               <div className="card-body">
                 <div className="accordion" id="payerAccordion">
-                  {/* Primary Emergency Contact */}
-
-                  {updateError?.data?.message && (
-                    <div className="alert alert-close alert-danger text-center">
-                      {updateError?.data?.message}
-                    </div>
-                  )}
-
                   <div className="accordion-item">
                     <h2 className="accordion-header" id="headingPrimary">
                       <button
@@ -634,7 +629,6 @@ const Payers = () => {
                           {formData?.occurrenceSpans &&
                             formData?.occurrenceSpans?.map((span, index) => (
                               <React.Fragment key={`occurrenceSpan-${index}`}>
-                                
                                 <div className="col-md-4">
                                   <label
                                     htmlFor={`occurrenceSpan${index + 1}Code`}

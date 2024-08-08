@@ -7,9 +7,12 @@ import CountySelect from "./../../components/FormElement/CountySelect";
 import Template from "./../../components/FormElement/Template";
 
 import { useUpdateContactMutation } from "../../Redux/api/Contact";
-
-import swal from "sweetalert";
-
+import { showToast } from "./../../utils/Toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateSteps,
+  getAllSectionStepState,
+} from "./../../Redux/slices/SectionStep.js";
 const EditContract = ({ patientId }) => {
   const [
     updateContact,
@@ -17,7 +20,9 @@ const EditContract = ({ patientId }) => {
   ] = useUpdateContactMutation();
 
   const { data: singleContact } = useGetContactByPatientIdQuery(patientId);
-  console.log(singleContact);
+  console.log(singleContact)
+  const dispatch = useDispatch();
+  const allSteps = useSelector(getAllSectionStepState);
   const [editId, setEditId] = useState("");
   const [formData, setFormData] = useState({
     representativeContacted: "",
@@ -389,24 +394,19 @@ const EditContract = ({ patientId }) => {
   }, [singleContact?.payload?.contact]);
 
   useEffect(() => {
-    // if (isUpdateSuccess) {
-    // }
-  }, [isUpdateSuccess]);
+    showToast("success", updateData?.message);
+    showToast("error", updateError?.data?.message);
+  }, [updateData?.message, updateError?.data?.message]);
 
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+    }
+  }, [isUpdateSuccess]);
   return (
     <div>
       {" "}
       <form onSubmit={handleSubmit} className="card">
-        {updateData?.message && (
-          <div className="text-center alert-success alert">
-            {updateData?.message}
-          </div>
-        )}
-        {updateError?.data?.message && (
-          <div className="alert alert-close alert-danger text-center">
-            {updateError?.data?.message}
-          </div>
-        )}
         <div className="card-body">
           <div className="accordion" id="emergencyContactsAccordion">
             <div className="accordion-item">

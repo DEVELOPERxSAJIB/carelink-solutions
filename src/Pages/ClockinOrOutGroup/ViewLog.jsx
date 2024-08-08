@@ -9,6 +9,7 @@ import MultiSelect from "./../../components/FormElement/MultiSelect";
 import useFormFields from "./../../hook/useFormHook";
 import  swal  from 'sweetalert';
 import { useGetAllSubUsersQuery } from "../../Redux/api/SubUserApi.js";
+import { showToast } from './../../utils/Toastify';
 import {
   useGetAllClocksQuery,
   useUpdateClockMutation,
@@ -131,7 +132,17 @@ setMultiValue(rowData?.individuals?.map((item)=>({value:item._id,label:item.firs
       refetch();
     }
   }, [isUpdateSuccess, isDeleteSuccess]);
+  useEffect(() => {
+    showToast("success", deleteData?.message);
+    showToast("success", updateData?.message);
+    showToast("error", updateError?.data?.message);
+    showToast("error", error?.data?.message);
+  }, [
+    updateData?.message,deleteData?.message,
+    updateError?.data?.message,
+    error?.data?.message,
 
+  ]);
   if (isLoading || isUpdateLoading || isDeleteLoading) return <AuthLoader />;
   return (
     <div className="card">
@@ -142,29 +153,7 @@ setMultiValue(rowData?.individuals?.map((item)=>({value:item._id,label:item.firs
       
 
       <div className="card-body">
-      {data?.message && (
-        <div className="alert alert-success text-center">{data.message}</div>
-      )}
-      {updateData?.message && (
-        <div className="alert alert-success text-center">{updateData.message}</div>
-      )}
-
-      {deleteData?.message && (
-        <div className="alert alert-success text-center">
-          {deleteData.message}
-        </div>
-      )}
-
-      {deleteError?.data?.message && (
-        <div className="alert alert-danger text-center">
-          {deleteError?.data?.message}
-        </div>
-      )}
-      {error?.data?.message && (
-        <div className="alert alert-danger text-center">
-          {error?.data?.message}
-        </div>
-      )}
+      
         <div className="gap-3 d-flex flex-wrap">
           <button
             className="btn btn-secondary create-new btn-primary waves-effect waves-light"
@@ -239,11 +228,7 @@ setMultiValue(rowData?.individuals?.map((item)=>({value:item._id,label:item.firs
             <form onSubmit={handleSubmit} className="card-body">
               <div className="row">
                
-                {updateError?.data?.message && (
-                  <div className="alert alert-danger text-center">
-                    {updateError?.data?.message}
-                  </div>
-                )}
+               
               </div>
               <div className="row g-6">
                 <div className="col-md-6">

@@ -36,7 +36,6 @@ const dispatch = useDispatch()
   };
   useEffect(()=>{
     setFormData({...data})
-    setFormData({...localSectionG})
     },[data])
   return (
     <form onSubmit={handleSubmit}>

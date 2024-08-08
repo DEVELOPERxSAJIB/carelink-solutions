@@ -7,6 +7,7 @@ import { useGetAllSubUsersQuery } from "../../Redux/api/SubUserApi";
 import useFormFields from "./../../hook/useFormHook";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import { useNavigate } from "react-router-dom";
+import { showToast } from './../../utils/Toastify';
 
 const AddNewMileage = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -50,7 +51,14 @@ const AddNewMileage = () => {
       navigate("/mileage-log");
     }
   });
+  useEffect(() => {
 
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    error?.data?.message,
+    data?.message,
+  ]);
   if (isLoading) return <AuthLoader />;
   
   return (
@@ -58,16 +66,7 @@ const AddNewMileage = () => {
       <div className="card mb-6">
         <PageHeader title="Add Mileage Log" className="card-header fs-3" />
         <form className="card-body" onSubmit={handleSubmit}>
-          {data?.message && (
-            <div className="alert alert-success text-center">
-              {data.message}
-            </div>
-          )}
-          {error?.data?.message && (
-            <div className="alert alert-danger text-center">
-              {error?.data?.message}
-            </div>
-          )}
+         
           <div className="row g-6">
             <div className="col-md-12">
               <label className="form-label" htmlFor="dateOfService">

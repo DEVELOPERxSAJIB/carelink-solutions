@@ -16,6 +16,7 @@ import EditModal from "./../../components/Models/EditModal";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import DatePicker from "react-datepicker";
 import { useMeQuery } from "../../Redux/api/UserApi";
+import { showToast } from "./../../utils/Toastify";
 const ViewAssignedMileage = () => {
   const { data: logData } = useMeQuery();
   const [editId, setEditId] = useState("");
@@ -116,6 +117,21 @@ const ViewAssignedMileage = () => {
       resetForm();
     }
   }, [isCreateSuccess, isDeleteSuccess, isUpdateSuccess]);
+  useEffect(() => {
+    showToast("success", deleteData?.message);
+    showToast("success", createData?.message);
+    showToast("success", updateData?.message);
+    showToast("error", updateError?.data?.message);
+    showToast("error", createError?.data?.message);
+  }, [
+    deleteData?.message,
+    updateData?.message,
+    createData?.message,
+    createError?.data?.message,
+    updateError?.data?.message,
+
+  ]);
+  
   if (isLoading || isDeleteLoading) return <AuthLoader />;
   return (
     <div className="card">
@@ -124,18 +140,6 @@ const ViewAssignedMileage = () => {
         className="py-3 pt-5 fs-3 card-header"
       />
       <div className="card-body">
-        {deleteData?.message && (
-          <div className="alert alert-success text-center">
-            {deleteData.message}
-          </div>
-        )}
-
-        {deleteError?.data?.message && (
-          <div className="alert alert-danger text-center">
-            {deleteError?.data?.message}
-          </div>
-        )}
-
         <div className="gap-3 d-flex flex-wrap">
           {logData?.payload?.user?.curd?.includes("create") && (
             <FullscreenModal
@@ -144,16 +148,7 @@ const ViewAssignedMileage = () => {
               id="addmileage"
             >
               <form onSubmit={handleSubmit}>
-                {createError?.data?.message && (
-                  <div className="alert alert-danger text-center">
-                    {createError?.data?.message}
-                  </div>
-                )}
-                {createData?.message && (
-                  <div className="alert alert-success text-center">
-                    {createData.message}
-                  </div>
-                )}
+              
 
                 <div className="row">
                   <div className="col-md-6 mb-3">
@@ -271,17 +266,7 @@ const ViewAssignedMileage = () => {
               onClose={setShow}
             >
               <form onSubmit={handleSubmit}>
-                {updateData?.message && (
-                  <div className="alert alert-success text-center">
-                    {updateData.message}
-                  </div>
-                )}
-
-                {updateError?.data?.message && (
-                  <div className="alert alert-danger text-center">
-                    {updateError?.data?.message}
-                  </div>
-                )}
+              
 
                 <div className="row">
                   <div className="col-md-6 mb-3">

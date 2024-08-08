@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import CitySelect from "./../../components/FormElement/CitySelect";
 import { useGetPharmacyByPatientIdQuery } from "../../Redux/api/PharmacyApi";
+import { showToast } from './../../utils/Toastify';
 
 const EditPharmacy = ({ patientId }) => {
   const { data: singlePharmacy } = useGetPharmacyByPatientIdQuery(patientId);
@@ -82,19 +83,15 @@ const EditPharmacy = ({ patientId }) => {
     updatePharmacy({ pharmacyId: editId, pharmacyData: formData });
   };
   useEffect(() => {}, [isUpdateSuccess]);
+  useEffect(() => {
+    showToast("success", updateData?.message)
+    showToast("error", updateError?.data?.message)
+ }, [updateData?.message,
+   updateError?.data?.message]);
   return (
     <div>
       <form onSubmit={handleSubmit} className="card">
-        {updateData?.message && (
-          <div className="text-center alert-success alert">
-            {updateData?.message}
-          </div>
-        )}
-        {updateError?.data?.message && (
-          <div className="alert alert-close alert-danger text-center">
-            {updateError?.data?.message}
-          </div>
-        )}
+        
         <div className="card-body">
           <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
             {/* Pharmacy Information */}

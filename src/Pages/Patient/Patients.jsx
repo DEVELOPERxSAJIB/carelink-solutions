@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
-import SelectState from "../../components/FormElement/StateSelect";
-import CountySelect from "../../components/FormElement/CountySelect";
-import CitySelect from "../../components/FormElement/CitySelect";
+
 import { useGetAllPatientsQuery } from "../../Redux/api/PatientApi";
 import {
-  useUpdatePatientMutation,
   useDeletePatientMutation,
 } from "../../Redux/api/PatientApi";
 
@@ -57,6 +54,7 @@ import EditContract from "./../../components/Patient/EditContract";
 import EditEmergencyPreparedness from "./../../components/Patient/EditEmergencyPreparedness";
 import EditAdvanceDirectives from "./../../components/Patient/EditAdvanceDirectives";
 import EditReferralInformation from "./../../components/Patient/EditReferralInformation";
+import { showToast } from './../../utils/Toastify';
 const Patients = () => {
   const { data: lgData } = useMeQuery();
   const dispatch = useDispatch();
@@ -65,7 +63,7 @@ const Patients = () => {
 
   const [
     deletePatient,
-    { data: deleteData, isSuccess: isDeleteSuccess, error: deleteError },
+    { data: deleteData, isSuccess: isDeleteSuccess },
   ] = useDeletePatientMutation();
   const { data, isLoading, refetch } = useGetAllPatientsQuery(editId);
   const [show, setShow] = useState(false);
@@ -656,6 +654,11 @@ const Patients = () => {
       refetch();
     }
   }, [isDeleteSuccess, refetch]);
+  useEffect(() => {
+    showToast("success", deleteData?.message);
+  }, [
+    deleteData?.message,
+  ]);
   return (
     <>
       {isLoading ? (
@@ -666,16 +669,7 @@ const Patients = () => {
             title="Patient List"
             className="py-3 pt-5 fs-3 card-header"
           />
-          {deleteData?.message && (
-            <div className="alert alert-success text-center">
-              {deleteData?.message}
-            </div>
-          )}
-          {deleteError?.data?.message && (
-            <div className="alert alert-danger text-center">
-              {deleteError?.data?.message}
-            </div>
-          )}
+          
 
           <div className="card-body">
             <div className="gap-3 d-flex flex-wrap">

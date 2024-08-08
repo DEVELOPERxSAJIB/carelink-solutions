@@ -20,6 +20,7 @@ import {
 } from "../../Redux/api/UserApi";
 import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
+import { showToast } from './../../utils/Toastify';
 import {
   registrationSchema,
   updateregistrationSchema,
@@ -153,7 +154,18 @@ const HealthCareProfessional = () => {
       refetch();
     }
   }, [isSuccess, reset, isUpdateSuccess, isDeleteSuccess, refetch]);
-
+  useEffect(() => {
+    showToast("success", deleteData?.message);
+    showToast("success", updateData?.message);
+    showToast("error", updateError?.data?.message);
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    updateData?.message,deleteData?.message,
+    updateError?.data?.message,
+    error?.data?.message,
+    data?.message,
+  ]);
   return (
     <div className="card">
       <TableHeader
@@ -171,16 +183,7 @@ const HealthCareProfessional = () => {
           >
             <>
               <div className="d-flex flex-column w-100 justify-content-center align-items-center">
-                {data?.message && (
-                  <div className="text-center alert alert-success w-100">
-                    {data?.message}
-                  </div>
-                )}
-                {error && (
-                  <div className="text-center alert alert-success w-100">
-                    {error?.data?.message}
-                  </div>
-                )}
+                
                 <div className="row justify-content-center d-flex align-items-center">
                   <div className="col-md-12">
                     <div className="card-body">
@@ -547,17 +550,7 @@ const HealthCareProfessional = () => {
                             </button>
                           </div>
 
-                          {/* Error message */}
-                          {isError && (
-                            <div
-                              className="alert alert-danger text-center"
-                              role="alert"
-                            >
-                              {error?.data?.message ||
-                                "Failed to register. Please try again later."}
-                            </div>
-                          )}
-
+                         
                           {/* Success message */}
                         </div>
                       </form>
@@ -780,16 +773,7 @@ const HealthCareProfessional = () => {
                   </div>
 
                   {/* Error message */}
-                  {isError && (
-                    <div
-                      className="alert alert-danger text-center"
-                      role="alert"
-                    >
-                      {error?.data?.message ||
-                        "Failed to register. Please try again later."}
-                    </div>
-                  )}
-
+                 
                   {/* Success message */}
                 </div>
               </form>
@@ -860,26 +844,7 @@ const HealthCareProfessional = () => {
           </button>
         </div>
         <div className="mt-5">
-          {updateData?.message && (
-            <div className="alert alert-success w-100 text-center">
-              {updateData?.message}
-            </div>
-          )}
-          {updateError?.data?.message && (
-            <div className="alert alert-danger w-100 text-center">
-              {updateError?.data?.message}
-            </div>
-          )}
-          {deleteData?.message && (
-            <div className="alert alert-success w-100 text-center">
-              {deleteData?.message}
-            </div>
-          )}
-          {deleteError?.data?.message && (
-            <div className="alert alert-danger w-100 text-center">
-              {deleteError?.data?.message}
-            </div>
-          )}
+          
           <DataTable
             columns={columns}
             data={data?.payload?.users ?? []}

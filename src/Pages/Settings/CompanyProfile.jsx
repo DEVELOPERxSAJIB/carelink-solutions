@@ -6,6 +6,7 @@ import StateSelect from "./../../components/FormElement/StateSelect";
 import CitySelect from "./../../components/FormElement/CitySelect";
 import {useCreateCompanyMutation,useCompanyProfileGetByIdQuery} from "../../Redux/api/SettingApi"
 import AuthLoader from './../../utils/Loaders/AuthLoader';
+import { showToast } from './../../utils/Toastify';
 const CompanyProfile = () => {
   const [createCompany,{data,isLoading,isSuccess,error}]=useCreateCompanyMutation()
   const {data:companyProfile,refetch}=useCompanyProfileGetByIdQuery()
@@ -65,6 +66,14 @@ const CompanyProfile = () => {
       
     }
   },[isSuccess,refetch])
+  useEffect(() => {
+
+    showToast("error", error?.data?.message);
+    showToast("success", data?.message);
+  }, [
+    error?.data?.message,
+    data?.message,
+  ]);
   if(isLoading) return <AuthLoader/>
   return (
     <div>
@@ -415,12 +424,7 @@ const CompanyProfile = () => {
               Save
             </button>
           </div>
-          {data?.message &&<div className="alert alert-success mt-2 text-center">
-            {data?.message}
-          </div>}
-          {error?.data?.message&&<div className="alert alert-danger mt-2 text-center">
-            {error?.data?.message}
-          </div>}
+         
         </form>
       </div>
     </div>

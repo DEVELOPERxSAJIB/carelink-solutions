@@ -10,8 +10,9 @@ const CreatePatient2 = () => {
   const dispatch = useDispatch();
 
   const data = useSelector(getAllSectionState);
+
   const localSectionA = JSON.parse(localStorage.getItem("SectionA"));
-  //console.log(localSectionA)
+
   const [formData, setFormData] = useState({
     npi: localSectionA?.npi || "",
     cmsCertificationNumber: localSectionA?.cmsCertificationNumber || "",
@@ -97,7 +98,7 @@ const CreatePatient2 = () => {
   };
   useEffect(() => {
     setFormData({ ...data });
-    setFormData({...localSectionA})
+
   }, [data]);
 
   return (
