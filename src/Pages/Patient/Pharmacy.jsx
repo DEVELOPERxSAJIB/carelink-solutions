@@ -15,6 +15,7 @@ import CitySelect from "./../../components/FormElement/CitySelect";
 import {useMeQuery} from "../../Redux/api/UserApi"
 import swal from "sweetalert";
 import Alert from "./../../components/Alert/Alert";
+import { showToast } from './../../utils/Toastify';
 const Pharmacy = () => {
   const {data:lgData} = useMeQuery()
   const { data, isLoading, refetch } = useGetAllPharmaciesQuery();
@@ -141,8 +142,17 @@ const Pharmacy = () => {
       refetch();
     }
   }, [isUpdateSuccess, isDeleteSuccess]);
-  const message = updateData?.message || deleteData?.message;
-  const errors = updateError?.data?.message || deleteError?.data?.message;
+  useEffect(() => {
+    showToast("error", updateError?.data?.message);
+    showToast("success", data?.message);
+    showToast("success", updateData?.message);
+    showToast("success", deleteData?.message);
+  }, [
+    data?.message,
+    updateError?.data?.message,
+    updateData?.message,
+    deleteData?.message,
+  ]);
   if (isLoading) return <MainLoader />;
   return (
     <div className="card">
@@ -151,8 +161,7 @@ const Pharmacy = () => {
         className="py-3 pt-5 fs-3 card-header"
       />
       <div className="card-body">
-        <Alert message={message} type="success" />
-
+       
         <div className="gap-3 d-flex flex-wrap">
           <ExportButton
             data={data?.payload?.pharmacies}
@@ -198,8 +207,7 @@ const Pharmacy = () => {
             <form onSubmit={handleSubmit} className="card">
               <div className="card-body">
                 <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
-                  <Alert message={errors} type="danger" />
-
+                  
                   {/* Pharmacy Information */}
                   <div className="accordion-item">
                     <h2 className="accordion-header" id="headingPharmacyInfo">

@@ -133,44 +133,13 @@ const Payers = () => {
   };
   const handleEdit = (row) => {
     const updatedRow = { ...row };
-
-    // Ensure occurrenceSpans dates are formatted correctly
-    updatedRow.occurrenceSpans = updatedRow.occurrenceSpans.map((span) => ({
-      ...span,
-      startDate: span.startDate
-        ? new Date(span.startDate).toISOString().substring(0, 10)
-        : "",
-      endDate: span.endDate
-        ? new Date(span.endDate).toISOString().substring(0, 10)
-        : "",
-    }));
-
-    // Ensure occurrenceCodes dates are formatted correctly
-    updatedRow.occurrenceCodes = updatedRow.occurrenceCodes.map((span) => ({
-      ...span,
-      date: span.date ? new Date(span.date).toISOString().substring(0, 10) : "",
-    }));
-
-    // Update other date fields if they exist
-    updatedRow.unableToWorkFrom = row.unableToWorkFrom
-      ? new Date(row.unableToWorkFrom).toISOString().substring(0, 10)
-      : "";
-    updatedRow.unableToWorkTo = row.unableToWorkTo
-      ? new Date(row.unableToWorkTo).toISOString().substring(0, 10)
-      : "";
-    updatedRow.hospitalizationStartDate = row.hospitalizationStartDate
-      ? new Date(row.hospitalizationStartDate).toISOString().substring(0, 10)
-      : "";
-    updatedRow.hospitalizationEndDate = row.hospitalizationEndDate
-      ? new Date(row.hospitalizationEndDate).toISOString().substring(0, 10)
-      : "";
-    updatedRow.emergencyTreatmentIndicator = row.emergencyTreatmentIndicator
-      ? new Date(row.emergencyTreatmentIndicator).toISOString().substring(0, 10)
-      : "";
-
+    setShow(true);
+    console.log(row)
+    
+    
     setShow(true);
     setEditId(row._id);
-    setFormData(updatedRow);
+    setFormData({...updatedRow});
   };
 
   useEffect(() => {
@@ -200,7 +169,6 @@ const Payers = () => {
     updateData?.message,
     data?.message,
     updateError?.data?.message,
-    data?.message,
   ]);
   if (isLoading) return <MainLoader />;
 

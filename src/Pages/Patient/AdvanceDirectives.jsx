@@ -14,6 +14,7 @@ import EditModal from "./../../components/Models/EditModal";
 import Template from "./../../components/FormElement/Template";
 import Alert from "./../../components/Alert/Alert";
 import { useMeQuery } from "../../Redux/api/UserApi";
+import { showToast } from "./../../utils/Toastify";
 const AdvanceDirectives = () => {
   const { data, isLoading, refetch } = useGetAllDirectivesQuery();
   const { data: lgData } = useMeQuery();
@@ -77,7 +78,6 @@ const AdvanceDirectives = () => {
     }
   }, [template]);
   const handleDelete = (row) => {
-    //console.log(row);
     swal({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -91,7 +91,6 @@ const AdvanceDirectives = () => {
     });
   };
   const handleEdit = (row) => {
-    //console.log(row);
     setEditId(row._id);
     setShow(true);
     setFormData({ ...row });
@@ -105,8 +104,17 @@ const AdvanceDirectives = () => {
       refetch();
     }
   }, [isUpdateSuccess, isDeleteSuccess]);
-  const message = updateData?.message || deleteData?.message;
-  const errors = updateError?.data?.message || deleteError?.data?.message;
+  useEffect(() => {
+    showToast("error", updateError?.data?.message);
+    showToast("success", data?.message);
+    showToast("success", updateData?.message);
+    showToast("success", deleteData?.message);
+  }, [
+    data?.message,
+    updateError?.data?.message,
+    updateData?.message,
+    deleteData?.message,
+  ]);
   if (isLoading) return <MainLoader />;
 
   return (
@@ -119,7 +127,7 @@ const AdvanceDirectives = () => {
             title="Advance Care Plan/Admission list"
             className="py-3 pt-5 fs-3 card-header"
           />
-          <Alert message={message} type="success" />
+
           {show && (
             <EditModal
               title="Edit Directive"
@@ -134,7 +142,6 @@ const AdvanceDirectives = () => {
             >
               <form onSubmit={handleSubmit} className="card">
                 <div className="card-body">
-                  <Alert message={errors} type="danger" />
                   <div className="row">
                     <div className="col-md-12">
                       <label htmlFor="admission" className="form-label">

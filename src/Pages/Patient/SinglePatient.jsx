@@ -1,7 +1,7 @@
 import { useCompanyProfileGetByIdQuery } from "../../Redux/api/SettingApi";
 import { useMeQuery } from "../../Redux/api/UserApi";
 import { useGetPatientByIdQuery } from "../../Redux/api/PatientApi";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useGetDirectiveByPatientIdQuery } from "../../Redux/api/DirectiveApi";
 import { useGetClinicalDiagnosisByPatientIdQuery } from "../../Redux/api/ClinicalDiagnosis";
 import { useGetContactByPatientIdQuery } from "../../Redux/api/Contact";
@@ -12,9 +12,11 @@ import { useGetPhysicianByPatientIdQuery } from "../../Redux/api/PhysicianApi";
 import { useGetReferralByPatientIdQuery } from "../../Redux/api/ReferalInformation";
 import { useParams } from "react-router-dom";
 import PdfHeader from "./PdfHeader";
+import { ReactToPrint } from "react-to-print";
 const SinglePatient = () => {
   const { data } = useMeQuery();
   const { id } = useParams();
+  const componentRef = useRef();
   const { data: patient } = useGetPatientByIdQuery(id);
   const { data: company } = useCompanyProfileGetByIdQuery(
     data?.payload?.user?._id
@@ -28,20 +30,6 @@ const SinglePatient = () => {
   const { data: singlePhysician } = useGetPhysicianByPatientIdQuery(id);
   const { data: singleReferral } = useGetReferralByPatientIdQuery(id);
   const [formData, setFormData] = useState({});
-  console.log(
-    patient,
-    directiveData?.payload?.directive,
-    singleClinical?.payload?.clinical,
-    singleContact?.payload?.contact,
-    singleEmergency?.payload?.emergency,
-    singlePayer?.payload?.payer,
-    singlePharmacy?.payload?.pharmacy,
-    singlePhysician?.payload?.physician,
-    singleReferral?.payload?.referral
-  );
-  const handlePrint = () => {
-    window.print();
-  };
 
   useEffect(() => {
     setFormData({ ...patient?.payload });
@@ -71,38 +59,50 @@ const SinglePatient = () => {
   ]);
 
   return (
-    <div>
-      <button
-        onClick={handlePrint}
-        className="hide-on-print btn btn-primary my-5 ml-auto"
+    <div  ref={componentRef}>
+      <ReactToPrint
+        trigger={() => <span className="btn btn-primary">Patient Profile</span>}
+        content={() => componentRef.current}
+        documentTitle="Patient"
+      />
+      <div
+        style={{ fontSize: "10px" }}
+    
+        className="layout-page w-100 "
       >
-        Patient profile
-      </button>
-      <div className="layout-page w-100 patient-body">
         {/* Navbar */}
-
+        {/* patient-body */}
         {/* / Navbar */}
         {/* Content wrapper */}
         <div className="content-wrapper">
           {/* Content */}
+          <PdfHeader
+            patient={patient?.payload}
+            company={company?.payload?.company}
+          />
           <div className="container-xxl flex-grow-1">
             <div className="row invoice-preview ">
               {/* Invoice */}
               <div className="col-xl-12 col-md-12 col-12 mb-md-0">
                 <div className=" invoice-preview-card  ">
-                  <PdfHeader
-                    company={company?.payload?.company}
-                    patient={patient?.payload}
-                  />
                   <div className=" px-0 w-100">
                     <div className="row w-100">
-                      <div className="col-xl-12 col-md-12 col-sm-12 col-12 mb-xl-0 mb-md-6 mb-sm-0 mb-6">
-                        <hr />
-                        <h6>Administrative Information</h6>
-                        <hr />
+                      <div className="col-xl-12 col-md-12 col-sm-12 col-12 mb-xl-0 mb-md-6 mb-sm-0">
+                        <h6
+                          style={{
+                            border: "1px solid gray",
+                            margin: "5px 0px",
+                            padding: "5px",
+                            fontSize: "11px",
+                          }}
+                        >
+                          Administrative Information
+                        </h6>
+
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="npi"
                               className="form-label d-inline-block font-bold"
                             >
@@ -113,6 +113,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="cmsCertificationNumber"
                               className="form-label d-inline-block font-bold"
                             >
@@ -126,6 +127,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="branchState"
                               className="form-label d-inline-block font-bold"
                             >
@@ -136,6 +138,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="branchIdNumber"
                               className="form-label d-inline-block font-bold"
                             >
@@ -149,6 +152,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="patientIdNumber"
                               className="form-label d-inline-block font-bold"
                             >
@@ -159,6 +163,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="startOfCareDate"
                               className="form-label d-inline-block font-bold"
                             >
@@ -172,6 +177,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="resumptionOfCareDate"
                               className="form-label d-inline-block font-bold"
                             >
@@ -184,6 +190,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="patientFirstName"
                               className="form-label d-inline-block font-bold"
                             >
@@ -194,6 +201,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="patientMiddleInitial"
                               className="form-label d-inline-block font-bold"
                             >
@@ -206,6 +214,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="patientLastName"
                               className="form-label d-inline-block font-bold"
                             >
@@ -215,6 +224,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="patientSuffix"
                               className="form-label d-inline-block font-bold"
                             >
@@ -227,6 +237,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="patientStateOfResidence"
                               className="form-label d-inline-block font-bold"
                             >
@@ -236,6 +247,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="patientZipCode"
                               className="form-label d-inline-block font-bold"
                             >
@@ -248,6 +260,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="socialSecurityNumber"
                               className="form-label d-inline-block font-bold"
                             >
@@ -257,6 +270,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="medicareNumber"
                               className="form-label d-inline-block font-bold"
                             >
@@ -269,6 +283,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="medicaidNumber"
                               className="form-label d-inline-block font-bold"
                             >
@@ -278,6 +293,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="gender"
                               className="form-label d-inline-block font-bold"
                             >
@@ -287,6 +303,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="birthDate"
                               className="form-label d-inline-block font-bold"
                             >
@@ -296,6 +313,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="ethnicity"
                               className="form-label d-inline-block font-bold"
                             >
@@ -305,6 +323,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="race"
                               className="form-label d-inline-block font-bold"
                             >
@@ -314,6 +333,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="paymentSources"
                               className="form-label d-inline-block font-bold"
                             >
@@ -323,6 +343,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="preferredLanguage"
                               className="form-label d-inline-block font-bold"
                             >
@@ -332,6 +353,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="needInterpreter"
                               className="form-label d-inline-block font-bold"
                             >
@@ -341,6 +363,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="disciplineOfPersonCompletingAssessment"
                               className="form-label d-inline-block font-bold"
                             >
@@ -354,6 +377,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="dateAssessmentCompleted"
                               className="form-label d-inline-block font-bold"
                             >
@@ -363,6 +387,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="reasonForAssessment"
                               className="form-label d-inline-block font-bold"
                             >
@@ -375,6 +400,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="dischargeTransferDeathDate"
                               className="form-label d-inline-block font-bold"
                             >
@@ -384,6 +410,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="dateOfPhysicianOrderedSOC"
                               className="form-label d-inline-block font-bold"
                             >
@@ -396,6 +423,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="dateOfReferral"
                               className="form-label d-inline-block font-bold"
                             >
@@ -405,6 +433,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="transportation"
                               className="form-label d-inline-block font-bold"
                             >
@@ -417,6 +446,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="inpatientFacilityDischargedFrom"
                               className="form-label d-inline-block font-bold"
                             >
@@ -427,6 +457,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="inpatientDischargeDate"
                               className="form-label d-inline-block font-bold"
                             >
@@ -439,6 +470,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="emergentCare"
                               className="form-label d-inline-block font-bold"
                             >
@@ -448,6 +480,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="reasonForEmergentCare"
                               className="form-label d-inline-block font-bold"
                             >
@@ -460,6 +493,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="inpatientFacilityAdmittedTo"
                               className="form-label d-inline-block font-bold"
                             >
@@ -469,6 +503,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="dischargeDisposition"
                               className="form-label d-inline-block font-bold"
                             >
@@ -481,6 +516,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="medicationListProvided"
                               className="form-label d-inline-block font-bold"
                             >
@@ -490,6 +526,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="routeMedicationListTransmission"
                               className="form-label d-inline-block font-bold"
                             >
@@ -503,6 +540,7 @@ const SinglePatient = () => {
                         <div className="row ">
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="medicationListProvidedToPatient"
                               className="form-label d-inline-block font-bold"
                             >
@@ -513,6 +551,7 @@ const SinglePatient = () => {
                           </div>
                           <div className="col-md-6 w-50">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="routeMedicationListTransmissionToPatient"
                               className="form-label d-inline-block font-bold"
                             >
@@ -529,19 +568,22 @@ const SinglePatient = () => {
                 </div>
               </div>
 
-              <div style={{ marginTop: "60px" }} className="">
-                <PdfHeader
-                  company={company?.payload?.company}
-                  patient={patient?.payload}
-                />
-              </div>
               <div className="col-xl-6 col-md-6 col-6 mb-md-0">
-                <hr />
-                <h6>Hearing, Speech, and Vision</h6>
-                <hr />
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Hearing, Speech, and Vision
+                </h6>
+
                 <div className="row">
                   <div className=" col-md-6">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="hearing"
                       className="form-label d-inline-block font-bold"
                     >
@@ -553,6 +595,7 @@ const SinglePatient = () => {
                   {/* Vision */}
                   <div className=" col-md-6">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="vision"
                       className="form-label d-inline-block font-bold"
                     >
@@ -565,6 +608,7 @@ const SinglePatient = () => {
                   {/* Health Literacy */}
                   <div className=" col-md-6">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="healthLiteracy"
                       className="form-label d-inline-block font-bold"
                     >
@@ -573,12 +617,22 @@ const SinglePatient = () => {
                     {formData && formData?.healthLiteracy}
                   </div>
                 </div>
-                <hr />
-                <h6>Mood</h6>
-                <hr />
+
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Mood
+                </h6>
+
                 <div className="row">
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="patientMoodUnderstood"
                       className="form-label d-inline-block font-bold"
                     >
@@ -594,6 +648,7 @@ const SinglePatient = () => {
                         <div className="row col-md-6 w-50">
                           <div className="col-md-6">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="littleInterestPresence"
                               className="form-label d-inline-block font-bold"
                             >
@@ -618,6 +673,7 @@ const SinglePatient = () => {
                         <div className="row col-md-6 w-50">
                           <div className="col-md-6">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="feelingDownPresence"
                               className="form-label d-inline-block font-bold"
                             >
@@ -645,6 +701,7 @@ const SinglePatient = () => {
                         <div className="row col-md-6 w-50">
                           <div className="col-md-6">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="troubleSleepingPresence"
                               className="form-label d-inline-block font-bold"
                             >
@@ -671,6 +728,7 @@ const SinglePatient = () => {
                         <div className="row col-md-6 w-50">
                           <div className="col-md-6">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="feelingTiredPresence"
                               className="form-label d-inline-block font-bold"
                             >
@@ -696,6 +754,7 @@ const SinglePatient = () => {
                         <div className="row col-md-6 w-50">
                           <div className="col-md-6">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="poorAppetitePresence"
                               className="form-label d-inline-block font-bold"
                             >
@@ -721,6 +780,7 @@ const SinglePatient = () => {
                         <div className="row col-md-6 w-50">
                           <div className="col-md-6">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="feelingBadPresence"
                               className="form-label d-inline-block font-bold"
                             >
@@ -745,6 +805,7 @@ const SinglePatient = () => {
                         <div className="row col-md-6 w-50">
                           <div className="col-md-6">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="troubleConcentratingPresence"
                               className="form-label d-inline-block font-bold"
                             >
@@ -770,6 +831,7 @@ const SinglePatient = () => {
                         <div className="row col-md-6 w-50">
                           <div className="col-md-6">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="movingSlowlyPresence"
                               className="form-label d-inline-block font-bold"
                             >
@@ -795,6 +857,7 @@ const SinglePatient = () => {
                         <div className="row col-md-6 w-50">
                           <div className="col-md-6">
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor="thoughtsOfHarmingPresence"
                               className="form-label d-inline-block font-bold"
                             >
@@ -820,6 +883,7 @@ const SinglePatient = () => {
                         {/* Total Severity Score */}
                         <div className="row">
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor="totalSeverityScore"
                             className="form-label d-inline-block font-bold"
                           >
@@ -833,6 +897,7 @@ const SinglePatient = () => {
                   {/* Social Isolation */}
                   <div className="col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="socialIsolation"
                       className="form-label d-inline-block font-bold"
                     >
@@ -844,12 +909,21 @@ const SinglePatient = () => {
                 </div>
               </div>
               <div className="col-xl-6 col-md-6 col-6 mb-md-0 ">
-                <hr />
-                <h6>Cognitive Patterns</h6>
-                <hr />
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Cognitive Patterns
+                </h6>
+
                 <div className="row">
                   <div className=" col-md-6">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="interviewConducted"
                       className="form-label d-inline-block font-bold"
                     >
@@ -862,6 +936,7 @@ const SinglePatient = () => {
                   {/* Repetition of Three Words */}
                   <div className=" col-md-6">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="repetitionOfThreeWords"
                       className="form-label d-inline-block font-bold"
                     >
@@ -874,12 +949,16 @@ const SinglePatient = () => {
                 <div className="row">
                   {/* Temporal Orientation */}
                   <div className=" col-md-6">
-                    <label className="form-label d-inline-block font-bold mx-1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-inline-block font-bold mx-1"
+                    >
                       C0300. Temporal Orientation:
                     </label>
                     <div className="row">
                       <div className="col-md-4">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="temporalOrientationYear"
                           className="form-label d-inline-block font-bold"
                         >
@@ -889,6 +968,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-4">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="temporalOrientationMonth"
                           className="form-label d-inline-block font-bold"
                         >
@@ -898,6 +978,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-4">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="temporalOrientationDay"
                           className="form-label d-inline-block font-bold"
                         >
@@ -910,12 +991,16 @@ const SinglePatient = () => {
 
                   {/* Recall */}
                   <div className=" col-md-6">
-                    <label className="form-label d-inline-block font-bold mx-1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-inline-block font-bold mx-1"
+                    >
                       C0400. Recall:
                     </label>
                     <div className="row">
-                      <div className="col-md-4">
+                      <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="recallSock"
                           className="form-label d-inline-block font-bold"
                         >
@@ -923,8 +1008,9 @@ const SinglePatient = () => {
                         </label>
                         {formData && formData?.recallSock}
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="recallBlue"
                           className="form-label d-inline-block font-bold"
                         >
@@ -932,8 +1018,9 @@ const SinglePatient = () => {
                         </label>
                         {formData && formData?.recallBlue}
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="recallBed"
                           className="form-label d-inline-block font-bold"
                         >
@@ -949,6 +1036,7 @@ const SinglePatient = () => {
                   {/* BIMS Summary Score */}
                   <div className=" col-md-6">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="bimsSummaryScore"
                       className="form-label d-inline-block font-bold"
                     >
@@ -959,12 +1047,16 @@ const SinglePatient = () => {
 
                   {/* Signs and Symptoms of Delirium */}
                   <div className=" col-md-6">
-                    <label className="form-label d-inline-block font-bold mx-1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-inline-block font-bold mx-1"
+                    >
                       C1310. Signs and Symptoms of Delirium:
                     </label>
                     <div className="row">
                       <div className="col-md-3">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="deliriumMentalStatusChange"
                           className="form-label d-inline-block font-bold"
                         >
@@ -974,6 +1066,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-3">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="deliriumInattention"
                           className="form-label d-inline-block font-bold"
                         >
@@ -983,6 +1076,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-3">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="deliriumDisorganizedThinking"
                           className="form-label d-inline-block font-bold"
                         >
@@ -992,6 +1086,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-3">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="deliriumAlteredConsciousness"
                           className="form-label d-inline-block font-bold"
                         >
@@ -1006,6 +1101,7 @@ const SinglePatient = () => {
                 <div className="row">
                   <div className=" col-md-6">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="cognitiveFunctioning"
                       className="form-label d-inline-block font-bold"
                     >
@@ -1017,6 +1113,7 @@ const SinglePatient = () => {
                   {/* When Confused */}
                   <div className=" col-md-6">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="whenConfused"
                       className="form-label d-inline-block font-bold"
                     >
@@ -1030,6 +1127,7 @@ const SinglePatient = () => {
                   {/* When Anxious */}
                   <div className=" col-md-6">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="whenAnxious"
                       className="form-label d-inline-block font-bold"
                     >
@@ -1040,132 +1138,147 @@ const SinglePatient = () => {
                 </div>
               </div>
 
-              <div
-                style={{ marginTop: "170px" }}
-                className="col-xl-12  col-md-12 col-12 mb-md-0"
-              >
-                <PdfHeader
-                  company={company?.payload?.company}
-                  patient={patient?.payload}
-                />
-                <h6>Behavior</h6>
-                <hr />
-                <div className="">
-                  <label className="form-label d-inline-block font-bold mx-1">
+              <div className="col-xl-12  col-md-12 col-12 mb-md-0">
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Behavior
+                </h6>
+
+                <div className="=">
+                  <label
+                    style={{ fontSize: "10px" }}
+                    className="form-label d-inline-block font-bold mx-1"
+                  >
                     M1740. Cognitive, Behavioral, and Psychiatric Symptoms
                     (check all that apply)
                   </label>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="memoryDeficit"
-                      name="memoryDeficit"
-                      checked={formData && formData?.memoryDeficit}
-                    />
-                    <label
-                      className="form-label d-block"
-                      htmlFor="memoryDeficit"
-                    >
-                      1. Memory deficit
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="impairedDecisionMaking"
-                      name="impairedDecisionMaking"
-                      checked={formData && formData?.impairedDecisionMaking}
-                    />
-                    <label
-                      className="form-label d-block"
-                      htmlFor="impairedDecisionMaking"
-                    >
-                      2. Impaired decision-making
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="verbalDisruption"
-                      name="verbalDisruption"
-                      checked={formData && formData?.verbalDisruption}
-                    />
-                    <label
-                      className="form-label d-block"
-                      htmlFor="verbalDisruption"
-                    >
-                      3. Verbal disruption
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="physicalAggression"
-                      name="physicalAggression"
-                      checked={formData && formData?.physicalAggression}
-                    />
-                    <label
-                      className="form-label d-block"
-                      htmlFor="physicalAggression"
-                    >
-                      4. Physical aggression
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="disruptiveBehavior"
-                      name="disruptiveBehavior"
-                      checked={formData && formData?.disruptiveBehavior}
-                    />
-                    <label
-                      className="form-label d-block"
-                      htmlFor="disruptiveBehavior"
-                    >
-                      5. Disruptive, infantile, or socially inappropriate
-                      behavior
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="delusionalBehavior"
-                      name="delusionalBehavior"
-                      checked={formData && formData?.delusionalBehavior}
-                    />
-                    <label
-                      className="form-label d-block"
-                      htmlFor="delusionalBehavior"
-                    >
-                      6. Delusional, hallucinatory, or paranoid behavior
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="noneOfTheAbove"
-                      name="noneOfTheAbove"
-                      checked={formData && formData?.noneOfTheAbove}
-                    />
-                    <label
-                      className="form-label d-block"
-                      htmlFor="noneOfTheAbove"
-                    >
-                      7. None of the above behaviors demonstrated
-                    </label>
+                  <div className="row">
+                    <div className="form-check col">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="memoryDeficit"
+                        name="memoryDeficit"
+                        checked={formData && formData?.memoryDeficit}
+                      />
+                      <label
+                        style={{ fontSize: "11px" }}
+                        className="form-label d-block"
+                        htmlFor="memoryDeficit"
+                      >
+                        1. Memory deficit
+                      </label>
+                    </div>
+                    <div className="form-check col">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="impairedDecisionMaking"
+                        name="impairedDecisionMaking"
+                        checked={formData && formData?.impairedDecisionMaking}
+                      />
+                      <label
+                        style={{ fontSize: "11px" }}
+                        className="form-label d-block"
+                        htmlFor="impairedDecisionMaking"
+                      >
+                        2. Impaired decision-making
+                      </label>
+                    </div>
+                    <div className="form-check col">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="verbalDisruption"
+                        name="verbalDisruption"
+                        checked={formData && formData?.verbalDisruption}
+                      />
+                      <label
+                        style={{ fontSize: "11px" }}
+                        className="form-label d-block"
+                        htmlFor="verbalDisruption"
+                      >
+                        3. Verbal disruption
+                      </label>
+                    </div>
+                    <div className="form-check col">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="physicalAggression"
+                        name="physicalAggression"
+                        checked={formData && formData?.physicalAggression}
+                      />
+                      <label
+                        style={{ fontSize: "11px" }}
+                        className="form-label d-block"
+                        htmlFor="physicalAggression"
+                      >
+                        4. Physical aggression
+                      </label>
+                    </div>
+                    <div className="form-check col">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="disruptiveBehavior"
+                        name="disruptiveBehavior"
+                        checked={formData && formData?.disruptiveBehavior}
+                      />
+                      <label
+                        style={{ fontSize: "11px" }}
+                        className="form-label d-block"
+                        htmlFor="disruptiveBehavior"
+                      >
+                        5. Disruptive, infantile, or socially inappropriate
+                        behavior
+                      </label>
+                    </div>
+                    <div className="form-check col">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="delusionalBehavior"
+                        name="delusionalBehavior"
+                        checked={formData && formData?.delusionalBehavior}
+                      />
+                      <label
+                        style={{ fontSize: "11px" }}
+                        className="form-label d-block"
+                        htmlFor="delusionalBehavior"
+                      >
+                        6. Delusional, hallucinatory, or paranoid behavior
+                      </label>
+                    </div>
+                    <div className="form-check col">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="noneOfTheAbove"
+                        name="noneOfTheAbove"
+                        checked={formData && formData?.noneOfTheAbove}
+                      />
+                      <label
+                        style={{ fontSize: "11px" }}
+                        className="form-label d-block"
+                        htmlFor="noneOfTheAbove"
+                      >
+                        7. None of the above behaviors demonstrated
+                      </label>
+                    </div>
                   </div>
                 </div>
 
                 {/* M1745: Frequency of Disruptive Behavior Symptoms */}
                 <div className="">
                   <label
+                    style={{ fontSize: "11px" }}
                     htmlFor="disruptiveBehaviorFrequency"
                     className="form-label d-inline-block font-bold"
                   >
@@ -1176,17 +1289,31 @@ const SinglePatient = () => {
               </div>
 
               <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
-                <hr />
-                <h6>Preferences for Customary Routine and Activities</h6>
-                <hr />
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Preferences for Customary Routine and Activities
+                </h6>
+
                 <div className="row w-100">
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-inline-block font-bold mx-1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-inline-block font-bold mx-1"
+                    >
                       M1100. Patient Living Situation
                     </label>
 
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="livingArrangement"
@@ -1200,7 +1327,10 @@ const SinglePatient = () => {
                     </div>
 
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="livingArrangement"
@@ -1213,7 +1343,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="livingArrangement"
@@ -1229,33 +1362,48 @@ const SinglePatient = () => {
                   </div>
                   {/* M2102: Types and Sources of Assistance */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-inline-block font-bold mx-1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-inline-block font-bold mx-1"
+                    >
                       M2102. Types and Sources of Assistance
                     </label>
 
                     <div className="mb-2">
-                      <label className="form-label d-inline-block font-bold mx-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-inline-block font-bold mx-1"
+                      >
                         a. ADL assistance
                       </label>
                       {formData && formData?.adlAssistance}
                     </div>
 
                     <div className="mb-2">
-                      <label className="form-label d-inline-block font-bold mx-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-inline-block font-bold mx-1"
+                      >
                         c. Medication administration
                       </label>
                       {formData && formData?.medicationAssistance}
                     </div>
 
                     <div className="mb-2">
-                      <label className="form-label d-inline-block font-bold mx-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-inline-block font-bold mx-1"
+                      >
                         d. Medical procedures/treatments
                       </label>
                       {formData && formData?.medicalProceduresAssistance}
                     </div>
 
                     <div className="mb-2">
-                      <label className="form-label d-inline-block font-bold mx-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-inline-block font-bold mx-1"
+                      >
                         f. Supervision and safety (due to cognitive impairment)
                       </label>
                       {formData && formData?.supervisionSafetyAssistance}
@@ -1266,11 +1414,17 @@ const SinglePatient = () => {
               <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
                 <div className="row w-100">
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-inline-block font-bold mx-1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-inline-block font-bold mx-1"
+                    >
                       M1800. Grooming
                     </label>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="grooming"
@@ -1281,7 +1435,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="grooming"
@@ -1292,7 +1449,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="grooming"
@@ -1303,7 +1463,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="grooming"
@@ -1317,11 +1480,17 @@ const SinglePatient = () => {
 
                   {/* M1810: Upper Body Dressing */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-inline-block font-bold mx-1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-inline-block font-bold mx-1"
+                    >
                       M1810. Current Ability to Dress Upper Body
                     </label>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="upperBodyDressing"
@@ -1334,7 +1503,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="upperBodyDressing"
@@ -1347,7 +1519,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="upperBodyDressing"
@@ -1360,7 +1535,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="upperBodyDressing"
@@ -1374,18 +1552,20 @@ const SinglePatient = () => {
                     </div>
                   </div>
                 </div>
-                <div style={{ marginTop: "150px" }} className="row">
-                  <PdfHeader
-                    company={company?.payload?.company}
-                    patient={patient?.payload}
-                  />
+                <div className="row">
                   {/* M1820: Lower Body Dressing */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-inline-block font-bold mx-1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-inline-block font-bold mx-1"
+                    >
                       M1820. Current Ability to Dress Lower Body
                     </label>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="lowerBodyDressing"
@@ -1399,7 +1579,10 @@ const SinglePatient = () => {
                     </div>
 
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="lowerBodyDressing"
@@ -1412,7 +1595,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="lowerBodyDressing"
@@ -1425,7 +1611,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="lowerBodyDressing"
@@ -1441,11 +1630,17 @@ const SinglePatient = () => {
 
                   {/* M1830: Bathing */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-inline-block font-bold mx-1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-inline-block font-bold mx-1"
+                    >
                       M1830. Bathing
                     </label>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="bathing"
@@ -1456,7 +1651,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="bathing"
@@ -1467,7 +1665,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="bathing"
@@ -1478,7 +1679,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="bathing"
@@ -1489,7 +1693,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="bathing"
@@ -1500,7 +1707,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="bathing"
@@ -1512,7 +1722,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="bathing"
@@ -1529,11 +1742,17 @@ const SinglePatient = () => {
                   {/* M1840: Toilet Transferring */}
 
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-inline-block font-bold mx-1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-inline-block font-bold mx-1"
+                    >
                       M1840. Toilet Transferring
                     </label>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="toiletTransferring"
@@ -1546,7 +1765,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="toiletTransferring"
@@ -1559,7 +1781,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="toiletTransferring"
@@ -1572,7 +1797,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="toiletTransferring"
@@ -1586,7 +1814,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="toiletTransferring"
@@ -1602,11 +1833,17 @@ const SinglePatient = () => {
 
                   {/* M1845: Toileting Hygiene */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-inline-block font-bold mx-1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-inline-block font-bold mx-1"
+                    >
                       M1845. Toileting Hygiene
                     </label>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="toiletingHygiene"
@@ -1619,7 +1856,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="toiletingHygiene"
@@ -1633,7 +1873,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="toiletingHygiene"
@@ -1646,7 +1889,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="toiletingHygiene"
@@ -1664,11 +1910,17 @@ const SinglePatient = () => {
                 <div className="row">
                   {/* M1850: Transferring */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-inline-block font-bold mx-1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-inline-block font-bold mx-1"
+                    >
                       M1850. Transferring
                     </label>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="transferring"
@@ -1679,7 +1931,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="transferring"
@@ -1690,7 +1945,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="transferring"
@@ -1701,7 +1959,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="transferring"
@@ -1712,7 +1973,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="transferring"
@@ -1723,7 +1987,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="transferring"
@@ -1737,11 +2004,17 @@ const SinglePatient = () => {
 
                   {/* M1860: Ambulation/Locomotion */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-inline-block font-bold mx-1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-inline-block font-bold mx-1"
+                    >
                       M1860. Ambulation/Locomotion
                     </label>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="ambulationLocomotion"
@@ -1754,7 +2027,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="ambulationLocomotion"
@@ -1767,7 +2043,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="ambulationLocomotion"
@@ -1780,7 +2059,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="ambulationLocomotion"
@@ -1793,7 +2075,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="ambulationLocomotion"
@@ -1806,7 +2091,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="ambulationLocomotion"
@@ -1819,7 +2107,10 @@ const SinglePatient = () => {
                       </label>
                     </div>
                     <div>
-                      <label className="form-label d-flex gap-1">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-flex gap-1"
+                      >
                         <input
                           type="radio"
                           name="ambulationLocomotion"
@@ -1834,17 +2125,20 @@ const SinglePatient = () => {
                   </div>
                 </div>
               </div>
-              <div
-                style={{ marginTop: "250px" }}
-                className="col-xl-12 col-md-12 col-12 mb-md-0 "
-              >
-                {/* <hr /> */}
-                <PdfHeader
-                  company={company?.payload?.company}
-                  patient={patient?.payload}
-                />
-                <h6>Functional Abilities</h6>
-                <hr />
+              <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
+                {/*  */}
+
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Functional Abilities
+                </h6>
+
                 <div className="row">
                   <div className=" col-md-6 w-50">
                     <p>GG0100. Prior Functioning: Everyday Activities</p>
@@ -1858,6 +2152,7 @@ const SinglePatient = () => {
                         ]?.map((field) => (
                           <div className="col-md-6" key={field}>
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor={`gg0100.${field}`}
                               className="form-label d-inline-block font-bold"
                             >
@@ -1890,6 +2185,7 @@ const SinglePatient = () => {
                           checked={formData?.gg0110?.[field] ?? false}
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           className="form-label d-block"
                           htmlFor={`gg0110.${field}`}
                         >
@@ -1915,6 +2211,7 @@ const SinglePatient = () => {
                     ]?.map((field) => (
                       <div className="col-md-6" key={field}>
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`gg0130.${field}`}
                           className="form-label d-inline-block font-bold"
                         >
@@ -1951,6 +2248,7 @@ const SinglePatient = () => {
                     ]?.map((field) => (
                       <div className="col-md-6 w-100" key={field}>
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`gg0170.${field}`}
                           className="form-label d-inline-block font-bold"
                         >
@@ -1981,18 +2279,24 @@ const SinglePatient = () => {
                   </div>
                 </div>
               </div>
-              <div
-                style={{ marginTop: "80px" }}
-                className="col-xl-12 col-md-12 col-12 mb-md-0 "
-              >
-                <PdfHeader
-                  company={company?.payload?.company}
-                  patient={patient?.payload}
-                />
-                <h6>Bladder and Bowel</h6>
-                <hr />
+              <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Bladder and Bowel
+                </h6>
+
                 <div className="">
-                  <label htmlFor="m1600" className="form-label d-block">
+                  <label
+                    style={{ fontSize: "11px" }}
+                    htmlFor="m1600"
+                    className="form-label d-block"
+                  >
                     M1600. Has this patient been treated for a Urinary Tract
                     Infection in the past 14 days?
                   </label>
@@ -2001,7 +2305,10 @@ const SinglePatient = () => {
 
                 {/* M1610 */}
                 <div className="">
-                  <label className="form-label d-block">
+                  <label
+                    style={{ fontSize: "10px" }}
+                    className="form-label d-block"
+                  >
                     M1610. Urinary Incontinence or Urinary Catheter Presence
                   </label>
                   <div className="form-check">
@@ -2013,7 +2320,11 @@ const SinglePatient = () => {
                       checked={formData?.m1610 === "0"}
                       className="form-check-input"
                     />
-                    <label htmlFor="m1610-0" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="m1610-0"
+                      className="form-label d-block"
+                    >
                       No incontinence or catheter (includes anuria or ostomy for
                       urinary drainage)
                     </label>
@@ -2027,7 +2338,11 @@ const SinglePatient = () => {
                       checked={formData?.m1610 === "1"}
                       className="form-check-input"
                     />
-                    <label htmlFor="m1610-1" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="m1610-1"
+                      className="form-label d-block"
+                    >
                       Patient is incontinent
                     </label>
                   </div>
@@ -2040,7 +2355,11 @@ const SinglePatient = () => {
                       checked={formData?.m1610 === "2"}
                       className="form-check-input"
                     />
-                    <label htmlFor="m1610-2" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="m1610-2"
+                      className="form-label d-block"
+                    >
                       Patient requires a urinary catheter (external, indwelling,
                       intermittent, or suprapubic)
                     </label>
@@ -2049,7 +2368,11 @@ const SinglePatient = () => {
 
                 {/* M1620 */}
                 <div className="">
-                  <label htmlFor="m1620" className="form-label d-block">
+                  <label
+                    style={{ fontSize: "11px" }}
+                    htmlFor="m1620"
+                    className="form-label d-block"
+                  >
                     M1620. Bowel Incontinence Frequency
                   </label>
                   {formData?.m1620}
@@ -2057,21 +2380,33 @@ const SinglePatient = () => {
 
                 {/* M1630 */}
                 <div className="">
-                  <label htmlFor="m1630" className="form-label d-block">
+                  <label
+                    style={{ fontSize: "11px" }}
+                    htmlFor="m1630"
+                    className="form-label d-block"
+                  >
                     M1630. Ostomy for Bowel Elimination
                   </label>
                   {formData?.m1630}
                 </div>
               </div>
               <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
-                <hr />
-                <h6>Active Diagnoses</h6>
-                <hr />
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Active Diagnoses
+                </h6>
 
                 <div className="row">
                   {/* M1021. Primary Diagnosis */}
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="primaryDiagnosis"
                       className="form-label d-block"
                     >
@@ -2079,7 +2414,7 @@ const SinglePatient = () => {
                     </label>
                     {formData?.primaryDiagnosis}
 
-                    <label className="form-label mt-2">
+                    <label style={{ fontSize: "10px" }} className="form-label">
                       Symptom Control Rating (0-4)
                     </label>
                     <div>
@@ -2099,6 +2434,7 @@ const SinglePatient = () => {
                             )}
                           />
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`primaryDiagnosisRating-${rating}`}
                             className="form-label d-block"
                           >
@@ -2112,6 +2448,7 @@ const SinglePatient = () => {
                   {[...Array(6)?.keys()]?.map((i) => (
                     <div key={i} className="col-md-6 w-50">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor={`otherDiagnoses-${i}`}
                         className="form-label d-block"
                       >
@@ -2119,7 +2456,10 @@ const SinglePatient = () => {
                       </label>
                       <span>{formData?.otherDiagnoses?.[i] || "N/A"}</span>
 
-                      <label className="form-label mt-2">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label"
+                      >
                         Symptom Control Rating (0-4)
                       </label>
                       <div>
@@ -2142,6 +2482,7 @@ const SinglePatient = () => {
                               readOnly
                             />
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor={`otherDiagnosesRatings-${i}-${rating}`}
                               className="form-label d-block"
                             >
@@ -2155,7 +2496,10 @@ const SinglePatient = () => {
                 </div>
                 {/* M1028. Active Diagnoses – Comorbidities and Co-existing Conditions */}
                 <div className="">
-                  <label className="form-label d-block">
+                  <label
+                    style={{ fontSize: "10px" }}
+                    className="form-label d-block"
+                  >
                     M1028. Active Diagnoses – Comorbidities and Co-existing
                     Conditions
                   </label>
@@ -2168,7 +2512,11 @@ const SinglePatient = () => {
                       checked={formData?.comorbidities?.pvd}
                       className="form-check-input"
                     />
-                    <label htmlFor="pvd" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="pvd"
+                      className="form-label d-block"
+                    >
                       Peripheral Vascular Disease (PVD) or Peripheral Artery
                       Disease (PAD)
                     </label>
@@ -2182,7 +2530,11 @@ const SinglePatient = () => {
                       checked={formData?.comorbidities?.dm}
                       className="form-check-input"
                     />
-                    <label htmlFor="dm" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="dm"
+                      className="form-label d-block"
+                    >
                       Diabetes Mellitus (DM)
                     </label>
                   </div>
@@ -2195,27 +2547,35 @@ const SinglePatient = () => {
                       checked={formData?.comorbidities?.none}
                       className="form-check-input"
                     />
-                    <label htmlFor="none" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="none"
+                      className="form-label d-block"
+                    >
                       None of the above
                     </label>
                   </div>
                 </div>
               </div>
-              <div
-                style={{ marginTop: "60px" }}
-                className="col-xl-12 col-md-12 col-12 mb-md-0 "
-              >
-                <PdfHeader
-                  company={company?.payload?.company}
-                  patient={patient?.payload}
-                />
-                <h6>Health Conditions</h6>
-                <hr />
+              <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Health Conditions
+                </h6>
 
                 <div className="row">
                   {/* M1033. Risk for Hospitalization */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       M1033. Risk for Hospitalization
                     </label>
                     {[
@@ -2272,7 +2632,11 @@ const SinglePatient = () => {
                           checked={formData?.riskForHospitalization === value}
                           className="form-check-input"
                         />
-                        <label htmlFor={value} className="form-label d-block">
+                        <label
+                          style={{ fontSize: "11px" }}
+                          htmlFor={value}
+                          className="form-label d-block"
+                        >
                           {label}
                         </label>
                       </div>
@@ -2281,7 +2645,10 @@ const SinglePatient = () => {
 
                   {/* J0510. Pain Effect on Sleep */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       J0510. Pain Effect on Sleep
                     </label>
                     {[
@@ -2306,6 +2673,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`painEffectOnSleep-${value}`}
                           className="form-label d-block"
                         >
@@ -2318,7 +2686,10 @@ const SinglePatient = () => {
                 <div className="row">
                   {/* J0520. Pain Interference with Therapy Activities */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       J0520. Pain Interference with Therapy Activities
                     </label>
                     {[
@@ -2345,6 +2716,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`painInterferenceWithTherapy-${value}`}
                           className="form-label d-block"
                         >
@@ -2356,7 +2728,7 @@ const SinglePatient = () => {
 
                   {/* J0530. Pain Interference with Day-to-Day Activities */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label">
+                    <label style={{ fontSize: "10px" }} className="form-label">
                       J0530. Pain Interference with Day-to-Day Activities
                     </label>
                     {[
@@ -2378,6 +2750,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`painInterferenceWithActivities-${value}`}
                           className="form-label"
                         >
@@ -2391,7 +2764,7 @@ const SinglePatient = () => {
                 <div className="row">
                   {/* J1800. Any Falls Since SOC/ROC */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label">
+                    <label style={{ fontSize: "10px" }} className="form-label">
                       J1800. Any Falls Since SOC/ROC
                     </label>
                     {[
@@ -2408,6 +2781,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`fallsSinceSOCROC-${value}`}
                           className="form-label"
                         >
@@ -2420,7 +2794,10 @@ const SinglePatient = () => {
                   {/* J1900. Number of Falls Since SOC/ROC */}
                   {formData?.fallsSinceSOCROC === "1" && (
                     <div className=" col-md-6 w-50">
-                      <label className="form-label">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label"
+                      >
                         J1900. Number of Falls Since SOC/ROC
                       </label>
                       {[
@@ -2438,6 +2815,7 @@ const SinglePatient = () => {
                             className="form-check-input"
                           />
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`fallsDetails-${value}`}
                             className="form-label"
                           >
@@ -2449,17 +2827,12 @@ const SinglePatient = () => {
                   )}
                 </div>
 
-                <div style={{ marginTop: "50px" }} className="row">
-                  <PdfHeader
-                    company={company?.payload?.company}
-                    patient={patient?.payload}
-                  />
-                </div>
+                <div className="row"></div>
 
                 <div className="row">
                   {/* M1400. When is the patient dyspneic or noticeably Short of Breath? */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label">
+                    <label style={{ fontSize: "10px" }} className="form-label">
                       M1400. When is the patient dyspneic or noticeably Short of
                       Breath?
                     </label>
@@ -2492,6 +2865,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`shortOfBreath-${value}`}
                           className="form-label"
                         >
@@ -2503,19 +2877,35 @@ const SinglePatient = () => {
                 </div>
               </div>
               <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
-                <hr />
-                <h6>Swallowing/Nutritional Status</h6>
-                <hr />
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Swallowing/Nutritional Status
+                </h6>
+
                 <div className="row">
                   <div className="col-md-6 w-50">
-                    <label htmlFor="height" className="form-label">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="height"
+                      className="form-label"
+                    >
                       M1060. Height (in inches)
                     </label>
                     {formData?.height}
                   </div>
 
                   <div className=" col-md-6 w-50">
-                    <label htmlFor="weight" className="form-label">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="weight"
+                      className="form-label"
+                    >
                       M1060. Weight (in pounds)
                     </label>
                     {formData?.weight}
@@ -2525,13 +2915,18 @@ const SinglePatient = () => {
                 <div className="row">
                   {/* Nutritional Approaches */}
                   <div className=" col-md-6 w-100">
-                    <label className="form-label">
+                    <label style={{ fontSize: "10px" }} className="form-label">
                       K0520. Nutritional Approaches
                     </label>
 
                     <div className="row">
                       <div className="col-md-6 w-50">
-                        <label className="form-label">On Admission</label>
+                        <label
+                          style={{ fontSize: "10px" }}
+                          className="form-label"
+                        >
+                          On Admission
+                        </label>
                         {[
                           {
                             label: "Parenteral/IV feeding",
@@ -2567,6 +2962,7 @@ const SinglePatient = () => {
                               className="form-check-input"
                             />
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor={`onAdmission-${value}`}
                               className="form-label d-block mx-2"
                             >
@@ -2577,7 +2973,12 @@ const SinglePatient = () => {
                       </div>
 
                       <div className=" col-md-6 w-50">
-                        <label className="form-label">Last 7 Days</label>
+                        <label
+                          style={{ fontSize: "10px" }}
+                          className="form-label"
+                        >
+                          Last 7 Days
+                        </label>
                         {[
                           {
                             label: "Parenteral/IV feeding",
@@ -2613,6 +3014,7 @@ const SinglePatient = () => {
                               className="form-check-input"
                             />
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor={`last7Days-${value}`}
                               className="form-label"
                             >
@@ -2624,7 +3026,12 @@ const SinglePatient = () => {
                     </div>
 
                     <div className="row">
-                      <label className="form-label">At Discharge</label>
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label"
+                      >
+                        At Discharge
+                      </label>
                       {[
                         {
                           label: "Parenteral/IV feeding",
@@ -2661,6 +3068,7 @@ const SinglePatient = () => {
                           />
 
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`atDischarge-${value}`}
                             className="form-label"
                           >
@@ -2670,18 +3078,10 @@ const SinglePatient = () => {
                       ))}
                     </div>
                   </div>
-                  <div
-                    style={{ marginTop: "50px" }}
-                    className="col-md-12 w-100"
-                  >
-                    <PdfHeader
-                      company={company?.payload?.company}
-                      patient={patient?.payload}
-                    />
-                  </div>
+                  <div className="col-md-12 w-100"></div>
                   {/* M1870. Feeding or Eating */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label">
+                    <label style={{ fontSize: "10px" }} className="form-label">
                       M1870. Feeding or Eating
                     </label>
                     {[
@@ -2722,6 +3122,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`feedingOrEating-${value}`}
                           className="form-label d-block"
                         >
@@ -2733,12 +3134,23 @@ const SinglePatient = () => {
                 </div>
               </div>
               <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
-                <hr />
-                <h6>Skin Conditions</h6>
-                <hr />
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Skin Conditions
+                </h6>
+
                 <div className="row">
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       M1306. Does this patient have at least one Unhealed
                       Pressure Ulcer/Injury at Stage 2 or Higher or designated
                       as Unstageable?
@@ -2757,6 +3169,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`unhealedPressureUlcer-${value}`}
                           className="form-label d-block"
                         >
@@ -2768,7 +3181,10 @@ const SinglePatient = () => {
 
                   {/* M1307 */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       M1307. The Oldest Stage 2 Pressure Ulcer that is present
                       at discharge
                     </label>
@@ -2801,6 +3217,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`oldestStage2PressureUlcer-${value}`}
                           className="form-label d-block"
                         >
@@ -2811,23 +3228,30 @@ const SinglePatient = () => {
                   </div>
                 </div>
                 {/* M1311 */}
-                <div style={{ marginTop: "250px" }} className="row">
-                  <PdfHeader
-                    company={company?.payload?.company}
-                    patient={patient?.payload}
-                  />
+                <div className="row">
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       M1311. Current Number of Unhealed Pressure Ulcers/Injuries
                       at Each Stage
                     </label>
 
                     <div className="">
-                      <label className="form-label d-block">A1. Stage 2</label>
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
+                        A1. Stage 2
+                      </label>
                       {formData?.numberOfStage2Ulcers}
                     </div>
                     <div className="">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         A2. Number of Stage 2 pressure ulcers present at most
                         recent SOC/ROC
                       </label>
@@ -2835,11 +3259,19 @@ const SinglePatient = () => {
                     </div>
 
                     <div className="">
-                      <label className="form-label d-block">B1. Stage 3</label>
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
+                        B1. Stage 3
+                      </label>
                       {formData?.numberOfStage3Ulcers}
                     </div>
                     <div className="">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         B2. Number of Stage 3 pressure ulcers present at most
                         recent SOC/ROC
                       </label>
@@ -2847,11 +3279,19 @@ const SinglePatient = () => {
                     </div>
 
                     <div className="">
-                      <label className="form-label d-block">C1. Stage 4</label>
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
+                        C1. Stage 4
+                      </label>
                       {formData?.numberOfStage4Ulcers}
                     </div>
                     <div className="">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         C2. Number of Stage 4 pressure ulcers present at most
                         recent SOC/ROC
                       </label>
@@ -2859,14 +3299,20 @@ const SinglePatient = () => {
                     </div>
 
                     <div className="">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         D1. Unstageable: Non-removable dressing/device
                       </label>
                       {formData?.numberOfUnstageableDressingUlcers}
                     </div>
 
                     <div className="col-md-12">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         D2. Number of unstageable pressure ulcers/injuries due
                         to non-removable dressing/device at most recent SOC/ROC
                       </label>
@@ -2874,13 +3320,19 @@ const SinglePatient = () => {
                     </div>
 
                     <div className="">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         E1. Unstageable: Slough and/or eschar
                       </label>
                       {formData?.numberOfUnstageableSloughUlcers}
                     </div>
                     <div className="row">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         E2. Number of unstageable pressure ulcers/injuries due
                         to coverage of wound bed by slough and/or eschar at most
                         recent SOC/ROC
@@ -2890,14 +3342,20 @@ const SinglePatient = () => {
                     </div>
 
                     <div className=" col-md-6 w-50">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         F1. Unstageable: Deep tissue injury
                       </label>
 
                       {formData?.numberOfDeepTissueInjuries}
                     </div>
                     <div className=" col-md-6 w-50">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         F2. Number of unstageable pressure injuries presenting
                         as deep tissue injury at most recent SOC/ROC
                       </label>
@@ -2908,7 +3366,10 @@ const SinglePatient = () => {
 
                   {/* M1322 */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       M1322. Current Number of Stage 1 Pressure Injuries
                     </label>
                     {[
@@ -2928,6 +3389,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`numberOfStage1Injuries-${value}`}
                           className="form-label d-block"
                         >
@@ -2940,7 +3402,10 @@ const SinglePatient = () => {
                 <div className="row">
                   {/* M1324 */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       M1324. Stage of Most Problematic Unhealed Pressure
                       Ulcer/Injury that is Stageable
                     </label>
@@ -2967,6 +3432,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`mostProblematicUlcerStage-${value}`}
                           className="form-label d-block"
                         >
@@ -2978,7 +3444,10 @@ const SinglePatient = () => {
 
                   {/* M1330 */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       M1330. Does this patient have a Stasis Ulcer?
                     </label>
                     {[
@@ -3008,6 +3477,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`stasisUlcer-${value}`}
                           className="form-label d-block"
                         >
@@ -3023,7 +3493,10 @@ const SinglePatient = () => {
                   {formData?.stasisUlcer !== "0" &&
                     formData?.stasisUlcer !== "" && (
                       <div className=" col-md-6 w-50">
-                        <label className="form-label d-block">
+                        <label
+                          style={{ fontSize: "10px" }}
+                          className="form-label d-block"
+                        >
                           M1332. Current Number of Stasis Ulcers that are
                           Observable
                         </label>
@@ -3036,7 +3509,10 @@ const SinglePatient = () => {
                   {formData?.stasisUlcer !== "0" &&
                     formData?.stasisUlcer !== "" && (
                       <div className=" col-md-6 w-50">
-                        <label className="form-label d-block">
+                        <label
+                          style={{ fontSize: "10px" }}
+                          className="form-label d-block"
+                        >
                           M1334. Status of Most Problematic Stasis Ulcer that is
                           Observable
                         </label>
@@ -3058,6 +3534,7 @@ const SinglePatient = () => {
                               className="form-check-input"
                             />
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor={`mostProblematicStasisUlcerStatus-${value}`}
                               className="form-label d-block"
                             >
@@ -3071,12 +3548,11 @@ const SinglePatient = () => {
                   {/* M1340 */}
                 </div>
                 <div className="row">
-                  <PdfHeader
-                    company={company?.payload?.company}
-                    patient={patient?.payload}
-                  />
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       M1340. Does this patient have a Surgical Wound?
                     </label>
                     {[
@@ -3102,6 +3578,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`surgicalWound-${value}`}
                           className="form-label d-block"
                         >
@@ -3115,7 +3592,10 @@ const SinglePatient = () => {
                   {formData?.surgicalWound !== "0" &&
                     formData?.surgicalWound !== "" && (
                       <div className="col-md-6 w-50">
-                        <label className="form-label d-block">
+                        <label
+                          style={{ fontSize: "10px" }}
+                          className="form-label d-block"
+                        >
                           M1342. Status of Most Problematic Surgical Wound that
                           is Observable
                         </label>
@@ -3138,6 +3618,7 @@ const SinglePatient = () => {
                               className="form-check-input"
                             />
                             <label
+                              style={{ fontSize: "10px" }}
                               htmlFor={`mostProblematicSurgicalWoundStatus-${value}`}
                               className="form-label d-block"
                             >
@@ -3150,11 +3631,23 @@ const SinglePatient = () => {
                 </div>
               </div>
               <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
-                <h6>Medications</h6>
-                <hr />
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Medications
+                </h6>
+
                 <div className="row">
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       N0415. High-Risk Drug Classes: Use and Indication
                     </label>
                     {/* High-Risk Drug Classes (unchanged) */}
@@ -3163,7 +3656,10 @@ const SinglePatient = () => {
 
                   {/* M2001. Drug Regimen Review */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       M2001. Drug Regimen Review
                     </label>
                     {[
@@ -3187,6 +3683,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`drugRegimenReview-${value}`}
                           className="form-label d-block"
                         >
@@ -3200,7 +3697,10 @@ const SinglePatient = () => {
                 <div className="row">
                   {/* M2003. Medication Follow-up */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       M2003. Medication Follow-up
                     </label>
                     {[
@@ -3217,6 +3717,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`medicationFollowUp-${value}`}
                           className="form-label d-block"
                         >
@@ -3228,7 +3729,10 @@ const SinglePatient = () => {
 
                   {/* M2005. Medication Intervention */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       M2005. Medication Intervention
                     </label>
                     {[
@@ -3250,6 +3754,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`medicationIntervention-${value}`}
                           className="form-label d-block"
                         >
@@ -3263,7 +3768,10 @@ const SinglePatient = () => {
               <div className="row">
                 {/* M2010. Patient/Caregiver High-Risk Drug Education */}
                 <div className=" col-md-6 w-50">
-                  <label className="form-label d-block">
+                  <label
+                    style={{ fontSize: "10px" }}
+                    className="form-label d-block"
+                  >
                     M2010. Patient/Caregiver High-Risk Drug Education
                   </label>
                   {[
@@ -3284,6 +3792,7 @@ const SinglePatient = () => {
                         className="form-check-input"
                       />
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor={`highRiskDrugEducation-${value}`}
                         className="form-label d-block"
                       >
@@ -3295,7 +3804,10 @@ const SinglePatient = () => {
 
                 {/* M2020. Management of Oral Medications */}
                 <div className=" col-md-6 w-50">
-                  <label className="form-label d-block">
+                  <label
+                    style={{ fontSize: "10px" }}
+                    className="form-label d-block"
+                  >
                     M2020. Management of Oral Medications
                   </label>
                   {[
@@ -3333,6 +3845,7 @@ const SinglePatient = () => {
                         className="form-check-input"
                       />
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor={`managementOralMedications-${value}`}
                         className="form-label d-block"
                       >
@@ -3344,7 +3857,10 @@ const SinglePatient = () => {
 
                 {/* M2030. Management of Injectable Medications */}
                 <div className=" col-md-6 w-50">
-                  <label className="form-label d-block">
+                  <label
+                    style={{ fontSize: "10px" }}
+                    className="form-label d-block"
+                  >
                     M2030. Management of Injectable Medications
                   </label>
                   {[
@@ -3384,6 +3900,7 @@ const SinglePatient = () => {
                         className="form-check-input"
                       />
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor={`managementInjectableMedications-${value}`}
                         className="form-label d-block"
                       >
@@ -3393,19 +3910,24 @@ const SinglePatient = () => {
                   ))}
                 </div>
               </div>
-              <div
-                style={{ marginTop: "60px" }}
-                className="col-xl-12 col-md-12 col-12 mb-md-0 "
-              >
-                <PdfHeader
-                  company={company?.payload?.company}
-                  patient={patient?.payload}
-                />
-                <h6>Special Treatments, Procedures, and Programs</h6>
-                <hr />
+              <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Special Treatments, Procedures, and Programs
+                </h6>
+
                 <div className="row">
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       O0110. Special Treatments, Procedures, and Programs
                       (Admission)
                     </label>
@@ -3417,7 +3939,10 @@ const SinglePatient = () => {
                           formData?.specialTreatmentsAdmission?.chemotherapy
                         }
                       />
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         A1. Chemotherapy
                       </label>
                     </div>
@@ -3429,7 +3954,10 @@ const SinglePatient = () => {
                           formData?.specialTreatmentsAdmission?.radiation
                         }
                       />
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         B1. Radiation
                       </label>
                     </div>
@@ -3442,14 +3970,20 @@ const SinglePatient = () => {
                           formData?.specialTreatmentsAdmission?.noneOfTheAbove
                         }
                       />
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         Z1. None of the Above
                       </label>
                     </div>
                   </div>
 
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       O0110. Special Treatments, Procedures, and Programs
                       (Discharge)
                     </label>
@@ -3461,7 +3995,10 @@ const SinglePatient = () => {
                           formData?.specialTreatmentsDischarge?.chemotherapy
                         }
                       />
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         A1. Chemotherapy
                       </label>
                     </div>
@@ -3473,7 +4010,10 @@ const SinglePatient = () => {
                           formData?.specialTreatmentsDischarge?.radiation
                         }
                       />
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         B1. Radiation
                       </label>
                     </div>
@@ -3486,7 +4026,10 @@ const SinglePatient = () => {
                           formData?.specialTreatmentsDischarge?.noneOfTheAbove
                         }
                       />
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         Z1. None of the Above
                       </label>
                     </div>
@@ -3496,7 +4039,10 @@ const SinglePatient = () => {
                 <div className="row">
                   {/* O0350. Patient’s COVID-19 vaccination is up to date */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       O0350. Patient’s COVID-19 vaccination is up to date
                     </label>
                     {[
@@ -3513,6 +4059,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`covidVaccinationUpToDate-${value}`}
                           className="form-label d-block"
                         >
@@ -3524,7 +4071,10 @@ const SinglePatient = () => {
 
                   {/* M1041. Influenza Vaccine Data Collection Period */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       M1041. Influenza Vaccine Data Collection Period
                     </label>
                     {[
@@ -3541,6 +4091,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`influenzaVaccinePeriod-${value}`}
                           className="form-label d-block"
                         >
@@ -3556,7 +4107,10 @@ const SinglePatient = () => {
                   {/* M1046. Influenza Vaccine Received */}
                   {formData?.influenzaVaccinePeriod === "1" && (
                     <div className=" col-md-6 w-50">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         M1046. Influenza Vaccine Received
                       </label>
                       {[
@@ -3612,6 +4166,7 @@ const SinglePatient = () => {
                             className="form-check-input"
                           />
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`influenzaVaccineReceived-${value}`}
                             className="form-label d-block"
                           >
@@ -3624,16 +4179,31 @@ const SinglePatient = () => {
                 </div>
               </div>
               <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
-                <h6>Participation in assessment and setting</h6>
-                <hr />
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Participation in assessment and setting
+                </h6>
+
                 <div className="">
-                  <label className="form-label d-block">
+                  <label
+                    style={{ fontSize: "10px" }}
+                    className="form-label d-block"
+                  >
                     M2401. Intervention Synopsis
                   </label>
 
                   <div className="row">
                     <div className=" col-md-6 w-50">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         b. Falls prevention interventions
                       </label>
                       {[
@@ -3651,6 +4221,7 @@ const SinglePatient = () => {
                             className="form-check-input"
                           />
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`fallsPrevention-${value}`}
                             className="form-label d-block"
                           >
@@ -3661,7 +4232,10 @@ const SinglePatient = () => {
                     </div>
 
                     <div className=" col-md-6 w-50">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         c. Depression intervention(s)
                       </label>
                       {[
@@ -3679,6 +4253,7 @@ const SinglePatient = () => {
                             className="form-check-input"
                           />
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`depressionIntervention-${value}`}
                             className="form-label d-block"
                           >
@@ -3691,7 +4266,10 @@ const SinglePatient = () => {
 
                   <div className="row">
                     <div className=" col-md-6 w-50">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         d. Intervention(s) to monitor and mitigate pain
                       </label>
                       {[
@@ -3709,6 +4287,7 @@ const SinglePatient = () => {
                             className="form-check-input"
                           />
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`painIntervention-${value}`}
                             className="form-label d-block"
                           >
@@ -3719,7 +4298,10 @@ const SinglePatient = () => {
                     </div>
 
                     <div className=" col-md-6 w-50">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         e. Intervention(s) to prevent pressure ulcers
                       </label>
                       {[
@@ -3739,6 +4321,7 @@ const SinglePatient = () => {
                             className="form-check-input"
                           />
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`pressureUlcerPrevention-${value}`}
                             className="form-label d-block"
                           >
@@ -3750,7 +4333,10 @@ const SinglePatient = () => {
                   </div>
                   <div className="row">
                     <div className=" col-md-6 w-50">
-                      <label className="form-label d-block">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
                         f. Pressure ulcer treatment based on principles of moist
                         wound healing
                       </label>
@@ -3769,6 +4355,7 @@ const SinglePatient = () => {
                             className="form-check-input"
                           />
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`pressureUlcerTreatment-${value}`}
                             className="form-label d-block"
                           >
@@ -3780,34 +4367,45 @@ const SinglePatient = () => {
                   </div>
                 </div>
               </div>
-              <div
-                style={{ marginTop: "100px" }}
-                className="col-xl-12 col-md-12 col-12 mb-md-0 "
-              >
+              <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
                 {/* Payer Information */}
-                <div className="mb-4">
-                  <PdfHeader
-                    company={company?.payload?.company}
-                    patient={patient?.payload}
-                  />
-                  <h6>Payer Information</h6>
-                  <hr />
+                <div className="mb-1">
+                  <h6
+                    style={{
+                      border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                    }}
+                  >
+                    Payer Information
+                  </h6>
+
                   <div className="row g-3">
                     <div className="col-md-6">
-                      <label htmlFor="mbiNumber" className="form-label d-block">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="mbiNumber"
+                        className="form-label d-block"
+                      >
                         (M0063) Medicare Beneficiary Identifier (MBI) Number
                         <span className="text-danger">*</span>
                       </label>
                       {formData?.mbiNumber}
                     </div>
                     <div className="col-md-6">
-                      <label htmlFor="hicNumber" className="form-label d-block">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="hicNumber"
+                        className="form-label d-block"
+                      >
                         Health Insurance Claim (HIC) Number
                       </label>
                       {formData?.hicNumber}
                     </div>
                     <div className="col-md-6">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="medicaidNumber"
                         className="form-label d-block"
                       >
@@ -3817,6 +4415,7 @@ const SinglePatient = () => {
                     </div>
                     <div className="col-md-6">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="alternateMedicaidNumber"
                         className="form-label d-block"
                       >
@@ -3828,13 +4427,22 @@ const SinglePatient = () => {
                 </div>
 
                 {/* Insurance Information */}
-                <div className="mb-4">
-                  <hr />
-                  <h6>Insurance Information</h6>
-                  <hr />
+                <div className="mb-1">
+                  <h6
+                    style={{
+                      border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                    }}
+                  >
+                    Insurance Information
+                  </h6>
+
                   <div className="row g-3">
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="primaryInsurance"
                         className="form-label d-block"
                       >
@@ -3842,8 +4450,9 @@ const SinglePatient = () => {
                       </label>
                       {formData?.primaryInsurance}
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="secondaryInsurance"
                         className="form-label d-block"
                       >
@@ -3851,8 +4460,9 @@ const SinglePatient = () => {
                       </label>
                       {formData?.secondaryInsurance}
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="tertiaryInsurance"
                         className="form-label d-block"
                       >
@@ -3864,10 +4474,11 @@ const SinglePatient = () => {
                 </div>
 
                 {/* Payer Comments and Selected Templates */}
-                <div className="mb-4">
+                <div className="mb-1">
                   <div className="row g-3">
                     <div className="col-md-12">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="payerComments"
                         className="form-label hide-on-print"
                       >
@@ -3879,19 +4490,25 @@ const SinglePatient = () => {
                 </div>
 
                 {/* Additional UB-04 Locators */}
-                <div style={{ marginTop: "100px" }} className="mb-4">
-                  <PdfHeader
-                    company={company?.payload?.company}
-                    patient={patient?.payload}
-                  />
-                  <h6>Additional UB-04 Locators</h6>
-                  <hr />
+                <div className="mb-1">
+                  <h6
+                    style={{
+                      border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                    }}
+                  >
+                    Additional UB-04 Locators
+                  </h6>
+
                   <p>(UB-04 Locators 31 - 34) Occurrence Codes</p>
                   <div className="row g-3">
                     {formData?.occurrenceCodes?.map((code, index) => (
                       <React.Fragment key={`occurrenceCode-${index}`}>
                         <div className="col-md-6 w-50">
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`occurrenceCode${index + 1}A`}
                             className="form-label d-block"
                           >
@@ -3901,6 +4518,7 @@ const SinglePatient = () => {
                         </div>
                         <div className="col-md-6 w-50">
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`occurrenceCode${index + 1}B`}
                             className="form-label d-block"
                           >
@@ -3913,13 +4531,14 @@ const SinglePatient = () => {
                   </div>
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-1">
                   <p>(UB-04 Locators 35 - 36) Occurrence Spans</p>
                   <div className="row g-3">
                     {formData?.occurrenceSpans?.map((span, index) => (
                       <React.Fragment key={`occurrenceSpan-${index}`}>
                         <div className="col-md-6 w-50">
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`occurrenceSpan${index + 1}A`}
                             className="form-label d-block"
                           >
@@ -3930,6 +4549,7 @@ const SinglePatient = () => {
                         </div>
                         <div className="col-md-6 w-50">
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`occurrenceSpan${index + 1}B`}
                             className="form-label d-block"
                           >
@@ -3940,6 +4560,7 @@ const SinglePatient = () => {
                         </div>
                         <div className="col-md-6 w-50">
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`occurrenceSpan${index + 1}C`}
                             className="form-label d-block"
                           >
@@ -3953,11 +4574,7 @@ const SinglePatient = () => {
                   </div>
                 </div>
 
-                <div style={{ marginTop: "90px" }} className="mb-4">
-                  <PdfHeader
-                    company={company?.payload?.company}
-                    patient={patient?.payload}
-                  />
+                <div className="mb-1">
                   <p>(UB-04 Locators 39 - 41) Condition Codes</p>
                   <div className="row g-3">
                     {formData?.conditionCodes?.map((code, index) => (
@@ -3966,6 +4583,7 @@ const SinglePatient = () => {
                         className="col-md-6 w-50"
                       >
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`conditionCode${index + 1}`}
                           className="form-label d-block"
                         >
@@ -3978,13 +4596,22 @@ const SinglePatient = () => {
                 </div>
 
                 {/* Additional Form Fields */}
-                <div className="mb-4">
-                  <hr />
-                  <h6>Additional Form Fields</h6>
-                  <hr />
+                <div className="mb-1">
+                  <h6
+                    style={{
+                      border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                    }}
+                  >
+                    Additional Form Fields
+                  </h6>
+
                   <div className="row g-3">
                     <div className="col-md-6 w-50">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="employmentRelated"
                         className="form-label d-block"
                       >
@@ -3994,6 +4621,7 @@ const SinglePatient = () => {
                     </div>
                     <div className="col-md-6 w-50">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="autoAccident"
                         className="form-label d-block"
                       >
@@ -4002,13 +4630,18 @@ const SinglePatient = () => {
                       {formData?.autoAccident}
                     </div>
                     <div className="col-md-6 w-50">
-                      <label htmlFor="claimCode" className="form-label d-block">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="claimCode"
+                        className="form-label d-block"
+                      >
                         Claim Code:
                       </label>
                       {formData?.claimCode}
                     </div>
                     <div className="col-md-6 w-50">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="unableToWorkFrom"
                         className="form-label d-block"
                       >
@@ -4018,6 +4651,7 @@ const SinglePatient = () => {
                     </div>
                     <div className="col-md-6 w-50">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="unableToWorkTo"
                         className="form-label d-block"
                       >
@@ -4027,6 +4661,7 @@ const SinglePatient = () => {
                     </div>
                     <div className="col-md-6 w-50">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="hospitalizationStartDate"
                         className="form-label d-block"
                       >
@@ -4036,6 +4671,7 @@ const SinglePatient = () => {
                     </div>
                     <div className="col-md-6 w-50">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="hospitalizationEndDate"
                         className="form-label d-block"
                       >
@@ -4045,6 +4681,7 @@ const SinglePatient = () => {
                     </div>
                     <div className="col-md-6 w-50">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="emergencyTreatmentIndicator"
                         className="form-label d-block"
                       >
@@ -4056,26 +4693,36 @@ const SinglePatient = () => {
                 </div>
               </div>
               {/* physician  */}
-              <div
-                style={{ marginTop: "90px" }}
-                className="col-xl-12 col-md-12 col-12 mb-md-0 "
-              >
-                <PdfHeader
-                  company={company?.payload?.company}
-                  patient={patient?.payload}
-                />
-                <h6 className="mt-3">Physician Information</h6>
-                <hr />
+              <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "12px",
+                  }}
+                  className="mt-3"
+                >
+                  Physician Information
+                </h6>
 
                 <div className="row">
                   <div className=" col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="npiNumber">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="npiNumber"
+                    >
                       NPI Number:
                     </label>
                     {formData?.npiNumber}
                   </div>
                   <div className=" col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="firstName">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="firstName"
+                    >
                       First Name:
                     </label>
                     {formData?.firstName}
@@ -4083,13 +4730,21 @@ const SinglePatient = () => {
                 </div>
                 <div className="row">
                   <div className=" col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="mi">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="mi"
+                    >
                       MI:
                     </label>
                     {formData?.mi}
                   </div>
                   <div className=" col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="lastName">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="lastName"
+                    >
                       Last Name:
                     </label>
                     {formData?.lastName}
@@ -4097,13 +4752,21 @@ const SinglePatient = () => {
                 </div>
                 <div className="row">
                   <div className=" col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="taxonomyCode">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="taxonomyCode"
+                    >
                       Taxonomy Code:
                     </label>
                     {formData?.taxonomyCode}
                   </div>
                   <div className=" col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="credentials">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="credentials"
+                    >
                       Credentials:
                     </label>
                     {formData?.credentials}
@@ -4111,13 +4774,18 @@ const SinglePatient = () => {
                 </div>
                 <div className="row">
                   <div className=" col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="npiNo">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="npiNo"
+                    >
                       NPI No:
                     </label>
                     {formData?.npiNo}
                   </div>
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       className="form-label d-block"
                       htmlFor="medicaidProviderIdentifier"
                     >
@@ -4127,19 +4795,36 @@ const SinglePatient = () => {
                   </div>
                 </div>
 
-                <hr />
-                <h6 className="mt-3">Physician Address</h6>
-                <hr />
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "12px",
+                  }}
+                  className="mt-3"
+                >
+                  Physician Address
+                </h6>
+
                 <div className="row">
                   <div className="col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="addressLine1">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="addressLine1"
+                    >
                       Address Line 1:
                     </label>
 
                     {formData?.addressLine1}
                   </div>
                   <div className="col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="addressLine2">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="addressLine2"
+                    >
                       Address Line 2:
                     </label>
                     {formData?.addressLine2}
@@ -4147,49 +4832,80 @@ const SinglePatient = () => {
 
                   {/* const [county,setCounty]=useState("") */}
                   <div className="col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="city">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="city"
+                    >
                       City:
                     </label>
                   </div>
                   <div className="col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="state">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="state"
+                    >
                       State:
                     </label>
                   </div>
                   <div className="col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="zip">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="zip"
+                    >
                       Zip:
                     </label>
                     {formData?.zip}
                   </div>
 
                   <div className="col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="primaryPhone">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="primaryPhone"
+                    >
                       Primary Phone:
                     </label>
                     {formData?.primaryPhone}
                   </div>
                   <div className="col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="alternatePhone">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="alternatePhone"
+                    >
                       Alternate Phone:
                     </label>
                     {formData?.alternatePhone}
                   </div>
                   <div className="col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="fax">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="fax"
+                    >
                       Fax:
                     </label>
                     {formData?.fax}
                   </div>
                   <div className="col-md-6 w-50">
-                    <label className="form-label my-2" htmlFor="email">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="email"
+                    >
                       E-mail:
                     </label>
                     {formData?.email}
                   </div>
 
                   <div className="col-md-12 w-100">
-                    <label className="form-label my-2">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                    >
                       Order Delivery Method:
                     </label>
                     <div className="row">
@@ -4205,6 +4921,7 @@ const SinglePatient = () => {
                           }
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           className="form-label d-block"
                           htmlFor="deliveryMethodAxxessPhysicianPortal"
                         >
@@ -4221,6 +4938,7 @@ const SinglePatient = () => {
                           checked={formData?.deliveryMethod === "Email"}
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           className="form-label d-block"
                           htmlFor="deliveryMethodEmail"
                         >
@@ -4237,6 +4955,7 @@ const SinglePatient = () => {
                           checked={formData?.deliveryMethod === "Phone"}
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           className="form-label d-block"
                           htmlFor="deliveryMethodPhone"
                         >
@@ -4253,6 +4972,7 @@ const SinglePatient = () => {
                           checked={formData?.deliveryMethod === "Fax"}
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           className="form-label d-block"
                           htmlFor="deliveryMethodFax"
                         >
@@ -4269,6 +4989,7 @@ const SinglePatient = () => {
                           checked={formData?.deliveryMethod === "Courier"}
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           className="form-label d-block"
                           htmlFor="deliveryMethodCourier"
                         >
@@ -4285,6 +5006,7 @@ const SinglePatient = () => {
                           checked={formData?.deliveryMethod === "Other"}
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           className="form-label d-block"
                           htmlFor="deliveryMethodOther"
                         >
@@ -4296,22 +5018,26 @@ const SinglePatient = () => {
                 </div>
               </div>
               {/* clinical dignosis  */}
-              <div
-                style={{ marginTop: "170px" }}
-                className="col-xl-12 col-md-12 col-12 mb-md-0 "
-              >
+              <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
                 {/* Service Required */}
 
-                <PdfHeader
-                  company={company?.payload?.company}
-                  patient={patient?.payload}
-                />
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Service Required
+                </h6>
 
-                <h6>Service Required</h6>
-                <hr />
                 <div className="row">
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       Service Required
                     </label>
                     {["SN", "HHA", "PT", "OT", "ST", "MSW"]?.map((service) => (
@@ -4324,7 +5050,11 @@ const SinglePatient = () => {
                           value={service}
                           checked={formData?.serviceRequired?.includes(service)}
                         />
-                        <label className="form-label d-block" htmlFor={service}>
+                        <label
+                          style={{ fontSize: "10px" }}
+                          className="form-label d-block"
+                          htmlFor={service}
+                        >
                           {service}
                         </label>
                       </div>
@@ -4332,7 +5062,12 @@ const SinglePatient = () => {
                   </div>
                   {/* DME Needed */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">DME Needed</label>
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
+                      DME Needed
+                    </label>
                     {[
                       "bedsideCommode",
                       "cane",
@@ -4355,7 +5090,11 @@ const SinglePatient = () => {
                           checked={formData?.dmeNeeded?.includes(dme)}
                           className="form-check-input"
                         />
-                        <label className="form-label d-block" htmlFor={dme}>
+                        <label
+                          style={{ fontSize: "10px" }}
+                          className="form-label d-block"
+                          htmlFor={dme}
+                        >
                           {dme}
                         </label>
                       </div>
@@ -4365,13 +5104,21 @@ const SinglePatient = () => {
                 {/* Height */}
                 <div className="row ">
                   <div className="col-md-6 w-50">
-                    <label htmlFor="heightValue" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="heightValue"
+                      className="form-label d-block"
+                    >
                       Height
                     </label>
                     {formData?.height?.value}
                   </div>
                   <div className="col-md-6 w-50">
-                    <label htmlFor="heightUnit" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="heightUnit"
+                      className="form-label d-block"
+                    >
                       Unit
                     </label>
                     {formData?.height?.unit}
@@ -4381,13 +5128,21 @@ const SinglePatient = () => {
                 {/* Weight */}
                 <div className="row ">
                   <div className="col-md-6 w-50">
-                    <label htmlFor="weightValue" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="weightValue"
+                      className="form-label d-block"
+                    >
                       Weight
                     </label>
                     {formData?.weight?.value}
                   </div>
                   <div className="col-md-6 w-50">
-                    <label htmlFor="weightUnit" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="weightUnit"
+                      className="form-label d-block"
+                    >
                       Unit
                     </label>
                     {formData?.weight?.unit}
@@ -4398,6 +5153,7 @@ const SinglePatient = () => {
                 <div className="row ">
                   <div className="col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="primaryDiagnosis"
                       className="form-label d-block"
                     >
@@ -4407,6 +5163,7 @@ const SinglePatient = () => {
                   </div>
                   <div className="col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="primaryDiagnosisCode"
                       className="form-label d-block"
                     >
@@ -4419,13 +5176,17 @@ const SinglePatient = () => {
                 <div className="row">
                   {/* Other Diagnoses */}
                   <div className="">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       Other Diagnoses
                     </label>
                     {formData?.otherDiagnoses?.map((diagnosis, index) => (
                       <div className="row " key={index}>
                         <div className="col-md-6 w-50">
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`diagnosis-${index}`}
                             className="form-label d-block"
                           >
@@ -4435,6 +5196,7 @@ const SinglePatient = () => {
                         </div>
                         <div className="col-md-6 w-50">
                           <label
+                            style={{ fontSize: "10px" }}
                             htmlFor={`code-${index}`}
                             className="form-label d-block"
                           >
@@ -4449,6 +5211,7 @@ const SinglePatient = () => {
                   {/* Clinical Comments */}
                   <div className="">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="clinicalComments"
                       className="form-label hide-on-print"
                     >
@@ -4459,19 +5222,22 @@ const SinglePatient = () => {
                 </div>
               </div>
               {/* pharmacy  */}
-              <div
-                style={{ marginTop: "210px" }}
-                className="col-xl-12 col-md-12 col-12 mb-md-0 "
-              >
-                <PdfHeader
-                  company={company?.payload?.company}
-                  patient={patient?.payload}
-                />
-                <h6>Pharmacy Information</h6>
-                <hr />
+              <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Pharmacy Information
+                </h6>
+
                 <div className="row">
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="pharmacyName"
                       className="form-label d-block"
                     >
@@ -4481,6 +5247,7 @@ const SinglePatient = () => {
                   </div>
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="addressLine1"
                       className="form-label d-block"
                     >
@@ -4492,6 +5259,7 @@ const SinglePatient = () => {
                 <div className="row">
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="addressLine2"
                       className="form-label d-block"
                     >
@@ -4500,19 +5268,31 @@ const SinglePatient = () => {
                     {formData?.addressLine2}
                   </div>
                   <div className="col-md-6">
-                    <label htmlFor="city" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="city"
+                      className="form-label d-block"
+                    >
                       City:
                     </label>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-6 w-50">
-                    <label htmlFor="state" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="state"
+                      className="form-label d-block"
+                    >
                       State:
                     </label>
                   </div>
                   <div className="col-md-6 w-50">
-                    <label htmlFor="zip" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="zip"
+                      className="form-label d-block"
+                    >
                       Zip:
                     </label>
                     {formData?.zip}
@@ -4522,6 +5302,7 @@ const SinglePatient = () => {
                 <div className="row">
                   <div className="col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="primaryPhone"
                       className="form-label d-block"
                     >
@@ -4531,6 +5312,7 @@ const SinglePatient = () => {
                   </div>
                   <div className="col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="contactFirstName"
                       className="form-label d-block"
                     >
@@ -4542,6 +5324,7 @@ const SinglePatient = () => {
                 <div className="row">
                   <div className="col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="contactLastName"
                       className="form-label d-block"
                     >
@@ -4550,7 +5333,11 @@ const SinglePatient = () => {
                     {formData?.contactLastName}
                   </div>
                   <div className="col-md-6 w-50">
-                    <label htmlFor="email" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="email"
+                      className="form-label d-block"
+                    >
                       Email:
                     </label>
                     {formData?.email}
@@ -4558,26 +5345,44 @@ const SinglePatient = () => {
                 </div>
                 <div className="row">
                   <div className="col-md-6 w-50">
-                    <label htmlFor="faxNumber" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="faxNumber"
+                      className="form-label d-block"
+                    >
                       Fax Number:
                     </label>
                     {formData?.faxNumber}
                   </div>
 
                   <div className=" col-md-6 w-50">
-                    <label htmlFor="comment" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="comment"
+                      className="form-label d-block"
+                    >
                       Comment:
                     </label>
                     {formData?.comment}
                   </div>
                 </div>
-                <hr />
-                <h6>Additional Pharmacies</h6>
-                <hr />
+
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Additional Pharmacies
+                </h6>
+
                 <div className="row ">
                   {formData?.additionalPharmacies?.map((pharmacy, index) => (
                     <div key={index} className="col-md-6  w-50">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor={`additionalPharmacy${index + 1}`}
                         className="form-label d-block"
                       >
@@ -4593,6 +5398,7 @@ const SinglePatient = () => {
                   <div className="row">
                     <div className="col-md-6 w-50">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="primaryFirstName"
                         className="form-label d-block"
                       >
@@ -4602,6 +5408,7 @@ const SinglePatient = () => {
                     </div>
                     <div className="col-md-6 w-50">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="primaryLastName"
                         className="form-label d-block"
                       >
@@ -4613,6 +5420,7 @@ const SinglePatient = () => {
                   <div className="row">
                     <div className="col-md-6 w-50">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="primaryMobilePhone"
                         className="form-label d-block"
                       >
@@ -4622,6 +5430,7 @@ const SinglePatient = () => {
                     </div>
                     <div className="col-md-6 w-50">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="primaryAlternatePhone"
                         className="form-label d-block"
                       >
@@ -4633,6 +5442,7 @@ const SinglePatient = () => {
 
                   <div className="col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="primaryRelationship"
                       className="form-label d-block"
                     >
@@ -4660,6 +5470,7 @@ const SinglePatient = () => {
                             }
                           />
                           <label
+                            style={{ fontSize: "11px" }}
                             className="form-label d-block"
                             htmlFor={`relationship${relationship}`}
                           >
@@ -4671,6 +5482,7 @@ const SinglePatient = () => {
                   </div>
                   <div className="col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="primaryEmail"
                       className="form-label d-block"
                     >
@@ -4678,14 +5490,12 @@ const SinglePatient = () => {
                     </label>
                     {formData?.primary?.email}
                   </div>
-                  <div style={{ marginTop: "150px" }} className="row">
-                    <PdfHeader
-                      company={company?.payload?.company}
-                      patient={patient?.payload}
-                    />
-                  </div>
+                  <div className="row"></div>
                   <div className="col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       Representative:
                     </label>
                     <div className="form-check">
@@ -4701,6 +5511,7 @@ const SinglePatient = () => {
                         }
                       />
                       <label
+                        style={{ fontSize: "11px" }}
                         className="form-label d-block"
                         htmlFor="primaryLegalRep"
                       >
@@ -4720,6 +5531,7 @@ const SinglePatient = () => {
                         }
                       />
                       <label
+                        style={{ fontSize: "11px" }}
                         className="form-label d-block"
                         htmlFor="primaryPatientRep"
                       >
@@ -4739,6 +5551,7 @@ const SinglePatient = () => {
                         checked={formData?.primary?.sameAsPatientAddress}
                       />
                       <label
+                        style={{ fontSize: "11px" }}
                         className="form-label d-block"
                         htmlFor="primarySameAsPatientAddress"
                       >
@@ -4752,6 +5565,7 @@ const SinglePatient = () => {
                     <React.Fragment>
                       <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="primaryAddressLine1"
                           className="form-label d-block"
                         >
@@ -4761,6 +5575,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="primaryAddressLine2"
                           className="form-label d-block"
                         >
@@ -4770,6 +5585,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="primaryCity"
                           className="form-label d-block"
                         >
@@ -4778,6 +5594,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="primaryState"
                           className="form-label d-block"
                         >
@@ -4786,6 +5603,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="primaryZip"
                           className="form-label d-block"
                         >
@@ -4801,6 +5619,7 @@ const SinglePatient = () => {
                     <div key="index" className="row g-3">
                       <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`additionalFirstName-${index}`}
                           className="form-label d-block"
                         >
@@ -4810,6 +5629,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`additionalLastName-${index}`}
                           className="form-label d-block"
                         >
@@ -4819,6 +5639,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`additionalMobilePhone-${index}`}
                           className="form-label d-block"
                         >
@@ -4828,6 +5649,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`additionalAlternatePhone-${index}`}
                           className="form-label d-block"
                         >
@@ -4843,6 +5665,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`additionalRelationship-${index}`}
                           className="form-label d-block"
                         >
@@ -4879,6 +5702,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col-md-6">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor={`additionalEmail-${index}`}
                           className="form-label d-block"
                         >
@@ -4893,7 +5717,10 @@ const SinglePatient = () => {
                         />
                       </div>
                       <div className="col-md-6">
-                        <label className="form-label d-block">
+                        <label
+                          style={{ fontSize: "10px" }}
+                          className="form-label d-block"
+                        >
                           Representative:
                         </label>
                         <div className="form-check">
@@ -4908,6 +5735,7 @@ const SinglePatient = () => {
                             }
                           />
                           <label
+                            style={{ fontSize: "11px" }}
                             className="form-label d-block"
                             htmlFor={`additionalLegalRep-${index}`}
                           >
@@ -4927,6 +5755,7 @@ const SinglePatient = () => {
                             }
                           />
                           <label
+                            style={{ fontSize: "11px" }}
                             className="form-label d-block"
                             htmlFor={`additionalPatientRep-${index}`}
                           >
@@ -4943,6 +5772,7 @@ const SinglePatient = () => {
                             checked={contact?.sameAsPatientAddress}
                           />
                           <label
+                            style={{ fontSize: "11px" }}
                             className="form-label d-block"
                             htmlFor={`additionalSameAsPatientAddress-${index}`}
                           >
@@ -5003,13 +5833,13 @@ const SinglePatient = () => {
                   ))}
                 </div>
 
-                <div style={{ marginTop: "150px" }} className="row">
-                  {/* <PdfHeader
-                    company={company?.payload?.company}
-                    patient={patient?.payload}
-                  /> */}
+                <div className="row">
+                  {/*  */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       Representative contacted regarding admission:
                     </label>
                     <div>
@@ -5060,6 +5890,7 @@ const SinglePatient = () => {
                             }
                           />
                           <label
+                            style={{ fontSize: "11px" }}
                             className="form-label d-block"
                             htmlFor={`representativeContacted-${option.value}`}
                           >
@@ -5088,6 +5919,7 @@ const SinglePatient = () => {
                             }
                           />
                           <label
+                            style={{ fontSize: "11px" }}
                             className="form-label d-block"
                             htmlFor="legalRepOption1"
                           >
@@ -5108,6 +5940,7 @@ const SinglePatient = () => {
                             }
                           />
                           <label
+                            style={{ fontSize: "11px" }}
                             className="form-label d-block"
                             htmlFor="legalRepOption2"
                           >
@@ -5131,6 +5964,7 @@ const SinglePatient = () => {
                             }
                           />
                           <label
+                            style={{ fontSize: "11px" }}
                             className="form-label d-block"
                             htmlFor="legalRepOption3"
                           >
@@ -5157,6 +5991,7 @@ const SinglePatient = () => {
                         }
                       />
                       <label
+                        style={{ fontSize: "11px" }}
                         className="form-label d-block"
                         htmlFor="patientSelectedOption1"
                       >
@@ -5177,6 +6012,7 @@ const SinglePatient = () => {
                         }
                       />
                       <label
+                        style={{ fontSize: "11px" }}
                         className="form-label d-block"
                         htmlFor="patientSelectedOption2"
                       >
@@ -5198,6 +6034,7 @@ const SinglePatient = () => {
                         }
                       />
                       <label
+                        style={{ fontSize: "11px" }}
                         className="form-label d-block"
                         htmlFor="patientSelectedOption3"
                       >
@@ -5216,6 +6053,7 @@ const SinglePatient = () => {
                       checked={formData?.doNotContactCAHPS}
                     />
                     <label
+                      style={{ fontSize: "11px" }}
                       className="form-label d-block"
                       htmlFor="doNotContactCAHPS"
                     >
@@ -5227,14 +6065,10 @@ const SinglePatient = () => {
 
                 {formData?.doNotContactCAHPS && (
                   <>
-                    <div style={{ marginTop: "50px" }} className="row">
-                      <PdfHeader
-                        company={company?.payload?.company}
-                        patient={patient?.payload}
-                      />
-                    </div>
+                    <div className="row"></div>
                     <div className="">
                       <label
+                        style={{ fontSize: "11px" }}
                         htmlFor="reasonForNoContact"
                         className="form-label d-block"
                       >
@@ -5284,6 +6118,7 @@ const SinglePatient = () => {
                     {formData?.reasonForNoContact === "other" && (
                       <div className="">
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="otherReason"
                           className="form-label d-block"
                         >
@@ -5307,6 +6142,7 @@ const SinglePatient = () => {
                           checked={formData?.alternateCAHPSContact}
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           className="form-label d-block"
                           htmlFor="alternateCAHPSContact"
                         >
@@ -5320,7 +6156,10 @@ const SinglePatient = () => {
                     {formData?.alternateCAHPSContact && (
                       <>
                         <div className=" d-flex gap-4">
-                          <label className="form-label d-block">
+                          <label
+                            style={{ fontSize: "10px" }}
+                            className="form-label d-block"
+                          >
                             Same as Primary Emergency Contact
                           </label>
                           <input
@@ -5342,6 +6181,7 @@ const SinglePatient = () => {
                                 {/* Add fields for alternate CAHPS contact */}
                                 <div className="">
                                   <label
+                                    style={{ fontSize: "11px" }}
                                     htmlFor="altFirstName"
                                     className="form-label d-block"
                                   >
@@ -5354,6 +6194,7 @@ const SinglePatient = () => {
                                 </div>
                                 <div className="">
                                   <label
+                                    style={{ fontSize: "11px" }}
                                     htmlFor="altLastName"
                                     className="form-label d-block"
                                   >
@@ -5366,6 +6207,7 @@ const SinglePatient = () => {
                                 </div>
                                 <div className="">
                                   <label
+                                    style={{ fontSize: "11px" }}
                                     className="form-label d-block"
                                     htmlFor="altRelationship"
                                   >
@@ -5416,6 +6258,7 @@ const SinglePatient = () => {
                                 </div>
                                 <div className="">
                                   <label
+                                    style={{ fontSize: "11px" }}
                                     htmlFor="altMobilePhone"
                                     className="form-label d-block"
                                   >
@@ -5428,6 +6271,7 @@ const SinglePatient = () => {
                                 </div>
                                 <div className="">
                                   <label
+                                    style={{ fontSize: "11px" }}
                                     htmlFor="altAlternatePhone"
                                     className="form-label d-block"
                                   >
@@ -5440,6 +6284,7 @@ const SinglePatient = () => {
                                 </div>
                                 <div className="">
                                   <label
+                                    style={{ fontSize: "11px" }}
                                     htmlFor="altEmail"
                                     className="form-label d-block"
                                   >
@@ -5452,6 +6297,7 @@ const SinglePatient = () => {
                                 </div>
                                 <div className="">
                                   <label
+                                    style={{ fontSize: "11px" }}
                                     htmlFor="altAddressLine1"
                                     className="form-label d-block"
                                   >
@@ -5464,6 +6310,7 @@ const SinglePatient = () => {
                                 </div>
                                 <div className="">
                                   <label
+                                    style={{ fontSize: "11px" }}
                                     htmlFor="altAddressLine2"
                                     className="form-label d-block"
                                   >
@@ -5476,6 +6323,7 @@ const SinglePatient = () => {
                                 </div>
                                 <div className="">
                                   <label
+                                    style={{ fontSize: "11px" }}
                                     htmlFor="altCity"
                                     className="form-label d-block"
                                   >
@@ -5484,6 +6332,7 @@ const SinglePatient = () => {
                                 </div>
                                 <div className="">
                                   <label
+                                    style={{ fontSize: "11px" }}
                                     htmlFor="altState"
                                     className="form-label d-block"
                                   >
@@ -5492,6 +6341,7 @@ const SinglePatient = () => {
                                 </div>
                                 <div className="">
                                   <label
+                                    style={{ fontSize: "11px" }}
                                     htmlFor="altZIP"
                                     className="form-label d-block"
                                   >
@@ -5501,6 +6351,7 @@ const SinglePatient = () => {
                                 </div>
                                 <div className="">
                                   <label
+                                    style={{ fontSize: "11px" }}
                                     htmlFor="altCounty"
                                     className="form-label d-block"
                                   >
@@ -5519,7 +6370,12 @@ const SinglePatient = () => {
                 <div className="contacts-comments mt-5">
                   <div className="comments-section">
                     {/* Comments input */}
-                    <label className="form-label my-2">Contacts Comments</label>
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                    >
+                      Contacts Comments
+                    </label>
 
                     {/* {comments} */}
                   </div>
@@ -5527,12 +6383,22 @@ const SinglePatient = () => {
               </div>
               <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
                 {/* Emergency Triage Information */}
-                <hr />
-                <h6>Emergency Triage</h6>
-                <hr />
+
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Emergency Triage
+                </h6>
+
                 <div className="row">
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="emergencyTriage"
                       className="form-label d-block"
                     >
@@ -5582,6 +6448,7 @@ const SinglePatient = () => {
                   </div>
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="additionalInfo"
                       className="form-label d-block"
                     >
@@ -5629,6 +6496,7 @@ const SinglePatient = () => {
                     {formData?.additionalInfo?.medicalNeeds && (
                       <div>
                         <label
+                          style={{ fontSize: "11px" }}
                           htmlFor="medicalNeedsInfo"
                           className="form-label d-block"
                         >
@@ -5655,6 +6523,7 @@ const SinglePatient = () => {
                 <div className="row ">
                   <div className="col-md-6">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="evacuationZone"
                       className="form-label d-block"
                     >
@@ -5677,42 +6546,61 @@ const SinglePatient = () => {
                   <div>
                     <div className="row">
                       <div className="col-md-6  w-50">
-                        <label htmlFor="addressLine1">Address Line 1</label>
+                        <label
+                          style={{ fontSize: "11px" }}
+                          htmlFor="addressLine1"
+                        >
+                          Address Line 1
+                        </label>
                         {formData?.addressLine1}
                       </div>
                       <div className="col-md-6  w-50">
-                        <label htmlFor="addressLine2">Address Line 2</label>
+                        <label
+                          style={{ fontSize: "11px" }}
+                          htmlFor="addressLine2"
+                        >
+                          Address Line 2
+                        </label>
                         {formData?.addressLine2}
                       </div>
                     </div>
-                    <PdfHeader
-                      company={company?.payload?.company}
-                      patient={patient?.payload}
-                    />
+
                     <div className="row">
                       <div className="col-md-6  w-50">
-                        <label htmlFor="state">State</label>
+                        <label style={{ fontSize: "11px" }} htmlFor="state">
+                          State
+                        </label>
                       </div>
                       <div className="col-md-6  w-50">
-                        <label htmlFor="city">City</label>
+                        <label style={{ fontSize: "11px" }} htmlFor="city">
+                          City
+                        </label>
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-md-6  w-50">
-                        <label htmlFor="state">County</label>
+                        <label style={{ fontSize: "11px" }} htmlFor="state">
+                          County
+                        </label>
                       </div>
                       <div className="col-md-6  w-50">
-                        <label htmlFor="zip">ZIP Code</label>
+                        <label style={{ fontSize: "11px" }} htmlFor="zip">
+                          ZIP Code
+                        </label>
                         {formData?.zip}
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-md-6  w-50">
-                        <label htmlFor="zip">Mobile Phone</label>
+                        <label style={{ fontSize: "11px" }} htmlFor="zip">
+                          Mobile Phone
+                        </label>
                         {formData?.mobilePhone}
                       </div>
                       <div className="col-md-6  w-50">
-                        <label htmlFor="zip">Alternative MobilePhone</label>
+                        <label style={{ fontSize: "11px" }} htmlFor="zip">
+                          Alternative MobilePhone
+                        </label>
                         {formData?.altMobilePhone}
                       </div>
                     </div>
@@ -5731,7 +6619,11 @@ const SinglePatient = () => {
                 )}
 
                 <div className="">
-                  <label htmlFor="comments" className="form-label d-block">
+                  <label
+                    style={{ fontSize: "11px" }}
+                    htmlFor="comments"
+                    className="form-label d-block"
+                  >
                     Comments
                   </label>
                   {formData?.comments}
@@ -5739,11 +6631,23 @@ const SinglePatient = () => {
               </div>
               <div className="col-xl-12 col-md-12 col-12 mb-md-0 ">
                 <div className="row">
-                  <hr />
-                  <h6>Advance Care Plan/Admission</h6>
-                  <hr />
+                  <h6
+                    style={{
+                      border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                    }}
+                  >
+                    Advance Care Plan/Admission
+                  </h6>
+
                   <div className="col-md-12">
-                    <label htmlFor="admission" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="admission"
+                      className="form-label d-block"
+                    >
                       Does this patient have an advance care plan or a surrogate
                       decision-maker AND able to provide legal documentation for
                       the home health medical record?
@@ -5772,6 +6676,7 @@ const SinglePatient = () => {
                 <div className="row">
                   <div className="col-md-12">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="comment"
                       className="form-label d-block my-2"
                     >
@@ -5783,13 +6688,22 @@ const SinglePatient = () => {
                 </div>
               </div>
               <div className="col-xl-12 col-md-12 col-12 mb-md-0">
-                <hr />
-                <h6>Referring Information</h6>
-                <hr />
+                <h6
+                  style={{
+                    border: "1px solid gray",
+                    padding: "5px",
+                    margin: "5px 0px",
+                    fontSize: "11px",
+                  }}
+                >
+                  Referring Information
+                </h6>
+
                 <div className="row">
                   {/* Referring Physician */}
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="referringPhysician"
                       className="form-label d-block"
                     >
@@ -5800,7 +6714,11 @@ const SinglePatient = () => {
 
                   {/* NPI */}
                   <div className=" col-md-6 w-50">
-                    <label htmlFor="npi" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="npi"
+                      className="form-label d-block"
+                    >
                       NPI
                     </label>
                     {formData?.npi}
@@ -5811,6 +6729,7 @@ const SinglePatient = () => {
                   {/* Face-to-Face Evaluation */}
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="faceToFaceEvaluation"
                       className="form-label d-block"
                     >
@@ -5827,6 +6746,7 @@ const SinglePatient = () => {
                           checked={formData?.faceToFaceEvaluation === "N/A"}
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           className="form-label d-block"
                           htmlFor="faceToFaceEvaluationNA"
                         >
@@ -5846,6 +6766,7 @@ const SinglePatient = () => {
                           }
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           className="form-label d-block"
                           htmlFor="faceToFaceEvaluationDate"
                         >
@@ -5876,6 +6797,7 @@ const SinglePatient = () => {
                           }
                         />
                         <label
+                          style={{ fontSize: "11px" }}
                           className="form-label d-block"
                           htmlFor="faceToFaceEvaluation30Days"
                         >
@@ -5886,6 +6808,7 @@ const SinglePatient = () => {
                   </div>
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="certifyingPhysician"
                       className="form-label d-block"
                     >
@@ -5900,7 +6823,10 @@ const SinglePatient = () => {
 
                   {/* Attending Physician */}
                   <div className=" col-md-6 w-50">
-                    <label className="form-label d-block">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
                       Attending Physician
                     </label>
                     <div>
@@ -5943,6 +6869,7 @@ const SinglePatient = () => {
                             }
                           />
                           <label
+                            style={{ fontSize: "11px" }}
                             className="form-label d-block"
                             htmlFor={`attendingPhysician-${option.value}`}
                           >
@@ -5956,6 +6883,7 @@ const SinglePatient = () => {
                   {/* Admission Source */}
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="admissionSource"
                       className="form-label d-block"
                     >
@@ -5967,6 +6895,7 @@ const SinglePatient = () => {
                   {/* Name of Referral Source */}
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="nameOfReferralSource"
                       className="form-label d-block"
                     >
@@ -5978,6 +6907,7 @@ const SinglePatient = () => {
                   {/* Referral Date */}
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="referralDate"
                       className="form-label d-block"
                     >
@@ -5988,7 +6918,11 @@ const SinglePatient = () => {
 
                   {/* Inquiry Date */}
                   <div className=" col-md-6 w-50">
-                    <label htmlFor="inquiryDate" className="form-label d-block">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="inquiryDate"
+                      className="form-label d-block"
+                    >
                       Inquiry Date
                     </label>
                     {formData?.inquiryDate}
@@ -5997,6 +6931,7 @@ const SinglePatient = () => {
                   {/* Community Liaison */}
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="communityLiaison"
                       className="form-label d-block"
                     >
@@ -6022,6 +6957,7 @@ const SinglePatient = () => {
                             }
                           />
                           <label
+                            style={{ fontSize: "11px" }}
                             className="form-label d-block"
                             htmlFor={`communityLiaison-${option.value}`}
                           >
@@ -6035,6 +6971,7 @@ const SinglePatient = () => {
                   {/* Internal Referral Source */}
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="internalReferralSource"
                       className="form-label d-block"
                     >
@@ -6057,6 +6994,7 @@ const SinglePatient = () => {
                             }
                           />
                           <label
+                            style={{ fontSize: "11px" }}
                             className="form-label d-block"
                             htmlFor={`internalReferralSource-${option.value}`}
                           >
@@ -6070,6 +7008,7 @@ const SinglePatient = () => {
                   {/* Facility Referral Source */}
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="facilityReferralSource"
                       className="form-label d-block"
                     >
@@ -6105,6 +7044,7 @@ const SinglePatient = () => {
                   {/* Type of Inpatient Admission */}
                   <div className=" col-md-6 w-50">
                     <label
+                      style={{ fontSize: "11px" }}
                       htmlFor="typeOfInpatientAdmission"
                       className="form-label d-block"
                     >
@@ -6133,6 +7073,7 @@ const SinglePatient = () => {
                             }
                           />
                           <label
+                            style={{ fontSize: "11px" }}
                             className="form-label d-block"
                             htmlFor={`typeOfInpatientAdmission-${option.value}`}
                           >

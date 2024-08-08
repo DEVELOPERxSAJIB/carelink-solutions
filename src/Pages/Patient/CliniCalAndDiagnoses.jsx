@@ -15,6 +15,7 @@ import Template from "./../../components/FormElement/Template";
 import swal from "sweetalert";
 import Alert from "./../../components/Alert/Alert";
 import { useMeQuery } from "../../Redux/api/UserApi";
+import { showToast } from "./../../utils/Toastify";
 const ClinicalDiagnoses = () => {
   const { data: logData } = useMeQuery();
   const { data, isLoading, refetch } = useGetAllClinicalDiagnosesQuery(); // Adjust hook name as per your actual hook
@@ -168,8 +169,17 @@ const ClinicalDiagnoses = () => {
       refetch();
     }
   }, [isUpdateSuccess, isDeleteSuccess]);
-  const message = updateData?.message || deleteData?.message || "";
-  const errors = updateError?.data?.message || deleteError?.data?.message;
+  useEffect(() => {
+    showToast("error", updateError?.data?.message);
+    showToast("success", data?.message);
+    showToast("success", updateData?.message);
+    showToast("success", deleteData?.message);
+  }, [
+    data?.message,
+    updateError?.data?.message,
+    updateData?.message,
+    deleteData?.message,
+  ]);
 
   if (isLoading) return <MainLoader />;
   return (
@@ -218,7 +228,6 @@ const ClinicalDiagnoses = () => {
             </button>
           )}
         </div>
-        <Alert message={message ?? ""} type="success" />
         {show && (
           <EditModal
             style={{
@@ -233,7 +242,6 @@ const ClinicalDiagnoses = () => {
             {" "}
             <form onSubmit={handleAdmit} className="card">
               <div className="card-body">
-                <Alert message={errors ?? ""} type="danger" />
                 <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
                   <div className="accordion-item">
                     <h2

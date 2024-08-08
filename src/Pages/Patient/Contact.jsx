@@ -18,6 +18,7 @@ import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
 import Alert from "./../../components/Alert/Alert";
 import { useMeQuery } from "../../Redux/api/UserApi";
+import { showToast } from './../../utils/Toastify';
 const Contact = () => {
   const { data: logData } = useMeQuery();
   const { data, isLoading, refetch } = useGetAllContactsQuery();
@@ -369,8 +370,17 @@ const Contact = () => {
       refetch();
     }
   }, [isUpdateSuccess, isDeleteSuccess]);
-  const message = updateData?.message || deleteData?.message;
-  const errors = updateError?.data?.message || deleteError?.data?.message;
+  useEffect(() => {
+    showToast("error", updateError?.data?.message);
+    showToast("success", data?.message);
+    showToast("success", updateData?.message);
+    showToast("success", deleteData?.message);
+  }, [
+    data?.message,
+    updateError?.data?.message,
+    updateData?.message,
+    deleteData?.message,
+  ]);
   if (isLoading) return <MainLoader />;
 
   return (
@@ -380,8 +390,7 @@ const Contact = () => {
         className="py-3 pt-5 fs-3 card-header"
       />
       <div className="card-body">
-        <Alert message={message} type="success" />
-
+        
         <div className="gap-3 d-flex flex-wrap">
           <ExportButton
             data={data?.payload?.contacts ?? []}
@@ -442,7 +451,7 @@ const Contact = () => {
             title="Edit contact"
           >
             <form onSubmit={handleSubmit} className="card">
-              <Alert message={errors} type="danger" />
+        
               <div className="card-body">
                 <div className="accordion" id="emergencyContactsAccordion">
                   <div className="accordion-item">

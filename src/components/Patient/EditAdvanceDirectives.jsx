@@ -2,19 +2,20 @@ import { useGetDirectiveByPatientIdQuery } from "../../Redux/api/DirectiveApi";
 import { useState, useEffect } from "react";
 import { useUpdateDirectiveMutation } from "../../Redux/api/DirectiveApi";
 import Template from "./../../components/FormElement/Template";
-import { showToast } from './../../utils/Toastify';
-import { useDispatch ,useSelector} from 'react-redux';
-  import {
-  updateSteps,getAllSectionStepState
-  } from "./../../Redux/slices/SectionStep.js";
+import { showToast } from "./../../utils/Toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateSteps,
+  getAllSectionStepState,
+} from "./../../Redux/slices/SectionStep.js";
 const EditAdvanceDirectives = ({ patientId }) => {
   const { data: directiveData } = useGetDirectiveByPatientIdQuery(patientId);
   const [
     updateDirective,
     { data: updateData, isSuccess: isUpdateSuccess, error: updateError },
   ] = useUpdateDirectiveMutation();
- const dispatch = useDispatch()
- const allSteps = useSelector(getAllSectionStepState);
+  const dispatch = useDispatch();
+  const allSteps = useSelector(getAllSectionStepState);
   const [editId, setEditId] = useState(false);
 
   const [template, setTemplate] = useState("");
@@ -58,7 +59,6 @@ const EditAdvanceDirectives = ({ patientId }) => {
   }, [template]);
 
   useEffect(() => {
-    //console.log(row);
     setEditId(directiveData?.payload?.directive?._id);
     setFormData({ ...directiveData?.payload?.directive });
   }, []);
@@ -67,15 +67,13 @@ const EditAdvanceDirectives = ({ patientId }) => {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
     }
   }, [isUpdateSuccess]);
-  useEffect(()=>{
-    showToast("success",updateData?.message)
-    showToast("success",updateError?.data?.message)
-  },[updateData?.message,
-    updateError?.data?.message])
+  useEffect(() => {
+    showToast("success", updateData?.message);
+    showToast("success", updateError?.data?.message);
+  }, [updateData?.message, updateError?.data?.message]);
   return (
     <div>
       <form onSubmit={handleSubmit} className="card">
-       
         <div className="card-body">
           <div className="row">
             <div className="col-md-12">

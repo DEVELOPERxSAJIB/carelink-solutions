@@ -11,430 +11,74 @@ import {
   useGetAllChatsQuery,
 } from "../Redux/api/ChatApi";
 const PushNotes = () => {
+  const [activeChat, setActiveChat] = useState(null);
   const [chatUser, setChatUser] = useState(null);
-  const { data: lgData } = useMeQuery();
-  const { data: users, refetch: userRefetch } = useGetAllUsersQuery();
-  const {
-    data: chats,
-    refetch,
-    isLoading: isChatLoading,
-  } = useGetAllChatsQuery(chatUser?._id);
-
-  const [createChat, { data: newChat, isSuccess: isNewChatSuccess, error }] =
-    useCreateChatMutation();
-  const [count, setCount] = useState(1);
-  const [isAudioEnabled, setIsAudioEnabled] = useState(true);
-  const [isVideoEnabled, setIsVideoEnabled] = useState(true);
-  const [availableCameras, setAvailableCameras] = useState([]);
-  const [selectedCamera, setSelectedCamera] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState("");
-  const localVideoRef = useRef(null);
-  const remoteVideoRef = useRef(null);
-  const socketRef = useRef(null);
-  const peerConnectionRef = useRef(null);
-  const mediaStreamRef = useRef(null);
-  const callingSoundRef = useRef(new Audio());
-  const endCallSoundRef = useRef(new Audio());
-  const roomRef = useRef("room1");
-  const [activeUsers, setActiveUsers] = useState([]);
+  const [chat, setChat] = useState("");
+  const [activeUser, setActiveUser] = useState([]);
   const [chatImage, setChatImage] = useState(null);
-  useEffect(() => {
-    // Fetch available cameras
-    navigator.mediaDevices.enumerateDevices().then((devices) => {
-      const videoDevices = devices.filter(
-        (device) => device.kind === "videoinput"
-      );
-      setAvailableCameras(videoDevices);
-      if (videoDevices.length > 0) {
-        setSelectedCamera(videoDevices[0].deviceId);
-      }
-    });
-
-    // Initialize the socket connection
-    socketRef.current = io("http://localhost:5050");
-    socketRef.current.emit("setActiveUser", lgData?.payload?.user);
-    socketRef.current.on("getActiveUser", (data) => {
-      //console.log(data);
-      setActiveUsers(data);
-    });
-    // Set up media stream and WebRTC connection
-    const constraints = {
-      video: { deviceId: { exact: selectedCamera } },
-      audio: true,
-    };
-    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-      mediaStreamRef.current = stream;
-      if (localVideoRef.current) {
-        localVideoRef.current.srcObject = stream;
-      }
-
-      const configuration = {
-        iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
-      };
-      peerConnectionRef.current = new RTCPeerConnection(configuration);
-      stream
-        .getTracks()
-        .forEach((track) => peerConnectionRef.current.addTrack(track, stream));
-
-      peerConnectionRef.current.onicecandidate = (event) => {
-        if (event.candidate) {
-          socketRef.current.emit("candidate", {
-            room: roomRef.current,
-            candidate: event.candidate,
-          });
-        }
-      };
-
-      peerConnectionRef.current.ontrack = (event) => {
-        if (remoteVideoRef.current) {
-          remoteVideoRef.current.srcObject = event.streams[0];
-        }
-      };
-
-      socketRef.current.on("offer", (offer) => {
-        peerConnectionRef.current.setRemoteDescription(
-          new RTCSessionDescription(offer)
-        );
-        peerConnectionRef.current.createAnswer().then((answer) => {
-          peerConnectionRef.current.setLocalDescription(answer);
-          socketRef.current.emit("answer", { room: roomRef.current, answer });
-        });
-      });
-
-      socketRef.current.on("answer", (answer) => {
-        peerConnectionRef.current.setRemoteDescription(
-          new RTCSessionDescription(answer)
-        );
-      });
-
-      socketRef.current.on("candidate", (candidate) => {
-        peerConnectionRef.current.addIceCandidate(
-          new RTCIceCandidate(candidate)
-        );
-      });
-      socketRef.current.on("setActiveUser", (data) => {
-        //console.log(data);
-      });
-
-      socketRef.current.on("message", (message) => {
-        setMessages((prevMessages) => [...prevMessages, message]);
-      });
-
-      // Create an offer to initiate a call
-      peerConnectionRef.current.createOffer().then((offer) => {
-        peerConnectionRef.current.setLocalDescription(offer);
-        socketRef.current.emit("offer", { room: roomRef.current, offer });
-        playSound(callingSoundRef, calling); // Set the source dynamically
-      });
-    });
-
-    // Cleanup on component unmount
-    return () => {
-      handleEndCall();
-    };
-  }, []);
-
-  const handleCameraChange = (event) => {
-    setSelectedCamera(event.target.value);
-    switchCamera(event.target.value);
+  const socket = useRef(null);
+  const scrollChat = useRef(null);
+  const { data: user } = useMeQuery();
+  const { data: users } = useGetAllUsersQuery();
+  const { data: chats, refetch, isLoading: isChatLoading } = useGetAllChatsQuery(chatUser?._id);
+  const [createChat, { data: newChat, isSuccess: isNewChatSuccess, error }] = useCreateChatMutation();
+  const handleChatCreate = (user) => {
+    setActiveChat(user);
+    setChatUser(user);
   };
 
-  const switchCamera = (deviceId) => {
-    if (mediaStreamRef.current) {
-      mediaStreamRef.current.getTracks().forEach((track) => track.stop());
-    }
-    const constraints = {
-      video: { deviceId: { exact: deviceId } },
-      audio: true,
-    };
-    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-      mediaStreamRef.current = stream;
-      if (localVideoRef.current) {
-        localVideoRef.current.srcObject = stream;
-      }
-      stream
-        .getTracks()
-        .forEach((track) => peerConnectionRef.current.addTrack(track, stream));
-    });
-  };
-
-  const toggleAudio = () => {
-    if (mediaStreamRef.current) {
-      const audioTracks = mediaStreamRef.current.getAudioTracks();
-      if (audioTracks.length > 0) {
-        audioTracks[0].enabled = !isAudioEnabled;
-        setIsAudioEnabled(!isAudioEnabled);
-      }
-    }
-  };
-
-  const toggleVideo = () => {
-    if (mediaStreamRef.current) {
-      const videoTracks = mediaStreamRef.current.getVideoTracks();
-      if (videoTracks.length > 0) {
-        videoTracks[0].enabled = !isVideoEnabled;
-        setIsVideoEnabled(!isVideoEnabled);
-      }
-    }
-  };
-
-  const handleEndCall = () => {
-    if (mediaStreamRef.current) {
-      mediaStreamRef.current.getTracks().forEach((track) => track.stop());
-    }
-    stopSound(callingSoundRef, endCall, false);
-    playSound(endCallSoundRef, endCall);
-    setIsVideoEnabled(false); // Set the source dynamically
-    if (socketRef.current) {
-      socketRef.current.disconnect();
-    }
-  };
-
-  const playSound = (audioRef, src, loop) => {
-    if (audioRef.current) {
-      audioRef.current.src = src; // Set the source dynamically
-      audioRef.current.currentTime = 0;
-      audioRef.current.loop = loop; // Enable continuous playback
-      audioRef.current.play().catch((error) => {
-        console.error("Error playing audio:", error);
-      });
-    }
-  };
-
-  const stopSound = (audioRef) => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
-  };
-
-  const handleChatCreate = (data) => {
-    //console.log(data);
-    localStorage.setItem("ChatUser", JSON.stringify(data));
-    setChatUser(data);
-  };
-  const handleSendMessage = (e) => {
+  const handleMessageSend = (e) => {
     e.preventDefault();
-    const form_data = new FormData();
-    form_data.append("chat", message);
-    form_data.append("receiverId", chatUser?._id);
-    if (chatImage) {
+    if (chat.trim() !== "") {
+      const form_data = new FormData();
+      form_data.append("chat", chat);
+      form_data.append("receiverId", activeChat._id);
       form_data.append("chat-image", chatImage);
+      createChat(form_data);
+      setChat("");
+      setChatImage(null);
     }
-
-    createChat(form_data);
   };
+
+  const handleChatPhoto = (e) => {
+    setChatImage(e.target.files[0]);
+  };
+
+  const handleEmojiSelect = (emojiObject) => {
+    setChat((prevState) => prevState + " " + emojiObject.emoji);
+  };
+
   useEffect(() => {
-    refetch();
-  }, [chatUser]);
+    socket.current = io("http://localhost:5050");
+
+    socket.current.emit("setActiveUser", user);
+
+    socket.current.on("getActiveUser", (data) => {
+      setActiveUser(data);
+    });
+
+    socket.current.on("realTimeMsgGet", (data) => {
+      console.log(data);
+    });
+
+    return () => {
+      socket.current.disconnect();
+    };
+  }, [user]);
+
   useEffect(() => {
-    const localChatData = JSON.parse(localStorage.getItem("ChatUser"));
-    setChatUser(localChatData);
-  }, [chatUser]);
+    if (newChat?.chat) {
+      socket.current.emit("realTimeMsgSend", newChat.chat);
+    }
+  }, [newChat?.chat]);
+
+  useEffect(() => {
+    scrollChat.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chats])
+
   return (
     <div className="row">
-      <div className="col-12 d-flex justify-content-center">
-        {/* <PopupModal title="Add Note" id="Add_Note">
-          <form onSubmit={handleSubmit}>
-            {count === 1 && (
-              <>
-                <div className="mb-3">
-                  <input
-                    type="file"
-                    id="Note_title"
-                    name="title"
-                    className="form-control"
-                    placeholder="Enter title"
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="Note_title" className="form-label">
-                    Note Title
-                  </label>
-                  <input
-                    type="text"
-                    id="Note_title"
-                    name="title"
-                    className="form-control"
-                    placeholder="Enter title"
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="Note_description" className="form-label">
-                    Note Description
-                  </label>
-                  <input
-                    type="text"
-                    id="Note_description"
-                    name="description"
-                    className="form-control"
-                    placeholder="Enter description"
-                    required
-                  />
-                </div>
-                <button
-                  onClick={() => setCount(2)}
-                  type="submit"
-                  className="btn btn-primary"
-                >
-                  <i className="ti ti-arrow-right"></i>
-                </button>
-              </>
-            )}
-            {count === 2 && (
-              <>
-                <input
-                  type="search"
-                  className="form-control"
-                  placeholder="search"
-                />
-                <div className="d-flex flex-column gap-4 mt-5">
-                  <div className="chat-contact-list-item d-flex align-items-center justify-content-between">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Krystal Norton
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          Business Executive
-                        </small>
-                      </div>
-                    </a>
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      name=""
-                      id=""
-                    />
-                  </div>
-                  <div className="chat-contact-list-item d-flex align-items-center justify-content-between">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Krystal Norton
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          Business Executive
-                        </small>
-                      </div>
-                    </a>
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      name=""
-                      id=""
-                    />
-                  </div>
-                  <div className="chat-contact-list-item d-flex align-items-center justify-content-between">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Krystal Norton
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          Business Executive
-                        </small>
-                      </div>
-                    </a>
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      name=""
-                      id=""
-                    />
-                  </div>
-                  <div className="chat-contact-list-item d-flex align-items-center justify-content-between">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Krystal Norton
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          Business Executive
-                        </small>
-                      </div>
-                    </a>
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      name=""
-                      id=""
-                    />
-                  </div>
-                  <div className="chat-contact-list-item d-flex align-items-center justify-content-between">
-                    <a className="d-flex align-items-center">
-                      <div className="flex-shrink-0 avatar">
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="rounded-circle"
-                        />
-                      </div>
-                      <div className="chat-contact-info flex-grow-1 ms-4">
-                        <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                          Krystal Norton
-                        </h6>
-                        <small className="chat-contact-status text-truncate">
-                          Business Executive
-                        </small>
-                      </div>
-                    </a>
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      name=""
-                      id=""
-                    />
-                  </div>
-                  <div className="d-flex gap-3 align-items-center">
-                    <button
-                      onClick={() => setCount(1)}
-                      type="submit"
-                      className="btn btn-primary"
-                    >
-                      <i className="ti ti-arrow-left"></i>
-                    </button>
-                    <button type="submit" className="btn btn-primary">
-                      Done
-                    </button>
-                  </div>
-                </div>
-              </>
-            )}
-          </form>
-        </PopupModal> */}
-      </div>
+    
 
       <div className="container-xxl flex-grow-1 container-p-y">
         <div></div>
@@ -756,150 +400,7 @@ const PushNotes = () => {
                         </div>
                       </div>
                       <div className="d-flex gap-3 align-items-center">
-                        <PopupModal
-                          style={{ minWidth: "500px", maxHeight: "80vh" }}
-                          title={
-                            <i
-                              className={`ti ti-video ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill ${
-                                isVideoEnabled ? "" : ""
-                              }`}
-                            />
-                          }
-                          id="video"
-                        >
-                          <div className="modal-body">
-                            <video
-                              style={{ width: "100%" }}
-                              ref={localVideoRef}
-                              autoPlay
-                              playsInline
-                              muted
-                            ></video>
-                            <video
-                              style={{ width: "100%" }}
-                              ref={remoteVideoRef}
-                              autoPlay
-                              playsInline
-                              className="d-none"
-                            ></video>
-                            <div className="d-flex gap-3">
-                              <button
-                                onClick={toggleAudio}
-                                className={`btn ${
-                                  isAudioEnabled ? "btn-success" : "btn-warning"
-                                } btn-secondary`}
-                              >
-                                <i
-                                  className={`ti ${
-                                    isAudioEnabled
-                                      ? "ti-microphone"
-                                      : "ti-microphone-off"
-                                  } ti-md`}
-                                ></i>
-                              </button>
-                              <button
-                                onClick={toggleVideo}
-                                className={`btn ${
-                                  isVideoEnabled
-                                    ? "btn-primary"
-                                    : "btn-secondary"
-                                } btn-secondary`}
-                              >
-                                <i
-                                  className={`ti ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill ${
-                                    isVideoEnabled
-                                      ? "ti-video"
-                                      : "ti-video-off "
-                                  }`}
-                                ></i>
-                              </button>
-                              <select
-                                onChange={handleCameraChange}
-                                value={selectedCamera}
-                                className="form-select w-50"
-                              >
-                                {availableCameras.map((camera) => (
-                                  <option
-                                    key={camera.deviceId}
-                                    value={camera.deviceId}
-                                  >
-                                    {camera.label ||
-                                      `Camera ${camera.deviceId}`}
-                                  </option>
-                                ))}
-                              </select>
-                              {isVideoEnabled && (
-                                <button
-                                  onClick={handleEndCall}
-                                  className="btn btn-danger"
-                                >
-                                  <i className="ti ti-phone-off"></i>
-                                </button>
-                              )}
-                            </div>
-                          </div>
-                        </PopupModal>
-
-                        {/* Audio Call Modal */}
-                        <PopupModal
-                          style={{ minWidth: "500px", maxHeight: "80vh" }}
-                          title={
-                            <i
-                              className={`ti ti-phone ti-md cursor-pointer d-inline-flex me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill ${
-                                isAudioEnabled ? "" : ""
-                              }`}
-                            />
-                          }
-                          id="audio"
-                        >
-                          <div className="modal-body">
-                            <p>{isVideoEnabled ? "Calling..." : "Call End"}</p>
-                            <div className="d-flex gap-3">
-                              <button
-                                onClick={toggleAudio}
-                                className={`btn ${
-                                  isAudioEnabled ? "btn-success" : "btn-warning"
-                                } btn-secondary`}
-                              >
-                                <i
-                                  className={`ti ${
-                                    isAudioEnabled
-                                      ? "ti-microphone"
-                                      : "ti-microphone-off"
-                                  } ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill`}
-                                ></i>
-                              </button>
-                              <button
-                                onClick={toggleVideo}
-                                className={`btn ${
-                                  isVideoEnabled
-                                    ? "btn-primary"
-                                    : "btn-secondary"
-                                } btn-secondary`}
-                              >
-                                <i
-                                  className={`ti ${
-                                    isVideoEnabled
-                                      ? "ti ti-phone"
-                                      : "ti ti-phone-off "
-                                  } ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill`}
-                                ></i>
-                              </button>
-                              {isVideoEnabled && (
-                                <button
-                                  onClick={handleEndCall}
-                                  className="btn btn-danger"
-                                >
-                                  <i className="ti ti-phone-off ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill"></i>
-                                </button>
-                              )}
-                            </div>
-                          </div>
-                        </PopupModal>
-
-                        {/* Calling and Call-End Sounds */}
-                        {/* <audio ref={callingSoundRef} />
-                      <audio ref={endCallSoundRef} /> */}
+                       
 
                         <i className="ti ti-search ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill" />
                         <div className="dropdown">
@@ -958,7 +459,7 @@ const PushNotes = () => {
                             <li
                               key={index}
                               className={`chat-message ${
-                                item?.senderId === chatUser?._id
+                                item?.senderId !== chatUser?._id
                                   ? "chat-message-right"
                                   : ""
                               } `}
@@ -998,12 +499,12 @@ const PushNotes = () => {
                   {/* Chat message form */}
                   <div className="chat-history-footer shadow-xs">
                     <form
-                      onSubmit={handleSendMessage}
+                      onSubmit={handleMessageSend}
                       className="form-send-message d-flex justify-content-between align-items-center"
                     >
                       <input
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
+                        value={chat}
+                        onChange={(e) => setChat(e.target.value)}
                         className="form-control message-input border-0 me-4 shadow-none"
                         placeholder="Type your message here..."
                       />
@@ -1022,6 +523,7 @@ const PushNotes = () => {
                           <input type="file" id="attach-doc" hidden="true" />
                         </label>
                         <button
+                        
                           type="submit"
                           className="btn btn-primary d-flex send-msg-btn"
                         >

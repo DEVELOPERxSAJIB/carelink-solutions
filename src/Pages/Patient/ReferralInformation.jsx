@@ -17,6 +17,7 @@ import EditModal from "./../../components/Models/EditModal";
 import swal  from "sweetalert";
 import Alert from "./../../components/Alert/Alert";
 import { useMeQuery } from "../../Redux/api/UserApi";
+import { showToast } from './../../utils/Toastify';
 const ReferralInformation = () => {
   const { data: lgData } = useMeQuery();
   const navigate = useNavigate();
@@ -128,8 +129,17 @@ const ReferralInformation = () => {
       refetch();
     }
   }, [isUpdateSuccess, isDeleteSuccess]);
-  const message = updateData?.message || deleteData?.message;
-  const errors = updateError?.data?.message || deleteError?.data?.message;
+  useEffect(() => {
+    showToast("error", updateError?.data?.message);
+    showToast("success", data?.message);
+    showToast("success", updateData?.message);
+    showToast("success", deleteData?.message);
+  }, [
+    data?.message,
+    updateError?.data?.message,
+    updateData?.message,
+    deleteData?.message,
+  ]);
   if (isLoading) return <MainLoader />;
 
   return (
@@ -138,7 +148,7 @@ const ReferralInformation = () => {
         title="Referral information"
         className="py-3 pt-5 fs-3 card-header"
       />
-      <Alert message={message} type="success" />
+      
       {show && (
         <EditModal
           style={{
@@ -152,7 +162,7 @@ const ReferralInformation = () => {
         >
           <form onSubmit={handleSubmit}>
             {/* City */}
-            <Alert message={errors} type="danger" />
+        
             <div className="row">
               <div className="mb-3 col-md-6">
                 <label htmlFor="city" className="form-label">

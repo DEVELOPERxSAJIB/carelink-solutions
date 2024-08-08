@@ -15,6 +15,7 @@ import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
 import Alert from "./../../components/Alert/Alert";
 import { useMeQuery } from "../../Redux/api/UserApi";
+import { showToast } from "./../../utils/Toastify";
 const Physicians = () => {
   const { data: lgData } = useMeQuery();
   const { data, isLoading, error, refetch } = useGetAllPhysiciansQuery();
@@ -118,9 +119,21 @@ const Physicians = () => {
       refetch();
     }
   }, [isUpdateSuccess, isDeleteSuccess]);
+  useEffect(() => {
+    showToast("error", error?.data?.message);
+    showToast("error", updateError?.data?.message);
+    showToast("success", data?.message);
+    showToast("success", updateData?.message);
+    showToast("success", deleteData?.message);
+  }, [
+    error?.data?.message,
+    data?.message,
+    updateError?.data?.message,
+    updateData?.message,
+    deleteData?.message,
+  ]);
+
   if (isLoading) return <MainLoader />;
- const message =updateData?.message || deleteData?.message
- const errors =updateError?.data?.message || deleteError?.data?.message
   return (
     <div className="card">
       <TableHeader
@@ -128,10 +141,6 @@ const Physicians = () => {
         className="py-3 pt-5 fs-3 card-header"
       />
       <div className="card-body">
-        <Alert
-          message={message}
-          type="success"
-        />
         <div className="gap-3 d-flex flex-wrap">
           <ExportButton
             data={data?.payload?.physicians ?? []}
@@ -139,49 +148,50 @@ const Physicians = () => {
             columns={columns}
             fileName="Physician"
           />
-           {lgData?.payload?.user?.curd?.includes("delete") &&
-           
-          <button
-            className="btn btn-secondary create-new btn-danger waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-trash me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Delete selected</span>
-            </span>
-          </button>
-           }
- {lgData?.payload?.user?.curd?.includes("delete") &&
-          <button
-            className="btn btn-info waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-archive me-1" />
-              <span className="d-none d-sm-inline-block">Archive </span>
-            </span>
-          </button>
- }
-  {lgData?.payload?.user?.curd?.includes("create") &&
-          <button
-            className="btn btn-success waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-            onClick={() => navigate("/create-physicians")}
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-archive me-1" />
-              <span className="d-none d-sm-inline-block">
-                Add New Physician
+          {lgData?.payload?.user?.curd?.includes("delete") && (
+            <button
+              className="btn btn-secondary create-new btn-danger waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-trash me-sm-1" />{" "}
+                <span className="d-none d-sm-inline-block">
+                  Delete selected
+                </span>
               </span>
-            </span>
-          </button>
-  }
+            </button>
+          )}
+          {lgData?.payload?.user?.curd?.includes("delete") && (
+            <button
+              className="btn btn-info waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-archive me-1" />
+                <span className="d-none d-sm-inline-block">Archive </span>
+              </span>
+            </button>
+          )}
+          {lgData?.payload?.user?.curd?.includes("create") && (
+            <button
+              className="btn btn-success waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+              onClick={() => navigate("/create-physicians")}
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-archive me-1" />
+                <span className="d-none d-sm-inline-block">
+                  Add New Physician
+                </span>
+              </span>
+            </button>
+          )}
         </div>
         {show && (
           <EditModal
@@ -195,7 +205,7 @@ const Physicians = () => {
             onClose={setShow}
           >
             <form onSubmit={handleSubmit}>
-              <Alert message={errors??""} type="danger" />
+
               <div className="row">
                 <div className=" col-md-6">
                   <label className="form-label my-2" htmlFor="npiNumber">
