@@ -2,7 +2,7 @@ const PdfHeader = ({ company, patient }) => {
   //console.log(patient);
   return (
     <div className=" p-2 pb-2">
-      <div style={{ fontSize: "12px" }} className=" invoice-preview-card  ">
+      <div style={{ fontSize: "12px",backgroundColor:"#eee" }} className=" invoice-preview-card  ">
         <div className="`invoice-preview-header rounded">
           <div className="d-flex justify-content-between border px-4 py-2">
             <div className="mb-xl-0 mb-6 text-heading">

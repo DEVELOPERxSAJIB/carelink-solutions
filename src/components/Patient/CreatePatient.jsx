@@ -11,17 +11,18 @@ import {
   updateSteps,
 } from "./../../Redux/slices/SectionStep";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
+import PageHeader from "./../FormElement/PageHeader";
+import { formatDate } from "./../../utils/FormateDate";
 import {
   useCreatePatientMutation,
   useUpdatePatientMutation,
 } from "../../Redux/api/PatientApi.js";
-const PatientProfile = () => {
+const CreatePatient = ({ editData }) => {
+  // console.log(editData)
   const componentRef = useRef();
   const dispatch = useDispatch();
   const data = useSelector(getAllSectionState);
   const allSteps = useSelector(getAllSectionStepState);
-
-  const [editId, setEditId] = useState(null);
 
   const [formData, setFormData] = useState({
     npi: "",
@@ -30,21 +31,46 @@ const PatientProfile = () => {
     branchIdNumber: "",
     patientIdNumber: "",
     startOfCareDate: "",
+    acuteOnset: "",
+    patientMoodUnderstood: "",
     resumptionOfCareDate: "",
     patientFirstName: "",
+    littleInterestFrequency: "",
+    feelingDownPresence: "",
+    feelingDownFrequency: "",
+    troubleSleepingPresence: "",
+    troubleSleepingFrequency: "",
+    feelingTiredPresence: "",
+    feelingTiredFrequency: "",
+    poorAppetitePresence: "",
+    poorAppetiteFrequency: "",
+    feelingBadPresence: "",
+    feelingBadFrequency: "",
+    troubleConcentratingPresence: "",
+    troubleConcentratingFrequency: "",
+    movingSlowlyPresence: "",
+    movingSlowlyFrequency: "",
+    thoughtsOfHarmingPresence: "",
+    thoughtsOfHarmingFrequency: "",
+    totalSeverityScore: "",
+    socialIsolation: "",
     patientMiddleInitial: "",
     patientLastName: "",
     patientSuffix: "",
     patientStateOfResidence: "",
     patientZipCode: "",
     socialSecurityNumber: "",
+    littleInterestPresence: "",
     medicareNumber: "",
     medicaidNumber: "",
     gender: "",
     birthDate: "",
+    inattention: "",
+    disorganizedThinking: "",
     ethnicity: [],
     race: [],
     paymentSources: [],
+    alteredConsciousness: "",
     preferredLanguage: "",
     needInterpreter: "",
     disciplineOfPersonCompletingAssessment: "",
@@ -152,6 +178,28 @@ const PatientProfile = () => {
     m1610: "",
     m1620: "",
     m1630: "",
+    m1306: "",
+    m1307: "",
+    firstIdentifiedDate: "",
+    stage2Current: "",
+    stage2PresentAtSOC: "",
+    stage3Current: "",
+    stage3PresentAtSOC: "",
+    stage4Current: "",
+    stage4PresentAtSOC: "",
+    unstageableDressingCurrent: "",
+    unstageableDressingPresentAtSOC: "",
+    unstageableSloughCurrent: "",
+    unstageableSloughPresentAtSOC: "",
+    deepTissueInjuryCurrent: "",
+    deepTissueInjuryPresentAtSOC: "",
+    m1322: "",
+    m1324: "",
+    m1330: "",
+    m1332: "",
+    m1334: "",
+    m1340: "",
+    m1342: "",
     primaryDiagnosis: "",
     otherDiagnoses: ["", "", "", "", "", ""],
     otherDiagnosesRatings: ["", "", "", "", "", ""],
@@ -199,7 +247,7 @@ const PatientProfile = () => {
     medicationIntervention: "",
     highRiskDrugEducation: "",
     managementOralMedications: "",
-    managementInjectableMedications: [],
+    managementInjectableMedications: "",
     specialTreatmentsDischarge: [],
     specialTreatmentsAdmission: [],
     covidVaccinationUpToDate: "",
@@ -212,6 +260,9 @@ const PatientProfile = () => {
     pressureUlcerTreatment: "",
   });
   console.log(formData);
+
+ 
+
   const handleInputChange = (e) => {
     const { name, value, type, checked, options } = e.target;
     if (type === "checkbox") {
@@ -326,11 +377,22 @@ const PatientProfile = () => {
         [name]: selectedValues,
       }));
     } else {
-      // Handle other input types
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: value,
-      }));
+      const [objectKey, fieldKey] = name.split(".");
+      console.log(objectKey, fieldKey);
+      if (objectKey === "M1311") {
+        setFormData((prevData) => ({
+          ...prevData,
+          M1311: {
+            ...prevData.M1311,
+            [fieldKey]: value,
+          },
+        }));
+      } else {
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+      }
     }
   };
 
@@ -415,7 +477,7 @@ const PatientProfile = () => {
     }
   };
   const handleOtherDiagnosisChange = (index, e) => {
-    const updatedDiagnoses = [...formData.otherDiagnoses];
+    const updatedDiagnoses = [...formData?.otherDiagnoses];
     updatedDiagnoses[index] = e.target.value;
     setFormData({
       ...formData,
@@ -425,7 +487,7 @@ const PatientProfile = () => {
 
   // Handle change for other diagnoses ratings
   const handleOtherDiagnosisRatingChange = (index, rating) => {
-    const updatedRatings = [...formData.otherDiagnosesRatings];
+    const updatedRatings = [...formData?.otherDiagnosesRatings];
     updatedRatings[index] = rating;
     setFormData({
       ...formData,
@@ -447,8 +509,8 @@ const PatientProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (editId) {
-      updatePatient({ patientId: editId, patientData: formData });
+    if (editData?._id) {
+      updatePatient({ patientId: editData?._id, patientData: formData });
     } else {
       dispatch(updateFormData(formData));
       createPatient(formData);
@@ -467,9 +529,13 @@ const PatientProfile = () => {
   };
 
   useEffect(() => {
-    if (isUpdateSuccess || isSuccess) {
+    if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
       localStorage.setItem("patient", JSON.stringify(patient?.payload));
+    }
+    if (isUpdateSuccess) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      localStorage.setItem("patient", JSON.stringify(updateData?.payload));
     }
   });
 
@@ -499,13 +565,58 @@ const PatientProfile = () => {
   useEffect(() => {
     const patientData = JSON.parse(localStorage.getItem("patient"));
     if (patientData) {
-      setFormData({ ...patientData });
+      setFormData({ ...formData, ...patientData });
     }
   }, []);
+  useEffect(() => {
+    if (editData) {
+      // Destructure and format date fields
+      const {
+        startOfCareDate,
+        resumptionOfCareDate,
+        birthDate,
+        dischargeTransferDeathDate,
+        inpatientDischargeDate,
+        dateAssessmentCompleted,
+        dateOfPhysicianOrderedSOC,
+        dateOfReferral,
+        ...rest // Other non-date fields
+      } = editData;
+
+      // Update formData with formatted dates
+      setFormData({
+        ...formData,
+        ...rest, // Non-date fields
+        startOfCareDate: startOfCareDate ? formatDate(startOfCareDate) : "",
+        resumptionOfCareDate: resumptionOfCareDate
+          ? formatDate(resumptionOfCareDate)
+          : "",
+        birthDate: birthDate ? formatDate(birthDate) : "",
+        dischargeTransferDeathDate: dischargeTransferDeathDate
+          ? formatDate(dischargeTransferDeathDate)
+          : "",
+        inpatientDischargeDate: inpatientDischargeDate
+          ? formatDate(inpatientDischargeDate)
+          : "",
+        dateAssessmentCompleted: dateAssessmentCompleted
+          ? formatDate(dateAssessmentCompleted)
+          : "",
+        dateOfPhysicianOrderedSOC: dateOfPhysicianOrderedSOC
+          ? formatDate(dateOfPhysicianOrderedSOC)
+          : "",
+        dateOfReferral: dateOfReferral ? formatDate(dateOfReferral) : "",
+      });
+    }
+  }, [editData]);
 
   if (isLoading || isUpdateLoading) return <AuthLoader />;
   return (
     <div className="w-100" ref={componentRef}>
+      <PageHeader
+        title="Patient details"
+        className="card-header fs-3"
+        back={false}
+      />
       <form className="mt-5 w-100" onSubmit={handleSubmit}>
         {/* section a  */}
         <div className="accordion w-100" id="administrativeInfoAccordion">
@@ -4553,9 +4664,10 @@ const PatientProfile = () => {
                     M1745. Frequency of Disruptive Behavior Symptoms
                   </label>
                   <fieldset id="disruptiveBehaviorFrequency">
-                    <div>
+                    <div className="form-check">
                       <input
                         type="radio"
+                        className="form-check-input"
                         id="frequencyNever"
                         name="disruptiveBehaviorFrequency"
                         value="0"
@@ -4564,9 +4676,10 @@ const PatientProfile = () => {
                       />
                       <label htmlFor="frequencyNever">Never</label>
                     </div>
-                    <div>
+                    <div className="form-check">
                       <input
                         type="radio"
+                        className="form-check-input"
                         id="frequencyLessThanOnceAMonth"
                         name="disruptiveBehaviorFrequency"
                         value="1"
@@ -4577,9 +4690,10 @@ const PatientProfile = () => {
                         Less than once a month
                       </label>
                     </div>
-                    <div>
+                    <div className="form-check">
                       <input
                         type="radio"
+                        className="form-check-input"
                         id="frequencyOnceAMonth"
                         name="disruptiveBehaviorFrequency"
                         value="2"
@@ -4588,9 +4702,10 @@ const PatientProfile = () => {
                       />
                       <label htmlFor="frequencyOnceAMonth">Once a month</label>
                     </div>
-                    <div>
+                    <div className="form-check">
                       <input
                         type="radio"
+                        className="form-check-input"
                         id="frequencySeveralTimesEachMonth"
                         name="disruptiveBehaviorFrequency"
                         value="3"
@@ -4601,9 +4716,10 @@ const PatientProfile = () => {
                         Several times each month
                       </label>
                     </div>
-                    <div>
+                    <div className="form-check">
                       <input
                         type="radio"
+                        className="form-check-input"
                         id="frequencySeveralTimesAWeek"
                         name="disruptiveBehaviorFrequency"
                         value="4"
@@ -4614,9 +4730,10 @@ const PatientProfile = () => {
                         Several times a week
                       </label>
                     </div>
-                    <div>
+                    <div className="form-check">
                       <input
                         type="radio"
+                        className="form-check-input"
                         id="frequencyAtLeastDaily"
                         name="disruptiveBehaviorFrequency"
                         value="5"
@@ -5205,53 +5322,53 @@ const PatientProfile = () => {
                 <div className="row">
                   <div className="mb-3 w-50 col-md-6">
                     <label className="form-label">M1800. Grooming</label>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="grooming"
-                          value="0"
-                          checked={formData?.grooming === "0"}
-                          onChange={handleInputChange}
-                        />
-                        Able to groom self unaided
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="grooming"
+                        value="0"
+                        checked={formData?.grooming === "0"}
+                        onChange={handleInputChange}
+                      />
+                      Able to groom self unaided
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="grooming"
-                          value="1"
-                          checked={formData?.grooming === "1"}
-                          onChange={handleInputChange}
-                        />
-                        Grooming utensils must be placed within reach
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="grooming"
+                        value="1"
+                        checked={formData?.grooming === "1"}
+                        onChange={handleInputChange}
+                      />
+                      Grooming utensils must be placed within reach
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="grooming"
-                          value="2"
-                          checked={formData?.grooming === "2"}
-                          onChange={handleInputChange}
-                        />
-                        Someone must assist the patient
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="grooming"
+                        value="2"
+                        checked={formData?.grooming === "2"}
+                        onChange={handleInputChange}
+                      />
+                      Someone must assist the patient
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="grooming"
-                          value="3"
-                          checked={formData?.grooming === "3"}
-                          onChange={handleInputChange}
-                        />
-                        Patient depends entirely upon someone else
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="grooming"
+                        value="3"
+                        checked={formData?.grooming === "3"}
+                        onChange={handleInputChange}
+                      />
+                      Patient depends entirely upon someone else
                     </div>
                   </div>
 
@@ -5260,53 +5377,53 @@ const PatientProfile = () => {
                     <label className="form-label">
                       M1810. Current Ability to Dress Upper Body
                     </label>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="upperBodyDressing"
-                          value="0"
-                          checked={formData?.upperBodyDressing === "0"}
-                          onChange={handleInputChange}
-                        />
-                        Able to dress upper body independently
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="upperBodyDressing"
+                        value="0"
+                        checked={formData?.upperBodyDressing === "0"}
+                        onChange={handleInputChange}
+                      />
+                      Able to dress upper body independently
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="upperBodyDressing"
-                          value="1"
-                          checked={formData?.upperBodyDressing === "1"}
-                          onChange={handleInputChange}
-                        />
-                        Able to dress upper body if clothing is laid out
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="upperBodyDressing"
+                        value="1"
+                        checked={formData?.upperBodyDressing === "1"}
+                        onChange={handleInputChange}
+                      />
+                      Able to dress upper body if clothing is laid out
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="upperBodyDressing"
-                          value="2"
-                          checked={formData?.upperBodyDressing === "2"}
-                          onChange={handleInputChange}
-                        />
-                        Someone must help the patient
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="upperBodyDressing"
+                        value="2"
+                        checked={formData?.upperBodyDressing === "2"}
+                        onChange={handleInputChange}
+                      />
+                      Someone must help the patient
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="upperBodyDressing"
-                          value="3"
-                          checked={formData?.upperBodyDressing === "3"}
-                          onChange={handleInputChange}
-                        />
-                        Patient depends entirely upon another person
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="upperBodyDressing"
+                        value="3"
+                        checked={formData?.upperBodyDressing === "3"}
+                        onChange={handleInputChange}
+                      />
+                      Patient depends entirely upon another person
                     </div>
                   </div>
 
@@ -5315,143 +5432,143 @@ const PatientProfile = () => {
                     <label className="form-label">
                       M1820. Current Ability to Dress Lower Body
                     </label>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="lowerBodyDressing"
-                          value="0"
-                          checked={formData?.lowerBodyDressing === "0"}
-                          onChange={handleInputChange}
-                        />
-                        Able to dress lower body independently
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="lowerBodyDressing"
+                        value="0"
+                        checked={formData?.lowerBodyDressing === "0"}
+                        onChange={handleInputChange}
+                      />
+                      Able to dress lower body independently
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="lowerBodyDressing"
-                          value="1"
-                          checked={formData?.lowerBodyDressing === "1"}
-                          onChange={handleInputChange}
-                        />
-                        Able to dress lower body if clothing is laid out
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="lowerBodyDressing"
+                        value="1"
+                        checked={formData?.lowerBodyDressing === "1"}
+                        onChange={handleInputChange}
+                      />
+                      Able to dress lower body if clothing is laid out
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="lowerBodyDressing"
-                          value="2"
-                          checked={formData?.lowerBodyDressing === "2"}
-                          onChange={handleInputChange}
-                        />
-                        Someone must help the patient
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="lowerBodyDressing"
+                        value="2"
+                        checked={formData?.lowerBodyDressing === "2"}
+                        onChange={handleInputChange}
+                      />
+                      Someone must help the patient
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="lowerBodyDressing"
-                          value="3"
-                          checked={formData?.lowerBodyDressing === "3"}
-                          onChange={handleInputChange}
-                        />
-                        Patient depends entirely upon another person
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="lowerBodyDressing"
+                        value="3"
+                        checked={formData?.lowerBodyDressing === "3"}
+                        onChange={handleInputChange}
+                      />
+                      Patient depends entirely upon another person
                     </div>
                   </div>
 
                   {/* M1830: Bathing */}
                   <div className="mb-3 w-50 col-md-6">
                     <label className="form-label">M1830. Bathing</label>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="bathing"
-                          value="0"
-                          checked={formData?.bathing === "0"}
-                          onChange={handleInputChange}
-                        />
-                        Able to bathe self independently
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="bathing"
+                        value="0"
+                        checked={formData?.bathing === "0"}
+                        onChange={handleInputChange}
+                      />
+                      Able to bathe self independently
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="bathing"
-                          value="1"
-                          checked={formData?.bathing === "1"}
-                          onChange={handleInputChange}
-                        />
-                        Able to bathe with the use of devices
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="bathing"
+                        value="1"
+                        checked={formData?.bathing === "1"}
+                        onChange={handleInputChange}
+                      />
+                      Able to bathe with the use of devices
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="bathing"
-                          value="2"
-                          checked={formData?.bathing === "2"}
-                          onChange={handleInputChange}
-                        />
-                        Able to bathe with intermittent assistance
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="bathing"
+                        value="2"
+                        checked={formData?.bathing === "2"}
+                        onChange={handleInputChange}
+                      />
+                      Able to bathe with intermittent assistance
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="bathing"
-                          value="3"
-                          checked={formData?.bathing === "3"}
-                          onChange={handleInputChange}
-                        />
-                        Requires presence of another person throughout the bath
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="bathing"
+                        value="3"
+                        checked={formData?.bathing === "3"}
+                        onChange={handleInputChange}
+                      />
+                      Requires presence of another person throughout the bath
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="bathing"
-                          value="4"
-                          checked={formData?.bathing === "4"}
-                          onChange={handleInputChange}
-                        />
-                        Unable to use shower/tub, but can bathe at sink or chair
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="bathing"
+                        value="4"
+                        checked={formData?.bathing === "4"}
+                        onChange={handleInputChange}
+                      />
+                      Unable to use shower/tub, but can bathe at sink or chair
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="bathing"
-                          value="5"
-                          checked={formData?.bathing === "5"}
-                          onChange={handleInputChange}
-                        />
-                        Unable to use shower/tub, but can bathe in bed or with
-                        assistance
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="bathing"
+                        value="5"
+                        checked={formData?.bathing === "5"}
+                        onChange={handleInputChange}
+                      />
+                      Unable to use shower/tub, but can bathe in bed or with
+                      assistance
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="bathing"
-                          value="6"
-                          checked={formData?.bathing === "6"}
-                          onChange={handleInputChange}
-                        />
-                        Unable to participate in bathing
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="bathing"
+                        value="6"
+                        checked={formData?.bathing === "6"}
+                        onChange={handleInputChange}
+                      />
+                      Unable to participate in bathing
                     </div>
                   </div>
 
@@ -5460,66 +5577,66 @@ const PatientProfile = () => {
                     <label className="form-label">
                       M1840. Toilet Transferring
                     </label>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="toiletTransferring"
-                          value="0"
-                          checked={formData?.toiletTransferring === "0"}
-                          onChange={handleInputChange}
-                        />
-                        Able to get to and from the toilet independently
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="toiletTransferring"
+                        value="0"
+                        checked={formData?.toiletTransferring === "0"}
+                        onChange={handleInputChange}
+                      />
+                      Able to get to and from the toilet independently
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="toiletTransferring"
-                          value="1"
-                          checked={formData?.toiletTransferring === "1"}
-                          onChange={handleInputChange}
-                        />
-                        Able to get to and from toilet with assistance
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="toiletTransferring"
+                        value="1"
+                        checked={formData?.toiletTransferring === "1"}
+                        onChange={handleInputChange}
+                      />
+                      Able to get to and from toilet with assistance
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="toiletTransferring"
-                          value="2"
-                          checked={formData?.toiletTransferring === "2"}
-                          onChange={handleInputChange}
-                        />
-                        Unable to get to toilet, but can use bedside commode
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="toiletTransferring"
+                        value="2"
+                        checked={formData?.toiletTransferring === "2"}
+                        onChange={handleInputChange}
+                      />
+                      Unable to get to toilet, but can use bedside commode
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="toiletTransferring"
-                          value="3"
-                          checked={formData?.toiletTransferring === "3"}
-                          onChange={handleInputChange}
-                        />
-                        Unable to get to toilet or commode, but can use
-                        bedpan/urinal independently
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="toiletTransferring"
+                        value="3"
+                        checked={formData?.toiletTransferring === "3"}
+                        onChange={handleInputChange}
+                      />
+                      Unable to get to toilet or commode, but can use
+                      bedpan/urinal independently
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="toiletTransferring"
-                          value="4"
-                          checked={formData?.toiletTransferring === "4"}
-                          onChange={handleInputChange}
-                        />
-                        Totally dependent in toileting
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="toiletTransferring"
+                        value="4"
+                        checked={formData?.toiletTransferring === "4"}
+                        onChange={handleInputChange}
+                      />
+                      Totally dependent in toileting
                     </div>
                   </div>
 
@@ -5528,131 +5645,130 @@ const PatientProfile = () => {
                     <label className="form-label">
                       M1845. Toileting Hygiene
                     </label>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="toiletingHygiene"
-                          value="0"
-                          checked={formData?.toiletingHygiene === "0"}
-                          onChange={handleInputChange}
-                        />
-                        Able to manage toileting hygiene independently
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="toiletingHygiene"
+                        value="0"
+                        checked={formData?.toiletingHygiene === "0"}
+                        onChange={handleInputChange}
+                      />
+                      Able to manage toileting hygiene independently
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="toiletingHygiene"
-                          value="1"
-                          checked={formData?.toiletingHygiene === "1"}
-                          onChange={handleInputChange}
-                        />
-                        Able to manage toileting hygiene if supplies are laid
-                        out
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="toiletingHygiene"
+                        value="1"
+                        checked={formData?.toiletingHygiene === "1"}
+                        onChange={handleInputChange}
+                      />
+                      Able to manage toileting hygiene if supplies are laid out
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="toiletingHygiene"
-                          value="2"
-                          checked={formData?.toiletingHygiene === "2"}
-                          onChange={handleInputChange}
-                        />
-                        Someone must assist with toileting hygiene
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="toiletingHygiene"
+                        value="2"
+                        checked={formData?.toiletingHygiene === "2"}
+                        onChange={handleInputChange}
+                      />
+                      Someone must assist with toileting hygiene
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="toiletingHygiene"
-                          value="3"
-                          checked={formData?.toiletingHygiene === "3"}
-                          onChange={handleInputChange}
-                        />
-                        Patient depends entirely on another person
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="toiletingHygiene"
+                        value="3"
+                        checked={formData?.toiletingHygiene === "3"}
+                        onChange={handleInputChange}
+                      />
+                      Patient depends entirely on another person
                     </div>
                   </div>
 
                   {/* M1850: Transferring */}
                   <div className="mb-3 w-50 col-md-6">
                     <label className="form-label">M1850. Transferring</label>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="transferring"
-                          value="0"
-                          checked={formData?.transferring === "0"}
-                          onChange={handleInputChange}
-                        />
-                        Able to independently transfer
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="transferring"
+                        value="0"
+                        checked={formData?.transferring === "0"}
+                        onChange={handleInputChange}
+                      />
+                      Able to independently transfer
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="transferring"
-                          value="1"
-                          checked={formData?.transferring === "1"}
-                          onChange={handleInputChange}
-                        />
-                        Able to transfer with minimal assistance or device
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="transferring"
+                        value="1"
+                        checked={formData?.transferring === "1"}
+                        onChange={handleInputChange}
+                      />
+                      Able to transfer with minimal assistance or device
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="transferring"
-                          value="2"
-                          checked={formData?.transferring === "2"}
-                          onChange={handleInputChange}
-                        />
-                        Able to bear weight and pivot during transfer
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="transferring"
+                        value="2"
+                        checked={formData?.transferring === "2"}
+                        onChange={handleInputChange}
+                      />
+                      Able to bear weight and pivot during transfer
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="transferring"
-                          value="3"
-                          checked={formData?.transferring === "3"}
-                          onChange={handleInputChange}
-                        />
-                        Unable to transfer or bear weight
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="transferring"
+                        value="3"
+                        checked={formData?.transferring === "3"}
+                        onChange={handleInputChange}
+                      />
+                      Unable to transfer or bear weight
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="transferring"
-                          value="4"
-                          checked={formData?.transferring === "4"}
-                          onChange={handleInputChange}
-                        />
-                        Bedfast, able to turn and position self
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="transferring"
+                        value="4"
+                        checked={formData?.transferring === "4"}
+                        onChange={handleInputChange}
+                      />
+                      Bedfast, able to turn and position self
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="transferring"
-                          value="5"
-                          checked={formData?.transferring === "5"}
-                          onChange={handleInputChange}
-                        />
-                        Bedfast, unable to turn or position self
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="transferring"
+                        value="5"
+                        checked={formData?.transferring === "5"}
+                        onChange={handleInputChange}
+                      />
+                      Bedfast, unable to turn or position self
                     </div>
                   </div>
 
@@ -5661,89 +5777,89 @@ const PatientProfile = () => {
                     <label className="form-label">
                       M1860. Ambulation/Locomotion
                     </label>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="ambulationLocomotion"
-                          value="0"
-                          checked={formData?.ambulationLocomotion === "0"}
-                          onChange={handleInputChange}
-                        />
-                        Able to walk independently on all surfaces
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="ambulationLocomotion"
+                        value="0"
+                        checked={formData?.ambulationLocomotion === "0"}
+                        onChange={handleInputChange}
+                      />
+                      Able to walk independently on all surfaces
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="ambulationLocomotion"
-                          value="1"
-                          checked={formData?.ambulationLocomotion === "1"}
-                          onChange={handleInputChange}
-                        />
-                        Able to walk independently with a one-handed device
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="ambulationLocomotion"
+                        value="1"
+                        checked={formData?.ambulationLocomotion === "1"}
+                        onChange={handleInputChange}
+                      />
+                      Able to walk independently with a one-handed device
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="ambulationLocomotion"
-                          value="2"
-                          checked={formData?.ambulationLocomotion === "2"}
-                          onChange={handleInputChange}
-                        />
-                        Requires a two-handed device or supervision
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="ambulationLocomotion"
+                        value="2"
+                        checked={formData?.ambulationLocomotion === "2"}
+                        onChange={handleInputChange}
+                      />
+                      Requires a two-handed device or supervision
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="ambulationLocomotion"
-                          value="3"
-                          checked={formData?.ambulationLocomotion === "3"}
-                          onChange={handleInputChange}
-                        />
-                        Able to walk only with supervision or assistance
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="ambulationLocomotion"
+                        value="3"
+                        checked={formData?.ambulationLocomotion === "3"}
+                        onChange={handleInputChange}
+                      />
+                      Able to walk only with supervision or assistance
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="ambulationLocomotion"
-                          value="4"
-                          checked={formData?.ambulationLocomotion === "4"}
-                          onChange={handleInputChange}
-                        />
-                        Chairfast, able to wheel self independently
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="ambulationLocomotion"
+                        value="4"
+                        checked={formData?.ambulationLocomotion === "4"}
+                        onChange={handleInputChange}
+                      />
+                      Chairfast, able to wheel self independently
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="ambulationLocomotion"
-                          value="5"
-                          checked={formData?.ambulationLocomotion === "5"}
-                          onChange={handleInputChange}
-                        />
-                        Chairfast, unable to wheel self
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="ambulationLocomotion"
+                        value="5"
+                        checked={formData?.ambulationLocomotion === "5"}
+                        onChange={handleInputChange}
+                      />
+                      Chairfast, unable to wheel self
                     </div>
-                    <div>
-                      <label>
-                        <input
-                          type="radio"
-                          name="ambulationLocomotion"
-                          value="6"
-                          checked={formData?.ambulationLocomotion === "6"}
-                          onChange={handleInputChange}
-                        />
-                        Bedfast, unable to ambulate or be up in a chair
-                      </label>
+                    <div className="form-check">
+                      {" "}
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="ambulationLocomotion"
+                        value="6"
+                        checked={formData?.ambulationLocomotion === "6"}
+                        onChange={handleInputChange}
+                      />
+                      Bedfast, unable to ambulate or be up in a chair
                     </div>
                   </div>
                 </div>
@@ -5783,7 +5899,7 @@ const PatientProfile = () => {
                         "indoorMobility",
                         "stairs",
                         "functionalCognition",
-                      ].map((field) => (
+                      ]?.map((field) => (
                         <div className="col-md-6 mb-3" key={field}>
                           <label
                             htmlFor={`gg0100.${field}`}
@@ -5893,7 +6009,7 @@ const PatientProfile = () => {
                       "walker",
                       "orthoticsProsthetics",
                       "noneOfTheAbove",
-                    ].map((field) => (
+                    ]?.map((field) => (
                       <div className="form-check" key={field}>
                         <input
                           className="form-check-input"
@@ -5925,7 +6041,7 @@ const PatientProfile = () => {
                         "upperBodyDressing",
                         "lowerBodyDressing",
                         "puttingOnTakingOffFootwear",
-                      ].map((field) => (
+                      ]?.map((field) => (
                         <div className="col-md-6 mb-3" key={field}>
                           <label
                             htmlFor={`gg0130.${field}`}
@@ -5965,7 +6081,7 @@ const PatientProfile = () => {
                                 label:
                                   "Not Attempted Due to Medical Conditions or Safety Concerns",
                               },
-                            ].map(({ value, label }) => (
+                            ]?.map(({ value, label }) => (
                               <div className="form-check" key={value}>
                                 <input
                                   type="radio"
@@ -6031,7 +6147,7 @@ const PatientProfile = () => {
                           label: "Wheel 50 Feet with Two Turns",
                         },
                         { id: "wheel150Feet", label: "Wheel 150 Feet" },
-                      ].map((field) => (
+                      ]?.map((field) => (
                         <div className="col-md-6 mb-3" key={field.id}>
                           <label className="form-label">{field.label}:</label>
                           {field.id === "usesWheelchairScooter" ? (
@@ -6084,7 +6200,7 @@ const PatientProfile = () => {
                                   label:
                                     "Not Attempted Due to Medical Conditions or Safety Concerns",
                                 },
-                              ].map((option) => (
+                              ]?.map((option) => (
                                 <div className="form-check" key={option.value}>
                                   <input
                                     className="form-check-input"
@@ -6544,7 +6660,7 @@ const PatientProfile = () => {
                   </div>
 
                   {/* M1023. Other Diagnoses */}
-                  {formData.otherDiagnoses.map((diagnosis, index) => (
+                  {formData?.otherDiagnoses?.map((diagnosis, index) => (
                     <div key={index}>
                       <label className="form-label">
                         Other Diagnosis {index + 1}:
@@ -6559,7 +6675,7 @@ const PatientProfile = () => {
                         <label className="form-label">
                           Rating:
                           <div className="form-check d-flex gap-2 align-items-center">
-                            {[0, 1, 2, 3, 4].map((rating) => (
+                            {[0, 1, 2, 3, 4]?.map((rating) => (
                               <div className="form-check " key={rating}>
                                 <input
                                   type="radio"
@@ -6878,7 +6994,7 @@ const PatientProfile = () => {
                       { label: "Frequently", value: "3" },
                       { label: "Almost constantly", value: "4" },
                       { label: "Unable to answer", value: "8" },
-                    ].map(({ label, value }) => (
+                    ]?.map(({ label, value }) => (
                       <div key={value} className="form-check">
                         <input
                           id={`painEffectOnSleep-${value}`}
@@ -6918,7 +7034,7 @@ const PatientProfile = () => {
                       { label: "Frequently", value: "3" },
                       { label: "Almost constantly", value: "4" },
                       { label: "Unable to answer", value: "8" },
-                    ].map(({ label, value }) => (
+                    ]?.map(({ label, value }) => (
                       <div key={value} className="form-check">
                         <input
                           id={`painInterferenceWithTherapy-${value}`}
@@ -6955,7 +7071,7 @@ const PatientProfile = () => {
                       { label: "Frequently", value: "3" },
                       { label: "Almost constantly", value: "4" },
                       { label: "Unable to answer", value: "8" },
-                    ].map(({ label, value }) => (
+                    ]?.map(({ label, value }) => (
                       <div key={value} className="form-check">
                         <input
                           id={`painInterferenceWithActivities-${value}`}
@@ -6986,7 +7102,7 @@ const PatientProfile = () => {
                     {[
                       { label: "No", value: "0" },
                       { label: "Yes", value: "1" },
-                    ].map(({ label, value }) => (
+                    ]?.map(({ label, value }) => (
                       <div key={value} className="form-check">
                         <input
                           id={`fallsSinceSOCROC-${value}`}
@@ -7017,7 +7133,7 @@ const PatientProfile = () => {
                         { label: "No injury", value: "noInjury" },
                         { label: "Injury (except major)", value: "injury" },
                         { label: "Major injury", value: "majorInjury" },
-                      ].map(({ label, value }) => (
+                      ]?.map(({ label, value }) => (
                         <div key={value} className="form-check">
                           <input
                             id={`fallsDetails-${value}`}
@@ -7063,7 +7179,7 @@ const PatientProfile = () => {
                         value: "3",
                       },
                       { label: "At rest (during day or night)", value: "4" },
-                    ].map(({ label, value }) => (
+                    ]?.map(({ label, value }) => (
                       <div key={value} className="form-check">
                         <input
                           id={`shortOfBreath-${value}`}
@@ -7617,7 +7733,7 @@ const PatientProfile = () => {
               data-bs-parent="#accordionSectionM"
             >
               <div className="accordion-body w-100 print-area">
-                {/* M1306 */}
+                {/* m1306 */}
                 <h4 className="print-title">Skin Conditions</h4>
                 <div className="row">
                   <div className="mb-3 w-50 col-md-6">
@@ -7634,9 +7750,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1306"
+                        name="m1306"
                         value="0"
-                        checked={formData?.M1306 === "0"}
+                        checked={formData?.m1306 === "0"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">0. No</label>
@@ -7645,16 +7761,16 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1306"
+                        name="m1306"
                         value="1"
-                        checked={formData?.M1306 === "1"}
+                        checked={formData?.m1306 === "1"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">1. Yes</label>
                     </div>
                   </div>
 
-                  {/* M1307 */}
+                  {/* m1307 */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>
                       M1307. The Oldest Stage 2 Pressure Ulcer that is present
@@ -7665,9 +7781,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1307"
+                        name="m1307"
                         value="1"
-                        checked={formData?.M1307 === "1"}
+                        checked={formData?.m1307 === "1"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -7678,9 +7794,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1307"
+                        name="m1307"
                         value="2"
-                        checked={formData?.M1307 === "2"}
+                        checked={formData?.m1307 === "2"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -7691,31 +7807,26 @@ const PatientProfile = () => {
                       <label>
                         Record date pressure ulcer first identified:
                       </label>
-                      <div className="d-flex">
-                        <input
-                          type="text"
-                          className="form-control me-2"
-                          placeholder="Month"
-                        />
-                        <input
-                          type="text"
-                          className="form-control me-2"
-                          placeholder="Day"
-                        />
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Year"
-                        />
+                      <div className="mb-3 w-50 col-md-6">
+                        <div className="form-group">
+                          <label>Date:</label>
+                          <input
+                            type="date"
+                            className="form-control"
+                            name="firstIdentifiedDate"
+                            value={formData?.firstIdentifiedDate || ""}
+                            onChange={handleInputChange}
+                          />
+                        </div>
                       </div>
                     </div>
                     <div className="form-check">
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1307"
+                        name="m1307"
                         value="NA"
-                        checked={formData?.M1307 === "NA"}
+                        checked={formData?.m1307 === "NA"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -7724,11 +7835,10 @@ const PatientProfile = () => {
                     </div>
                   </div>
 
-                  {/* M1311: Stage 2 */}
+                  {/* m1311: Stage 2 */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>
-                      M1311?. Current Number of Unhealed Pressure
-                      Ulcers/Injuries
+                      M1311: Current Number of Unhealed Pressure Ulcers/Injuries
                     </h6>
                     <h6>A1. Stage 2</h6>
                     <p>
@@ -7741,8 +7851,8 @@ const PatientProfile = () => {
                       <input
                         type="number"
                         className="form-control mb-2"
-                        name="M1311?.stage2?.current"
-                        value={formData?.M1311?.stage2?.current}
+                        name="stage2Current"
+                        value={formData.stage2Current}
                         onChange={handleInputChange}
                       />
                     </div>
@@ -7754,14 +7864,14 @@ const PatientProfile = () => {
                       <input
                         type="number"
                         className="form-control"
-                        name="M1311??.stage2?.presentAtSOC"
-                        value={formData?.M1311?.stage2?.presentAtSOC}
+                        name="stage2PresentAtSOC"
+                        value={formData.stage2PresentAtSOC}
                         onChange={handleInputChange}
                       />
                     </div>
                   </div>
 
-                  {/* M1311: Stage 3 */}
+                  {/* m1311: Stage 3 */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>B1. Stage 3</h6>
                     <p>
@@ -7775,8 +7885,8 @@ const PatientProfile = () => {
                       <input
                         type="number"
                         className="form-control mb-2"
-                        name="M1311?.stage3?.current"
-                        value={formData?.M1311?.stage3?.current}
+                        name="stage3Current"
+                        value={formData.stage3Current}
                         onChange={handleInputChange}
                       />
                     </div>
@@ -7788,14 +7898,14 @@ const PatientProfile = () => {
                       <input
                         type="number"
                         className="form-control"
-                        name="M1311?.stage3.presentAtSOC"
-                        value={formData?.M1311?.stage3.presentAtSOC}
+                        name="stage3PresentAtSOC"
+                        value={formData.stage3PresentAtSOC}
                         onChange={handleInputChange}
                       />
                     </div>
                   </div>
 
-                  {/* M1311: Stage 4 */}
+                  {/* m1311: Stage 4 */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>C1. Stage 4</h6>
                     <p>
@@ -7808,8 +7918,8 @@ const PatientProfile = () => {
                       <input
                         type="number"
                         className="form-control mb-2"
-                        name="M1311?.stage4?.current"
-                        value={formData?.M1311?.stage4?.current}
+                        name="stage4Current"
+                        value={formData.stage4Current}
                         onChange={handleInputChange}
                       />
                     </div>
@@ -7821,14 +7931,14 @@ const PatientProfile = () => {
                       <input
                         type="number"
                         className="form-control"
-                        name="M1311?.stage4.presentAtSOC"
-                        value={formData?.M1311?.stage4.presentAtSOC}
+                        name="stage4PresentAtSOC"
+                        value={formData.stage4PresentAtSOC}
                         onChange={handleInputChange}
                       />
                     </div>
                   </div>
 
-                  {/* M1311: Unstageable: Non-removable dressing/device */}
+                  {/* m1311: Unstageable: Non-removable dressing/device */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>D1. Unstageable: Non-removable dressing/device</h6>
                     <p>
@@ -7842,8 +7952,8 @@ const PatientProfile = () => {
                       <input
                         type="number"
                         className="form-control mb-2"
-                        name="M1311?.unstageableDressing?.current"
-                        value={formData?.M1311?.unstageableDressing?.current}
+                        name="unstageableDressingCurrent"
+                        value={formData.unstageableDressingCurrent}
                         onChange={handleInputChange}
                       />
                     </div>
@@ -7855,16 +7965,14 @@ const PatientProfile = () => {
                       <input
                         type="number"
                         className="form-control"
-                        name="M1311?.unstageableDressing.presentAtSOC"
-                        value={
-                          formData?.M1311?.unstageableDressing.presentAtSOC
-                        }
+                        name="unstageableDressingPresentAtSOC"
+                        value={formData.unstageableDressingPresentAtSOC}
                         onChange={handleInputChange}
                       />
                     </div>
                   </div>
 
-                  {/* M1311: Unstageable: Slough and/or eschar */}
+                  {/* m1311: Unstageable: Slough and/or eschar */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>E1. Unstageable: Slough and/or eschar</h6>
                     <p>
@@ -7876,8 +7984,8 @@ const PatientProfile = () => {
                       <input
                         type="number"
                         className="form-control mb-2"
-                        name="M1311?.unstageableSlough?.current"
-                        value={formData?.M1311?.unstageableSlough?.current}
+                        name="unstageableSloughCurrent"
+                        value={formData.unstageableSloughCurrent}
                         onChange={handleInputChange}
                       />
                     </div>
@@ -7889,14 +7997,14 @@ const PatientProfile = () => {
                       <input
                         type="number"
                         className="form-control"
-                        name="M1311?.unstageableSlough.presentAtSOC"
-                        value={formData?.M1311?.unstageableSlough.presentAtSOC}
+                        name="unstageableSloughPresentAtSOC"
+                        value={formData.unstageableSloughPresentAtSOC}
                         onChange={handleInputChange}
                       />
                     </div>
                   </div>
 
-                  {/* M1311: Unstageable: Deep tissue injury */}
+                  {/* m1311: Unstageable: Deep tissue injury */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>F1. Unstageable: Deep tissue injury</h6>
                     <p>
@@ -7908,8 +8016,8 @@ const PatientProfile = () => {
                       <input
                         type="number"
                         className="form-control mb-2"
-                        name="M1311?.deepTissueInjury?.current"
-                        value={formData?.M1311?.deepTissueInjury?.current}
+                        name="deepTissueInjuryCurrent"
+                        value={formData.deepTissueInjuryCurrent}
                         onChange={handleInputChange}
                       />
                     </div>
@@ -7921,14 +8029,14 @@ const PatientProfile = () => {
                       <input
                         type="number"
                         className="form-control"
-                        name="M1311?.deepTissueInjury.presentAtSOC"
-                        value={formData?.M1311?.deepTissueInjury.presentAtSOC}
+                        name="deepTissueInjuryPresentAtSOC"
+                        value={formData.deepTissueInjuryPresentAtSOC}
                         onChange={handleInputChange}
                       />
                     </div>
                   </div>
 
-                  {/* M1322 */}
+                  {/* m1322 */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>M1322. Current Number of Stage 1 Pressure Injuries</h6>
                     <p>
@@ -7941,9 +8049,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1322"
+                        name="m1322"
                         value="0"
-                        checked={formData?.M1322 === "0"}
+                        checked={formData?.m1322 === "0"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">0. Zero</label>
@@ -7952,9 +8060,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1322"
+                        name="m1322"
                         value="1"
-                        checked={formData?.M1322 === "1"}
+                        checked={formData?.m1322 === "1"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">1. One</label>
@@ -7963,9 +8071,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1322"
+                        name="m1322"
                         value="2"
-                        checked={formData?.M1322 === "2"}
+                        checked={formData?.m1322 === "2"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">2. Two</label>
@@ -7974,9 +8082,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1322"
+                        name="m1322"
                         value="3"
-                        checked={formData?.M1322 === "3"}
+                        checked={formData?.m1322 === "3"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">3. Three</label>
@@ -7985,9 +8093,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1322"
+                        name="m1322"
                         value="4"
-                        checked={formData?.M1322 === "4"}
+                        checked={formData?.m1322 === "4"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -7996,7 +8104,7 @@ const PatientProfile = () => {
                     </div>
                   </div>
 
-                  {/* M1324 */}
+                  {/* m1324 */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>
                       M1324. Stage of Most Problematic Unhealed Pressure
@@ -8011,9 +8119,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1324"
+                        name="m1324"
                         value="1"
-                        checked={formData?.M1324 === "1"}
+                        checked={formData?.m1324 === "1"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">1. Stage 1</label>
@@ -8022,9 +8130,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1324"
+                        name="m1324"
                         value="2"
-                        checked={formData?.M1324 === "2"}
+                        checked={formData?.m1324 === "2"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">2. Stage 2</label>
@@ -8033,9 +8141,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1324"
+                        name="m1324"
                         value="3"
-                        checked={formData?.M1324 === "3"}
+                        checked={formData?.m1324 === "3"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">3. Stage 3</label>
@@ -8044,9 +8152,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1324"
+                        name="m1324"
                         value="4"
-                        checked={formData?.M1324 === "4"}
+                        checked={formData?.m1324 === "4"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">4. Stage 4</label>
@@ -8055,9 +8163,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1324"
+                        name="m1324"
                         value="NA"
-                        checked={formData?.M1324 === "NA"}
+                        checked={formData?.m1324 === "NA"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -8067,16 +8175,16 @@ const PatientProfile = () => {
                     </div>
                   </div>
 
-                  {/* M1330 */}
+                  {/* m1330 */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>M1330. Does this patient have a Stasis Ulcer?</h6>
                     <div className="form-check">
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1330"
+                        name="m1330"
                         value="0"
-                        checked={formData?.M1330 === "0"}
+                        checked={formData?.m1330 === "0"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">0. No</label>
@@ -8085,9 +8193,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1330"
+                        name="m1330"
                         value="1"
-                        checked={formData?.M1330 === "1"}
+                        checked={formData?.m1330 === "1"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -8099,9 +8207,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1330"
+                        name="m1330"
                         value="2"
-                        checked={formData?.M1330 === "2"}
+                        checked={formData?.m1330 === "2"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -8112,9 +8220,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1330"
+                        name="m1330"
                         value="3"
-                        checked={formData?.M1330 === "3"}
+                        checked={formData?.m1330 === "3"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -8125,7 +8233,7 @@ const PatientProfile = () => {
                     </div>
                   </div>
 
-                  {/* M1332 */}
+                  {/* m1332 */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>
                       M1332. Current Number of Stasis Ulcer(s) that are
@@ -8135,9 +8243,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1332"
+                        name="m1332"
                         value="1"
-                        checked={formData?.M1332 === "1"}
+                        checked={formData?.m1332 === "1"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">1. One</label>
@@ -8146,9 +8254,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1332"
+                        name="m1332"
                         value="2"
-                        checked={formData?.M1332 === "2"}
+                        checked={formData?.m1332 === "2"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">2. Two</label>
@@ -8157,9 +8265,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1332"
+                        name="m1332"
                         value="3"
-                        checked={formData?.M1332 === "3"}
+                        checked={formData?.m1332 === "3"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">3. Three</label>
@@ -8168,9 +8276,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1332"
+                        name="m1332"
                         value="4"
-                        checked={formData?.M1332 === "4"}
+                        checked={formData?.m1332 === "4"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -8179,7 +8287,7 @@ const PatientProfile = () => {
                     </div>
                   </div>
 
-                  {/* M1334 */}
+                  {/* m1334 */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>
                       M1334. Status of Most Problematic Stasis Ulcer that is
@@ -8189,9 +8297,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1334"
+                        name="m1334"
                         value="1"
-                        checked={formData?.M1334 === "1"}
+                        checked={formData?.m1334 === "1"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -8202,9 +8310,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1334"
+                        name="m1334"
                         value="2"
-                        checked={formData?.M1334 === "2"}
+                        checked={formData?.m1334 === "2"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -8215,25 +8323,25 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1334"
+                        name="m1334"
                         value="3"
-                        checked={formData?.M1334 === "3"}
+                        checked={formData?.m1334 === "3"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">3. Not healing</label>
                     </div>
                   </div>
 
-                  {/* M1340 */}
+                  {/* m1340 */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>M1340. Does this patient have a Surgical Wound?</h6>
                     <div className="form-check">
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1340"
+                        name="m1340"
                         value="0"
-                        checked={formData?.M1340 === "0"}
+                        checked={formData?.m1340 === "0"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">0. No</label>
@@ -8242,9 +8350,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1340"
+                        name="m1340"
                         value="1"
-                        checked={formData?.M1340 === "1"}
+                        checked={formData?.m1340 === "1"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -8256,9 +8364,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1340"
+                        name="m1340"
                         value="2"
-                        checked={formData?.M1340 === "2"}
+                        checked={formData?.m1340 === "2"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -8268,7 +8376,7 @@ const PatientProfile = () => {
                     </div>
                   </div>
 
-                  {/* M1342 */}
+                  {/* m1342 */}
                   <div className="mb-3 w-50 col-md-6">
                     <h6>
                       M1342. Status of Most Problematic Surgical Wound that is
@@ -8278,9 +8386,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1342"
+                        name="m1342"
                         value="0"
-                        checked={formData?.M1342 === "0"}
+                        checked={formData?.m1342 === "0"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -8291,9 +8399,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1342"
+                        name="m1342"
                         value="1"
-                        checked={formData?.M1342 === "1"}
+                        checked={formData?.m1342 === "1"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -8304,9 +8412,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1342"
+                        name="m1342"
                         value="2"
-                        checked={formData?.M1342 === "2"}
+                        checked={formData?.m1342 === "2"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">
@@ -8317,9 +8425,9 @@ const PatientProfile = () => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        name="M1342"
+                        name="m1342"
                         value="3"
-                        checked={formData?.M1342 === "3"}
+                        checked={formData?.m1342 === "3"}
                         onChange={handleInputChange}
                       />
                       <label className="form-check-label">3. Not healing</label>
@@ -9474,23 +9582,32 @@ const PatientProfile = () => {
         </div>
         <div className="row mt-4 hide-on-print">
           <div className="col-md-12 d-flex gap-3">
-            <button type="submit" className="btn btn-primary">
-              {isUpdateLoading || isLoading ? "...Wait please" : "Submit"}
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={handleSaveAndExit}
-            >
-              Save & Exit
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onSubmit={handleSaveAndContinue}
-            >
-              Save & Continue
-            </button>
+            {editData?._id && (
+              <button type="submit" className="btn btn-primary">
+                {isUpdateLoading || isLoading ? "...Wait please" : "edit"}
+              </button>
+            )}
+            {!editData?._id && (
+              <>
+                <button type="submit" className="btn btn-primary">
+                  {isUpdateLoading || isLoading ? "...Wait please" : "Submit"}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleSaveAndExit}
+                >
+                  Save & Exit
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onSubmit={handleSaveAndContinue}
+                >
+                  Save & Continue
+                </button>
+              </>
+            )}
           </div>
         </div>
       </form>
@@ -9498,4 +9615,4 @@ const PatientProfile = () => {
   );
 };
 
-export default PatientProfile;
+export default CreatePatient;

@@ -12,27 +12,10 @@ import MainLoader from "../../utils/Loaders/MainLoader";
 import EditModal from "../../components/Models/EditModal";
 import DataTable from "../../components/Tables/DynamicTable";
 import swal from "sweetalert";
-import SectionAForm from "../../components/Patient/SectionA";
-import SectionBForm from "../../components/Patient/SectionB";
-import SectionCForm from "../../components/Patient/SectionC";
-import SectionDForm from "../../components/Patient/SectionD";
-import SectionEForm from "../../components/Patient/SectionE";
-import SectionFForm from "../../components/Patient/SectionF";
-import SectionGForm from "../../components/Patient/SectionG";
-import SectionGGForm from "../../components/Patient/SectionGG";
-import SectionHForm from "../../components/Patient/SectionH";
-import SectionIForm from "../../components/Patient/SectionI";
-import SectionJForm from "../../components/Patient/SectionJ";
-import SectionKForm from "../../components/Patient/SectionK";
-import SectionMForm from "../../components/Patient/SectionM";
-import SectionNForm from "../../components/Patient/SectionN";
-import SectionOForm from "../../components/Patient/SectionO";
-import SectionQForm from "../../components/Patient/SectionQ";
 import { updateFormData } from "./../../Redux/slices/SectionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useMeQuery } from "../../Redux/api/UserApi";
 import FullscreenModal from "./../../components/Models/FullScreenModel";
-import CreatePatient from "./CreatePatient";
 import CreatePayers from "./CreatePayers";
 import CreateClinicalAndDiagnoses from "./CreateClinicalAndDiagnoses";
 import CreatePharmacy from "./CreatePharmacy";
@@ -55,21 +38,22 @@ import EditEmergencyPreparedness from "./../../components/Patient/EditEmergencyP
 import EditAdvanceDirectives from "./../../components/Patient/EditAdvanceDirectives";
 import EditReferralInformation from "./../../components/Patient/EditReferralInformation";
 import { showToast } from './../../utils/Toastify';
+import CreatePatient from './../../components/Patient/CreatePatient';
 const Patients = () => {
   const { data: lgData } = useMeQuery();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const allSteps = useSelector(getAllSectionStepState);
-  const [editId, setEditId] = useState("");
+  const [editData, setEditData] = useState("");
 
   const [
     deletePatient,
     { data: deleteData, isSuccess: isDeleteSuccess },
   ] = useDeletePatientMutation();
-  const { data, isLoading, refetch } = useGetAllPatientsQuery(editId);
+  const { data, isLoading, refetch } = useGetAllPatientsQuery(editData?._id);
   const [show, setShow] = useState(false);
 
   const handleEdit = (rowData) => {
-    setEditId(rowData._id);
+    setEditData(rowData);
     setShow(true);
     dispatch(updateFormData({ ...rowData }));
   };
@@ -1265,59 +1249,44 @@ const Patients = () => {
 
                 {allSteps?.steps === 0 && (
                   <>
-                    <SectionAForm />
-                    <SectionBForm />
-                    <SectionCForm />
-                    <SectionDForm />
-                    <SectionEForm />
-                    <SectionFForm />
-                    <SectionGForm />
-                    <SectionGGForm />
-                    <SectionHForm />
-                    <SectionIForm />
-                    <SectionJForm />
-                    <SectionKForm />
-                    <SectionMForm />
-                    <SectionNForm />
-                    <SectionOForm />
-                    <SectionQForm editId={editId} />
+                    <CreatePatient editData={editData} />
                   </>
                 )}
 
                 {allSteps?.steps === 1 && (
-                  <EditPayer patientId={editId} />
+                  <EditPayer patientId={editData?._id} />
                 )}
                 {allSteps?.steps === 2 && (
                   <EditPhysicians
-                    patientId={editId}
+                    patientId={editData?._id}
                   />
                 )}
                 {allSteps?.steps === 3 && (
                   <EditClinicalDiagnoses
-                  patientId={editId}
+                  patientId={editData?._id}
                   />
                 )}
                 {allSteps?.steps === 4 && (
                   <EditPharmacy
-                  patientId={editId}
+                  patientId={editData?._id}
                   />
                 )}
                 {allSteps?.steps === 5 && (
-                  <EditContract  patientId={editId} />
+                  <EditContract  patientId={editData?._id} />
                 )}
                 {allSteps?.steps === 6 && (
                   <EditEmergencyPreparedness
-                  patientId={editId}
+                  patientId={editData?._id}
                   />
                 )}
                 {allSteps?.steps === 7 && (
                   <EditAdvanceDirectives
-                  patientId={editId}
+                  patientId={editData?._id}
                   />
                 )}
                 {allSteps?.steps === 8 && (
                   <EditReferralInformation
-                  patientId={editId}
+                  patientId={editData?._id}
                   />
                 )}
               </EditModal>

@@ -212,6 +212,8 @@ const CreateEmergencyPreparedness = () => {
                   <div>
                     <input
                       type="radio"
+                      className="form-check-input"
+                      className="form-check-input"
                       name="emergencyTriage"
                       id="emergencyTriage1"
                       value="1"
@@ -223,6 +225,7 @@ const CreateEmergencyPreparedness = () => {
                     <br />
                     <input
                       type="radio"
+                      className="form-check-input"
                       name="emergencyTriage"
                       id="emergencyTriage2"
                       value="2"
@@ -234,6 +237,7 @@ const CreateEmergencyPreparedness = () => {
                     <br />
                     <input
                       type="radio"
+                      className="form-check-input"
                       name="emergencyTriage"
                       id="emergencyTriage3"
                       value="3"
@@ -245,6 +249,7 @@ const CreateEmergencyPreparedness = () => {
                     <br />
                     <input
                       type="radio"
+                      className="form-check-input"
                       name="emergencyTriage"
                       id="emergencyTriage4"
                       value="4"
@@ -262,6 +267,7 @@ const CreateEmergencyPreparedness = () => {
                   <div>
                     <input
                       type="checkbox"
+                      className="form-check-input"
                       name="additionalInfo"
                       id="needsAssistance"
                       value="needsAssistance"
@@ -275,6 +281,7 @@ const CreateEmergencyPreparedness = () => {
                   <div>
                     <input
                       type="checkbox"
+                      className="form-check-input"
                       name="additionalInfo"
                       id="contactWithOfficials"
                       value="contactWithOfficials"
@@ -290,6 +297,7 @@ const CreateEmergencyPreparedness = () => {
                   <div>
                     <input
                       type="checkbox"
+                      className="form-check-input"
                       name="additionalInfo"
                       id="medicalNeeds"
                       value="medicalNeeds"
@@ -400,6 +408,7 @@ const CreateEmergencyPreparedness = () => {
                   <div className="col-md-12 my-2">
                     <input
                       type="checkbox"
+                      className="form-check-input"
                       name="evacuationAddress"
                       id="evacuationAddress"
                       onChange={handleInputChange}
