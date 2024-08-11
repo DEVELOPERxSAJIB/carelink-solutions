@@ -325,7 +325,7 @@ const DataTable = ({
                       ) : column.render ? (
                         column.render(row)
                       ) : (
-                        row[column.field]
+                        <Link to={`/${tableName}/${row?._id}`}>{row[column.field]}</Link>
                       )}
                     </td>
                   ))}

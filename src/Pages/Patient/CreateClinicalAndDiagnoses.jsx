@@ -20,23 +20,23 @@ const CreateClinicalAndDiagnoses = () => {
   const [template, setTemplate] = useState("");
 
   const initialFormData = {
-    serviceRequired: localStorageClinicalDiagnosis?.serviceRequired || [],
-    height: localStorageClinicalDiagnosis?.height || {
+    serviceRequired: [],
+    height: {
       value: "",
       unit: "",
     },
-    weight: localStorageClinicalDiagnosis?.weight || {
+    weight: {
       value: "",
       unit: "",
     },
-    dmeNeeded: localStorageClinicalDiagnosis?.dmeNeeded || [],
-    primaryDiagnosis: localStorageClinicalDiagnosis?.primaryDiagnosis || "",
+    dmeNeeded: [],
+    primaryDiagnosis: "",
     primaryDiagnosisCode:
-      localStorageClinicalDiagnosis?.primaryDiagnosisCode || "",
-    otherDiagnoses: localStorageClinicalDiagnosis?.otherDiagnoses || [
+     "",
+    otherDiagnoses: [
       { diagnosis: "", code: "" },
     ],
-    clinicalComments: localStorageClinicalDiagnosis?.clinicalComments || "",
+    clinicalComments: "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -162,6 +162,13 @@ const CreateClinicalAndDiagnoses = () => {
     showToast("error", error?.data?.message);
     showToast("success", data?.message);
   }, [error?.data?.message, data?.message]);
+  useEffect(() => {
+    if(localStorageClinicalDiagnosis){
+      setFormData({...localStorageClinicalDiagnosis})
+    }
+  }, []);
+
+
   if (isLoading) return <AuthLoader />;
 
   return (
@@ -188,7 +195,7 @@ const CreateClinicalAndDiagnoses = () => {
             </h2>
             <div
               id="collapseServiceRequired"
-              className="accordion-collapse collapse show "
+              className="accordion-collapse collapse "
               aria-labelledby="headingServiceRequired"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -294,7 +301,7 @@ const CreateClinicalAndDiagnoses = () => {
             </h2>
             <div
               id="collapseDMENeeded"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse"
               aria-labelledby="headingDMENeeded"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -349,7 +356,7 @@ const CreateClinicalAndDiagnoses = () => {
             </h2>
             <div
               id="collapsePrimaryDiagnosis"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse"
               aria-labelledby="headingPrimaryDiagnosis"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -409,7 +416,7 @@ const CreateClinicalAndDiagnoses = () => {
             </h2>
             <div
               id="collapseOtherDiagnoses"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse"
               aria-labelledby="headingOtherDiagnoses"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -487,7 +494,7 @@ const CreateClinicalAndDiagnoses = () => {
             </h2>
             <div
               id="collapseClinicalComments"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse"
               aria-labelledby="headingClinicalComments"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >

@@ -170,7 +170,7 @@ const CreatePayers = () => {
             </h2>
             <div
               id="collapsePrimary"
-              className="accordion-collapse collapse show "
+              className="accordion-collapse collapse "
               aria-labelledby="headingPrimary"
               data-bs-parent="#payerAccordion"
             >
@@ -261,7 +261,7 @@ const CreatePayers = () => {
             </h2>
             <div
               id="collapseInsurance"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse"
               aria-labelledby="headingInsurance"
               data-bs-parent="#payerAccordion"
             >
@@ -332,7 +332,7 @@ const CreatePayers = () => {
             </h2>
             <div
               id="collapsePayerComments"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse"
               aria-labelledby="headingPayerComments"
               data-bs-parent="#payerAccordion"
             >
@@ -384,7 +384,7 @@ const CreatePayers = () => {
             </h2>
             <div
               id="collapseUB04Locators"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse"
               aria-labelledby="headingUB04Locators"
               data-bs-parent="#payerAccordion"
             >
@@ -471,7 +471,7 @@ const CreatePayers = () => {
             </h2>
             <div
               id="collapseUB04Spans"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse"
               aria-labelledby="headingUB04Spans"
               data-bs-parent="#payerAccordion"
             >
@@ -578,7 +578,7 @@ const CreatePayers = () => {
             </h2>
             <div
               id="collapseConditionCodes"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse"
               aria-labelledby="headingConditionCodes"
               data-bs-parent="#payerAccordion"
             >
@@ -632,7 +632,7 @@ const CreatePayers = () => {
             </h2>
             <div
               id="collapseEmploymentAuto"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse"
               aria-labelledby="headingEmploymentAuto"
               data-bs-parent="#payerAccordion"
             >

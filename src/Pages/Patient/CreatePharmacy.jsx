@@ -162,7 +162,7 @@ const CreatePharmacy = () => {
             </h2>
             <div
               id="collapsePharmacyInfo"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse"
               aria-labelledby="headingPharmacyInfo"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -350,7 +350,7 @@ const CreatePharmacy = () => {
             </h2>
             <div
               id="collapseAdditionalPharmacies"
-              className="accordion-collapse collapse show "
+              className="accordion-collapse collapse "
               aria-labelledby="headingAdditionalPharmacies"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >

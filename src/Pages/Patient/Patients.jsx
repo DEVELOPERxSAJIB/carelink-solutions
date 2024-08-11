@@ -88,6 +88,8 @@ const Patients = () => {
   };
 
   const columns = [
+    { field: "patientFirstName", header: "Patient First Name" },
+    { field: "patientLastName", header: "Patient Last Name" },
     { field: "npi", header: "NPI" },
     { field: "cmsCertificationNumber", header: "CMS Certification Number" },
     { field: "branchState", header: "Branch State" },
@@ -95,9 +97,7 @@ const Patients = () => {
     { field: "patientIdNumber", header: "Patient ID Number" },
     { field: "startOfCareDate", header: "Start of Care Date" },
     { field: "resumptionOfCareDate", header: "Resumption of Care Date" },
-    { field: "patientFirstName", header: "Patient First Name" },
     { field: "patientMiddleInitial", header: "Patient Middle Initial" },
-    { field: "patientLastName", header: "Patient Last Name" },
     { field: "patientSuffix", header: "Patient Suffix" },
     { field: "patientStateOfResidence", header: "Patient State of Residence" },
     { field: "patientZipCode", header: "Patient Zip Code" },
@@ -713,12 +713,13 @@ const Patients = () => {
                   className="col-md-12"
                   style={{
                     minWidth: "100vw",
-                    minHeight: "60vh",
+                    minHeight: "80vh",
                     overflowY: "scroll",
+                    width:"100%"
                   }}
                   title={`Add New Patient`}
                 >
-                  <div style={{maxHeight:"60vh",minHeight:"70vh",overflowY:"scroll"}}>
+                  <div style={{maxHeight:"60vh",minHeight:"80vh",overflowY:"scroll",width:"100%"}}>
                     <div className="d-flex align-items-center flex-wrap gap-1 mb-5 justify-content-center">
                       <div
                         className="step"

@@ -32,11 +32,17 @@ const SinglePatient = () => {
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
-    setFormData({ ...patient?.payload });
+    if (patient) {
+      setFormData(prevData => ({
+        ...prevData,
+        ...patient?.payload,
+      }));
+    }
   }, [patient]);
+
   useEffect(() => {
-    setFormData({ ...patient?.payload });
-    setFormData({
+    setFormData(prevData => ({
+      ...prevData,
       ...directiveData?.payload?.directive,
       ...singleClinical?.payload?.clinical,
       ...singleContact?.payload?.contact,
@@ -45,9 +51,8 @@ const SinglePatient = () => {
       ...singlePharmacy?.payload?.pharmacy,
       ...singlePhysician?.payload?.physician,
       ...singleReferral?.payload?.referral,
-    });
+    }));
   }, [
-    patient,
     directiveData?.payload?.directive,
     singleClinical?.payload?.clinical,
     singleContact?.payload?.contact,
@@ -57,7 +62,6 @@ const SinglePatient = () => {
     singlePhysician?.payload?.physician,
     singleReferral?.payload?.referral,
   ]);
-
   return (
     <div  ref={componentRef}>
       <ReactToPrint

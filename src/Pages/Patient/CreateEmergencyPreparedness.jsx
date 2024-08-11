@@ -101,12 +101,12 @@ const CreateEmergencyPreparedness = () => {
     formData.city = city;
     formData.state = state;
     formData.county = county;
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if(patientId?._id){
-      formData.patientId= allSteps.patientId || patientId?._id
+    const patientId = JSON.parse(localStorage.getItem("patient"));
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId || patientId?._id;
       localStorage.removeItem("Emergency");
-    }else{
-      showToast("error","Patient id required")
+    } else {
+      showToast("error", "Patient id required");
     }
     createEmergency(formData);
   };
@@ -116,13 +116,13 @@ const CreateEmergencyPreparedness = () => {
     formData.city = city;
     formData.state = state;
     formData.county = county;
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if(patientId?._id){
-      formData.patientId= allSteps.patientId || patientId?._id
+    const patientId = JSON.parse(localStorage.getItem("patient"));
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId || patientId?._id;
       createEmergency(formData);
       localStorage.setItem("Emergency", JSON.stringify(formData));
-    }else{
-      showToast("error","Patient id required")
+    } else {
+      showToast("error", "Patient id required");
     }
   };
 
@@ -131,12 +131,12 @@ const CreateEmergencyPreparedness = () => {
     formData.city = city;
     formData.state = state;
     formData.county = county;
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if(patientId?._id){
-      formData.patientId= allSteps.patientId || patientId?._id
+    const patientId = JSON.parse(localStorage.getItem("patient"));
+    if (patientId?._id) {
+      formData.patientId = allSteps.patientId || patientId?._id;
       localStorage.setItem("Emergency", JSON.stringify(formData));
-    }else{
-      showToast("error","Patient id required")
+    } else {
+      showToast("error", "Patient id required");
     }
   };
   useEffect(() => {
@@ -165,17 +165,13 @@ const CreateEmergencyPreparedness = () => {
   }, [template?.value]);
   useEffect(() => {
     if (isSuccess) {
-      dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
     }
   }, [isSuccess]);
   useEffect(() => {
     showToast("error", error?.data?.message);
     showToast("success", data?.message);
-  }, [
-
-    error?.data?.message,
-    data?.message,
-  ]);
+  }, [error?.data?.message, data?.message]);
   if (isLoading) return <AuthLoader />;
 
   return (
@@ -184,9 +180,9 @@ const CreateEmergencyPreparedness = () => {
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <PageHeader
             title="Emergency Preparedness"
-            className="card-header fs-3" back={false}
+            className="card-header fs-3"
+            back={false}
           />
-         
 
           {/* Emergency Triage Information */}
           <div className="accordion-item">
@@ -204,7 +200,7 @@ const CreateEmergencyPreparedness = () => {
             </h2>
             <div
               id="collapseEmergencyTriage"
-              className="accordion-collapse collapse show "
+              className="accordion-collapse collapse  "
               aria-labelledby="headingEmergencyTriage"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -338,7 +334,7 @@ const CreateEmergencyPreparedness = () => {
             </h2>
             <div
               id="collapseAdditionalInfo"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse "
               aria-labelledby="headingAdditionalInfo"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -380,7 +376,7 @@ const CreateEmergencyPreparedness = () => {
             </h2>
             <div
               id="collapseEvacuation"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse "
               aria-labelledby="headingEvacuation"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
@@ -532,7 +528,7 @@ const CreateEmergencyPreparedness = () => {
             </h2>
             <div
               id="collapseComments"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse "
               aria-labelledby="headingComments"
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >

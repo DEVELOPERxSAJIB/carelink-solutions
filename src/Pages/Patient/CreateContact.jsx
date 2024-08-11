@@ -13,7 +13,7 @@ import {
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
-import { showToast } from './../../utils/Toastify';
+import { showToast } from "./../../utils/Toastify";
 const ContactForm = () => {
   const allSteps = useSelector(getAllSectionStepState);
   const dispatch = useDispatch();
@@ -247,11 +247,11 @@ const ContactForm = () => {
         remainingCharacters,
       };
       if (patientId?._id) {
-        contactData.patientId = allSteps.patientId ||patientId?._id;
+        contactData.patientId = allSteps.patientId || patientId?._id;
         createContact(contactData);
         localStorage.removeItem("Contact");
-      }else{
-        showToast("error","Patient id required")
+      } else {
+        showToast("error", "Patient id required");
       }
     } catch (error) {
       console.error("Error creating contact:", error);
@@ -286,11 +286,11 @@ const ContactForm = () => {
         remainingCharacters,
       };
       if (patientId?._id) {
-        contactData.patientId = allSteps.patientId ||patientId?._id;
+        contactData.patientId = allSteps.patientId || patientId?._id;
         createContact(contactData);
         localStorage.setItem("Contact", JSON.stringify(contactData));
-      }else{
-        showToast("error","Patient id required")
+      } else {
+        showToast("error", "Patient id required");
       }
     } catch (error) {
       console.error("Error creating contact:", error);
@@ -325,10 +325,10 @@ const ContactForm = () => {
         remainingCharacters,
       };
       if (patientId?._id) {
-        contactData.patientId = allSteps.patientId ||patientId?._id;
+        contactData.patientId = allSteps.patientId || patientId?._id;
         localStorage.setItem("Contact", JSON.stringify(contactData));
-      }else{
-        showToast("error","Patient id required")
+      } else {
+        showToast("error", "Patient id required");
       }
     } catch (error) {
       console.error("Error creating contact:", error);
@@ -368,13 +368,9 @@ const ContactForm = () => {
     }
   }, [isSuccess]);
   useEffect(() => {
-
     showToast("error", error?.data?.message);
     showToast("success", data?.message);
-  }, [
-    error?.data?.message,
-    data?.message,
-  ]);
+  }, [error?.data?.message, data?.message]);
   if (isLoading) return <AuthLoader />;
 
   return (
@@ -384,7 +380,7 @@ const ContactForm = () => {
       <div className="card-body">
         <div className="accordion" id="emergencyContactsAccordion">
           {/* Primary Emergency Contact */}
-         
+
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingPrimary">
               <button
@@ -400,7 +396,7 @@ const ContactForm = () => {
             </h2>
             <div
               id="collapsePrimary"
-              className="accordion-collapse collapse show"
+              className="accordion-collapse collapse"
               aria-labelledby="headingPrimary"
               data-bs-parent="#emergencyContactsAccordion"
             >
@@ -704,7 +700,7 @@ const ContactForm = () => {
               </h2>
               <div
                 id={`additionalCollapse-${index}`}
-                className="accordion-collapse collapse show"
+                className="accordion-collapse collapse"
                 aria-labelledby={`additionalHeading-${index}`}
                 data-bs-parent="#emergencyContactsAccordion"
               >
@@ -1070,45 +1066,152 @@ const ContactForm = () => {
             </h2>
             <div
               id="collapseRepresentativeContacted"
-              className="accordion-collapse collapse show "
+              className="accordion-collapse collapse "
               aria-labelledby="headingRepresentativeContacted"
               data-bs-parent="#admissionFormAccordion"
             >
               <div className="accordion-body py-2">
                 <div className="mb-3">
                   <label>Representative contacted regarding admission:</label>
-                  <select
-                    name="representativeContacted"
-                    className="form-select"
-                    value={formData.representativeContacted}
-                    onChange={handleFormChange}
-                  >
-                    <option value="N/A">
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="representativeContacted"
+                      id="noRepresentative"
+                      value="N/A"
+                      checked={formData.representativeContacted.includes("N/A")}
+                      onChange={handleFormChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="noRepresentative"
+                    >
                       N/A (no legal/patient-selected representative)
-                    </option>
-                    <option value="legalRepresentative">
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="representativeContacted"
+                      id="legalRepresentative"
+                      value="legalRepresentative"
+                      checked={formData.representativeContacted.includes(
+                        "legalRepresentative"
+                      )}
+                      onChange={handleFormChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="legalRepresentative"
+                    >
                       Legal Representative contacted regarding admission
-                    </option>
-                    <option value="patientDecline">
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="representativeContacted"
+                      id="patientDecline"
+                      value="patientDecline"
+                      checked={formData.representativeContacted.includes(
+                        "patientDecline"
+                      )}
+                      onChange={handleFormChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="patientDecline"
+                    >
                       Patient request to decline notice of rights to
                       Patient-Selected Representative
-                    </option>
-                    <option value="patientSelected">
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="representativeContacted"
+                      id="patientSelected"
+                      value="patientSelected"
+                      checked={formData.representativeContacted.includes(
+                        "patientSelected"
+                      )}
+                      onChange={handleFormChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="patientSelected"
+                    >
                       Patient-Selected Representative contacted regarding
                       admission
-                    </option>
-                    <option value="legalNotInAgreement">
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="representativeContacted"
+                      id="legalNotInAgreement"
+                      value="legalNotInAgreement"
+                      checked={formData.representativeContacted.includes(
+                        "legalNotInAgreement"
+                      )}
+                      onChange={handleFormChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="legalNotInAgreement"
+                    >
                       Legal Representative not in agreement with admission
-                    </option>
-                    <option value="physicianNotified">
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="representativeContacted"
+                      id="physicianNotified"
+                      value="physicianNotified"
+                      checked={formData.representativeContacted.includes(
+                        "physicianNotified"
+                      )}
+                      onChange={handleFormChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="physicianNotified"
+                    >
                       Physician notified
-                    </option>
-                    <option value="patientNotified">Patient notified</option>
-                  </select>
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="representativeContacted"
+                      id="patientNotified"
+                      value="patientNotified"
+                      checked={formData.representativeContacted.includes(
+                        "patientNotified"
+                      )}
+                      onChange={handleFormChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="patientNotified"
+                    >
+                      Patient notified
+                    </label>
+                  </div>
                 </div>
 
                 {/* Conditional rendering based on the selected representative */}
-                {formData.representativeContacted === "legalRepresentative" && (
+                {formData.representativeContacted.includes(
+                  "legalRepresentative"
+                ) && (
                   <>
                     <div className="form-check">
                       <input
@@ -1175,7 +1278,9 @@ const ContactForm = () => {
                   </>
                 )}
 
-                {formData.representativeContacted === "patientSelected" && (
+                {formData.representativeContacted.includes(
+                  "patientSelected"
+                ) && (
                   <>
                     <div className="form-check">
                       <input
@@ -1261,7 +1366,7 @@ const ContactForm = () => {
             </h2>
             <div
               id="collapseCAHPS"
-              className="accordion-collapse collapse show "
+              className="accordion-collapse collapse "
               aria-labelledby="headingCAHPS"
               data-bs-parent="#admissionFormAccordion"
             >
@@ -1288,36 +1393,104 @@ const ContactForm = () => {
                 {formData.doNotContactCAHPS && (
                   <>
                     <div className="mb-3">
-                      <label
-                        htmlFor="reasonForNoContact"
-                        className="form-label"
-                      >
-                        Reason for no contact for CAHPS
-                      </label>
-                      <select
-                        className="form-select"
-                        id="reasonForNoContact"
-                        value={formData.reasonForNoContact}
-                        onChange={(e) =>
-                          handleFieldChange(
-                            "reasonForNoContact",
-                            e.target.value
-                          )
-                        }
-                      >
-                        <option value="">Select reason</option>
-                        <option value="endangersHealth">
-                          Endangers health or well being of a home health
-                          provider
-                        </option>
-                        <option value="stateRegulatedPatient">
-                          State regulated patient
-                        </option>
-                        <option value="patientRequest">
-                          Patient request not to be contacted for surveys
-                        </option>
-                        <option value="other">Other</option>
-                      </select>
+                    
+                      <div className="mb-3">
+                        <label className="form-label">
+                          Reason for no contact for CAHPS
+                        </label>
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            id="reasonEndangersHealth"
+                            value="endangersHealth"
+                            checked={
+                              formData.reasonForNoContact === "endangersHealth"
+                            }
+                            onChange={(e) =>
+                              handleFieldChange(
+                                "reasonForNoContact",
+                                e.target.value
+                              )
+                            }
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="reasonEndangersHealth"
+                          >
+                            Endangers health or well being of a home health
+                            provider
+                          </label>
+                        </div>
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            id="reasonStateRegulatedPatient"
+                            value="stateRegulatedPatient"
+                            checked={
+                              formData.reasonForNoContact ===
+                              "stateRegulatedPatient"
+                            }
+                            onChange={(e) =>
+                              handleFieldChange(
+                                "reasonForNoContact",
+                                e.target.value
+                              )
+                            }
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="reasonStateRegulatedPatient"
+                          >
+                            State regulated patient
+                          </label>
+                        </div>
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            id="reasonPatientRequest"
+                            value="patientRequest"
+                            checked={
+                              formData.reasonForNoContact === "patientRequest"
+                            }
+                            onChange={(e) =>
+                              handleFieldChange(
+                                "reasonForNoContact",
+                                e.target.value
+                              )
+                            }
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="reasonPatientRequest"
+                          >
+                            Patient request not to be contacted for surveys
+                          </label>
+                        </div>
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            id="reasonOther"
+                            value="other"
+                            checked={formData.reasonForNoContact === "other"}
+                            onChange={(e) =>
+                              handleFieldChange(
+                                "reasonForNoContact",
+                                e.target.value
+                              )
+                            }
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="reasonOther"
+                          >
+                            Other
+                          </label>
+                        </div>
+                      </div>
                     </div>
 
                     {formData.reasonForNoContact === "other" && (
@@ -1338,52 +1511,104 @@ const ContactForm = () => {
                     )}
 
                     <div className="mb-3">
+                      <label className="form-label">
+                        Alternate CAHPS Contact (Applicable only when the
+                        patient is physically or mentally incapable of
+                        completing the survey.)
+                      </label>
                       <div className="form-check">
                         <input
                           className="form-check-input"
-                          type="checkbox"
-                          id="alternateCAHPSContact"
+                          type="radio"
+                          id="alternateCAHPSContactYes"
                           checked={formData.alternateCAHPSContact}
                           onChange={() =>
-                            handleCheckboxChange("alternateCAHPSContact")
+                            handleFieldChange("alternateCAHPSContact", true)
                           }
                         />
                         <label
                           className="form-check-label"
-                          htmlFor="alternateCAHPSContact"
+                          htmlFor="alternateCAHPSContactYes"
                         >
-                          Alternate CAHPS Contact (Applicable only when the
-                          patient is physically or mentally incapable of
-                          completing survey.)
+                          Yes
+                        </label>
+                      </div>
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          id="alternateCAHPSContactNo"
+                          checked={!formData.alternateCAHPSContact}
+                          onChange={() =>
+                            handleFieldChange("alternateCAHPSContact", false)
+                          }
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="alternateCAHPSContactNo"
+                        >
+                          No
                         </label>
                       </div>
                     </div>
 
                     {formData.alternateCAHPSContact && (
                       <>
-                        <div className="mb-3 d-flex gap-4">
-                          <label>Same as Primary Emergency Contact</label>
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="sameAsPrimaryEmergencyContact"
-                            checked={
-                              formData.alternateCAHPSContactDetails
-                                .sameAsPrimaryEmergencyContact
-                            }
-                            onChange={(e) =>
-                              handleAlternateCAHPSContactChange(
-                                "sameAsPrimaryEmergencyContact",
-                                e.target.checked
-                              )
-                            }
-                          />
+                        <div className="mb-3">
+                          <label className="form-label">
+                            Same as Primary Emergency Contact
+                          </label>
+                          <div className="form-check">
+                            <input
+                              type="radio"
+                              className="form-check-input"
+                              id="sameAsPrimaryEmergencyContactYes"
+                              checked={
+                                formData.alternateCAHPSContactDetails
+                                  .sameAsPrimaryEmergencyContact
+                              }
+                              onChange={() =>
+                                handleAlternateCAHPSContactChange(
+                                  "sameAsPrimaryEmergencyContact",
+                                  true
+                                )
+                              }
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="sameAsPrimaryEmergencyContactYes"
+                            >
+                              Yes
+                            </label>
+                          </div>
+                          <div className="form-check">
+                            <input
+                              type="radio"
+                              className="form-check-input"
+                              id="sameAsPrimaryEmergencyContactNo"
+                              checked={
+                                !formData.alternateCAHPSContactDetails
+                                  .sameAsPrimaryEmergencyContact
+                              }
+                              onChange={() =>
+                                handleAlternateCAHPSContactChange(
+                                  "sameAsPrimaryEmergencyContact",
+                                  false
+                                )
+                              }
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="sameAsPrimaryEmergencyContactNo"
+                            >
+                              No
+                            </label>
+                          </div>
                         </div>
 
                         {!formData.alternateCAHPSContactDetails
                           .sameAsPrimaryEmergencyContact && (
                           <>
-                            {/* Add fields for alternate CAHPS contact */}
                             <div className="mb-3">
                               <label
                                 htmlFor="altFirstName"
@@ -1436,7 +1661,6 @@ const ContactForm = () => {
                               >
                                 Relationship
                               </label>
-
                               <select
                                 className="form-select"
                                 id="altRelationship"
@@ -1611,13 +1835,25 @@ const ContactForm = () => {
                               />
                             </div>
                             <div className="mb-3">
-                              <label htmlFor="altCounty" className="form-label">
-                                County
+                              <label
+                                htmlFor="altCountry"
+                                className="form-label"
+                              >
+                                Country
                               </label>
-                              <CountySelect
-                                selectedState={CAHPSState}
-                                selectedCounty={CAHPSCounty}
-                                setSelectedCounty={setCAHPSCounty}
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="altCountry"
+                                value={
+                                  formData.alternateCAHPSContactDetails.country
+                                }
+                                onChange={(e) =>
+                                  handleAlternateCAHPSContactChange(
+                                    "country",
+                                    e.target.value
+                                  )
+                                }
                               />
                             </div>
                           </>

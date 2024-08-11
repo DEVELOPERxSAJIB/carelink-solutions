@@ -58,7 +58,7 @@ const CreateReferralInformation = () => {
     formData.city = city;
     formData.state = state;
     const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId?._id ||allSteps.patientId) {
+    if (patientId?._id || allSteps.patientId) {
       formData.patientId = allSteps.patientId || patientId?._id;
       createReferral(formData);
     } else {
@@ -71,7 +71,7 @@ const CreateReferralInformation = () => {
     formData.city = city;
     formData.state = state;
     const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId?._id ||allSteps.patientId) {
+    if (patientId?._id || allSteps.patientId) {
       formData.patientId = allSteps.patientId || patientId?._id;
       localStorage.setItem("Referral", JSON.stringify(formData));
       createReferral(formData);
@@ -84,7 +84,7 @@ const CreateReferralInformation = () => {
     formData.city = city;
     formData.state = state;
     const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId?._id ||allSteps.patientId) {
+    if (patientId?._id || allSteps.patientId) {
       formData.patientId = allSteps.patientId || patientId?._id;
       localStorage.setItem("Referral", JSON.stringify(formData));
       createReferral(formData);
@@ -131,7 +131,11 @@ const CreateReferralInformation = () => {
 
   return (
     <div ref={componentRef} className="card w-100">
-      <PageHeader title="Referral Information" className="card-header fs-3 " back={false} />
+      <PageHeader
+        title="Referral Information"
+        className="card-header fs-3 "
+        back={false}
+      />
       <div className="card-header"></div>
       <div className="card-body">
         <form onSubmit={handleSubmit}>

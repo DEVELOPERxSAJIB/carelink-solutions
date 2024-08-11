@@ -20,8 +20,8 @@ const CreateAdvanceDirectives = () => {
   const [template, setTemplate] = useState("");
 
   const initialFormData = {
-    admission: localData?.admission ? localData?.admission : "No",
-    comment: localData?.comment ? localData?.comment : "",
+    admission:  "No",
+    comment: "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -70,6 +70,7 @@ const CreateAdvanceDirectives = () => {
     const patientId =JSON.parse(localStorage.getItem("patient"))
     if (patientId?._id) {
       formData.patientId = allSteps.patientId ||patientId?._id;
+      createDirective(formData);
     }
     localStorage.setItem("Directive", JSON.stringify(formData));
   };
@@ -96,6 +97,11 @@ const CreateAdvanceDirectives = () => {
     error?.data?.message,
     data?.message,
   ]);
+  useEffect(()=>{
+if(localData){
+  setFormData({...localData})
+}
+  },[])
   if (isLoading) return <AuthLoader />;
 
   return (
