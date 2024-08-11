@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import Template from "./../../components/FormElement/Template";
-import { useCreateClinicalDiagnosisMutation } from "../../Redux/api/ClinicalDiagnosis";
+import {
+  useCreateClinicalDiagnosisMutation,
+  useCreateTestClinicalDiagnosisMutation,
+} from "../../Redux/api/ClinicalDiagnosis";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
-import { ReactToPrint } from "react-to-print";
+
 import {
   getAllSectionStepState,
   updateSteps,
@@ -14,6 +17,8 @@ const CreateClinicalAndDiagnoses = () => {
   const componentRef = useRef();
   const [createClinicalDiagnosis, { data, error, isLoading, isSuccess }] =
     useCreateClinicalDiagnosisMutation();
+  const [createTestClinicalDiagnosis, { data: testData, error: testError }] =
+  useCreateTestClinicalDiagnosisMutation();
   const localStorageClinicalDiagnosis = JSON.parse(
     localStorage.getItem("ClinicalDiagnosis")
   );
@@ -31,11 +36,8 @@ const CreateClinicalAndDiagnoses = () => {
     },
     dmeNeeded: [],
     primaryDiagnosis: "",
-    primaryDiagnosisCode:
-     "",
-    otherDiagnoses: [
-      { diagnosis: "", code: "" },
-    ],
+    primaryDiagnosisCode: "",
+    otherDiagnoses: [{ diagnosis: "", code: "" }],
     clinicalComments: "",
   };
 
@@ -109,36 +111,24 @@ const CreateClinicalAndDiagnoses = () => {
     e.preventDefault();
     const patientId = JSON.parse(localStorage.getItem("patient"));
     if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
+      formData.patientId = allSteps.patientId || patientId?._id;
       createClinicalDiagnosis(formData);
       localStorage.removeItem("ClinicalDiagnosis");
-    }else{
-      showToast("error","Patient id required")
+    } else {
+      showToast("error", "Patient id required");
     }
   };
 
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
-      createClinicalDiagnosis(formData);
-      localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
-    }else{
-      showToast("error","Patient id required")
-    }
+    localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
+    showToast("success", "Saved");
   };
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
-      createClinicalDiagnosis(formData);
-      localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
-    }else{
-      showToast("error","Patient id required")
-    }
+    localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
+    createTestClinicalDiagnosis(formData);
   };
 
   const allSteps = useSelector(getAllSectionStepState);
@@ -157,24 +147,34 @@ const CreateClinicalAndDiagnoses = () => {
     if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
     }
-  }, [isSuccess]);
+    if (testData) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      showToast("success", "Saved");
+    }
+    if (testError) {
+      showToast("error", testError?.data?.message);
+    }
+  }, [isSuccess, testError, testData]);
   useEffect(() => {
     showToast("error", error?.data?.message);
     showToast("success", data?.message);
   }, [error?.data?.message, data?.message]);
   useEffect(() => {
-    if(localStorageClinicalDiagnosis){
-      setFormData({...localStorageClinicalDiagnosis})
+    if (localStorageClinicalDiagnosis) {
+      setFormData({ ...localStorageClinicalDiagnosis });
     }
   }, []);
-
 
   if (isLoading) return <AuthLoader />;
 
   return (
     <form ref={componentRef} onSubmit={handleAdmit} className="card w-100">
       <div className="card-body w-100">
-        <PageHeader title="Clinical/Diagnosis" className="card-header fs-3" back={false}/>
+        <PageHeader
+          title="Clinical/Diagnosis"
+          className="card-header fs-3"
+          back={false}
+        />
 
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <div className="accordion-item">
@@ -526,7 +526,17 @@ const CreateClinicalAndDiagnoses = () => {
             </div>
           </div>
         </div>
-        <div className="d-flex hide-on-print justify-content-end gap-3 mt-3">
+        <div className="d-flex justify-content-end mt-3 hide-on-print gap-3">
+          <button type="submit" className="btn btn-success">
+            Admin
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleSaveAndContinue}
+          >
+            Save & Continue
+          </button>
           <button
             type="button"
             className="btn btn-secondary"
@@ -534,21 +544,6 @@ const CreateClinicalAndDiagnoses = () => {
           >
             Save & Exit
           </button>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onSubmit={handleSaveAndContinue}
-          >
-            Save & Continue
-          </button>
-          <button type="submit" className="btn btn-success">
-            save
-          </button>
-          <ReactToPrint
-            trigger={() => <span className="btn btn-primary">Print</span>}
-            content={() => componentRef.current}
-            documentTitle="Patient"
-          />
         </div>
       </div>
     </form>

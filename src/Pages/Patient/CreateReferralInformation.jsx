@@ -70,52 +70,22 @@ const CreateReferralInformation = () => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId?._id || allSteps.patientId) {
-      formData.patientId = allSteps.patientId || patientId?._id;
-      localStorage.setItem("Referral", JSON.stringify(formData));
-      createReferral(formData);
-    } else {
-      showToast("error", "Patient id required");
-    }
+    localStorage.setItem("Referral", JSON.stringify(formData));
+    dispatch(updateSteps({ ...allSteps, steps: 0 }));
+    showToast("success","Saved")
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId?._id || allSteps.patientId) {
-      formData.patientId = allSteps.patientId || patientId?._id;
       localStorage.setItem("Referral", JSON.stringify(formData));
-      createReferral(formData);
-    } else {
-      showToast("error", "Patient id required");
-    }
+      showToast("success","Saved")
   };
 
   useEffect(() => {
     if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: 0 }));
       localStorage.removeItem("Referral");
-      localStorage.removeItem("patient");
-      localStorage.removeItem("SectionA");
-      localStorage.removeItem("SectionB");
-      localStorage.removeItem("SectionC");
-      localStorage.removeItem("SectionD");
-      localStorage.removeItem("SectionE");
-      localStorage.removeItem("SectionF");
-      localStorage.removeItem("SectionG");
-      localStorage.removeItem("SectionGG");
-      localStorage.removeItem("SectionH");
-      localStorage.removeItem("SectionI");
-      localStorage.removeItem("SectionJ");
-      localStorage.removeItem("SectionK");
-      localStorage.removeItem("SectionL");
-      localStorage.removeItem("SectionM");
-      localStorage.removeItem("SectionN");
-      localStorage.removeItem("SectionO");
-      localStorage.removeItem("SectionP");
-      localStorage.removeItem("SectionQ");
     }
   }, [isSuccess]);
   useEffect(() => {
@@ -464,30 +434,26 @@ const CreateReferralInformation = () => {
 
           {/* Submit Button */}
           <div className="row hide-on-print">
-            <div className="col-md-12">
+            <div className="d-flex justify-content-end mt-3 hide-on-print gap-3"  >
               {" "}
               <button type="submit" className="btn btn-success me-2">
-                save
+                Admit
               </button>
               <button
-                onSubmit={handleSaveAndContinue}
-                type="submit"
-                className="btn btn-warning me-2"
+                onClick={handleSaveAndContinue}
+                type="button"
+                className="btn btn-primary me-2"
               >
                 save and continue
               </button>
               <button
                 onClick={handleSaveAndExit}
-                type="submit"
-                className="btn btn-danger me-2"
+                type="button"
+                className="btn btn-secondary me-2"
               >
                 save and exit
               </button>
-              <ReactToPrint
-                trigger={() => <span className="btn btn-primary">Print</span>}
-                content={() => componentRef.current}
-                documentTitle="Patient"
-              />
+              
             </div>
           </div>
         </form>

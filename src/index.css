@@ -491,3 +491,10 @@
 .layout-wrapper:not(.layout-horizontal) .layout-navbar .dropdown-menu[data-bs-popper] {
 	top: 100%;
 }
+/* Add this to your print-specific CSS file or inside your component's styles */
+.print-container{
+page-break-after:always
+}
+.header-print{
+display:table-header-group
+}

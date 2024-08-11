@@ -68,27 +68,16 @@ const CreatePhysicians = () => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
       localStorage.setItem("Physician", JSON.stringify(formData));
-      createPhysician(formData);
-    }else{
-      showToast("error","Patient id required")
-    }
+      dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
+      showToast("success","Saved")
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
       localStorage.setItem("Physician", JSON.stringify(formData));
-      createPhysician(formData);
-    }else{
-      showToast("error","Patient id required")
-    }
+      showToast("success","Saved")
   };
   useEffect(() => {
     if (isSuccess) {
@@ -112,6 +101,7 @@ const CreatePhysicians = () => {
         fax: "",
         email: "",
       });
+      localStorage.setItem("Physician")
     }
   }, [isSuccess]);
   useEffect(() => {
@@ -410,33 +400,27 @@ const CreatePhysicians = () => {
             </div>
           </div>
 
-          <div className="col-md-6 mt-5 d-flex hide-on-print gap-2">
-            <button type="submit" className="btn btn-primary mr-2">
-              Save
+          <div className="d-flex justify-content-end mt-3 hide-on-print gap-3"  >
+            <button type="submit" className="btn btn-success mr-2">
+              Admit
             </button>
             <button
               onClick={handleSaveAndContinue}
-              type="submit"
+              type="button"
               className="btn btn-primary mr-2"
             >
               Save and continue
             </button>
             <button
               onClick={handleSaveAndExit}
-              type="submit"
-              className="btn btn-primary mr-2"
+              type="button"
+              className="btn btn-secondary mr-2"
             >
               Save and exit
             </button>
-            <button type="button" className="btn btn-secondary">
-              Exit
-            </button>
 
-            <ReactToPrint
-              trigger={() => <span className="btn btn-primary">Print</span>}
-              content={() => componentRef.current}
-              documentTitle="Patient"
-            />
+
+
           </div>
         </form>
       </div>

@@ -26,6 +26,15 @@ export const ClinicalDiagnosisApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "ClinicalDiagnosis" }],
     }),
+    // Mutation endpoint to create a new clinical diagnosis
+    createTestClinicalDiagnosis: builder.mutation({
+      query: (diagnosisData) => ({
+        url: "clinical/test",
+        method: "POST",
+        body: diagnosisData,
+      }),
+      invalidatesTags: [{ type: "ClinicalDiagnosis" }],
+    }),
 
     // Query endpoint to get all clinical diagnoses
     getAllClinicalDiagnoses: builder.query({
@@ -65,6 +74,7 @@ export const ClinicalDiagnosisApi = rootApi.injectEndpoints({
 export const {
   useGetClinicalDiagnosisByIdQuery,
   useCreateClinicalDiagnosisMutation,
+  useCreateTestClinicalDiagnosisMutation,
   useGetAllClinicalDiagnosesQuery,
   useUpdateClinicalDiagnosisMutation,
   useDeleteClinicalDiagnosisMutation,

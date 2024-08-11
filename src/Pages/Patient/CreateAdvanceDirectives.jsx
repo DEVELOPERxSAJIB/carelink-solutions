@@ -57,22 +57,15 @@ const CreateAdvanceDirectives = () => {
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
-      createDirective(formData);
-    }
     localStorage.setItem("Directive", JSON.stringify(formData));
+    dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
+    showToast("success","Saved")
   };
 
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
-      createDirective(formData);
-    }
     localStorage.setItem("Directive", JSON.stringify(formData));
+    showToast("success","Saved")
   };
 
   useEffect(() => {
@@ -165,16 +158,9 @@ if(localData){
 
         {/* Action Buttons */}
         <div className="row mt-4 hide-on-print">
-          <div className="col-md-12 d-flex gap-3">
-            <button type="submit" className="btn btn-info">
-              Save
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={handleSaveAndExit}
-            >
-              Save & Exit
+          <div className="d-flex justify-content-end mt-3 hide-on-print gap-3"  >
+            <button type="submit" className="btn btn-success">
+              Admin
             </button>
             <button
               type="button"
@@ -183,11 +169,14 @@ if(localData){
             >
               Save & Continue
             </button>
-            <ReactToPrint
-              trigger={() => <span className="btn btn-primary">Print</span>}
-              content={() => componentRef.current}
-              documentTitle="Patient"
-            />
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleSaveAndExit}
+            >
+              Save & Exit
+            </button>
+            
           </div>
         </div>
       </div>

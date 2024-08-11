@@ -12,7 +12,7 @@ import {
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
-import { showToast } from './../../utils/Toastify';
+import { showToast } from "./../../utils/Toastify";
 const CreateEmergencyPreparedness = () => {
   const allSteps = useSelector(getAllSectionStepState);
   const dispatch = useDispatch();
@@ -116,14 +116,9 @@ const CreateEmergencyPreparedness = () => {
     formData.city = city;
     formData.state = state;
     formData.county = county;
-    const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId || patientId?._id;
-      createEmergency(formData);
-      localStorage.setItem("Emergency", JSON.stringify(formData));
-    } else {
-      showToast("error", "Patient id required");
-    }
+    localStorage.setItem("Emergency", JSON.stringify(formData));
+    dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+    showToast("success","Saved")
   };
 
   const handleSaveAndExit = (e) => {
@@ -131,13 +126,8 @@ const CreateEmergencyPreparedness = () => {
     formData.city = city;
     formData.state = state;
     formData.county = county;
-    const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId || patientId?._id;
-      localStorage.setItem("Emergency", JSON.stringify(formData));
-    } else {
-      showToast("error", "Patient id required");
-    }
+    localStorage.setItem("Emergency", JSON.stringify(formData));
+    showToast("success","Saved")
   };
   useEffect(() => {
     setCity(localStorageData?.city);
@@ -405,17 +395,7 @@ const CreateEmergencyPreparedness = () => {
                       {/* Populate options if needed */}
                     </select>
                   </div>
-                  <div className="col-md-12 my-2">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      name="evacuationAddress"
-                      id="evacuationAddress"
-                      onChange={handleInputChange}
-                      checked={formData.evacuationAddress}
-                    />{" "}
-                    Same as Emergency Contact
-                  </div>
+                  
                 </div>
                 {/* Address Fields */}
                 {!formData.evacuationAddress && (
@@ -565,9 +545,16 @@ const CreateEmergencyPreparedness = () => {
           </div>
           {/* Action Buttons */}
           <div className="row mt-4 hide-on-print">
-            <div className="col-md-12 d-flex gap-3">
-              <button type="submit" className="btn btn-info">
-                Save
+            <div className="d-flex justify-content-end mt-3 hide-on-print gap-3"  >
+              <button type="submit" className="btn btn-success">
+                Admit
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleSaveAndContinue}
+              >
+                Save & Continue
               </button>
               <button
                 type="button"
@@ -576,18 +563,6 @@ const CreateEmergencyPreparedness = () => {
               >
                 Save & Exit
               </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onSubmit={handleSaveAndContinue}
-              >
-                Save & Continue
-              </button>
-              <ReactToPrint
-                trigger={() => <span className="btn btn-primary">Print</span>}
-                content={() => componentRef.current}
-                documentTitle="Patient"
-              />
             </div>
           </div>
         </div>
