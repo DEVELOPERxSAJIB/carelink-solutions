@@ -96,6 +96,7 @@ import Admin from '../Pages/BusinessCommunity/Admin';
 import SinglePatient from './../Pages/Patient/SinglePatient';
 import MyProfile from '../Pages/Profiles/MyProfile';
 import Settings from '../Pages/Profiles/Settings';
+import PatientProfile from '../Pages/Profiles/PatientProfile';
 
 const privateRouter = [
   {
@@ -481,6 +482,10 @@ const privateRouter = [
           {
             path: "/profile-settings",
             element: <Settings />,
+          },
+          {
+            path: "/patient/:id",
+            element: <PatientProfile />,
           },
           {
             path: "/*",
