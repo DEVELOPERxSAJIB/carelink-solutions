@@ -19,6 +19,7 @@ import DatePicker from "react-datepicker";
 // Function to get the start and end dates of the current week
 import { useMeQuery } from "../Redux/api/UserApi";
 import { showToast } from './../utils/Toastify';
+import GeoLocation from './../components/geolocation/Geolocation';
 const MenuItemTimeSheet = () => {
   const { data: lgData } = useMeQuery();
   const [editId, setEditId] = useState("");
@@ -156,6 +157,7 @@ const MenuItemTimeSheet = () => {
   if (isLoading || isDeleteLoading) return <AuthLoader />;
   return (
     <div className="card">
+      <GeoLocation/>
       <TableHeader title="Timesheet" className="py-3 pt-5 fs-3 card-header" />
       <div className="card-body">
         
