@@ -18,6 +18,14 @@ export const ContactApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Contact" }],
     }),
+    createTestContact: builder.mutation({
+      query: (contactData) => ({
+        url: "contacts/test",
+        method: "POST",
+        body: contactData,
+      }),
+      invalidatesTags: [{ type: "Contact" }],
+    }),
     getAllContacts: builder.query({
       query: () => ({
         url: "contacts",
@@ -52,6 +60,7 @@ export const {
   useGetContactByIdQuery,
   useGetContactByPatientIdQuery,
   useCreateContactMutation,
+  useCreateTestContactMutation,
   useGetAllContactsQuery,
   useUpdateContactMutation,
   useDeleteContactMutation,

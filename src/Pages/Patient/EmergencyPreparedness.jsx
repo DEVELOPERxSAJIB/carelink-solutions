@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import DataTable from "./../../components/Tables/DynamicTable";
 import ExportButton from "./../../components/Buttons/ExportButton";
-import CitySelect from "../../components/FormElement/CitySelect"
-import CountySelect  from "../../components/FormElement/CountySelect"
+import CitySelect from "../../components/FormElement/CitySelect";
+import CountySelect from "../../components/FormElement/CountySelect";
 import TableHeader from "./../../components/Tables/TableHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import {
@@ -15,16 +15,20 @@ import swal from "sweetalert";
 import EditModal from "./../../components/Models/EditModal";
 import Template from "./../../components/FormElement/Template";
 import StateSelect from "./../../components/FormElement/StateSelect";
-import Alert from './../../components/Alert/Alert';
+import Alert from "./../../components/Alert/Alert";
 
 import { useMeQuery } from "../../Redux/api/UserApi";
 const EmergencyPreparedness = () => {
-  const { data: logData } = useMeQuery();              
-  const { data, isLoading,refetch } = useGetAllEmergenciesQuery(); // Adjust hook name as per your actual hook
-  const [updateEmergency, { data: updateData, isSuccess: isUpdateSuccess,error:updateError }] =
-    useUpdateEmergencyMutation(); // Adjust hook name as per your actual hook
-  const [deleteEmergency, { data: deleteData, isSuccess: isDeleteSuccess,error:deleteError }] =
-    useDeleteEmergencyMutation(); // Adjust hook name as per your actual hook
+  const { data: logData } = useMeQuery();
+  const { data, isLoading, refetch } = useGetAllEmergenciesQuery(); // Adjust hook name as per your actual hook
+  const [
+    updateEmergency,
+    { data: updateData, isSuccess: isUpdateSuccess, error: updateError },
+  ] = useUpdateEmergencyMutation(); // Adjust hook name as per your actual hook
+  const [
+    deleteEmergency,
+    { data: deleteData, isSuccess: isDeleteSuccess, error: deleteError },
+  ] = useDeleteEmergencyMutation(); // Adjust hook name as per your actual hook
   // const flattenedData = flattenData(data?.payload?.emergencies ?? []); // Adjust data structure as per your actual API response
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -32,8 +36,8 @@ const EmergencyPreparedness = () => {
 
   const columns = [
     {
-      field: 'emergencyTriage',
-      header: 'Emergency Triage',
+      field: "emergencyTriage",
+      header: "Emergency Triage",
     },
     // {
     //   field: 'additionalInfo',
@@ -41,60 +45,58 @@ const EmergencyPreparedness = () => {
     //   render: additionalInfo => Array.isArray(additionalInfo) ? additionalInfo.join(', ') : additionalInfo,
     // },
     {
-      field: 'additionalComments',
-      header: 'Additional Comments',
+      field: "additionalComments",
+      header: "Additional Comments",
     },
     {
-      field: 'evacuationZone',
-      header: 'Evacuation Zone',
+      field: "evacuationZone",
+      header: "Evacuation Zone",
     },
     {
-      field: 'sameAsEvacuationContact',
-      header: 'Same as Evacuation Contact',
+      field: "sameAsEvacuationContact",
+      header: "Same as Evacuation Contact",
     },
     {
-      field: 'addressLine1',
-      header: 'Evacuation Address 1',
+      field: "addressLine1",
+      header: "Evacuation Address 1",
     },
     {
-      field: 'addressLine2',
-      header: 'Evacuation Address 2',
+      field: "addressLine2",
+      header: "Evacuation Address 2",
     },
     {
-      field: 'city',
-      header: 'City',
+      field: "city",
+      header: "City",
     },
     {
-      field: 'state',
-      header: 'State',
+      field: "state",
+      header: "State",
     },
     {
-      field: 'zip',
-      header: 'ZIP',
+      field: "zip",
+      header: "ZIP",
     },
     {
-      field: 'county',
-      header: 'County',
+      field: "county",
+      header: "County",
     },
     {
-      field: 'mobilePhone',
-      header: 'Mobile Phone',
+      field: "mobilePhone",
+      header: "Mobile Phone",
     },
     {
-      field: 'altMobilePhone',
-      header: 'Alternate Mobile Phone',
+      field: "altMobilePhone",
+      header: "Alternate Mobile Phone",
     },
     {
-      field: 'visitLocation',
-      header: 'Visit Location',
+      field: "visitLocation",
+      header: "Visit Location",
     },
     {
-      field: 'comments',
-      header: 'Comments',
+      field: "comments",
+      header: "Comments",
     },
-  
   ];
-  
 
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -127,9 +129,9 @@ const EmergencyPreparedness = () => {
     setShow(true);
     setEditId(row._id);
     setFormData({ ...row });
-    setCity(row.city)
-    setState(row.state)
-    setCounty(row.county)
+    setCity(row.city);
+    setState(row.state);
+    setCounty(row.county);
   };
   //console.log(formData)
   const handleDelete = (rowData) => {
@@ -222,7 +224,7 @@ const EmergencyPreparedness = () => {
         className="py-3 pt-5 fs-3 card-header"
       />
       <div className="card-body">
-        <Alert message={message} type="success"/>
+        <Alert message={message} type="success" />
         <div className="gap-3 d-flex flex-wrap">
           <ExportButton
             data={data?.payload?.emergencies ?? []}
@@ -230,47 +232,52 @@ const EmergencyPreparedness = () => {
             columns={columns}
             fileName="Emergency prepared"
           />
-            {logData?.payload?.user?.curd?.includes("create") &&
-            
-          <button
-            className="btn btn-success waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-            onClick={() => navigate("/create-emergency-preparedness")}
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-plus me-1" />
-              <span className="d-none d-sm-inline-block">
-                Add New emergency prepared
+          {logData?.payload?.user?.curd?.includes("create") && (
+            <button
+              className="btn btn-success waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+              onClick={() => navigate("/create-emergency-preparedness")}
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-plus me-1" />
+                <span className="d-none d-sm-inline-block">
+                  Add New emergency prepared
+                </span>
               </span>
-            </span>
-          </button>
-            }
-              {logData?.payload?.user?.curd?.includes("delete") &&
-          <button
-            className="btn btn-secondary create-new btn-danger waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-trash me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Delete selected</span>
-            </span>
-          </button>
-              }
+            </button>
+          )}
+          {logData?.payload?.user?.curd?.includes("delete") && (
+            <button
+              className="btn btn-secondary create-new btn-danger waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-trash me-sm-1" />{" "}
+                <span className="d-none d-sm-inline-block">
+                  Delete selected
+                </span>
+              </span>
+            </button>
+          )}
         </div>
         {show && (
-          <EditModal style={{
-            minWidth: "70%",
-            maxWidth: "70%",
-            maxHeight: "80vh",
-            overflowY: "scroll",
-          }} onClose={setShow} title="Edit emergency prepared">
+          <EditModal
+            style={{
+              minWidth: "70%",
+              maxWidth: "70%",
+              maxHeight: "80vh",
+              overflowY: "scroll",
+            }}
+            onClose={setShow}
+            title="Edit emergency prepared"
+          >
             <form onSubmit={handleSubmit} className="card">
               <div className="card-body">
-              <Alert message={errors} type="danger"/>
+                <Alert message={errors} type="danger" />
                 <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
                   {/* Emergency Triage Information */}
                   <div className="accordion-item">

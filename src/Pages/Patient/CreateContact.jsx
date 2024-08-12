@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import CitySelect from "../../components/FormElement/CitySelect";
 import StateSelect from "./../../components/FormElement/StateSelect";
-import { useCreateContactMutation } from "../../Redux/api/Contact";
+import {
+  useCreateContactMutation,
+  useCreateTestContactMutation,
+} from "../../Redux/api/Contact";
 import CountySelect from "./../../components/FormElement/CountySelect";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
@@ -14,6 +17,7 @@ import {
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
 import { showToast } from "./../../utils/Toastify";
+import AdmitButton from './../../components/Patient/AdmitButton';
 const ContactForm = () => {
   const allSteps = useSelector(getAllSectionStepState);
   const dispatch = useDispatch();
@@ -21,6 +25,8 @@ const ContactForm = () => {
   const componentRef = useRef();
   const [createContact, { data, isLoading, isSuccess, error }] =
     useCreateContactMutation();
+  const [createTestContact, { data: testData, error: testError }] =
+    useCreateTestContactMutation();
 
   const localContactData = JSON.parse(localStorage.getItem("Contact"));
   //console.log(localContactData)
@@ -284,17 +290,14 @@ const ContactForm = () => {
         comments,
         remainingCharacters,
       };
-      createContact(contactData);
-      localStorage.setItem("Contact", JSON.stringify(contactData));
-      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
-        showToast("success","Saved")
+      createTestContact(contactData);
     } catch (error) {
       console.error("Error creating contact:", error);
     }
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    
+
     try {
       const contactData = {
         ...formData,
@@ -320,8 +323,8 @@ const ContactForm = () => {
         comments,
         remainingCharacters,
       };
-        localStorage.setItem("Contact", JSON.stringify(contactData));
-        showToast("success","Saved")
+      
+      createTestContact(contactData);
     } catch (error) {
       console.error("Error creating contact:", error);
     }
@@ -357,14 +360,23 @@ const ContactForm = () => {
   useEffect(() => {
     if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
-      localStorage.removeItem("Contact")
+      localStorage.removeItem("Contact");
     }
-  }, [isSuccess]);
+    if (testData) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      showToast("success", "Saved, please continue");
+      localStorage.setItem("Contact", JSON.stringify(testData?.payload));
+
+    }
+    if (testError) {
+      showToast("success", testError?.data?.error);
+    }
+  }, [isSuccess, testData, testError]);
   useEffect(() => {
     showToast("error", error?.data?.message);
     showToast("success", data?.message);
   }, [error?.data?.message, data?.message]);
-  
+
   if (isLoading) return <AuthLoader />;
 
   return (
@@ -555,7 +567,7 @@ const ContactForm = () => {
                       </label>
                     </div>
                   </div>
-               
+
                   {!emergencyContacts.primary.sameAsPatientAddress && (
                     <React.Fragment>
                       <div className="col-md-6">
@@ -880,7 +892,7 @@ const ContactForm = () => {
                         </label>
                       </div>
                     </div>
-                    
+
                     {!contact.sameAsPatientAddress && (
                       <React.Fragment>
                         <div className="col-md-6">
@@ -1342,7 +1354,6 @@ const ContactForm = () => {
                 {formData.doNotContactCAHPS && (
                   <>
                     <div className="mb-3">
-                    
                       <div className="mb-3">
                         <label className="form-label">
                           Reason for no contact for CAHPS
@@ -1842,25 +1853,23 @@ const ContactForm = () => {
                 rows="5"
               ></textarea>
             </div>
-            <div className="d-flex justify-content-end mt-3 hide-on-print gap-3"  >
-              <button type="submit" className="btn btn-success my-5 text-">
-                Admit
-              </button>
+            <div className="d-flex justify-content-end mt-3 hide-on-print gap-3 w-100">
+            <AdmitButton/>
+
               <button
-              type="button"
+                type="button"
                 onClick={handleSaveAndContinue}
                 className="btn btn-primary my-5 text-"
               >
                 Save and continue
               </button>
               <button
-               type="button"
+                type="button"
                 onClick={handleSaveAndExit}
                 className="btn btn-secondary my-5 text-"
               >
                 Save and exit
               </button>
-             
             </div>
           </div>
         </div>

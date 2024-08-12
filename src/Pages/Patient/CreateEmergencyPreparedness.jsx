@@ -1,18 +1,22 @@
 import { useState, useEffect, useRef } from "react";
-import { useCreateEmergencyMutation } from "../../Redux/api/EmergencyApi";
+import {
+  useCreateEmergencyMutation,
+  useCreateTestEmergencyMutation,
+} from "../../Redux/api/EmergencyApi";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import Template from "./../../components/FormElement/Template";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import CountySelect from "./../../components/FormElement/CountySelect";
 import CitySelect from "../../components/FormElement/CitySelect";
-import { ReactToPrint } from "react-to-print";
+
 import {
   getAllSectionStepState,
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
 import { showToast } from "./../../utils/Toastify";
+import AdmitButton from "./../../components/Patient/AdmitButton";
 const CreateEmergencyPreparedness = () => {
   const allSteps = useSelector(getAllSectionStepState);
   const dispatch = useDispatch();
@@ -20,6 +24,8 @@ const CreateEmergencyPreparedness = () => {
   const componentRef = useRef();
   const [createEmergency, { data, isLoading, error, isSuccess }] =
     useCreateEmergencyMutation();
+  const [createTestEmergency, { data: testData, error: testError }] =
+    useCreateTestEmergencyMutation();
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [county, setCounty] = useState("");
@@ -116,9 +122,7 @@ const CreateEmergencyPreparedness = () => {
     formData.city = city;
     formData.state = state;
     formData.county = county;
-    localStorage.setItem("Emergency", JSON.stringify(formData));
-    dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
-    showToast("success","Saved")
+    createTestEmergency(formData);
   };
 
   const handleSaveAndExit = (e) => {
@@ -126,8 +130,7 @@ const CreateEmergencyPreparedness = () => {
     formData.city = city;
     formData.state = state;
     formData.county = county;
-    localStorage.setItem("Emergency", JSON.stringify(formData));
-    showToast("success","Saved")
+    createTestEmergency(formData);
   };
   useEffect(() => {
     setCity(localStorageData?.city);
@@ -157,7 +160,15 @@ const CreateEmergencyPreparedness = () => {
     if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
     }
-  }, [isSuccess]);
+    if (testData) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      showToast("success", "Saved, please continue");
+      localStorage.setItem("Emergency", JSON.stringify(testData?.payload));
+    }
+    if (testError) {
+      showToast("error", testError?.data?.message);
+    }
+  }, [isSuccess, testData, testError]);
   useEffect(() => {
     showToast("error", error?.data?.message);
     showToast("success", data?.message);
@@ -395,7 +406,6 @@ const CreateEmergencyPreparedness = () => {
                       {/* Populate options if needed */}
                     </select>
                   </div>
-                  
                 </div>
                 {/* Address Fields */}
                 {!formData.evacuationAddress && (
@@ -545,10 +555,9 @@ const CreateEmergencyPreparedness = () => {
           </div>
           {/* Action Buttons */}
           <div className="row mt-4 hide-on-print">
-            <div className="d-flex justify-content-end mt-3 hide-on-print gap-3"  >
-              <button type="submit" className="btn btn-success">
-                Admit
-              </button>
+            <div className="d-flex justify-content-end mt-3 hide-on-print gap-3">
+              <AdmitButton />
+
               <button
                 type="button"
                 className="btn btn-primary"

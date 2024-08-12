@@ -13,6 +13,7 @@ import {
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
 import { showToast } from "./../../utils/Toastify";
+import AdmitButton from './../../components/Patient/AdmitButton';
 const CreateClinicalAndDiagnoses = () => {
   const componentRef = useRef();
   const [createClinicalDiagnosis, { data, error, isLoading, isSuccess }] =
@@ -28,11 +29,11 @@ const CreateClinicalAndDiagnoses = () => {
     serviceRequired: [],
     height: {
       value: "",
-      unit: "",
+      unit: "lb",
     },
     weight: {
       value: "",
-      unit: "",
+      unit: "kg",
     },
     dmeNeeded: [],
     primaryDiagnosis: "",
@@ -67,13 +68,13 @@ const CreateClinicalAndDiagnoses = () => {
       }));
     } else if (name.startsWith("otherDiagnoses")) {
       const fieldName = name.split(".")[2];
-      const updatedDiagnoses = [...formData.otherDiagnoses];
+      const updatedDiagnoses = [...formData?.otherDiagnoses];
       updatedDiagnoses[index][fieldName] = value;
       setFormData({
         ...formData,
         otherDiagnoses: updatedDiagnoses,
       });
-    } else if (name.includes(".")) {
+    } else if (name?.includes(".")) {
       const [outerKey, innerKey] = name.split(".");
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -93,12 +94,12 @@ const CreateClinicalAndDiagnoses = () => {
   const handleAddDiagnosis = () => {
     setFormData({
       ...formData,
-      otherDiagnoses: [...formData.otherDiagnoses, { diagnosis: "", code: "" }],
+      otherDiagnoses: [...formData?.otherDiagnoses, { diagnosis: "", code: "" }],
     });
   };
 
   const handleRemoveDiagnosis = (index) => {
-    const updatedDiagnoses = formData.otherDiagnoses.filter(
+    const updatedDiagnoses = formData?.otherDiagnoses.filter(
       (diagnosis, i) => i !== index
     );
     setFormData({
@@ -121,13 +122,13 @@ const CreateClinicalAndDiagnoses = () => {
 
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
-    showToast("success", "Saved");
+    
+    createTestClinicalDiagnosis(formData);
   };
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
+    
     createTestClinicalDiagnosis(formData);
   };
 
@@ -139,7 +140,7 @@ const CreateClinicalAndDiagnoses = () => {
       setFormData((prevFormData) => ({
         ...prevFormData,
         clinicalComments:
-          (prevFormData.clinicalComments || "") + template.value,
+          (prevFormData.clinicalComments || "") + template?.value,
       }));
     }
   }, [template]);
@@ -150,6 +151,7 @@ const CreateClinicalAndDiagnoses = () => {
     if (testData) {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
       showToast("success", "Saved");
+      localStorage.setItem("ClinicalDiagnosis", JSON.stringify(testData?.payload));
     }
     if (testError) {
       showToast("error", testError?.data?.message);
@@ -200,7 +202,7 @@ const CreateClinicalAndDiagnoses = () => {
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
               <div className="accordion-body py-2">
-                {["SN", "HHA", "PT", "OT", "ST", "MSW"].map((service) => (
+                {["SN", "HHA", "PT", "OT", "ST", "MSW"]?.map((service) => (
                   <div className="form-check" key={service}>
                     <input
                       className="form-check-input"
@@ -208,7 +210,7 @@ const CreateClinicalAndDiagnoses = () => {
                       id={service}
                       name="serviceRequired"
                       value={service}
-                      checked={formData.serviceRequired.includes(service)}
+                      checked={formData?.serviceRequired?.includes(service)}
                       onChange={handleInputChange}
                     />
                     <label className="form-check-label" htmlFor={service}>
@@ -226,7 +228,7 @@ const CreateClinicalAndDiagnoses = () => {
                       className="form-control"
                       id="heightValue"
                       name="height.value"
-                      value={formData.height.value}
+                      value={formData?.height?.value}
                       onChange={handleInputChange}
                       placeholder="Enter height"
                     />
@@ -239,7 +241,7 @@ const CreateClinicalAndDiagnoses = () => {
                       className="form-control"
                       id="heightUnit"
                       name="height.unit"
-                      value={formData.height.unit}
+                      value={formData?.height?.unit}
                       onChange={handleInputChange}
                     >
                       <option value="in">IN</option>
@@ -258,7 +260,7 @@ const CreateClinicalAndDiagnoses = () => {
                       className="form-control"
                       id="weightValue"
                       name="weight.value"
-                      value={formData.weight.value}
+                      value={formData?.weight?.value}
                       onChange={handleInputChange}
                       placeholder="Enter weight"
                     />
@@ -271,7 +273,7 @@ const CreateClinicalAndDiagnoses = () => {
                       className="form-control"
                       id="weightUnit"
                       name="weight.unit"
-                      value={formData.weight.unit}
+                      value={formData?.weight?.unit}
                       onChange={handleInputChange}
                     >
                       <option value="lb">LB</option>
@@ -318,14 +320,14 @@ const CreateClinicalAndDiagnoses = () => {
                   "walker",
                   "wheelchair",
                   "other",
-                ].map((dme) => (
+                ]?.map((dme) => (
                   <div className="form-check" key={dme}>
                     <input
                       type="checkbox"
                       id={dme}
                       name="dmeNeeded"
                       value={dme}
-                      checked={formData.dmeNeeded.includes(dme)}
+                      checked={formData?.dmeNeeded?.includes(dme)}
                       onChange={handleInputChange}
                       className="form-check-input"
                     />
@@ -371,7 +373,7 @@ const CreateClinicalAndDiagnoses = () => {
                       className="form-control"
                       id="primaryDiagnosis"
                       name="primaryDiagnosis"
-                      value={formData.primaryDiagnosis}
+                      value={formData?.primaryDiagnosis}
                       onChange={handleInputChange}
                       placeholder="Enter primary diagnosis"
                     />
@@ -388,7 +390,7 @@ const CreateClinicalAndDiagnoses = () => {
                       className="form-control"
                       id="primaryDiagnosisCode"
                       name="primaryDiagnosisCode"
-                      value={formData.primaryDiagnosisCode}
+                      value={formData?.primaryDiagnosisCode}
                       onChange={handleInputChange}
                       placeholder="Enter primary diagnosis code"
                     />
@@ -421,7 +423,7 @@ const CreateClinicalAndDiagnoses = () => {
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
               <div className="accordion-body py-2">
-                {formData.otherDiagnoses.map((diagnosis, index) => (
+                {formData?.otherDiagnoses?.map((diagnosis, index) => (
                   <div className="row mb-3" key={index}>
                     <div className="col-md-6">
                       <label
@@ -510,7 +512,7 @@ const CreateClinicalAndDiagnoses = () => {
                     className="form-control"
                     id="clinicalComments"
                     name="clinicalComments"
-                    value={formData.clinicalComments}
+                    value={formData?.clinicalComments}
                     onChange={handleInputChange}
                     placeholder="Enter clinical comments"
                     rows="3"
@@ -527,9 +529,7 @@ const CreateClinicalAndDiagnoses = () => {
           </div>
         </div>
         <div className="d-flex justify-content-end mt-3 hide-on-print gap-3">
-          <button type="submit" className="btn btn-success">
-            Admin
-          </button>
+        <AdmitButton/>
           <button
             type="button"
             className="btn btn-primary"

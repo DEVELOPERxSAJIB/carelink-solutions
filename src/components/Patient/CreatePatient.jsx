@@ -13,6 +13,7 @@ import {
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import PageHeader from "./../FormElement/PageHeader";
 import { formatDate } from "./../../utils/FormateDate";
+import AdmitButton from "./AdmitButton";
 import {
   useCreatePatientMutation,
   useUpdatePatientMutation,
@@ -260,7 +261,6 @@ const CreatePatient = ({ editData }) => {
     pressureUlcerPrevention: "",
     pressureUlcerTreatment: "",
   });
-  console.log(formData);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked, options } = e.target;
@@ -496,8 +496,7 @@ const CreatePatient = ({ editData }) => {
   const [createPatient, { data: patient, isLoading, error, isSuccess }] =
     useCreatePatientMutation();
   const [createTestPatient, { data: testData, error: testError }] =
-  useCreateTestPatientMutation();
-console.log(testData)
+    useCreateTestPatientMutation();
   const [
     updatePatient,
     {
@@ -520,25 +519,24 @@ console.log(testData)
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    localStorage.setItem("patient", JSON.stringify(formData));
-    showToast("success", "Saved");
+    createTestPatient(formData);
+   
   };
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
     createTestPatient(formData);
     
-
-    localStorage.setItem("patient", JSON.stringify(formData));
   };
 
   useEffect(() => {
     if (testError) {
       showToast("error", testError?.data?.message);
-      console.log(testError)
+      console.log(testError);
     }
     if (testData) {
       showToast("success", "Saved, please contiue");
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      localStorage.setItem("patient", JSON.stringify(testData?.payload));
     }
     if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
@@ -548,7 +546,7 @@ console.log(testData)
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
       localStorage.setItem("patient", JSON.stringify(updateData?.payload));
     }
-  }, [isSuccess, isUpdateSuccess, testError,testData]);
+  }, [isSuccess, isUpdateSuccess, testError, testData]);
 
   useEffect(() => {
     if (updateData?.message) {
@@ -9600,9 +9598,7 @@ console.log(testData)
             )}
             {!editData?._id && (
               <>
-                <button type="submit" className="btn btn-success">
-                  {isUpdateLoading || isLoading ? "...Wait please" : "Admin"}
-                </button>
+                <AdmitButton />
                 <button
                   type="button"
                   className="btn btn-primary"

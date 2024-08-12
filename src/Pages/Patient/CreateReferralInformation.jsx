@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import CitySelect from "../../components/FormElement/CitySelect";
 import StateSelect from "./../../components/FormElement/StateSelect";
-import { useCreateReferralMutation } from "../../Redux/api/ReferalInformation";
+import {
+  useCreateReferralMutation,
+  useCreateTestReferralMutation,
+} from "../../Redux/api/ReferalInformation";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import { ReactToPrint } from "react-to-print";
@@ -11,12 +14,15 @@ import {
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
 import { showToast } from "./../../utils/Toastify";
+import AdmitButton from './../../components/Patient/AdmitButton';
 const CreateReferralInformation = () => {
   const allSteps = useSelector(getAllSectionStepState);
   const dispatch = useDispatch();
   const componentRef = useRef();
   const [createReferral, { data, error, isLoading, isSuccess }] =
     useCreateReferralMutation();
+  const [createTestReferral, { data: testData, error: testError }] =
+    useCreateTestReferralMutation();
   const localReferralData = JSON.parse(localStorage.getItem("Referral"));
   const [formData, setFormData] = useState({
     referringPhysician: "",
@@ -61,6 +67,7 @@ const CreateReferralInformation = () => {
     if (patientId?._id || allSteps.patientId) {
       formData.patientId = allSteps.patientId || patientId?._id;
       createReferral(formData);
+
     } else {
       showToast("error", "Patient id required");
     }
@@ -70,24 +77,32 @@ const CreateReferralInformation = () => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    localStorage.setItem("Referral", JSON.stringify(formData));
-    dispatch(updateSteps({ ...allSteps, steps: 0 }));
-    showToast("success","Saved")
+   
+    createTestReferral(formData);
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-      localStorage.setItem("Referral", JSON.stringify(formData));
-      showToast("success","Saved")
+   
+    createTestReferral(formData);
   };
 
   useEffect(() => {
     if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: 0 }));
       localStorage.removeItem("Referral");
+      localStorage.removeItem("patient");
     }
-  }, [isSuccess]);
+    if (testData) {
+      dispatch(updateSteps({ ...allSteps, steps: 0 }));
+      showToast("success", "Saved, Please continue");
+      localStorage.setItem("Referral", JSON.stringify(testData?.payload));
+    }
+    if (testError) {
+      showToast("error", testError?.data?.message);
+    }
+  }, [isSuccess, testData, testError]);
   useEffect(() => {
     setCity(localReferralData?.city || "");
     setState(localReferralData?.state || "");
@@ -434,11 +449,10 @@ const CreateReferralInformation = () => {
 
           {/* Submit Button */}
           <div className="row hide-on-print">
-            <div className="d-flex justify-content-end mt-3 hide-on-print gap-3"  >
+            <div className="d-flex justify-content-end mt-3 hide-on-print gap-3">
               {" "}
-              <button type="submit" className="btn btn-success me-2">
-                Admit
-              </button>
+              <AdmitButton/>
+
               <button
                 onClick={handleSaveAndContinue}
                 type="button"
@@ -453,7 +467,6 @@ const CreateReferralInformation = () => {
               >
                 save and exit
               </button>
-              
             </div>
           </div>
         </form>

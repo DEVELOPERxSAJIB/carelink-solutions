@@ -1,20 +1,26 @@
 import { useState, useEffect, useRef } from "react";
-import { useCreatePharmacyMutation } from "../../Redux/api/PharmacyApi";
+import {
+  useCreatePharmacyMutation,
+  useCreateTestPharmacyMutation,
+} from "../../Redux/api/PharmacyApi";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import CitySelect from "./../../components/FormElement/CitySelect";
-import { ReactToPrint } from "react-to-print";
+
 import {
   getAllSectionStepState,
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
 import { showToast } from "./../../utils/Toastify";
 import { useSelector, useDispatch } from "react-redux";
+import AdmitButton from './../../components/Patient/AdmitButton';
 const CreatePharmacy = () => {
   const componentRef = useRef();
   const [createPharmacy, { data, isLoading, error, isSuccess }] =
     useCreatePharmacyMutation();
+  const [createTestPharmacy, { data: testData, error: testError }] =
+    useCreateTestPharmacyMutation();
   const localStorageData = JSON.parse(localStorage.getItem("Pharmacy"));
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
@@ -94,16 +100,16 @@ const CreatePharmacy = () => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-      localStorage.setItem("Pharmacy", JSON.stringify(formData));
-      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
-      showToast("success","Saved")
+    
+    createTestPharmacy(formData);
+    
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-      localStorage.setItem("Pharmacy", JSON.stringify(formData));
-      showToast("success","Saved")
+    
+    createTestPharmacy(formData);
   };
 
   useEffect(() => {
@@ -118,7 +124,15 @@ const CreatePharmacy = () => {
     if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
     }
-  }, [isSuccess]);
+    if (testData) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      showToast("success", "Saved, Please continue");
+      localStorage.setItem("Pharmacy", JSON.stringify(testData?.payload));
+    }
+    if (testError) {
+      showToast("error", testError?.data?.message);
+    }
+  }, [isSuccess,testData,testError]);
   useEffect(() => {
     showToast("error", error?.data?.message);
     showToast("success", data?.message);
@@ -383,10 +397,9 @@ const CreatePharmacy = () => {
         </div>
 
         {/* Buttons */}
-        <div className="d-flex justify-content-end mt-3 hide-on-print gap-3"  >
-          <button type="submit" className="btn btn-success me-2">
-            Admit
-          </button>
+        <div className="d-flex justify-content-end mt-3 hide-on-print gap-3">
+        <AdmitButton/>
+
           <button
             onClick={handleSaveAndContinue}
             type="button"

@@ -498,3 +498,7 @@ page-break-after:always
 .header-print{
 display:table-header-group
 }
+.footer-print{
+display:table-footer-group;
+text-align:center;
+}

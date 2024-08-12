@@ -13756,6 +13756,9 @@ const SinglePatient = () => {
                 </td>
               </tr>
             </tbody>
+          <tfoot className="footer-print">
+            <span>Carelink Solution</span>
+          </tfoot>
           </table>
           {/* Content */}
         </div>
