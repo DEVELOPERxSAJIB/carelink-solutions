@@ -15,6 +15,7 @@ import { useGetAllRoutesQuery } from "../../Redux/api/RouteApi.js";
 import EditModal from "./../../components/Models/EditModal";
 import MainLoader from "./../../utils/Loaders/MainLoader";
 import { useMeQuery } from "../../Redux/api/UserApi";
+import closeModal from './../../utils/modalClose';
 const VehicleViewLog = () => {
   const { data: logData } = useMeQuery();
   const { data, isLoading, refetch } = useGetAllTripsQuery();
@@ -84,6 +85,7 @@ const VehicleViewLog = () => {
   useEffect(() => {
     if (isCreateSuccess) {
       refetch();
+      closeModal()
     }
     if (isUpdateSuccess) {
       refetch();

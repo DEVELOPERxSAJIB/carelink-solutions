@@ -14,7 +14,7 @@ import { useCreateReferralMutation } from "../../Redux/api/ReferalInformation";
 import { useCreatePayerMutation } from "../../Redux/api/PayerApi";
 import { useCreatePharmacyMutation } from "../../Redux/api/PharmacyApi";
 import { useCreatePhysicianMutation } from "../../Redux/api/PhysicianApi";
-import AuthLoader from "./../../utils/Loaders/AuthLoader";
+import closeModal from './../../utils/modalClose';
 
 const AdmitButton = () => {
   const [loading, setLoading] = useState(false);
@@ -60,7 +60,7 @@ const AdmitButton = () => {
     for (const { key, label, number } of requiredData) {
       const data = JSON.parse(localStorage.getItem(key));
       if (!data) {
-        showToast("error", `${label} required, please save and continue`);
+        showToast("error", `${label} required!, Please complete the form, then choose 'Save and Continue'`);
         dispatch(updateSteps({ ...allSteps, steps: number }));
         allDataPresent = false;
         setLoading(false); // Hide loader if data is missing
@@ -130,8 +130,8 @@ const AdmitButton = () => {
           localStorage.removeItem("Pharmacy");
           localStorage.removeItem("Physician");
           localStorage.removeItem("Referral");
-
           showToast("success", "Admitted successfully!");
+          closeModal()
         }
       } catch (error) {
         console.log(error);

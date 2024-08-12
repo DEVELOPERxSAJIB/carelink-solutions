@@ -150,7 +150,7 @@ const CreateClinicalAndDiagnoses = () => {
     }
     if (testData) {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
-      showToast("success", "Saved");
+      showToast("success", "Saved,please continue");
       localStorage.setItem("ClinicalDiagnosis", JSON.stringify(testData?.payload));
     }
     if (testError) {

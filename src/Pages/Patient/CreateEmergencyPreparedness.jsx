@@ -131,6 +131,8 @@ const CreateEmergencyPreparedness = () => {
     formData.state = state;
     formData.county = county;
     createTestEmergency(formData);
+    
+    
   };
   useEffect(() => {
     setCity(localStorageData?.city);
@@ -213,7 +215,6 @@ const CreateEmergencyPreparedness = () => {
                   <div>
                     <input
                       type="radio"
-                      className="form-check-input"
                       className="form-check-input"
                       name="emergencyTriage"
                       id="emergencyTriage1"

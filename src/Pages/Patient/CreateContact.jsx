@@ -328,6 +328,7 @@ const ContactForm = () => {
     } catch (error) {
       console.error("Error creating contact:", error);
     }
+    
   };
   useEffect(() => {
     if (localContactData) {
@@ -369,7 +370,7 @@ const ContactForm = () => {
 
     }
     if (testError) {
-      showToast("success", testError?.data?.error);
+      showToast("error", testError?.data?.message);
     }
   }, [isSuccess, testData, testError]);
   useEffect(() => {
@@ -1853,24 +1854,25 @@ const ContactForm = () => {
                 rows="5"
               ></textarea>
             </div>
-            <div className="d-flex justify-content-end mt-3 hide-on-print gap-3 w-100">
-            <AdmitButton/>
-
-              <button
-                type="button"
-                onClick={handleSaveAndContinue}
-                className="btn btn-primary my-5 text-"
-              >
-                Save and continue
-              </button>
-              <button
-                type="button"
-                onClick={handleSaveAndExit}
-                className="btn btn-secondary my-5 text-"
-              >
-                Save and exit
-              </button>
-            </div>
+            <div className="row mt-4 hide-on-print">
+          <div className="d-flex position-sticky bottom-10 justify-content-end mt-3 hide-on-print gap-3">
+            <AdmitButton />
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleSaveAndContinue}
+            >
+              Save & Continue
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleSaveAndExit}
+            >
+              Save & Exit
+            </button>
+          </div>
+        </div>
           </div>
         </div>
       </div>

@@ -96,7 +96,7 @@ const CreateReferralInformation = () => {
     }
     if (testData) {
       dispatch(updateSteps({ ...allSteps, steps: 0 }));
-      showToast("success", "Saved, Please continue");
+      showToast("success", "Saved, No click on admit");
       localStorage.setItem("Referral", JSON.stringify(testData?.payload));
     }
     if (testError) {

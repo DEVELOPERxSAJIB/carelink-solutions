@@ -13,7 +13,7 @@ import MainLoader from "./../../utils/Loaders/MainLoader";
 import EditModal from "./../../components/Models/EditModal";
 import Template from "./../../components/FormElement/Template";
 import swal from "sweetalert";
-import Alert from "./../../components/Alert/Alert";
+
 import { useMeQuery } from "../../Redux/api/UserApi";
 import { showToast } from "./../../utils/Toastify";
 const ClinicalDiagnoses = () => {

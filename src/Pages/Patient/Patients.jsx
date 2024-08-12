@@ -689,7 +689,7 @@ const Patients = () => {
                 <FullscreenModal
                   className="col-md-12"
                   style={{
-                    minHeight: "80vh",
+                    minHeight: "75vh",
                     minWidth: "100vw",
                     overflowY: "scroll",
                     width: "100%",
@@ -698,8 +698,8 @@ const Patients = () => {
                 >
                   <div
                     style={{
-                      maxHeight: "80vh",
-                      minHeight: "80vh",
+                      maxHeight: "75vh",
+                      minHeight: "75vh",
                       // overflowY: "scroll",
                       width: "100%",
                     }}

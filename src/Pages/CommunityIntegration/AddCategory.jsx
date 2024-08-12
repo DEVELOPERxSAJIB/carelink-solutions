@@ -2,27 +2,6 @@ import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/Tables/DynamicTable";
 import TableHeader from './../../components/Tables/TableHeader';
 
-// Function to get the start and end dates of the current week
-const getCurrentWeekDateRange = () => {
-  const now = new Date();
-  const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-  const endOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
-
-  const formatDate = (date) => {
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      weekday: "short",
-    };
-    return date.toLocaleDateString("en-US", options);
-  };
-
-  return {
-    start: formatDate(startOfWeek),
-    end: formatDate(endOfWeek),
-  };
-};
 
 const AddCategory = () => {
   const columns = [
@@ -56,12 +35,6 @@ const AddCategory = () => {
       addedOn: "2024-06-03 11:45"
     }
   ];
-  
-  
-  
-  
-  
-
   const handleEdit = (rowData) => {
     alert(`Editing ${rowData.firstName} ${rowData.lastName}`);
   };

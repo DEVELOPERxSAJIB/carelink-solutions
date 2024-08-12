@@ -15,6 +15,7 @@ import {
 } from "../../Redux/api/VehicleApi.js";
 // Function to get the start and end dates of the current week
 import { useMeQuery } from "../../Redux/api/UserApi";
+import closeModal from './../../utils/modalClose';
 const MyVehicles = () => {
   const { data: logData } = useMeQuery();
   const { data, isLoading, refetch } = useGetAllVehiclesQuery();
@@ -102,6 +103,11 @@ const MyVehicles = () => {
     }
   };
   useEffect(() => {
+    if (isSuccess) {
+      refetch();
+      setShow(false);
+      closeModal()
+    }
     if (isUpdateSuccess) {
       refetch();
       setShow(false);

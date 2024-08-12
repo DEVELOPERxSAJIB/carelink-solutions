@@ -14,6 +14,7 @@ import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import PageHeader from "./../FormElement/PageHeader";
 import { formatDate } from "./../../utils/FormateDate";
 import AdmitButton from "./AdmitButton";
+import closeModal from './../../utils/modalClose';
 import {
   useCreatePatientMutation,
   useUpdatePatientMutation,
@@ -520,7 +521,7 @@ const CreatePatient = ({ editData }) => {
   const handleSaveAndExit = (e) => {
     e.preventDefault();
     createTestPatient(formData);
-   
+    
   };
   const handleSaveAndContinue = (e) => {
     e.preventDefault();

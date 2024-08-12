@@ -26,6 +26,7 @@ import {
 } from "../../Redux/api/UserApi";
 import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
+import closeModal from './../../utils/modalClose';
 
 const Provider = () => {
   const { data: lgData } = useMeQuery();
@@ -138,6 +139,7 @@ const Provider = () => {
       setSelectedCity(null);
       setSelectedCounty(null);
       setSelectedState(null);
+      closeModal()
     }
     if (isUpdateSuccess) {
       refetch();

@@ -502,3 +502,49 @@ display:table-header-group
 display:table-footer-group;
 text-align:center;
 }
+.table-content *{
+  padding:0px;
+  margin: 0px;
+}
+.table-content input[type="checkbox"]{
+  margin-left:2px;
+  margin-right:5px;
+  margin-bottom:0px;
+  margin-top:0px
+}
+.table-content input[type="radio"]{
+  margin-left:2px;
+  margin-right:5px;
+  margin-bottom:0px;
+  margin-top:0px
+}
+
+.table-content table {
+  width: 100%;
+  border-collapse: collapse; /* Ensures that borders are collapsed into a single border */
+}
+
+.table-content table, 
+.table-content th, 
+.table-content td {
+  border: 1px solid gray; /* Applies the border to the table, headers, and cells */
+}
+
+.table-content th, 
+.table-content td {
+  width: 33%; /* Ensures each cell takes up 33% of the table's width */
+  padding-left: 8px; /* Adds padding to the left of each cell */
+  text-align: left; /* Aligns text to the left horizontally */
+  vertical-align: top; /* Aligns the content to the top vertically */
+}
+
+
+.table-content th {
+  background-color: #f2f2f2; /* Light gray background for the header row */
+  font-weight: bold; /* Makes the header text bold */
+}
+
+.table-content tr:nth-child(even) {
+  background-color: #f9f9f9; /* Alternating row colors for better readability */
+}
+
