@@ -157,7 +157,6 @@ const MenuItemTimeSheet = () => {
   if (isLoading || isDeleteLoading) return <AuthLoader />;
   return (
     <div className="card">
-      <GeoLocation/>
       <TableHeader title="Timesheet" className="py-3 pt-5 fs-3 card-header" />
       <div className="card-body">
         
