@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import CitySelect from "../../components/FormElement/CitySelect";
 import StateSelect from "./../../components/FormElement/StateSelect";
-import { useCreateContactMutation } from "../../Redux/api/Contact";
+import {
+  useCreateContactMutation,
+  useCreateTestContactMutation,
+} from "../../Redux/api/Contact";
 import CountySelect from "./../../components/FormElement/CountySelect";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
@@ -14,6 +17,7 @@ import {
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
 import { showToast } from "./../../utils/Toastify";
+import AdmitButton from './../../components/Patient/AdmitButton';
 const ContactForm = () => {
   const allSteps = useSelector(getAllSectionStepState);
   const dispatch = useDispatch();
@@ -21,6 +25,8 @@ const ContactForm = () => {
   const componentRef = useRef();
   const [createContact, { data, isLoading, isSuccess, error }] =
     useCreateContactMutation();
+  const [createTestContact, { data: testData, error: testError }] =
+    useCreateTestContactMutation();
 
   const localContactData = JSON.parse(localStorage.getItem("Contact"));
   //console.log(localContactData)
@@ -259,7 +265,6 @@ const ContactForm = () => {
   };
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    const patientId = JSON.parse(localStorage.getItem("patient"));
     try {
       const contactData = {
         ...formData,
@@ -285,20 +290,14 @@ const ContactForm = () => {
         comments,
         remainingCharacters,
       };
-      if (patientId?._id) {
-        contactData.patientId = allSteps.patientId || patientId?._id;
-        createContact(contactData);
-        localStorage.setItem("Contact", JSON.stringify(contactData));
-      } else {
-        showToast("error", "Patient id required");
-      }
+      createTestContact(contactData);
     } catch (error) {
       console.error("Error creating contact:", error);
     }
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    const patientId = JSON.parse(localStorage.getItem("patient"));
+
     try {
       const contactData = {
         ...formData,
@@ -324,15 +323,12 @@ const ContactForm = () => {
         comments,
         remainingCharacters,
       };
-      if (patientId?._id) {
-        contactData.patientId = allSteps.patientId || patientId?._id;
-        localStorage.setItem("Contact", JSON.stringify(contactData));
-      } else {
-        showToast("error", "Patient id required");
-      }
+      
+      createTestContact(contactData);
     } catch (error) {
       console.error("Error creating contact:", error);
     }
+    
   };
   useEffect(() => {
     if (localContactData) {
@@ -365,12 +361,23 @@ const ContactForm = () => {
   useEffect(() => {
     if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      localStorage.removeItem("Contact");
     }
-  }, [isSuccess]);
+    if (testData) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      showToast("success", "Saved, please continue");
+      localStorage.setItem("Contact", JSON.stringify(testData?.payload));
+
+    }
+    if (testError) {
+      showToast("error", testError?.data?.message);
+    }
+  }, [isSuccess, testData, testError]);
   useEffect(() => {
     showToast("error", error?.data?.message);
     showToast("success", data?.message);
   }, [error?.data?.message, data?.message]);
+
   if (isLoading) return <AuthLoader />;
 
   return (
@@ -561,29 +568,7 @@ const ContactForm = () => {
                       </label>
                     </div>
                   </div>
-                  <div className="col-md-12">
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="primarySameAsPatientAddress"
-                        checked={emergencyContacts.primary.sameAsPatientAddress}
-                        onChange={(e) =>
-                          handleChange(
-                            "primary",
-                            "sameAsPatientAddress",
-                            e.target.checked
-                          )
-                        }
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="primarySameAsPatientAddress"
-                      >
-                        Same as Patient Address
-                      </label>
-                    </div>
-                  </div>
+
                   {!emergencyContacts.primary.sameAsPatientAddress && (
                     <React.Fragment>
                       <div className="col-md-6">
@@ -908,30 +893,7 @@ const ContactForm = () => {
                         </label>
                       </div>
                     </div>
-                    <div className="col-md-12">
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          id={`additionalSameAsPatientAddress-${index}`}
-                          checked={contact.sameAsPatientAddress}
-                          onChange={(e) =>
-                            handleChange(
-                              "additional",
-                              "sameAsPatientAddress",
-                              e.target.checked,
-                              index
-                            )
-                          }
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor={`additionalSameAsPatientAddress-${index}`}
-                        >
-                          Same as Patient Address
-                        </label>
-                      </div>
-                    </div>
+
                     {!contact.sameAsPatientAddress && (
                       <React.Fragment>
                         <div className="col-md-6">
@@ -1393,7 +1355,6 @@ const ContactForm = () => {
                 {formData.doNotContactCAHPS && (
                   <>
                     <div className="mb-3">
-                    
                       <div className="mb-3">
                         <label className="form-label">
                           Reason for no contact for CAHPS
@@ -1893,28 +1854,25 @@ const ContactForm = () => {
                 rows="5"
               ></textarea>
             </div>
-            <div className="d-flex align-items-center gap-4 hide-on-print">
-              <button type="submit" className="btn btn-primary my-5 text-">
-                submit
-              </button>
-              <button
-                onClick={handleSaveAndContinue}
-                className="btn btn-primary my-5 text-"
-              >
-                Save and continue
-              </button>
-              <button
-                onClick={handleSaveAndExit}
-                className="btn btn-primary my-5 text-"
-              >
-                Save and exit
-              </button>
-              <ReactToPrint
-                trigger={() => <span className="btn btn-primary">Print</span>}
-                content={() => componentRef.current}
-                documentTitle="Patient"
-              />
-            </div>
+            <div className="row mt-4 hide-on-print">
+          <div className="d-flex position-sticky bottom-10 justify-content-end mt-3 hide-on-print gap-3">
+            <AdmitButton />
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleSaveAndContinue}
+            >
+              Save & Continue
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleSaveAndExit}
+            >
+              Save & Exit
+            </button>
+          </div>
+        </div>
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@ import {
 import { useEffect } from "react";
 import MainLoader from "../../utils/Loaders/MainLoader";
 import { showToast } from './../../utils/Toastify';
+import closeModal from './../../utils/modalClose';
 
 
 const Calendars = () => {
@@ -58,6 +59,7 @@ const Calendars = () => {
         name: "",
         description: "",
       });
+      closeModal()
     }
 
     if (isDeleteSuccess) {

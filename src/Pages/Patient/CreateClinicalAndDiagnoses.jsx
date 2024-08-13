@@ -1,19 +1,25 @@
 import { useState, useEffect, useRef } from "react";
 import Template from "./../../components/FormElement/Template";
-import { useCreateClinicalDiagnosisMutation } from "../../Redux/api/ClinicalDiagnosis";
+import {
+  useCreateClinicalDiagnosisMutation,
+  useCreateTestClinicalDiagnosisMutation,
+} from "../../Redux/api/ClinicalDiagnosis";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
-import { ReactToPrint } from "react-to-print";
+
 import {
   getAllSectionStepState,
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
 import { showToast } from "./../../utils/Toastify";
+import AdmitButton from './../../components/Patient/AdmitButton';
 const CreateClinicalAndDiagnoses = () => {
   const componentRef = useRef();
   const [createClinicalDiagnosis, { data, error, isLoading, isSuccess }] =
     useCreateClinicalDiagnosisMutation();
+  const [createTestClinicalDiagnosis, { data: testData, error: testError }] =
+  useCreateTestClinicalDiagnosisMutation();
   const localStorageClinicalDiagnosis = JSON.parse(
     localStorage.getItem("ClinicalDiagnosis")
   );
@@ -23,19 +29,16 @@ const CreateClinicalAndDiagnoses = () => {
     serviceRequired: [],
     height: {
       value: "",
-      unit: "",
+      unit: "lb",
     },
     weight: {
       value: "",
-      unit: "",
+      unit: "kg",
     },
     dmeNeeded: [],
     primaryDiagnosis: "",
-    primaryDiagnosisCode:
-     "",
-    otherDiagnoses: [
-      { diagnosis: "", code: "" },
-    ],
+    primaryDiagnosisCode: "",
+    otherDiagnoses: [{ diagnosis: "", code: "" }],
     clinicalComments: "",
   };
 
@@ -65,13 +68,13 @@ const CreateClinicalAndDiagnoses = () => {
       }));
     } else if (name.startsWith("otherDiagnoses")) {
       const fieldName = name.split(".")[2];
-      const updatedDiagnoses = [...formData.otherDiagnoses];
+      const updatedDiagnoses = [...formData?.otherDiagnoses];
       updatedDiagnoses[index][fieldName] = value;
       setFormData({
         ...formData,
         otherDiagnoses: updatedDiagnoses,
       });
-    } else if (name.includes(".")) {
+    } else if (name?.includes(".")) {
       const [outerKey, innerKey] = name.split(".");
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -91,12 +94,12 @@ const CreateClinicalAndDiagnoses = () => {
   const handleAddDiagnosis = () => {
     setFormData({
       ...formData,
-      otherDiagnoses: [...formData.otherDiagnoses, { diagnosis: "", code: "" }],
+      otherDiagnoses: [...formData?.otherDiagnoses, { diagnosis: "", code: "" }],
     });
   };
 
   const handleRemoveDiagnosis = (index) => {
-    const updatedDiagnoses = formData.otherDiagnoses.filter(
+    const updatedDiagnoses = formData?.otherDiagnoses.filter(
       (diagnosis, i) => i !== index
     );
     setFormData({
@@ -109,36 +112,24 @@ const CreateClinicalAndDiagnoses = () => {
     e.preventDefault();
     const patientId = JSON.parse(localStorage.getItem("patient"));
     if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
+      formData.patientId = allSteps.patientId || patientId?._id;
       createClinicalDiagnosis(formData);
       localStorage.removeItem("ClinicalDiagnosis");
-    }else{
-      showToast("error","Patient id required")
+    } else {
+      showToast("error", "Patient id required");
     }
   };
 
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
-      createClinicalDiagnosis(formData);
-      localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
-    }else{
-      showToast("error","Patient id required")
-    }
+    
+    createTestClinicalDiagnosis(formData);
   };
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    const patientId = JSON.parse(localStorage.getItem("patient"));
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
-      createClinicalDiagnosis(formData);
-      localStorage.setItem("ClinicalDiagnosis", JSON.stringify(formData));
-    }else{
-      showToast("error","Patient id required")
-    }
+    
+    createTestClinicalDiagnosis(formData);
   };
 
   const allSteps = useSelector(getAllSectionStepState);
@@ -149,7 +140,7 @@ const CreateClinicalAndDiagnoses = () => {
       setFormData((prevFormData) => ({
         ...prevFormData,
         clinicalComments:
-          (prevFormData.clinicalComments || "") + template.value,
+          (prevFormData.clinicalComments || "") + template?.value,
       }));
     }
   }, [template]);
@@ -157,24 +148,35 @@ const CreateClinicalAndDiagnoses = () => {
     if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
     }
-  }, [isSuccess]);
+    if (testData) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      showToast("success", "Saved,please continue");
+      localStorage.setItem("ClinicalDiagnosis", JSON.stringify(testData?.payload));
+    }
+    if (testError) {
+      showToast("error", testError?.data?.message);
+    }
+  }, [isSuccess, testError, testData]);
   useEffect(() => {
     showToast("error", error?.data?.message);
     showToast("success", data?.message);
   }, [error?.data?.message, data?.message]);
   useEffect(() => {
-    if(localStorageClinicalDiagnosis){
-      setFormData({...localStorageClinicalDiagnosis})
+    if (localStorageClinicalDiagnosis) {
+      setFormData({ ...localStorageClinicalDiagnosis });
     }
   }, []);
-
 
   if (isLoading) return <AuthLoader />;
 
   return (
     <form ref={componentRef} onSubmit={handleAdmit} className="card w-100">
       <div className="card-body w-100">
-        <PageHeader title="Clinical/Diagnosis" className="card-header fs-3" back={false}/>
+        <PageHeader
+          title="Clinical/Diagnosis"
+          className="card-header fs-3"
+          back={false}
+        />
 
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
           <div className="accordion-item">
@@ -200,7 +202,7 @@ const CreateClinicalAndDiagnoses = () => {
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
               <div className="accordion-body py-2">
-                {["SN", "HHA", "PT", "OT", "ST", "MSW"].map((service) => (
+                {["SN", "HHA", "PT", "OT", "ST", "MSW"]?.map((service) => (
                   <div className="form-check" key={service}>
                     <input
                       className="form-check-input"
@@ -208,7 +210,7 @@ const CreateClinicalAndDiagnoses = () => {
                       id={service}
                       name="serviceRequired"
                       value={service}
-                      checked={formData.serviceRequired.includes(service)}
+                      checked={formData?.serviceRequired?.includes(service)}
                       onChange={handleInputChange}
                     />
                     <label className="form-check-label" htmlFor={service}>
@@ -226,7 +228,7 @@ const CreateClinicalAndDiagnoses = () => {
                       className="form-control"
                       id="heightValue"
                       name="height.value"
-                      value={formData.height.value}
+                      value={formData?.height?.value}
                       onChange={handleInputChange}
                       placeholder="Enter height"
                     />
@@ -239,7 +241,7 @@ const CreateClinicalAndDiagnoses = () => {
                       className="form-control"
                       id="heightUnit"
                       name="height.unit"
-                      value={formData.height.unit}
+                      value={formData?.height?.unit}
                       onChange={handleInputChange}
                     >
                       <option value="in">IN</option>
@@ -258,7 +260,7 @@ const CreateClinicalAndDiagnoses = () => {
                       className="form-control"
                       id="weightValue"
                       name="weight.value"
-                      value={formData.weight.value}
+                      value={formData?.weight?.value}
                       onChange={handleInputChange}
                       placeholder="Enter weight"
                     />
@@ -271,7 +273,7 @@ const CreateClinicalAndDiagnoses = () => {
                       className="form-control"
                       id="weightUnit"
                       name="weight.unit"
-                      value={formData.weight.unit}
+                      value={formData?.weight?.unit}
                       onChange={handleInputChange}
                     >
                       <option value="lb">LB</option>
@@ -318,14 +320,14 @@ const CreateClinicalAndDiagnoses = () => {
                   "walker",
                   "wheelchair",
                   "other",
-                ].map((dme) => (
+                ]?.map((dme) => (
                   <div className="form-check" key={dme}>
                     <input
                       type="checkbox"
                       id={dme}
                       name="dmeNeeded"
                       value={dme}
-                      checked={formData.dmeNeeded.includes(dme)}
+                      checked={formData?.dmeNeeded?.includes(dme)}
                       onChange={handleInputChange}
                       className="form-check-input"
                     />
@@ -371,7 +373,7 @@ const CreateClinicalAndDiagnoses = () => {
                       className="form-control"
                       id="primaryDiagnosis"
                       name="primaryDiagnosis"
-                      value={formData.primaryDiagnosis}
+                      value={formData?.primaryDiagnosis}
                       onChange={handleInputChange}
                       placeholder="Enter primary diagnosis"
                     />
@@ -388,7 +390,7 @@ const CreateClinicalAndDiagnoses = () => {
                       className="form-control"
                       id="primaryDiagnosisCode"
                       name="primaryDiagnosisCode"
-                      value={formData.primaryDiagnosisCode}
+                      value={formData?.primaryDiagnosisCode}
                       onChange={handleInputChange}
                       placeholder="Enter primary diagnosis code"
                     />
@@ -421,7 +423,7 @@ const CreateClinicalAndDiagnoses = () => {
               data-bs-parent="#ClinicalDiagnosisInfoAccordion"
             >
               <div className="accordion-body py-2">
-                {formData.otherDiagnoses.map((diagnosis, index) => (
+                {formData?.otherDiagnoses?.map((diagnosis, index) => (
                   <div className="row mb-3" key={index}>
                     <div className="col-md-6">
                       <label
@@ -510,7 +512,7 @@ const CreateClinicalAndDiagnoses = () => {
                     className="form-control"
                     id="clinicalComments"
                     name="clinicalComments"
-                    value={formData.clinicalComments}
+                    value={formData?.clinicalComments}
                     onChange={handleInputChange}
                     placeholder="Enter clinical comments"
                     rows="3"
@@ -526,7 +528,15 @@ const CreateClinicalAndDiagnoses = () => {
             </div>
           </div>
         </div>
-        <div className="d-flex hide-on-print justify-content-end gap-3 mt-3">
+        <div className="d-flex justify-content-end mt-3 hide-on-print gap-3">
+        <AdmitButton/>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleSaveAndContinue}
+          >
+            Save & Continue
+          </button>
           <button
             type="button"
             className="btn btn-secondary"
@@ -534,21 +544,6 @@ const CreateClinicalAndDiagnoses = () => {
           >
             Save & Exit
           </button>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onSubmit={handleSaveAndContinue}
-          >
-            Save & Continue
-          </button>
-          <button type="submit" className="btn btn-success">
-            save
-          </button>
-          <ReactToPrint
-            trigger={() => <span className="btn btn-primary">Print</span>}
-            content={() => componentRef.current}
-            documentTitle="Patient"
-          />
         </div>
       </div>
     </form>

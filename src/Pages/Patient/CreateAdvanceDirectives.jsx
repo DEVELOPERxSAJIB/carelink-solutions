@@ -1,26 +1,31 @@
 import { useState, useEffect, useRef } from "react";
-import { useCreateDirectiveMutation } from "../../Redux/api/DirectiveApi";
+import {
+  useCreateDirectiveMutation,
+  useCreateTestDirectiveMutation,
+} from "../../Redux/api/DirectiveApi";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import Template from "./../../components/FormElement/Template";
-// useCreateDirectiveMutation
-import { ReactToPrint } from "react-to-print";
+
 import {
   getAllSectionStepState,
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
 import { useSelector, useDispatch } from "react-redux";
-import { showToast } from './../../utils/Toastify';
+import { showToast } from "./../../utils/Toastify";
+import AdmitButton from "./../../components/Patient/AdmitButton";
 const CreateAdvanceDirectives = () => {
   const componentRef = useRef();
   const localData = JSON.parse(localStorage.getItem("Directive"));
   const [createDirective, { data, isLoading, error, isSuccess }] =
     useCreateDirectiveMutation();
+  const [createTestDirective, { data: testData, error: testError }] =
+    useCreateTestDirectiveMutation();
 
   const [template, setTemplate] = useState("");
 
   const initialFormData = {
-    admission:  "No",
+    admission: "No",
     comment: "",
   };
 
@@ -45,34 +50,27 @@ const CreateAdvanceDirectives = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const patientId =JSON.parse(localStorage.getItem("patient"))
+    const patientId = JSON.parse(localStorage.getItem("patient"));
     if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
+      formData.patientId = allSteps.patientId || patientId?._id;
       createDirective(formData);
       localStorage.removeItem("Directive");
-    }else{
-      showToast("error","Patient id required")
+    } else {
+      showToast("error", "Patient id required");
     }
   };
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
-      createDirective(formData);
-    }
-    localStorage.setItem("Directive", JSON.stringify(formData));
+
+    createTestDirective(formData);
   };
 
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
-      createDirective(formData);
-    }
-    localStorage.setItem("Directive", JSON.stringify(formData));
+
+    createTestDirective(formData);
+    
   };
 
   useEffect(() => {
@@ -87,21 +85,27 @@ const CreateAdvanceDirectives = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (isSuccess) {
-      dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
     }
-  }, [isSuccess]);
+    if (testData) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      showToast("success", "Saved,please continue");
+      localStorage.setItem("Directive", JSON.stringify(testData?.payload));
+    }
+    if (testError) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      showToast("error", testError?.data?.error);
+    }
+  }, [isSuccess, testData, testError]);
   useEffect(() => {
     showToast("error", error?.data?.message);
     showToast("success", data?.message);
-  }, [
-    error?.data?.message,
-    data?.message,
-  ]);
-  useEffect(()=>{
-if(localData){
-  setFormData({...localData})
-}
-  },[])
+  }, [error?.data?.message, data?.message]);
+  useEffect(() => {
+    if (localData) {
+      setFormData({ ...localData });
+    }
+  }, []);
   if (isLoading) return <AuthLoader />;
 
   return (
@@ -112,7 +116,6 @@ if(localData){
         back={false}
       />
       <div className="card-body w-100">
-        
         <div className="row">
           <div className="col-md-12">
             <label htmlFor="admission" className="form-label">
@@ -165,9 +168,14 @@ if(localData){
 
         {/* Action Buttons */}
         <div className="row mt-4 hide-on-print">
-          <div className="col-md-12 d-flex gap-3">
-            <button type="submit" className="btn btn-info">
-              Save
+          <div className="d-flex justify-content-end mt-3 hide-on-print gap-3">
+            <AdmitButton />
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleSaveAndContinue}
+            >
+              Save & Continue
             </button>
             <button
               type="button"
@@ -176,18 +184,6 @@ if(localData){
             >
               Save & Exit
             </button>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={handleSaveAndContinue}
-            >
-              Save & Continue
-            </button>
-            <ReactToPrint
-              trigger={() => <span className="btn btn-primary">Print</span>}
-              content={() => componentRef.current}
-              documentTitle="Patient"
-            />
           </div>
         </div>
       </div>

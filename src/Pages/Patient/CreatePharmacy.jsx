@@ -1,20 +1,26 @@
 import { useState, useEffect, useRef } from "react";
-import { useCreatePharmacyMutation } from "../../Redux/api/PharmacyApi";
+import {
+  useCreatePharmacyMutation,
+  useCreateTestPharmacyMutation,
+} from "../../Redux/api/PharmacyApi";
 import PageHeader from "./../../components/FormElement/PageHeader";
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import StateSelect from "./../../components/FormElement/StateSelect";
 import CitySelect from "./../../components/FormElement/CitySelect";
-import { ReactToPrint } from "react-to-print";
-import {getAllSectionStepState,
+
+import {
+  getAllSectionStepState,
   updateSteps,
 } from "./../../Redux/slices/SectionStep.js";
-import { showToast } from './../../utils/Toastify';
-import {useSelector,
-  useDispatch} from "react-redux"
+import { showToast } from "./../../utils/Toastify";
+import { useSelector, useDispatch } from "react-redux";
+import AdmitButton from './../../components/Patient/AdmitButton';
 const CreatePharmacy = () => {
   const componentRef = useRef();
-  const [createPharmacy, { data, isLoading, error,isSuccess }] =
+  const [createPharmacy, { data, isLoading, error, isSuccess }] =
     useCreatePharmacyMutation();
+  const [createTestPharmacy, { data: testData, error: testError }] =
+    useCreateTestPharmacyMutation();
   const localStorageData = JSON.parse(localStorage.getItem("Pharmacy"));
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
@@ -81,70 +87,66 @@ const CreatePharmacy = () => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if(patientId?._id ||allSteps?.patientId){
-      formData.patientId= allSteps.patientId ||patientId?._id
+    const patientId = JSON.parse(localStorage.getItem("patient"));
+    if (patientId?._id || allSteps?.patientId) {
+      formData.patientId = allSteps.patientId || patientId?._id;
       createPharmacy(formData);
       localStorage.removeItem("Pharmacy");
-    }else{
-      showToast("error","Patient id required")
+    } else {
+      showToast("error", "Patient id required");
     }
   };
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    const patientId =JSON.parse(localStorage.getItem("patient"))
     formData.city = city;
     formData.state = state;
-    if(patientId?._id||allSteps?.patientId){
-      formData.patientId= allSteps.patientId ||patientId?._id
-      createPharmacy(formData);
-      localStorage.setItem("Pharmacy", JSON.stringify(formData));
-    }else{
-      showToast("error","Patient id required")
-    }
+    
+    createTestPharmacy(formData);
+    
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
     formData.city = city;
     formData.state = state;
-    const patientId =JSON.parse(localStorage.getItem("patient"))
-    if(patientId?._id ||allSteps?.patientId){
-      formData.patientId= allSteps?.patientId||patientId?._id
-      createPharmacy(formData);
-      localStorage.setItem("Pharmacy", JSON.stringify(formData));
-    }else{
-      showToast("error","Patient id required")
-    }
+    
+    createTestPharmacy(formData);
   };
 
-  useEffect(()=>{
-    setState(localStorageData?.state || "")
-    setCity(localStorageData?.city || "")
-  },[])
+  useEffect(() => {
+    setState(localStorageData?.state || "");
+    setCity(localStorageData?.city || "");
+  }, []);
 
-   const allSteps = useSelector(getAllSectionStepState)
-   const dispatch = useDispatch()
-   
-  useEffect(()=>{
-    if(isSuccess){
-      dispatch(updateSteps({...allSteps,steps:allSteps?.steps + 1}));
+  const allSteps = useSelector(getAllSectionStepState);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
     }
-  },[isSuccess])
+    if (testData) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      showToast("success", "Saved, Please continue");
+      localStorage.setItem("Pharmacy", JSON.stringify(testData?.payload));
+    }
+    if (testError) {
+      showToast("error", testError?.data?.message);
+    }
+  }, [isSuccess,testData,testError]);
   useEffect(() => {
     showToast("error", error?.data?.message);
     showToast("success", data?.message);
-  }, [
-
-    error?.data?.message,
-    data?.message,
-  ]);
+  }, [error?.data?.message, data?.message]);
   if (isLoading) return <AuthLoader />;
   return (
     <form ref={componentRef} onSubmit={handleSubmit} className="card w-100">
       <div className="card-body">
         <div className="accordion" id="ClinicalDiagnosisInfoAccordion">
-          <PageHeader title="Pharmacy" className="card-header fs-3"  back={false}/>
-          
+          <PageHeader
+            title="Pharmacy"
+            className="card-header fs-3"
+            back={false}
+          />
 
           {/* Pharmacy Information */}
           <div className="accordion-item">
@@ -395,29 +397,23 @@ const CreatePharmacy = () => {
         </div>
 
         {/* Buttons */}
-        <div className="d-flex justify-content-end mt-3 hide-on-print">
-          <button type="submit" className="btn btn-success me-2">
-            save
-          </button>
+        <div className="d-flex justify-content-end mt-3 hide-on-print gap-3">
+        <AdmitButton/>
+
           <button
-            onSubmit={handleSaveAndContinue}
-            type="submit"
-            className="btn btn-warning me-2"
+            onClick={handleSaveAndContinue}
+            type="button"
+            className="btn btn-primary me-2"
           >
             save and continue
           </button>
           <button
             onClick={handleSaveAndExit}
-            type="submit"
-            className="btn btn-danger me-2"
+            type="button"
+            className="btn btn-secondary me-2"
           >
             save and exit
           </button>
-          <ReactToPrint
-            trigger={() => <span className="btn btn-primary">Print</span>}
-            content={() => componentRef.current}
-            documentTitle="Patient"
-          />
         </div>
       </div>
     </form>

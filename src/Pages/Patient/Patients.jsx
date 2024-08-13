@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { useGetAllPatientsQuery } from "../../Redux/api/PatientApi";
-import {
-  useDeletePatientMutation,
-} from "../../Redux/api/PatientApi";
+import { useDeletePatientMutation } from "../../Redux/api/PatientApi";
 
 import ExportButton from "../../components/Buttons/ExportButton";
 import TableHeader from "../../components/Tables/TableHeader";
@@ -37,18 +35,16 @@ import EditContract from "./../../components/Patient/EditContract";
 import EditEmergencyPreparedness from "./../../components/Patient/EditEmergencyPreparedness";
 import EditAdvanceDirectives from "./../../components/Patient/EditAdvanceDirectives";
 import EditReferralInformation from "./../../components/Patient/EditReferralInformation";
-import { showToast } from './../../utils/Toastify';
-import CreatePatient from './../../components/Patient/CreatePatient';
+import { showToast } from "./../../utils/Toastify";
+import CreatePatient from "./../../components/Patient/CreatePatient";
 const Patients = () => {
   const { data: lgData } = useMeQuery();
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const allSteps = useSelector(getAllSectionStepState);
   const [editData, setEditData] = useState("");
 
-  const [
-    deletePatient,
-    { data: deleteData, isSuccess: isDeleteSuccess },
-  ] = useDeletePatientMutation();
+  const [deletePatient, { data: deleteData, isSuccess: isDeleteSuccess }] =
+    useDeletePatientMutation();
   const { data, isLoading, refetch } = useGetAllPatientsQuery(editData?._id);
   const [show, setShow] = useState(false);
 
@@ -640,9 +636,7 @@ const Patients = () => {
   }, [isDeleteSuccess, refetch]);
   useEffect(() => {
     showToast("success", deleteData?.message);
-  }, [
-    deleteData?.message,
-  ]);
+  }, [deleteData?.message]);
   return (
     <>
       {isLoading ? (
@@ -653,7 +647,6 @@ const Patients = () => {
             title="Patient List"
             className="py-3 pt-5 fs-3 card-header"
           />
-          
 
           <div className="card-body">
             <div className="gap-3 d-flex flex-wrap">
@@ -696,14 +689,21 @@ const Patients = () => {
                 <FullscreenModal
                   className="col-md-12"
                   style={{
+                    minHeight: "75vh",
                     minWidth: "100vw",
-                    minHeight: "80vh",
                     overflowY: "scroll",
-                    width:"100%"
+                    width: "100%",
                   }}
                   title={`Add New Patient`}
                 >
-                  <div style={{maxHeight:"60vh",minHeight:"80vh",overflowY:"scroll",width:"100%"}}>
+                  <div
+                    style={{
+                      maxHeight: "75vh",
+                      minHeight: "75vh",
+                      // overflowY: "scroll",
+                      width: "100%",
+                    }}
+                  >
                     <div className="d-flex align-items-center flex-wrap gap-1 mb-5 justify-content-center">
                       <div
                         className="step"
@@ -1257,37 +1257,25 @@ const Patients = () => {
                   <EditPayer patientId={editData?._id} />
                 )}
                 {allSteps?.steps === 2 && (
-                  <EditPhysicians
-                    patientId={editData?._id}
-                  />
+                  <EditPhysicians patientId={editData?._id} />
                 )}
                 {allSteps?.steps === 3 && (
-                  <EditClinicalDiagnoses
-                  patientId={editData?._id}
-                  />
+                  <EditClinicalDiagnoses patientId={editData?._id} />
                 )}
                 {allSteps?.steps === 4 && (
-                  <EditPharmacy
-                  patientId={editData?._id}
-                  />
+                  <EditPharmacy patientId={editData?._id} />
                 )}
                 {allSteps?.steps === 5 && (
-                  <EditContract  patientId={editData?._id} />
+                  <EditContract patientId={editData?._id} />
                 )}
                 {allSteps?.steps === 6 && (
-                  <EditEmergencyPreparedness
-                  patientId={editData?._id}
-                  />
+                  <EditEmergencyPreparedness patientId={editData?._id} />
                 )}
                 {allSteps?.steps === 7 && (
-                  <EditAdvanceDirectives
-                  patientId={editData?._id}
-                  />
+                  <EditAdvanceDirectives patientId={editData?._id} />
                 )}
                 {allSteps?.steps === 8 && (
-                  <EditReferralInformation
-                  patientId={editData?._id}
-                  />
+                  <EditReferralInformation patientId={editData?._id} />
                 )}
               </EditModal>
             )}

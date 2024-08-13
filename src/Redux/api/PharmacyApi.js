@@ -25,6 +25,14 @@ export const PharmacyApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Pharmacy" }],
     }),
+    createTestPharmacy: builder.mutation({
+      query: (pharmacyData) => ({
+        url: "pharmacy/test",
+        method: "POST",
+        body: pharmacyData,
+      }),
+      invalidatesTags: [{ type: "Pharmacy" }],
+    }),
     getAllPharmacies: builder.query({
       query: () => ({
         url: "pharmacy",
@@ -55,6 +63,7 @@ export const {
   useGetPharmacyByIdQuery,
   useGetPharmacyByPatientIdQuery,
   useCreatePharmacyMutation,
+  useCreateTestPharmacyMutation,
   useGetAllPharmaciesQuery,
   useUpdatePharmacyMutation,
   useDeletePharmacyMutation,

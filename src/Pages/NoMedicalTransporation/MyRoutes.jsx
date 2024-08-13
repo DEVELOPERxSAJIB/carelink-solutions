@@ -14,6 +14,7 @@ import {
   useDeleteRouteMutation,
 } from "../../Redux/api/RouteApi.js";
 import { useMeQuery } from "../../Redux/api/UserApi";
+import closeModal from './../../utils/modalClose';
 const MyRoutes = () => {
   const { data: logData } = useMeQuery();
   const { data, isLoading, refetch } = useGetAllRoutesQuery();
@@ -79,9 +80,17 @@ const MyRoutes = () => {
   };
 
   useEffect(() => {
-    if (isCreateSuccess || isUpdateSuccess || isDeleteSuccess) {
+    if (isCreateSuccess ) {
       refetch();
       setShow(false);
+      closeModal()
+    }
+    if (  isUpdateSuccess) {
+      refetch();
+      setShow(false);
+    }
+    if ( isDeleteSuccess) {
+      refetch();
     }
   }, [isCreateSuccess, isUpdateSuccess, isDeleteSuccess]);
   if (isLoading) return <AuthLoader />;

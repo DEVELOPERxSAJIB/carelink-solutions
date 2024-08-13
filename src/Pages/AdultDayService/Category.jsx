@@ -1,30 +1,9 @@
-import { useNavigate } from "react-router-dom";
+
 import DataTable from "../../components/Tables/DynamicTable";
 import FullscreenModal from "./../../components/Models/FullScreenModel";
 import useFormFields from './../../hook/useFormHook';
 import TableHeader from './../../components/Tables/TableHeader';
 
-// Function to get the start and end dates of the current week
-const getCurrentWeekDateRange = () => {
-  const now = new Date();
-  const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-  const endOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
-
-  const formatDate = (date) => {
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      weekday: "short",
-    };
-    return date.toLocaleDateString("en-US", options);
-  };
-
-  return {
-    start: formatDate(startOfWeek),
-    end: formatDate(endOfWeek),
-  };
-};
 
 const Category = () => {
   const columns = [
@@ -85,9 +64,7 @@ const Category = () => {
     status: "",
   };
   const [formData, handleChange, resetForm] = useFormFields(initialState);
-const handleSubmit =()=>[
-
-]
+const handleSubmit =()=>{}
   return (
     <div className="card">
 

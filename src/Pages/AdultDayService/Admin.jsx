@@ -14,7 +14,6 @@ import useFormValidation from "./../../hook/useFormValidation";
 import MultiSelect from "./../../components/FormElement/MultiSelect";
 import curdOption from "./../../utils/CurdOptions";
 import pagesOption from "./../../utils/PagesOptions";
-import closeModal from './../../utils/modalClose';
 import { showToast } from "../../utils/Toastify";
 import {
   useMeQuery,
@@ -24,6 +23,7 @@ import {
 } from "../../Redux/api/UserApi";
 import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
+import closeModal from './../../utils/modalClose';
 import {
   registrationSchema,
   updateregistrationSchema,
@@ -183,7 +183,7 @@ const Admin = () => {
       <TableHeader title="Our Admins" className="py-3 pt-5 fs-3 card-header" />
       <div className="card-body">
         <div className="gap-3 d-flex flex-wrap">
-          <FullscreenModal
+        <FullscreenModal
             id="admin"
             title="Add New admin"
             className="col-md-8"

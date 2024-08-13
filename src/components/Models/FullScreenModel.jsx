@@ -1,5 +1,5 @@
-
-const FullscreenModal = ({ title, children, id, className ,style}) => {
+import { motion } from "framer-motion";
+const FullscreenModal = ({ title, children, id, className, style }) => {
   return (
     <>
       <button
@@ -16,7 +16,11 @@ const FullscreenModal = ({ title, children, id, className ,style}) => {
         <div className="modal-dialog modal-fullscreen " role="document">
           <div className="modal-content">
             <div
-              style={style?style:{ minHeight: "60vh",minWidth:"60vw"}}
+              style={
+                style
+                  ? style
+                  : { minHeight: "60vh", maxHeight: "60vh", minWidth: "60vw" }
+              }
               className="row d-flex justify-content-center  align-items-center"
             >
               <div className={` ${className ? className : "col-md-4"}`}>
@@ -31,9 +35,15 @@ const FullscreenModal = ({ title, children, id, className ,style}) => {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div className="modal-body card m-3 d-flex justify-content-center align-items-center">
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="modal-body card m-5 d-flex justify-content-center align-items-center"
+                >
                   {children}
-                </div>
+                </motion.div>
                 <div className="modal-footer">
                   <button
                     type="button"

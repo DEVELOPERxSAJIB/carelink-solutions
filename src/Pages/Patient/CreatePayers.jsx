@@ -2,12 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import AuthLoader from "../../utils/Loaders/AuthLoader";
 import PageHeader from "../../components/FormElement/PageHeader";
 
-import { useCreatePayerMutation } from "../../Redux/api/PayerApi";
+import {
+  useCreatePayerMutation,
+  useCreateTestPayerMutation,
+} from "../../Redux/api/PayerApi";
 import Template from "./../../components/FormElement/Template";
 import { ReactToPrint } from "react-to-print";
 
 import { useSelector, useDispatch } from "react-redux";
-import { showToast } from './../../utils/Toastify';
+import { showToast } from "./../../utils/Toastify";
+import AdmitButton from './../../components/Patient/AdmitButton';
 import {
   getAllSectionStepState,
   updateSteps,
@@ -17,6 +21,8 @@ const CreatePayers = () => {
   const componentRef = useRef();
   const [createPayer, { data, isLoading, isSuccess, error }] =
     useCreatePayerMutation();
+  const [createTestPayer, { data: testData, error: testError }] =
+    useCreateTestPayerMutation();
   const localStoragePatient = JSON.parse(localStorage.getItem("Payer"));
   const allSteps = useSelector(getAllSectionStepState);
   const dispatch = useDispatch();
@@ -84,38 +90,25 @@ const CreatePayers = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const patientId = JSON.parse(localStorage.getItem("patient"));
-    console.log(patientId?._id)
+    console.log(patientId?._id);
     if (patientId?._id) {
-      formData.patientId = allSteps.patientId  ||patientId?._id;
+      formData.patientId = allSteps.patientId || patientId?._id;
       createPayer(formData);
       localStorage.removeItem("Payer");
-    }else{
-      showToast("error","Patient id required")
+    } else {
+      showToast("error", "Patient id required");
     }
   };
 
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    const patientId = JSON.parse(localStorage.getItem("patient"));
-    console.log(patientId?._id)
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
-      localStorage.setItem("Payer", JSON.stringify(formData));
-      createPayer(formData);
-    }else{
-      showToast("error","Patient id required")
-    }
+    
+    createTestPayer(formData);
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    const patientId = JSON.parse(localStorage.getItem("patient"));
-    console.log(patientId?._id)
-    if (patientId?._id) {
-      formData.patientId = allSteps.patientId ||patientId?._id;
-      localStorage.setItem("Payer", JSON.stringify(formData));
-    }else{
-      showToast("error","Patient id required")
-    }
+    
+    createTestPayer(formData);
   };
   useEffect(() => {
     setFormData((prevFormData) => ({
@@ -130,8 +123,17 @@ const CreatePayers = () => {
     if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
     }
-  }, [isSuccess]);
-  console.log(error)
+    if (testData) {
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      showToast("success", "Saved,Please continue");
+      localStorage.setItem("Payer", JSON.stringify(testData?.payload));
+
+    }
+    if (testError) {
+      showToast("error", testError?.data?.message);
+    }
+  }, [isSuccess, testError, testData]);
+  console.log(error);
   useEffect(() => {
     setTemplate(localStoragePatient?.payerComments);
     if (localStoragePatient) {
@@ -141,20 +143,21 @@ const CreatePayers = () => {
   useEffect(() => {
     showToast("error", error?.data?.message);
     showToast("success", data?.message);
-  }, [
-    error?.data?.message,
-    data?.message,
-  ]);
+  }, [error?.data?.message, data?.message]);
   if (isLoading) return <AuthLoader />;
 
   return (
     <form ref={componentRef} onSubmit={handleSubmit} className="card w-100">
-      <PageHeader title="Payer Information" className="card-header fs-3" back={false} />
+      <PageHeader
+        title="Payer Information"
+        className="card-header fs-3"
+        back={false}
+      />
 
       <div className="card-body">
         <div className="accordion" id="payerAccordion">
           {/* Primary Emergency Contact */}
-          
+
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingPrimary">
               <button
@@ -773,31 +776,23 @@ const CreatePayers = () => {
             </div>
           </div>
           <div className="row hide-on-print">
-            <div className="col-md-12 d-flex gap-3 mt-5 gap-2">
-              <button className="btn btn-primary" type="submit">
-                Save
-              </button>
+            <div className="d-flex justify-content-end mt-3 hide-on-print gap-3">
+            <AdmitButton/>
+
               <button
                 className="btn btn-primary"
-                type="submit"
-                onSubmit={handleSaveAndContinue}
+                type="button"
+                onClick={handleSaveAndContinue}
               >
                 Save and Continue
               </button>
               <button
                 className="btn btn-secondary"
-                type="submit"
+                type="button"
                 onClick={handleSaveAndExit}
               >
                 Save and Exit
               </button>
-              <ReactToPrint
-                trigger={() => (
-                  <button className="btn btn-primary">Print</button>
-                )}
-                content={() => componentRef.current}
-                documentTitle="Patient"
-              />
             </div>
           </div>
         </div>

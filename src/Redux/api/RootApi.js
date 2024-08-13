@@ -23,7 +23,9 @@ export const rootApi = createApi({
     "Referral",
     "Calendar",
     "Tickets",
-    "contactsupport","Vehicle","Trip",
+    "contactsupport",
+    "Vehicle",
+    "Trip",
   ],
   endpoints: () => ({}),
 });

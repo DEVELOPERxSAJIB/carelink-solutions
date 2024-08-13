@@ -26,7 +26,7 @@ const DataTable = ({
   const [visibleColumns, setVisibleColumns] = useState(
     columns.slice(0, 5).map((column) => column.field) // Show only first 5 columns by default
   );
-  const [truncate, setTruncate] = useState(true); // State to track truncation
+  const [truncate, setTruncate] = useState(false); // State to track truncation
   const tableRef = useRef();
   // Toggle truncation based on checkbox change
   const handleTruncate = (e) => {

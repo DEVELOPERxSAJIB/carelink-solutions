@@ -18,6 +18,14 @@ export const PayerApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Payer" }],
     }),
+    createTestPayer: builder.mutation({
+      query: (payerData) => ({
+        url: "payer/test",
+        method: "POST",
+        body: payerData,
+      }),
+      invalidatesTags: [{ type: "Payer" }],
+    }),
     getAllPayers: builder.query({
       query: () => ({
         url: "payer",
@@ -48,6 +56,7 @@ export const {
   useGetPayerByIdQuery,
   useGetPayerByPatientIdQuery,
   useCreatePayerMutation,
+  useCreateTestPayerMutation,
   useGetAllPayersQuery,
   useUpdatePayerMutation,
   useDeletePayerMutation,

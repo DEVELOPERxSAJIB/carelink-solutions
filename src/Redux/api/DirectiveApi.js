@@ -22,6 +22,14 @@ export const DirectiveApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Directive" }],
     }),
+    createTestDirective: builder.mutation({
+      query: (directiveData) => ({
+        url: "directive/test",
+        method: "POST",
+        body: directiveData,
+      }),
+      invalidatesTags: [{ type: "Directive" }],
+    }),
     getAllDirectives: builder.query({
       query: () => ({
         url: "directive",
@@ -52,6 +60,7 @@ export const {
   useGetDirectiveByIdQuery,
   useGetDirectiveByPatientIdQuery,
   useCreateDirectiveMutation,
+  useCreateTestDirectiveMutation,
   useGetAllDirectivesQuery,
   useUpdateDirectiveMutation,
   useDeleteDirectiveMutation,

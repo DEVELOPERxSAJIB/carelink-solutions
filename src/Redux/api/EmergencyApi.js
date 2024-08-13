@@ -18,6 +18,14 @@ export const EmergencyApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Emergency" }],
     }),
+    createTestEmergency: builder.mutation({
+      query: (emergencyData) => ({
+        url: "emergency/test",
+        method: "POST",
+        body: emergencyData,
+      }),
+      invalidatesTags: [{ type: "Emergency" }],
+    }),
     getAllEmergencies: builder.query({
       query: () => ({
         url: "emergency",
@@ -48,6 +56,7 @@ export const {
   useGetEmergencyByIdQuery,
   useGetEmergencyByPatientIdQuery,
   useCreateEmergencyMutation,
+  useCreateTestEmergencyMutation,
   useGetAllEmergenciesQuery,
   useUpdateEmergencyMutation,
   useDeleteEmergencyMutation,

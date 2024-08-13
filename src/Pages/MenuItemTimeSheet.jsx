@@ -14,9 +14,16 @@ import AuthLoader from "./../utils/Loaders/AuthLoader";
 import swal from "sweetalert";
 import EditModal from "./../components/Models/EditModal";
 import DatePicker from "react-datepicker";
+<<<<<<< HEAD
 import { useGetAllCaregiverQuery, useMeQuery } from "../Redux/api/UserApi";
 import { showToast } from "./../utils/Toastify";
 
+=======
+// Function to get the start and end dates of the current week
+import { useMeQuery } from "../Redux/api/UserApi";
+import { showToast } from './../utils/Toastify';
+import GeoLocation from './../components/geolocation/Geolocation';
+>>>>>>> 3c0c7da2dfa6646141285afd85a3317aee4e171f
 const MenuItemTimeSheet = () => {
   const { data: lgData } = useMeQuery();
   const [editId, setEditId] = useState("");

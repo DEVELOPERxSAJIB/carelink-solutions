@@ -18,6 +18,14 @@ export const PhysicianApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Physician" }],
     }),
+    createTestPhysician: builder.mutation({
+      query: (physicianData) => ({
+        url: "physician/test",
+        method: "POST",
+        body: physicianData,
+      }),
+      invalidatesTags: [{ type: "Physician" }],
+    }),
     getAllPhysicians: builder.query({
       query: () => ({
         url: "physician",
@@ -48,6 +56,7 @@ export const {
   useGetPhysicianByIdQuery,
   useGetPhysicianByPatientIdQuery,
   useCreatePhysicianMutation,
+  useCreateTestPhysicianMutation,
   useGetAllPhysiciansQuery,
   useUpdatePhysicianMutation,
   useDeletePhysicianMutation,

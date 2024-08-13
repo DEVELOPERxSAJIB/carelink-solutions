@@ -21,6 +21,7 @@ import {
 import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
 import { showToast } from './../../utils/Toastify';
+import closeModal from './../../utils/modalClose';
 import {
   registrationSchema,
   updateregistrationSchema,
@@ -146,6 +147,7 @@ const Guardians = () => {
       setSelectedCity(null);
       setSelectedCounty(null);
       setSelectedState(null);
+      closeModal()
     }
     if (isUpdateSuccess) {
       refetch();

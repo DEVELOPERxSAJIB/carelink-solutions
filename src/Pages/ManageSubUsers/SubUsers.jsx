@@ -14,6 +14,7 @@ import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import EditModal from "./../../components/Models/EditModal";
 import swal from "sweetalert";
 import { showToast } from "./../../utils/Toastify";
+import closeModal from './../../utils/modalClose';
 
 const SubUsers = () => {
   const [editId, setEditId] = useState("");
@@ -100,6 +101,7 @@ const SubUsers = () => {
   useEffect(() => {
     if (isCreateSuccess) {
       refetch();
+      closeModal()
       const modalTriggerButton = document.querySelector(
         '[data-bs-dismiss="modal"]'
       );

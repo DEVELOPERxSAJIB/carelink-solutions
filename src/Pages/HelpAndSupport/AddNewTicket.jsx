@@ -11,6 +11,7 @@ import MainLoader from "../../utils/Loaders/MainLoader";
 import { useEffect, useState } from "react";
 import swal from "sweetalert"
 import { showToast } from './../../utils/Toastify';
+import closeModal from './../../utils/modalClose';
 
 const AddNewTicket = () => {
   const { data, isLoading, refetch } = useGetAllTicketsQuery();
@@ -99,6 +100,7 @@ const AddNewTicket = () => {
         ticketSubject: "",
         message: "",
       });
+      closeModal()
       setTicketFile(null);
       refetch();
     }

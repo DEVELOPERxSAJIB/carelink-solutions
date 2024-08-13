@@ -13,9 +13,12 @@ import {
 import AuthLoader from "./../../utils/Loaders/AuthLoader";
 import PageHeader from "./../FormElement/PageHeader";
 import { formatDate } from "./../../utils/FormateDate";
+import AdmitButton from "./AdmitButton";
+import closeModal from './../../utils/modalClose';
 import {
   useCreatePatientMutation,
   useUpdatePatientMutation,
+  useCreateTestPatientMutation,
 } from "../../Redux/api/PatientApi.js";
 const CreatePatient = ({ editData }) => {
   // console.log(editData)
@@ -259,9 +262,6 @@ const CreatePatient = ({ editData }) => {
     pressureUlcerPrevention: "",
     pressureUlcerTreatment: "",
   });
-  console.log(formData);
-
- 
 
   const handleInputChange = (e) => {
     const { name, value, type, checked, options } = e.target;
@@ -496,7 +496,8 @@ const CreatePatient = ({ editData }) => {
   };
   const [createPatient, { data: patient, isLoading, error, isSuccess }] =
     useCreatePatientMutation();
-
+  const [createTestPatient, { data: testData, error: testError }] =
+    useCreateTestPatientMutation();
   const [
     updatePatient,
     {
@@ -519,16 +520,25 @@ const CreatePatient = ({ editData }) => {
   };
   const handleSaveAndExit = (e) => {
     e.preventDefault();
-    createPatient(formData);
-    localStorage.setItem("patient", JSON.stringify(formData));
+    createTestPatient(formData);
+    
   };
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    createPatient(formData);
-    localStorage.setItem("patient", JSON.stringify(formData));
+    createTestPatient(formData);
+    
   };
 
   useEffect(() => {
+    if (testError) {
+      showToast("error", testError?.data?.message);
+      console.log(testError);
+    }
+    if (testData) {
+      showToast("success", "Saved, please contiue");
+      dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
+      localStorage.setItem("patient", JSON.stringify(testData?.payload));
+    }
     if (isSuccess) {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
       localStorage.setItem("patient", JSON.stringify(patient?.payload));
@@ -537,7 +547,7 @@ const CreatePatient = ({ editData }) => {
       dispatch(updateSteps({ ...allSteps, steps: allSteps?.steps + 1 }));
       localStorage.setItem("patient", JSON.stringify(updateData?.payload));
     }
-  });
+  }, [isSuccess, isUpdateSuccess, testError, testData]);
 
   useEffect(() => {
     if (updateData?.message) {
@@ -9581,7 +9591,7 @@ const CreatePatient = ({ editData }) => {
           </div>
         </div>
         <div className="row mt-4 hide-on-print">
-          <div className="col-md-12 d-flex gap-3">
+          <div className="d-flex justify-content-end mt-3 hide-on-print gap-3">
             {editData?._id && (
               <button type="submit" className="btn btn-primary">
                 {isUpdateLoading || isLoading ? "...Wait please" : "edit"}
@@ -9589,8 +9599,13 @@ const CreatePatient = ({ editData }) => {
             )}
             {!editData?._id && (
               <>
-                <button type="submit" className="btn btn-primary">
-                  {isUpdateLoading || isLoading ? "...Wait please" : "Submit"}
+                <AdmitButton />
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleSaveAndContinue}
+                >
+                  Save & Continue
                 </button>
                 <button
                   type="button"
@@ -9598,13 +9613,6 @@ const CreatePatient = ({ editData }) => {
                   onClick={handleSaveAndExit}
                 >
                   Save & Exit
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onSubmit={handleSaveAndContinue}
-                >
-                  Save & Continue
                 </button>
               </>
             )}

@@ -14,8 +14,8 @@ import useFormValidation from "./../../hook/useFormValidation";
 import MultiSelect from "./../../components/FormElement/MultiSelect";
 import curdOption from "./../../utils/CurdOptions";
 import pagesOption from "./../../utils/PagesOptions";
-import { showToast } from './../../utils/Toastify';
 import closeModal from './../../utils/modalClose';
+import { showToast } from './../../utils/Toastify';
 import {
   useMeQuery,
   useGetAllCaregiverQuery,

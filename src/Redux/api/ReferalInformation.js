@@ -18,6 +18,14 @@ export const ReferralApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Referral" }],
     }),
+    createTestReferral: builder.mutation({
+      query: (referralData) => ({
+        url: "referral/test",
+        method: "POST",
+        body: referralData,
+      }),
+      invalidatesTags: [{ type: "Referral" }],
+    }),
     getAllReferrals: builder.query({
       query: () => ({
         url: "referral",
@@ -48,6 +56,7 @@ export const {
   useGetReferralByIdQuery,
   useGetReferralByPatientIdQuery,
   useCreateReferralMutation,
+  useCreateTestReferralMutation,
   useGetAllReferralsQuery,
   useUpdateReferralMutation,
   useDeleteReferralMutation,
