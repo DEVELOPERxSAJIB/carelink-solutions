@@ -12,6 +12,7 @@ import { getChatState, setChatData } from "./../Redux/slices/ChatSlic";
 import {
   useCreateChatMutation,
   useGetAllChatsQuery,
+  useGetAllChatsUsersQuery,
 } from "../Redux/api/ChatApi";
 const PushNotes = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,8 @@ const PushNotes = () => {
     refetch,
     isLoading: isChatLoading,
   } = useGetAllChatsQuery(chatUser?._id);
+  const { data: chatUsers } = useGetAllChatsUsersQuery();
+  console.log(chatUsers);
   const [createChat, { data: newChat, isSuccess: isNewChatSuccess, error }] =
     useCreateChatMutation();
 
@@ -85,7 +88,7 @@ const PushNotes = () => {
 
   useEffect(() => {
     scrollChat.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatsData,chats?.chats]);
+  }, [chatsData, chats?.chats]);
 
   useEffect(() => {
     refetch();
@@ -299,41 +302,51 @@ const PushNotes = () => {
                   </li>
                   {users?.payload?.users?.length > 0 ? (
                     <>
-                      {users?.payload?.users?.map((item, index) => {
-                        return (
-                          <li
-                            key={index}
-                            className="chat-contact-list-item mb-1"
-                          >
-                            <a className="d-flex align-items-center">
-                              <div className="flex-shrink-0 avatar avatar-online">
-                                <img
-                                  src={avatar}
-                                  alt="Avatar"
-                                  className="rounded-circle"
-                                />
-                              </div>
-                              <div className="chat-contact-info flex-grow-1 ms-4">
-                                <div className="d-flex justify-content-between align-items-center">
-                                  <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                                    {item?.userInfo?.firstName}
-                                    {item?.userInfo?.lastName}
-                                  </h6>
-                                  <small className="">
-                                    {moment(item?.createdAt).fromNow()}
+                      {users?.payload?.users
+                        ?.filter(
+                          (user) =>
+                            !chatUsers?.chats?.some(
+                              (chat) =>
+                                chat?.senderId === user?._id ||
+                                chat?.receiverId === user?._id
+                            )
+                        )
+                        ?.map((item, index) => {
+                          return (
+                            <li
+                              key={index}
+                              onClick={() => handleChatCreate(item?.userInfo)}
+                              className="chat-contact-list-item mb-1"
+                            >
+                              <a className="d-flex align-items-center">
+                                <div className="flex-shrink-0 avatar avatar-online">
+                                  <img
+                                    src={avatar}
+                                    alt="Avatar"
+                                    className="rounded-circle"
+                                  />
+                                </div>
+                                <div className="chat-contact-info flex-grow-1 ms-4">
+                                  <div className="d-flex justify-content-between align-items-center">
+                                    <h6 className="chat-contact-name text-truncate m-0 fw-normal">
+                                      {item?.userInfo?.firstName}
+                                      {item?.userInfo?.lastName}
+                                    </h6>
+                                    <small className="">
+                                      {moment(item?.createdAt).fromNow()}
+                                    </small>
+                                  </div>
+                                  <small className="chat-contact-status text-truncate">
+                                    {item?.lastMsg?.message?.text}
                                   </small>
                                 </div>
-                                <small className="chat-contact-status text-truncate">
-                                  {item?.lastMsg?.message?.text}
-                                </small>
-                              </div>
-                            </a>
-                          </li>
+                              </a>
+                            </li>
 
-                          // avatar avatar-busy
-                          // avatar avatar-offline
-                        );
-                      })}
+                            // avatar avatar-busy
+                            // avatar avatar-offline
+                          );
+                        })}
                     </>
                   ) : (
                     <li className="chat-contact-list-item chat-list-item-0 d-none">
@@ -352,34 +365,43 @@ const PushNotes = () => {
                   <li className="chat-contact-list-item contact-list-item-0 d-none">
                     <h6 className=" mb-0">No Contacts Found</h6>
                   </li>
-                  {users?.payload?.users?.map((item, index) => {
-                    return (
-                      <li
-                        key={index}
-                        onClick={() => handleChatCreate(item?.userInfo)}
-                        className="chat-contact-list-item mb-0"
-                      >
-                        <a className="d-flex align-items-center">
-                          <div className="flex-shrink-0 avatar">
-                            <img
-                              src={avatar}
-                              alt="Avatar"
-                              className="rounded-circle"
-                            />
-                          </div>
-                          <div className="chat-contact-info flex-grow-1 ms-4">
-                            <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                              {item?.userInfo?.firstName} {""}
-                              {item?.userInfo?.lastName}
-                            </h6>
-                            <small className="chat-contact-status text-truncate">
-                              {item?.userInfo?.role}
-                            </small>
-                          </div>
-                        </a>
-                      </li>
-                    );
-                  })}
+                  {users?.payload?.users
+                    ?.filter(
+                      (user) =>
+                        !chatUsers?.chats?.some(
+                          (chat) =>
+                            chat?.senderId !== user?._id ||
+                            chat?.receiverId !== user?._id
+                        )
+                    )
+                    ?.map((item, index) => {
+                      return (
+                        <li
+                          key={index}
+                          onClick={() => handleChatCreate(item?.userInfo)}
+                          className="chat-contact-list-item mb-0"
+                        >
+                          <a className="d-flex align-items-center">
+                            <div className="flex-shrink-0 avatar">
+                              <img
+                                src={avatar}
+                                alt="Avatar"
+                                className="rounded-circle"
+                              />
+                            </div>
+                            <div className="chat-contact-info flex-grow-1 ms-4">
+                              <h6 className="chat-contact-name text-truncate m-0 fw-normal">
+                                {item?.userInfo?.firstName} {""}
+                                {item?.userInfo?.lastName}
+                              </h6>
+                              <small className="chat-contact-status text-truncate">
+                                {item?.userInfo?.role}
+                              </small>
+                            </div>
+                          </a>
+                        </li>
+                      );
+                    })}
                 </ul>
               </div>
             </div>
