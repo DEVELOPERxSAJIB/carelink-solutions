@@ -106,7 +106,10 @@ const SinglePatient = () => {
         documentTitle="Patient"
       />
       {/* <button onClick={handlePrint}></button> */}
-      <div style={{ fontSize: "10px" }} className="layout-page w-100  ">
+      <div
+        style={{ fontSize: "10px" }}
+        className="layout-page w-100 patient-body "
+      >
         {/* Navbar */}
         {/* patient-body */}
         {/* / Navbar */}
@@ -306,7 +309,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col">
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="medicareNumber"
                           className="form-label mr-2"
                         >
@@ -319,7 +322,7 @@ const SinglePatient = () => {
                     <div className="">
                       <div className="col">
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="medicaidNumber"
                           className="form-label mr-2"
                         >
@@ -329,7 +332,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col">
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="gender"
                           className="form-label mr-2"
                         >
@@ -359,7 +362,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           type="checkbox"
@@ -372,7 +375,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="ethnicityA"
                           className="form-check-label"
                         >
@@ -398,7 +401,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="ethnicityB"
                           className="form-check-label"
                         >
@@ -424,7 +427,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="ethnicityC"
                           className="form-check-label"
                         >
@@ -448,7 +451,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="ethnicityD"
                           className="form-check-label"
                         >
@@ -474,7 +477,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="ethnicityE"
                           className="form-check-label"
                         >
@@ -500,7 +503,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="ethnicityX"
                           className="form-check-label"
                         >
@@ -526,7 +529,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="ethnicityY"
                           className="form-check-label"
                         >
@@ -560,7 +563,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceA"
                           className="form-check-label"
                         >
@@ -586,7 +589,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceB"
                           className="form-check-label"
                         >
@@ -612,7 +615,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceC"
                           className="form-check-label"
                         >
@@ -636,7 +639,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceD"
                           className="form-check-label"
                         >
@@ -660,7 +663,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceE"
                           className="form-check-label"
                         >
@@ -684,7 +687,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceF"
                           className="form-check-label"
                         >
@@ -708,7 +711,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceG"
                           className="form-check-label"
                         >
@@ -732,7 +735,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceH"
                           className="form-check-label"
                         >
@@ -756,7 +759,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceI"
                           className="form-check-label"
                         >
@@ -780,7 +783,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceJ"
                           className="form-check-label"
                         >
@@ -804,7 +807,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceK"
                           className="form-check-label"
                         >
@@ -830,7 +833,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceL"
                           className="form-check-label"
                         >
@@ -854,7 +857,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceM"
                           className="form-check-label"
                         >
@@ -880,7 +883,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceN"
                           className="form-check-label"
                         >
@@ -906,7 +909,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceX"
                           className="form-check-label"
                         >
@@ -932,7 +935,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceY"
                           className="form-check-label"
                         >
@@ -958,7 +961,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="raceZ"
                           className="form-check-label"
                         >
@@ -998,7 +1001,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="s0"
                           className="form-check-label"
                         >
@@ -1024,7 +1027,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="s1"
                           className="form-check-label"
                         >
@@ -1050,7 +1053,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="s2"
                           className="form-check-label"
                         >
@@ -1076,7 +1079,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="s3"
                           className="form-check-label"
                         >
@@ -1102,7 +1105,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="s4"
                           className="form-check-label"
                         >
@@ -1128,7 +1131,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="s5"
                           className="form-check-label"
                         >
@@ -1154,7 +1157,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="s6"
                           className="form-check-label"
                         >
@@ -1180,7 +1183,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="s7"
                           className="form-check-label"
                         >
@@ -1206,7 +1209,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="s8"
                           className="form-check-label"
                         >
@@ -1232,7 +1235,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="s9"
                           className="form-check-label"
                         >
@@ -1258,7 +1261,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="s10"
                           className="form-check-label"
                         >
@@ -1284,7 +1287,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="s11"
                           className="form-check-label"
                         >
@@ -1310,7 +1313,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="sUK"
                           className="form-check-label"
                         >
@@ -2217,7 +2220,7 @@ const SinglePatient = () => {
                           className="form-check-input"
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="otherUnknown"
                           className="form-check-label"
                         >
@@ -3538,7 +3541,7 @@ const SinglePatient = () => {
                     <div className="">
                       <div className="col">
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="recallSock"
                           className="form-label mr-2"
                         >
@@ -3616,7 +3619,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col">
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="recallBlue"
                           className="form-label mr-2"
                         >
@@ -3694,7 +3697,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col">
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="recallBed"
                           className="form-label mr-2"
                         >
@@ -3799,7 +3802,7 @@ const SinglePatient = () => {
                     <div className="">
                       <div className="col">
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="acuteOnset"
                           className="form-label mr-2"
                         >
@@ -3854,7 +3857,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="col">
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="inattention"
                           className="form-label mr-2"
                         >
@@ -4669,7 +4672,7 @@ const SinglePatient = () => {
                           htmlFor="totalSeverityScore"
                           className="form-label mr-2"
                         >
-                          D0160. Total Severity Score
+                          D0160. Total Severity Score:
                         </label>
                         {formData?.totalSeverityScore || "N/A"}
                       </div>
@@ -4684,7 +4687,7 @@ const SinglePatient = () => {
                       className="form-label mr-2"
                     >
                       D0700. Social Isolation: How often do you feel lonely or
-                      isolated from those around you?
+                      isolated from those around you?:
                     </label>
                     {formData?.socialIsolation || "N/A"}
                   </div>
@@ -4915,7 +4918,7 @@ const SinglePatient = () => {
                           }
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="frequencyNever"
                         >
                           Never
@@ -4940,7 +4943,7 @@ const SinglePatient = () => {
                           }
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="frequencyLessThanOnceAMonth"
                         >
                           Less than once a month
@@ -4965,7 +4968,7 @@ const SinglePatient = () => {
                           }
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="frequencyOnceAMonth"
                         >
                           Once a month
@@ -4990,7 +4993,7 @@ const SinglePatient = () => {
                           }
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="frequencySeveralTimesEachMonth"
                         >
                           Several times each month
@@ -5015,7 +5018,7 @@ const SinglePatient = () => {
                           }
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="frequencySeveralTimesAWeek"
                         >
                           Several times a week
@@ -5040,7 +5043,7 @@ const SinglePatient = () => {
                           }
                         />
                         <label
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
                           htmlFor="frequencyAtLeastDaily"
                         >
                           At least daily
@@ -5229,7 +5232,7 @@ const SinglePatient = () => {
                           Available
                         </label>
                       </div>
-                      <div className="form-check">
+                      <div className="form-check d-flex align-items-cener gap-1">
                         <input
                           type="checkbox"
                           className="form-check-input"
@@ -5245,7 +5248,7 @@ const SinglePatient = () => {
                           clock
                         </label>
                       </div>
-                      <div className="form-check">
+                      <div className="form-check d-flex align-items-cener gap-1">
                         <input
                           type="checkbox"
                           className="form-check-input"
@@ -5260,7 +5263,7 @@ const SinglePatient = () => {
                           Patient lives in congregate situation, Regular Daytime
                         </label>
                       </div>
-                      <div className="form-check">
+                      <div className="form-check d-flex align-items-cener gap-1">
                         <input
                           type="checkbox"
                           className="form-check-input"
@@ -5276,7 +5279,7 @@ const SinglePatient = () => {
                           Nighttime
                         </label>
                       </div>
-                      <div className="form-check">
+                      <div className="form-check d-flex align-items-cener gap-1">
                         <input
                           type="checkbox"
                           className="form-check-input"
@@ -5292,7 +5295,7 @@ const SinglePatient = () => {
                           Occasional/Short-Term Assistance
                         </label>
                       </div>
-                      <div className="form-check">
+                      <div className="form-check d-flex align-items-cener gap-1">
                         <input
                           type="checkbox"
                           className="form-check-input"
@@ -5324,7 +5327,7 @@ const SinglePatient = () => {
                     >
                       a. ADL assistance
                     </label>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5339,7 +5342,7 @@ const SinglePatient = () => {
                         No assistance needed
                       </label>
                     </div>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5354,7 +5357,7 @@ const SinglePatient = () => {
                         Non-agency caregiver(s) currently provide assistance
                       </label>
                     </div>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5370,7 +5373,7 @@ const SinglePatient = () => {
                         services
                       </label>
                     </div>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5387,7 +5390,7 @@ const SinglePatient = () => {
                         assistance
                       </label>
                     </div>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5413,7 +5416,7 @@ const SinglePatient = () => {
                     >
                       d. Medical procedures/treatments
                     </label>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5428,7 +5431,7 @@ const SinglePatient = () => {
                         No assistance needed
                       </label>
                     </div>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5443,7 +5446,7 @@ const SinglePatient = () => {
                         Non-agency caregiver(s) currently provide assistance
                       </label>
                     </div>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5459,7 +5462,7 @@ const SinglePatient = () => {
                         services
                       </label>
                     </div>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5476,7 +5479,7 @@ const SinglePatient = () => {
                         assistance
                       </label>
                     </div>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5501,7 +5504,7 @@ const SinglePatient = () => {
                     >
                       f. Supervision and safety (due to cognitive impairment)
                     </label>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5516,7 +5519,7 @@ const SinglePatient = () => {
                         No assistance needed
                       </label>
                     </div>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5531,7 +5534,7 @@ const SinglePatient = () => {
                         Non-agency caregiver(s) currently provide assistance
                       </label>
                     </div>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5547,7 +5550,7 @@ const SinglePatient = () => {
                         services
                       </label>
                     </div>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5564,7 +5567,7 @@ const SinglePatient = () => {
                         assistance
                       </label>
                     </div>
-                    <div className="form-check">
+                    <div className="form-check d-flex align-items-cener gap-1">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -5618,7 +5621,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5636,7 +5639,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5654,7 +5657,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5672,7 +5675,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5700,7 +5703,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5718,7 +5721,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5736,7 +5739,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5754,7 +5757,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5782,7 +5785,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5800,7 +5803,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5818,7 +5821,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5836,7 +5839,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5865,7 +5868,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5883,7 +5886,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5901,7 +5904,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5919,7 +5922,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5937,7 +5940,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5955,7 +5958,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -5974,7 +5977,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6002,7 +6005,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6020,7 +6023,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6038,7 +6041,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6056,7 +6059,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6075,7 +6078,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6103,7 +6106,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6121,7 +6124,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6139,7 +6142,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6157,7 +6160,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6186,7 +6189,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6204,7 +6207,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6222,7 +6225,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6240,7 +6243,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6258,7 +6261,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6276,7 +6279,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6304,7 +6307,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6322,7 +6325,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6340,7 +6343,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6358,7 +6361,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6376,7 +6379,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6394,7 +6397,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6412,7 +6415,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       {" "}
                       <input
@@ -6467,7 +6470,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6490,7 +6493,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6513,7 +6516,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6536,7 +6539,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6559,7 +6562,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6595,7 +6598,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6618,7 +6621,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6641,7 +6644,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6664,7 +6667,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6687,7 +6690,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6723,7 +6726,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6746,7 +6749,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6769,7 +6772,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6792,7 +6795,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6815,7 +6818,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6851,7 +6854,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6876,7 +6879,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6901,7 +6904,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6927,7 +6930,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6953,7 +6956,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               type="radio"
@@ -6991,7 +6994,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7016,7 +7019,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7043,7 +7046,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7068,7 +7071,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7093,7 +7096,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7120,7 +7123,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7160,7 +7163,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check"
+                              className="form-check d-flex align-items-cener gap-1"
                             >
                               <input
                                 type="radio"
@@ -7183,7 +7186,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check"
+                              className="form-check d-flex align-items-cener gap-1"
                             >
                               <input
                                 type="radio"
@@ -7206,7 +7209,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check"
+                              className="form-check d-flex align-items-cener gap-1"
                             >
                               <input
                                 type="radio"
@@ -7229,7 +7232,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check"
+                              className="form-check d-flex align-items-cener gap-1"
                             >
                               <input
                                 type="radio"
@@ -7252,7 +7255,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check"
+                              className="form-check d-flex align-items-cener gap-1"
                             >
                               <input
                                 type="radio"
@@ -7275,7 +7278,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check"
+                              className="form-check d-flex align-items-cener gap-1"
                             >
                               <input
                                 type="radio"
@@ -7298,7 +7301,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check"
+                              className="form-check d-flex align-items-cener gap-1"
                             >
                               <input
                                 type="radio"
@@ -7321,7 +7324,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check"
+                              className="form-check d-flex align-items-cener gap-1"
                             >
                               <input
                                 type="radio"
@@ -7344,7 +7347,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check"
+                              className="form-check d-flex align-items-cener gap-1"
                             >
                               <input
                                 type="radio"
@@ -7367,7 +7370,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check"
+                              className="form-check d-flex align-items-cener gap-1"
                             >
                               <input
                                 type="radio"
@@ -7490,7 +7493,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7513,7 +7516,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7536,7 +7539,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7559,7 +7562,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7582,7 +7585,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7605,7 +7608,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7628,7 +7631,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7651,7 +7654,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7674,7 +7677,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7697,7 +7700,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7733,7 +7736,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7756,7 +7759,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7779,7 +7782,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7802,7 +7805,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7825,7 +7828,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7848,7 +7851,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7871,7 +7874,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7894,7 +7897,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7917,7 +7920,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7940,7 +7943,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7976,7 +7979,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -7999,7 +8002,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8022,7 +8025,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8045,7 +8048,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8068,7 +8071,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8091,7 +8094,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8114,7 +8117,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8137,7 +8140,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8160,7 +8163,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8183,7 +8186,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8220,7 +8223,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8243,7 +8246,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8266,7 +8269,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8289,7 +8292,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8312,7 +8315,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8335,7 +8338,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8358,7 +8361,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8381,7 +8384,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8404,7 +8407,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8427,7 +8430,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           className="form-check-input"
@@ -8468,7 +8471,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8493,7 +8496,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8518,7 +8521,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8543,7 +8546,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8568,7 +8571,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8593,7 +8596,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8618,7 +8621,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8643,7 +8646,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8668,7 +8671,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8693,7 +8696,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8731,7 +8734,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8756,7 +8759,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8781,7 +8784,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8806,7 +8809,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8831,7 +8834,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8856,7 +8859,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8881,7 +8884,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8906,7 +8909,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8931,7 +8934,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -8956,7 +8959,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check"
+                            className="form-check d-flex align-items-cener gap-1"
                           >
                             <input
                               className="form-check-input"
@@ -9015,7 +9018,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1600-0"
@@ -9039,7 +9042,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1600-1"
@@ -9063,7 +9066,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1600-NA"
@@ -9087,7 +9090,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1600-UK"
@@ -9122,7 +9125,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1610-0"
@@ -9147,7 +9150,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1610-1"
@@ -9171,7 +9174,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1610-2"
@@ -9207,7 +9210,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1620-0"
@@ -9231,7 +9234,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1620-1"
@@ -9255,7 +9258,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1620-2"
@@ -9279,7 +9282,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1620-3"
@@ -9303,7 +9306,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1620-4"
@@ -9327,7 +9330,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1620-5"
@@ -9351,7 +9354,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1620-NA"
@@ -9375,7 +9378,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1620-UK"
@@ -9411,7 +9414,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1630-0"
@@ -9435,7 +9438,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1630-1"
@@ -9461,7 +9464,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="m1630-2"
@@ -9517,7 +9520,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="primaryDiagnosis1"
@@ -9542,7 +9545,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="primaryDiagnosis2"
@@ -9575,7 +9578,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="primaryDiagnosisRating0"
@@ -9598,7 +9601,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="primaryDiagnosisRating1"
@@ -9677,7 +9680,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="pvd"
@@ -9702,7 +9705,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="dm"
@@ -9726,7 +9729,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="none"
@@ -9781,7 +9784,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="falls"
@@ -9809,7 +9812,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="weightLoss"
@@ -9837,7 +9840,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="hospitalizations"
@@ -9864,7 +9867,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="emergencyVisits"
@@ -9891,7 +9894,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="declineInStatus"
@@ -9918,7 +9921,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="complianceDifficulty"
@@ -9945,7 +9948,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="medications"
@@ -9972,7 +9975,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="exhaustion"
@@ -9999,7 +10002,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="otherRisks"
@@ -10026,7 +10029,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="none"
@@ -10077,7 +10080,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           id={`painEffectOnSleep-${value}`}
@@ -10126,7 +10129,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           id={`painInterferenceWithTherapy-${value}`}
@@ -10173,7 +10176,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           id={`painInterferenceWithActivities-${value}`}
@@ -10216,7 +10219,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           id={`fallsSinceSOCROC-${value}`}
@@ -10262,7 +10265,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check"
+                          className="form-check d-flex align-items-cener gap-1"
                         >
                           <input
                             id={`fallsDetails-${value}`}
@@ -10326,7 +10329,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex align-items-cener gap-1"
                       >
                         <input
                           id={`shortOfBreath-${value}`}
@@ -10389,165 +10392,160 @@ const SinglePatient = () => {
                     {formData?.weight || "N/A"}
                   </div>
                   <label
+                    style={{ fontSize: "12px" }}
+                    className="form-label mr-2"
+                  >
+                    K0520. Nutritional Approaches
+                  </label>
+                  <div className="  col">
+                    <label
                       style={{ fontSize: "12px" }}
                       className="form-label mr-2"
                     >
-                      K0520. Nutritional Approaches
+                      On Admission
                     </label>
 
-                    <div className="  col">
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        id="onAdmission-parenteralIVFeeding"
+                        name="nutritionalApproachesOnAdmission"
+                        type="checkbox"
+                        value="parenteralIVFeeding"
+                        checked={formData?.nutritionalApproachesOnAdmission?.includes(
+                          "parenteralIVFeeding"
+                        )}
+                        className="form-check-input"
+                      />
                       <label
                         style={{ fontSize: "12px" }}
-                        className="form-label mr-2"
+                        htmlFor="onAdmission-parenteralIVFeeding"
+                        className="form-check-label"
                       >
-                        On Admission
+                        Parenteral/IV feeding
                       </label>
-
-                      <div
-                        style={{
-                          minHight: 0,
-                          margin: 0,
-                          padding: "0px 0px 0px auto",
-                        }}
-                        className="form-check"
-                      >
-                        <input
-                          id="onAdmission-parenteralIVFeeding"
-                          name="nutritionalApproachesOnAdmission"
-                          type="checkbox"
-                          value="parenteralIVFeeding"
-                          checked={formData?.nutritionalApproachesOnAdmission?.includes(
-                            "parenteralIVFeeding"
-                          )}
-                          className="form-check-input"
-                        />
-                        <label
-                          style={{ fontSize: "12px" }}
-                          htmlFor="onAdmission-parenteralIVFeeding"
-                          className="form-check-label"
-                        >
-                          Parenteral/IV feeding
-                        </label>
-                      </div>
-
-                      <div
-                        style={{
-                          minHight: 0,
-                          margin: 0,
-                          padding: "0px 0px 0px auto",
-                        }}
-                        className="form-check"
-                      >
-                        <input
-                          id="onAdmission-feedingTube"
-                          name="nutritionalApproachesOnAdmission"
-                          type="checkbox"
-                          value="feedingTube"
-                          checked={formData?.nutritionalApproachesOnAdmission?.includes(
-                            "feedingTube"
-                          )}
-                          className="form-check-input"
-                        />
-                        <label
-                          style={{ fontSize: "12px" }}
-                          htmlFor="onAdmission-feedingTube"
-                          className="form-check-label"
-                        >
-                          Feeding tube (e.g., nasogastric or abdominal (PEG))
-                        </label>
-                      </div>
-
-                      <div
-                        style={{
-                          minHight: 0,
-                          margin: 0,
-                          padding: "0px 0px 0px auto",
-                        }}
-                        className="form-check"
-                      >
-                        <input
-                          id="onAdmission-mechanicallyAlteredDiet"
-                          name="nutritionalApproachesOnAdmission"
-                          type="checkbox"
-                          value="mechanicallyAlteredDiet"
-                          checked={formData?.nutritionalApproachesOnAdmission?.includes(
-                            "mechanicallyAlteredDiet"
-                          )}
-                          className="form-check-input"
-                        />
-                        <label
-                          style={{ fontSize: "12px" }}
-                          htmlFor="onAdmission-mechanicallyAlteredDiet"
-                          className="form-check-label"
-                        >
-                          Mechanically altered diet (e.g., pureed food,
-                          thickened liquids)
-                        </label>
-                      </div>
-
-                      <div
-                        style={{
-                          minHight: 0,
-                          margin: 0,
-                          padding: "0px 0px 0px auto",
-                        }}
-                        className="form-check"
-                      >
-                        <input
-                          id="onAdmission-therapeuticDiet"
-                          name="nutritionalApproachesOnAdmission"
-                          type="checkbox"
-                          value="therapeuticDiet"
-                          checked={formData?.nutritionalApproachesOnAdmission?.includes(
-                            "therapeuticDiet"
-                          )}
-                          className="form-check-input"
-                        />
-                        <label
-                          style={{ fontSize: "12px" }}
-                          htmlFor="onAdmission-therapeuticDiet"
-                          className="form-check-label"
-                        >
-                          Therapeutic diet (e.g., low salt, diabetic, low
-                          cholesterol)
-                        </label>
-                      </div>
-
-                      <div
-                        style={{
-                          minHight: 0,
-                          margin: 0,
-                          padding: "0px 0px 0px auto",
-                        }}
-                        className="form-check"
-                      >
-                        <input
-                          id="onAdmission-none"
-                          name="nutritionalApproachesOnAdmission"
-                          type="checkbox"
-                          value="none"
-                          checked={formData?.nutritionalApproachesOnAdmission?.includes(
-                            "none"
-                          )}
-                          className="form-check-input"
-                        />
-                        <label
-                          style={{ fontSize: "12px" }}
-                          htmlFor="onAdmission-none"
-                          className="form-check-label"
-                        >
-                          None of the above
-                        </label>
-                      </div>
                     </div>
+
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        id="onAdmission-feedingTube"
+                        name="nutritionalApproachesOnAdmission"
+                        type="checkbox"
+                        value="feedingTube"
+                        checked={formData?.nutritionalApproachesOnAdmission?.includes(
+                          "feedingTube"
+                        )}
+                        className="form-check-input"
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        htmlFor="onAdmission-feedingTube"
+                        className="form-check-label"
+                      >
+                        Feeding tube (e.g., nasogastric or abdominal (PEG))
+                      </label>
+                    </div>
+
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        id="onAdmission-mechanicallyAlteredDiet"
+                        name="nutritionalApproachesOnAdmission"
+                        type="checkbox"
+                        value="mechanicallyAlteredDiet"
+                        checked={formData?.nutritionalApproachesOnAdmission?.includes(
+                          "mechanicallyAlteredDiet"
+                        )}
+                        className="form-check-input"
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        htmlFor="onAdmission-mechanicallyAlteredDiet"
+                        className="form-check-label"
+                      >
+                        Mechanically altered diet (e.g., pureed food, thickened
+                        liquids)
+                      </label>
+                    </div>
+
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        id="onAdmission-therapeuticDiet"
+                        name="nutritionalApproachesOnAdmission"
+                        type="checkbox"
+                        value="therapeuticDiet"
+                        checked={formData?.nutritionalApproachesOnAdmission?.includes(
+                          "therapeuticDiet"
+                        )}
+                        className="form-check-input"
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        htmlFor="onAdmission-therapeuticDiet"
+                        className="form-check-label"
+                      >
+                        Therapeutic diet (e.g., low salt, diabetic, low
+                        cholesterol)
+                      </label>
+                    </div>
+
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        id="onAdmission-none"
+                        name="nutritionalApproachesOnAdmission"
+                        type="checkbox"
+                        value="none"
+                        checked={formData?.nutritionalApproachesOnAdmission?.includes(
+                          "none"
+                        )}
+                        className="form-check-input"
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        htmlFor="onAdmission-none"
+                        className="form-check-label"
+                      >
+                        None of the above
+                      </label>
+                    </div>
+                  </div>
                 </td>
                 <td>
-                  
-
                   {/* Nutritional Approaches */}
                   <div className="  col">
-                   
-
                     <div>
                       <div className="  col">
                         <label
@@ -10563,7 +10561,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check"
+                          className="form-check d-flex align-items-cener gap-1"
                         >
                           <input
                             id="last7Days-parenteralIVFeeding"
@@ -10590,7 +10588,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check"
+                          className="form-check d-flex align-items-cener gap-1"
                         >
                           <input
                             id="last7Days-feedingTube"
@@ -10617,7 +10615,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check"
+                          className="form-check d-flex align-items-cener gap-1"
                         >
                           <input
                             id="last7Days-mechanicallyAlteredDiet"
@@ -10645,7 +10643,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check"
+                          className="form-check d-flex align-items-cener gap-1"
                         >
                           <input
                             id="last7Days-therapeuticDiet"
@@ -10673,7 +10671,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check"
+                          className="form-check d-flex align-items-cener gap-1"
                         >
                           <input
                             id="last7Days-none"
@@ -10709,7 +10707,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check"
+                          className="form-check d-flex align-items-cener gap-1"
                         >
                           <input
                             id="atDischarge-parenteralIVFeeding"
@@ -10736,7 +10734,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check"
+                          className="form-check d-flex align-items-cener gap-1"
                         >
                           <input
                             id="atDischarge-feedingTube"
@@ -10763,7 +10761,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check"
+                          className="form-check d-flex align-items-cener gap-1"
                         >
                           <input
                             id="atDischarge-mechanicallyAlteredDiet"
@@ -10791,7 +10789,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check"
+                          className="form-check d-flex align-items-cener gap-1"
                         >
                           <input
                             id="atDischarge-therapeuticDiet"
@@ -10819,7 +10817,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check"
+                          className="form-check d-flex align-items-cener gap-1"
                         >
                           <input
                             id="atDischarge-none"
@@ -10859,7 +10857,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="feedingOrEating0"
@@ -10882,7 +10880,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="feedingOrEating1"
@@ -10913,7 +10911,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="feedingOrEating2"
@@ -10937,7 +10935,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="feedingOrEating3"
@@ -10962,7 +10960,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="feedingOrEating4"
@@ -10986,7 +10984,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check"
+                      className="form-check d-flex align-items-cener gap-1"
                     >
                       <input
                         id="feedingOrEating5"
@@ -11007,5867 +11005,5842 @@ const SinglePatient = () => {
                 </td>
               </tr>
               <tr>
-                <td colSpan="3"></td>
+                <td colSpan="3">
+                  <h6
+                    style={{
+                      // border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                      textAlign: "center",
+                      backgroundColor: "#eee",
+                    }}
+                    className=""
+                  >
+                    Skin Conditions
+                  </h6>
+                </td>
               </tr>
               <tr>
-                {/* full data  herer  */}
+                <td>
+                  {" "}
+                  <div className="  col">
+                    <h6 style={{ fontSize: "12px" }}>
+                      1306. Does this patient have at least one Unhealed
+                      Pressure Ulcer/Injury at Stage 2 or Higher or designated
+                      as Unstageable?
+                    </h6>
+                    <p>
+                      (Excludes Stage 1 pressure injuries and all healed
+                      pressure ulcers/injuries)
+                    </p>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1306"
+                        value="0"
+                        checked={formData?.m1306 === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        0. No
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1306"
+                        value="1"
+                        checked={formData?.m1306 === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        1. Yes
+                      </label>
+                    </div>
+                  </div>
+                  {/* m1307 */}
+                  <div className="  col">
+                    <h6 style={{ fontSize: "12px" }}>
+                      M1307. The Oldest Stage 2 Pressure Ulcer that is present
+                      at discharge:
+                    </h6>
+                    <p>(Excludes healed Stage 2 pressure ulcers)</p>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1307"
+                        value="1"
+                        checked={formData?.m1307 === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        1. Was present at the most recent SOC/ROC assessment
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1307"
+                        value="2"
+                        checked={formData?.m1307 === "2"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        2. Developed since the most recent SOC/ROC assessment
+                      </label>
+                    </div>
+                    <div className="form-group">
+                      <label>
+                        Record date pressure ulcer first identified:
+                      </label>
+                      <div className="  col">
+                        <div className="form-group">
+                          <label>Date:</label>
+                          {formData?.firstIdentifiedDate || "N/A"}
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1307"
+                        value="NA"
+                        checked={formData?.m1307 === "NA"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        NA. No Stage 2 pressure ulcers are present at discharge
+                      </label>
+                    </div>
+                  </div>{" "}
+                  {/* m1311: Stage 2 */}
+                  <div className="  col">
+                    <h6 style={{ fontSize: "12px" }}>
+                      M1311: Current Number of Unhealed Pressure Ulcers/Injuries
+                    </h6>
+                    <h6 style={{ fontSize: "12px" }}>A1. Stage 2</h6>
+                    <p>
+                      Partial thickness loss of dermis presenting as a shallow
+                      open ulcer with a red or pink wound bed, without slough.
+                      May also present as an intact or open/ruptured blister.
+                    </p>
+                    <div className="form-group">
+                      <label>Number of Stage 2 pressure ulcers:</label>
+                      {formData.stage2Current || "N/A"}
+                    </div>
+                    <div className="form-group">
+                      <label>
+                        Number of these Stage 2 pressure ulcers that were
+                        present at most recent SOC/ROC:
+                      </label>
+                      {formData.stage2PresentAtSOC || "N/A"}
+                    </div>
+                  </div>
+                  {/* m1311: Stage 3 */}
+                  <div className="  col">
+                    <h6 style={{ fontSize: "12px" }}>B1. Stage 3</h6>
+                    <p>
+                      Full thickness tissue loss. Subcutaneous fat may be
+                      visible but bone, tendon, or muscle is not exposed. Slough
+                      may be present but does not obscure the depth of tissue
+                      loss. May include undermining and tunneling.
+                    </p>
+                    <div className="form-group">
+                      <label>Number of Stage 3 pressure ulcers:</label>
+                      {formData.stage3Current || "N/A"}
+                    </div>
+                    <div className="form-group">
+                      <label>
+                        Number of these Stage 3 pressure ulcers that were
+                        present at most recent SOC/ROC:
+                      </label>
+                      {formData.stage3PresentAtSOC || "N/A"}
+                    </div>
+                  </div>
+                  {/* m1311: Stage 4 */}
+                  <div className="  col">
+                    <h6 style={{ fontSize: "12px" }}>C1. Stage 4</h6>
+                    <p>
+                      Full thickness tissue loss with exposed bone, tendon, or
+                      muscle. Slough or eschar may be present on some parts of
+                      the wound bed. Often includes undermining and tunneling.
+                    </p>
+                    <div className="form-group">
+                      <label>Number of Stage 4 pressure ulcers:</label>
+                      {formData.stage4Current || "N/A"}
+                    </div>
+                    <div className="form-group">
+                      <label>
+                        Number of these Stage 4 pressure ulcers that were
+                        present at most recent SOC/ROC:
+                      </label>
+                      {formData.stage4PresentAtSOC || "N/A"}
+                    </div>
+                  </div>
+                  {/* m1311: Unstageable: Non-removable dressing/device */}
+                  <div className="  col">
+                    <h6 style={{ fontSize: "12px" }}>
+                      D1. Unstageable: Non-removable dressing/device
+                    </h6>
+                    <p>
+                      Known but not stageable due to non-removable
+                      dressing/device
+                    </p>
+                    <div className="form-group">
+                      <label>
+                        Number of unstageable pressure ulcers/injuries:
+                      </label>
+                      {formData.unstageableDressingCurrent || "N/A"}
+                    </div>
+                    <div className="form-group">
+                      <label>
+                        Number of these unstageable pressure ulcers/injuries
+                        that were present at most recent SOC/ROC:
+                      </label>
+                      {formData?.unstageableDressingPresentAtSOC || "N/A"}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {/* m1311: Unstageable: Slough and/or eschar */}
+                  <div className="  col">
+                    <h6 style={{ fontSize: "12px" }}>
+                      E1. Unstageable: Slough and/or eschar
+                    </h6>
+                    <p>
+                      Known but not stageable due to coverage of wound bed by
+                      slough and/or eschar
+                    </p>
+                    <div className="form-group">
+                      <label>Number of unstageable pressure ulcers:</label>
+                      {formData.unstageableSloughCurrent || "N/A"}
+                    </div>
+                    <div className="form-group">
+                      <label>
+                        Number of these unstageable pressure ulcers/injuries
+                        that were present at most recent SOC/ROC:
+                      </label>
+                      {formData.unstageableSloughPresentAtSOC || "N/A"}
+                    </div>
+                  </div>
+                  {/* m1311: Unstageable: Deep tissue injury */}
+                  <div className="  col">
+                    <h6 style={{ fontSize: "12px" }}>
+                      F1. Unstageable: Deep tissue injury
+                    </h6>
+                    <p>
+                      Number of unstageable pressure injuries presenting as deep
+                      tissue injury
+                    </p>
+                    <div className="form-group">
+                      <label>Number of unstageable pressure injuries:</label>
+                      {formData.deepTissueInjuryCurrent || "N/A"}
+                    </div>
+                    <div className="form-group">
+                      <label>
+                        Number of these unstageable pressure injuries that were
+                        present at most recent SOC/ROC:
+                      </label>
+                      {formData.deepTissueInjuryPresentAtSOC || "N/A"}
+                    </div>
+                  </div>
+
+                  {/* m1322 */}
+                  <div className="  col">
+                    <h6 style={{ fontSize: "12px" }}>
+                      M1322. Current Number of Stage 1 Pressure Injuries
+                    </h6>
+                    <p>
+                      Intact skin with non-blanchable redness of a localized
+                      area usually over a bony prominence. Darkly pigmented skin
+                      may not have a visible blanching; in dark skin tones only,
+                      it may appear with persistent blue or purple hues.
+                    </p>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1322"
+                        value="0"
+                        checked={formData?.m1322 === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        0. Zero
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1322"
+                        value="1"
+                        checked={formData?.m1322 === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        1. One
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1322"
+                        value="2"
+                        checked={formData?.m1322 === "2"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        2. Two
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1322"
+                        value="3"
+                        checked={formData?.m1322 === "3"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        3. Three
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1322"
+                        value="4"
+                        checked={formData?.m1322 === "4"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        4. Four or more
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* m1324 */}
+                  <div className="  col">
+                    <h6 style={{ fontSize: "12px" }}>
+                      M1324. Stage of Most Problematic Unhealed Pressure
+                      Ulcer/Injury that is Stageable
+                    </h6>
+                    <p>
+                      Excludes pressure ulcer/injury that cannot be staged due
+                      to a non-removable dressing/device, coverage of wound bed
+                      by slough and/or eschar, or deep tissue injury.
+                    </p>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1324"
+                        value="1"
+                        checked={formData?.m1324 === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        1. Stage 1
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1324"
+                        value="2"
+                        checked={formData?.m1324 === "2"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        2. Stage 2
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1324"
+                        value="3"
+                        checked={formData?.m1324 === "3"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        3. Stage 3
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1324"
+                        value="4"
+                        checked={formData?.m1324 === "4"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        4. Stage 4
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1324"
+                        value="NA"
+                        checked={formData?.m1324 === "NA"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        NA. Patient has no pressure ulcers/injuries or no
+                        stageable pressure ulcers/injuries
+                      </label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {/* m1330 */}
+                  <div className="mb-3  col">
+                    <h6 style={{ fontSize: "12px" }}>
+                      M1330. Does this patient have a Stasis Ulcer?
+                    </h6>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1330"
+                        value="0"
+                        checked={formData?.m1330 === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        0. No
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1330"
+                        value="1"
+                        checked={formData?.m1330 === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        1. Yes, patient has BOTH observable and unobservable
+                        stasis ulcers
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1330"
+                        value="2"
+                        checked={formData?.m1330 === "2"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        2. Yes, patient has observable stasis ulcers ONLY
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1330"
+                        value="3"
+                        checked={formData?.m1330 === "3"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        3. Yes, patient has unobservable stasis ulcers ONLY
+                        (known but not observable due to non-removable
+                        dressing/device)
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* m1332 */}
+                  <div className="mb-3  col">
+                    <h6 style={{ fontSize: "12px" }}>
+                      M1332. Current Number of Stasis Ulcer(s) that are
+                      Observable
+                    </h6>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1332"
+                        value="1"
+                        checked={formData?.m1332 === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        1. One
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1332"
+                        value="2"
+                        checked={formData?.m1332 === "2"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        2. Two
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1332"
+                        value="3"
+                        checked={formData?.m1332 === "3"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        3. Three
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1332"
+                        value="4"
+                        checked={formData?.m1332 === "4"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        4. Four or more
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* m1334 */}
+                  <div className="mb-3  col">
+                    <h6 style={{ fontSize: "12px" }}>
+                      M1334. Status of Most Problematic Stasis Ulcer that is
+                      Observable
+                    </h6>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1334"
+                        value="1"
+                        checked={formData?.m1334 === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        1. Fully granulating
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1334"
+                        value="2"
+                        checked={formData?.m1334 === "2"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        2. Early/partial granulation
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1334"
+                        value="3"
+                        checked={formData?.m1334 === "3"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        3. Not healing
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* m1340 */}
+                  <div className="mb-3  col">
+                    <h6 style={{ fontSize: "12px" }}>
+                      M1340. Does this patient have a Surgical Wound?
+                    </h6>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1340"
+                        value="0"
+                        checked={formData?.m1340 === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        0. No
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1340"
+                        value="1"
+                        checked={formData?.m1340 === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        1. Yes, patient has at least one observable surgical
+                        wound
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1340"
+                        value="2"
+                        checked={formData?.m1340 === "2"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        2. Surgical wound known but not observable due to
+                        non-removable dressing/device
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* m1342 */}
+                  <div className="mb-3  col">
+                    <h6 style={{ fontSize: "12px" }}>
+                      M1342. Status of Most Problematic Surgical Wound that is
+                      Observable
+                    </h6>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1342"
+                        value="0"
+                        checked={formData?.m1342 === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        0. Newly epithelialized
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1342"
+                        value="1"
+                        checked={formData?.m1342 === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        1. Fully granulating
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1342"
+                        value="2"
+                        checked={formData?.m1342 === "2"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        2. Early/partial granulation
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="m1342"
+                        value="3"
+                        checked={formData?.m1342 === "3"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        3. Not healing
+                      </label>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
                 <td colSpan="3">
-                  <div className="container-xxl flex-grow-1">
-                    <div className="invoice-preview ">
-                      {/* section J  */}
-
-                      {/* section M  */}
-                      <h6
-                        style={{
-                          // border: "1px solid gray",
-                          padding: "5px",
-                          margin: "5px 0px",
-                          fontSize: "11px",
-                          textAlign: "center",
-                          backgroundColor: "#eee",
-                        }}
-                        className=""
+                  {" "}
+                  <h6
+                    style={{
+                      // border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                      textAlign: "center",
+                      backgroundColor: "#eee",
+                    }}
+                    className=""
+                  >
+                    Medications
+                  </h6>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {" "}
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      N0415. High-Risk Drug Classes: Use and Indication
+                    </label>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
                       >
-                        Skin Conditions
-                      </h6>
-                      <div className="">
-                        <div className="  col">
-                          <h6 style={{ fontSize: "12px" }}>
-                            1306. Does this patient have at least one Unhealed
-                            Pressure Ulcer/Injury at Stage 2 or Higher or
-                            designated as Unstageable?
-                          </h6>
-                          <p>
-                            (Excludes Stage 1 pressure injuries and all healed
-                            pressure ulcers/injuries)
-                          </p>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1306"
-                              value="0"
-                              checked={formData?.m1306 === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              0. No
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1306"
-                              value="1"
-                              checked={formData?.m1306 === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              1. Yes
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* m1307 */}
-                        <div className="  col">
-                          <h6 style={{ fontSize: "12px" }}>
-                            M1307. The Oldest Stage 2 Pressure Ulcer that is
-                            present at discharge:
-                          </h6>
-                          <p>(Excludes healed Stage 2 pressure ulcers)</p>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1307"
-                              value="1"
-                              checked={formData?.m1307 === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              1. Was present at the most recent SOC/ROC
-                              assessment
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1307"
-                              value="2"
-                              checked={formData?.m1307 === "2"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              2. Developed since the most recent SOC/ROC
-                              assessment
-                            </label>
-                          </div>
-                          <div className="form-group">
-                            <label>
-                              Record date pressure ulcer first identified:
-                            </label>
-                            <div className="  col">
-                              <div className="form-group">
-                                <label>Date:</label>
-                                {formData?.firstIdentifiedDate || "N/A"}
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1307"
-                              value="NA"
-                              checked={formData?.m1307 === "NA"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              NA. No Stage 2 pressure ulcers are present at
-                              discharge
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* m1311: Stage 2 */}
-                        <div className="  col">
-                          <h6 style={{ fontSize: "12px" }}>
-                            M1311: Current Number of Unhealed Pressure
-                            Ulcers/Injuries
-                          </h6>
-                          <h6 style={{ fontSize: "12px" }}>A1. Stage 2</h6>
-                          <p>
-                            Partial thickness loss of dermis presenting as a
-                            shallow open ulcer with a red or pink wound bed,
-                            without slough. May also present as an intact or
-                            open/ruptured blister.
-                          </p>
-                          <div className="form-group">
-                            <label>Number of Stage 2 pressure ulcers:</label>
-                            {formData.stage2Current || "N/A"}
-                          </div>
-                          <div className="form-group">
-                            <label>
-                              Number of these Stage 2 pressure ulcers that were
-                              present at most recent SOC/ROC:
-                            </label>
-                            {formData.stage2PresentAtSOC || "N/A"}
-                          </div>
-                        </div>
-
-                        {/* m1311: Stage 3 */}
-                        <div className="  col">
-                          <h6 style={{ fontSize: "12px" }}>B1. Stage 3</h6>
-                          <p>
-                            Full thickness tissue loss. Subcutaneous fat may be
-                            visible but bone, tendon, or muscle is not exposed.
-                            Slough may be present but does not obscure the depth
-                            of tissue loss. May include undermining and
-                            tunneling.
-                          </p>
-                          <div className="form-group">
-                            <label>Number of Stage 3 pressure ulcers:</label>
-                            {formData.stage3Current || "N/A"}
-                          </div>
-                          <div className="form-group">
-                            <label>
-                              Number of these Stage 3 pressure ulcers that were
-                              present at most recent SOC/ROC:
-                            </label>
-                            {formData.stage3PresentAtSOC || "N/A"}
-                          </div>
-                        </div>
-
-                        {/* m1311: Stage 4 */}
-                        <div className="  col">
-                          <h6 style={{ fontSize: "12px" }}>C1. Stage 4</h6>
-                          <p>
-                            Full thickness tissue loss with exposed bone,
-                            tendon, or muscle. Slough or eschar may be present
-                            on some parts of the wound bed. Often includes
-                            undermining and tunneling.
-                          </p>
-                          <div className="form-group">
-                            <label>Number of Stage 4 pressure ulcers:</label>
-                            {formData.stage4Current || "N/A"}
-                          </div>
-                          <div className="form-group">
-                            <label>
-                              Number of these Stage 4 pressure ulcers that were
-                              present at most recent SOC/ROC:
-                            </label>
-                            {formData.stage4PresentAtSOC || "N/A"}
-                          </div>
-                        </div>
-
-                        {/* m1311: Unstageable: Non-removable dressing/device */}
-                        <div className="  col">
-                          <h6 style={{ fontSize: "12px" }}>
-                            D1. Unstageable: Non-removable dressing/device
-                          </h6>
-                          <p>
-                            Known but not stageable due to non-removable
-                            dressing/device
-                          </p>
-                          <div className="form-group">
-                            <label>
-                              Number of unstageable pressure ulcers/injuries:
-                            </label>
-                            {formData.unstageableDressingCurrent || "N/A"}
-                          </div>
-                          <div className="form-group">
-                            <label>
-                              Number of these unstageable pressure
-                              ulcers/injuries that were present at most recent
-                              SOC/ROC:
-                            </label>
-                            {formData?.unstageableDressingPresentAtSOC || "N/A"}
-                          </div>
-                        </div>
-
-                        {/* m1311: Unstageable: Slough and/or eschar */}
-                        <div className="  col">
-                          <h6 style={{ fontSize: "12px" }}>
-                            E1. Unstageable: Slough and/or eschar
-                          </h6>
-                          <p>
-                            Known but not stageable due to coverage of wound bed
-                            by slough and/or eschar
-                          </p>
-                          <div className="form-group">
-                            <label>
-                              Number of unstageable pressure ulcers:
-                            </label>
-                            {formData.unstageableSloughCurrent || "N/A"}
-                          </div>
-                          <div className="form-group">
-                            <label>
-                              Number of these unstageable pressure
-                              ulcers/injuries that were present at most recent
-                              SOC/ROC:
-                            </label>
-                            {formData.unstageableSloughPresentAtSOC || "N/A"}
-                          </div>
-                        </div>
-
-                        {/* m1311: Unstageable: Deep tissue injury */}
-                        <div className="  col">
-                          <h6 style={{ fontSize: "12px" }}>
-                            F1. Unstageable: Deep tissue injury
-                          </h6>
-                          <p>
-                            Number of unstageable pressure injuries presenting
-                            as deep tissue injury
-                          </p>
-                          <div className="form-group">
-                            <label>
-                              Number of unstageable pressure injuries:
-                            </label>
-                            {formData.deepTissueInjuryCurrent || "N/A"}
-                          </div>
-                          <div className="form-group">
-                            <label>
-                              Number of these unstageable pressure injuries that
-                              were present at most recent SOC/ROC:
-                            </label>
-                            {formData.deepTissueInjuryPresentAtSOC || "N/A"}
-                          </div>
-                        </div>
-
-                        {/* m1322 */}
-                        <div className="  col">
-                          <h6 style={{ fontSize: "12px" }}>
-                            M1322. Current Number of Stage 1 Pressure Injuries
-                          </h6>
-                          <p>
-                            Intact skin with non-blanchable redness of a
-                            localized area usually over a bony prominence.
-                            Darkly pigmented skin may not have a visible
-                            blanching; in dark skin tones only, it may appear
-                            with persistent blue or purple hues.
-                          </p>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1322"
-                              value="0"
-                              checked={formData?.m1322 === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              0. Zero
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1322"
-                              value="1"
-                              checked={formData?.m1322 === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              1. One
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1322"
-                              value="2"
-                              checked={formData?.m1322 === "2"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              2. Two
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1322"
-                              value="3"
-                              checked={formData?.m1322 === "3"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              3. Three
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1322"
-                              value="4"
-                              checked={formData?.m1322 === "4"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              4. Four or more
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* m1324 */}
-                        <div className="  col">
-                          <h6 style={{ fontSize: "12px" }}>
-                            M1324. Stage of Most Problematic Unhealed Pressure
-                            Ulcer/Injury that is Stageable
-                          </h6>
-                          <p>
-                            Excludes pressure ulcer/injury that cannot be staged
-                            due to a non-removable dressing/device, coverage of
-                            wound bed by slough and/or eschar, or deep tissue
-                            injury.
-                          </p>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1324"
-                              value="1"
-                              checked={formData?.m1324 === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              1. Stage 1
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1324"
-                              value="2"
-                              checked={formData?.m1324 === "2"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              2. Stage 2
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1324"
-                              value="3"
-                              checked={formData?.m1324 === "3"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              3. Stage 3
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1324"
-                              value="4"
-                              checked={formData?.m1324 === "4"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              4. Stage 4
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1324"
-                              value="NA"
-                              checked={formData?.m1324 === "NA"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              NA. Patient has no pressure ulcers/injuries or no
-                              stageable pressure ulcers/injuries
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* m1330 */}
-                        <div className="mb-3  col">
-                          <h6 style={{ fontSize: "12px" }}>
-                            M1330. Does this patient have a Stasis Ulcer?
-                          </h6>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1330"
-                              value="0"
-                              checked={formData?.m1330 === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              0. No
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1330"
-                              value="1"
-                              checked={formData?.m1330 === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              1. Yes, patient has BOTH observable and
-                              unobservable stasis ulcers
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1330"
-                              value="2"
-                              checked={formData?.m1330 === "2"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              2. Yes, patient has observable stasis ulcers ONLY
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1330"
-                              value="3"
-                              checked={formData?.m1330 === "3"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              3. Yes, patient has unobservable stasis ulcers
-                              ONLY (known but not observable due to
-                              non-removable dressing/device)
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* m1332 */}
-                        <div className="mb-3  col">
-                          <h6 style={{ fontSize: "12px" }}>
-                            M1332. Current Number of Stasis Ulcer(s) that are
-                            Observable
-                          </h6>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1332"
-                              value="1"
-                              checked={formData?.m1332 === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              1. One
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1332"
-                              value="2"
-                              checked={formData?.m1332 === "2"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              2. Two
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1332"
-                              value="3"
-                              checked={formData?.m1332 === "3"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              3. Three
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1332"
-                              value="4"
-                              checked={formData?.m1332 === "4"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              4. Four or more
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* m1334 */}
-                        <div className="mb-3  col">
-                          <h6 style={{ fontSize: "12px" }}>
-                            M1334. Status of Most Problematic Stasis Ulcer that
-                            is Observable
-                          </h6>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1334"
-                              value="1"
-                              checked={formData?.m1334 === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              1. Fully granulating
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1334"
-                              value="2"
-                              checked={formData?.m1334 === "2"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              2. Early/partial granulation
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1334"
-                              value="3"
-                              checked={formData?.m1334 === "3"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              3. Not healing
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* m1340 */}
-                        <div className="mb-3  col">
-                          <h6 style={{ fontSize: "12px" }}>
-                            M1340. Does this patient have a Surgical Wound?
-                          </h6>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1340"
-                              value="0"
-                              checked={formData?.m1340 === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              0. No
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1340"
-                              value="1"
-                              checked={formData?.m1340 === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              1. Yes, patient has at least one observable
-                              surgical wound
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1340"
-                              value="2"
-                              checked={formData?.m1340 === "2"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              2. Surgical wound known but not observable due to
-                              non-removable dressing/device
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* m1342 */}
-                        <div className="mb-3  col">
-                          <h6 style={{ fontSize: "12px" }}>
-                            M1342. Status of Most Problematic Surgical Wound
-                            that is Observable
-                          </h6>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1342"
-                              value="0"
-                              checked={formData?.m1342 === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              0. Newly epithelialized
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1342"
-                              value="1"
-                              checked={formData?.m1342 === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              1. Fully granulating
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1342"
-                              value="2"
-                              checked={formData?.m1342 === "2"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              2. Early/partial granulation
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="m1342"
-                              value="3"
-                              checked={formData?.m1342 === "3"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              3. Not healing
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      {/* section N  */}
-                      <h6
-                        style={{
-                          // border: "1px solid gray",
-                          padding: "5px",
-                          margin: "5px 0px",
-                          fontSize: "11px",
-                          textAlign: "center",
-                          backgroundColor: "#eee",
-                        }}
-                        className=""
-                      >
-                        Medications
-                      </h6>
-                      <div className="">
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            N0415. High-Risk Drug Classes: Use and Indication
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              A. Antipsychotic
-                            </label>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={
-                                  formData?.highRiskDrugs?.antipsychotic
-                                    ?.isTaking
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Is Taking
-                              </label>
-                            </div>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={
-                                  formData?.highRiskDrugs?.antipsychotic
-                                    ?.indicationNoted
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Indication Noted
-                              </label>
-                            </div>
-                          </div>
-
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              E. Anticoagulant
-                            </label>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={
-                                  formData?.highRiskDrugs?.anticoagulant
-                                    ?.isTaking
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Is Taking
-                              </label>
-                            </div>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={
-                                  formData?.highRiskDrugs?.anticoagulant
-                                    ?.indicationNoted
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Indication Noted
-                              </label>
-                            </div>
-                          </div>
-
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              F. Antibiotic
-                            </label>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={
-                                  formData?.highRiskDrugs?.antibiotic?.isTaking
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Is Taking
-                              </label>
-                            </div>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={
-                                  formData?.highRiskDrugs?.antibiotic
-                                    ?.indicationNoted
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Indication Noted
-                              </label>
-                            </div>
-                          </div>
-
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              H. Opioid
-                            </label>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={
-                                  formData?.highRiskDrugs?.opioid?.isTaking
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Is Taking
-                              </label>
-                            </div>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={
-                                  formData?.highRiskDrugs?.opioid
-                                    .indicationNoted
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Indication Noted
-                              </label>
-                            </div>
-                          </div>
-
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              I. Antiplatelet
-                            </label>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={
-                                  formData?.highRiskDrugs?.antiplatelet
-                                    ?.isTaking
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Is Taking
-                              </label>
-                            </div>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={
-                                  formData?.highRiskDrugs?.antiplatelet
-                                    .indicationNoted
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Indication Noted
-                              </label>
-                            </div>
-                          </div>
-
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              J. Hypoglycemic (including insulin)
-                            </label>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={
-                                  formData?.highRiskDrugs?.hypoglycemic
-                                    ?.isTaking
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Is Taking
-                              </label>
-                            </div>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={
-                                  formData?.highRiskDrugs?.hypoglycemic
-                                    ?.indicationNoted
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Indication Noted
-                              </label>
-                            </div>
-                          </div>
-
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Z. None of the above
-                            </label>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={
-                                  formData?.highRiskDrugs?.none?.isTaking
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Is Taking
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* M2001. Drug Regimen Review */}
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            M2001. Drug Regimen Review
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="drugRegimenReview"
-                              value="0"
-                              checked={formData?.drugRegimenReview === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              No — No issues found during review
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="drugRegimenReview"
-                              value="1"
-                              checked={formData?.drugRegimenReview === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Yes — Issues found during review
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="drugRegimenReview"
-                              value="9"
-                              checked={formData?.drugRegimenReview === "9"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              NA — Patient is not taking any medications
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* M2003. Medication Follow-up */}
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            M2003. Medication Follow-up
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="medicationFollowUp"
-                              value="0"
-                              checked={formData?.medicationFollowUp === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              No
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="medicationFollowUp"
-                              value="1"
-                              checked={formData?.medicationFollowUp === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Yes
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* M2005. Medication Intervention */}
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            M2005. Medication Intervention
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="medicationIntervention"
-                              value="0"
-                              checked={formData?.medicationIntervention === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              No
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="medicationIntervention"
-                              value="1"
-                              checked={formData?.medicationIntervention === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Yes
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="medicationIntervention"
-                              value="9"
-                              checked={formData?.medicationIntervention === "9"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              NA — No potential issues identified or patient is
-                              not taking any medications
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* M2010. Patient/Caregiver High-Risk Drug Education */}
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            M2010. Patient/Caregiver High-Risk Drug Education
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="highRiskDrugEducation"
-                              value="0"
-                              checked={formData?.highRiskDrugEducation === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              No
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="highRiskDrugEducation"
-                              value="1"
-                              checked={formData?.highRiskDrugEducation === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Yes
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="highRiskDrugEducation"
-                              value="NA"
-                              checked={formData?.highRiskDrugEducation === "NA"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              NA — No high-risk drugs or fully knowledgeable
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* M2020. Management of Oral Medications */}
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            M2020. Management of Oral Medications
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="managementOralMedications"
-                              value="0"
-                              checked={
-                                formData?.managementOralMedications === "0"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Able to independently take the correct
-                              medication(s)
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="managementOralMedications"
-                              value="1"
-                              checked={
-                                formData?.managementOralMedications === "1"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Able to take medication(s) if prepared in advance
-                              or if using a drug diary/chart
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="managementOralMedications"
-                              value="2"
-                              checked={
-                                formData?.managementOralMedications === "2"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Able to take medication(s) if given reminders
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="managementOralMedications"
-                              value="3"
-                              checked={
-                                formData?.managementOralMedications === "3"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Unable to take medication unless administered by
-                              another person
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="managementOralMedications"
-                              value="NA"
-                              checked={
-                                formData?.managementOralMedications === "NA"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              NA — No oral medications prescribed
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* M2030. Management of Injectable Medications */}
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            M2030. Management of Injectable Medications
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="managementInjectableMedications"
-                              value="0"
-                              checked={
-                                formData?.managementInjectableMedications ===
-                                "0"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Able to independently take the correct
-                              medication(s)
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="managementInjectableMedications"
-                              value="1"
-                              checked={
-                                formData?.managementInjectableMedications ===
-                                "1"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Able to take medication(s) if syringes are
-                              prepared in advance or if using a drug diary/chart
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="managementInjectableMedications"
-                              value="2"
-                              checked={
-                                formData?.managementInjectableMedications ===
-                                "2"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Able to take medication(s) if given reminders
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="managementInjectableMedications"
-                              value="3"
-                              checked={
-                                formData?.managementInjectableMedications ===
-                                "3"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Unable to take medication unless administered by
-                              another person
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="managementInjectableMedications"
-                              value="NA"
-                              checked={
-                                formData?.managementInjectableMedications ===
-                                "NA"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              NA — No injectable medications prescribed
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      {/* section o */}
-                      <h6
-                        style={{
-                          // border: "1px solid gray",
-                          padding: "5px",
-                          margin: "5px 0px",
-                          fontSize: "11px",
-                          textAlign: "center",
-                          backgroundColor: "#eee",
-                        }}
-                        className=""
-                      >
-                        Special Treatments, Procedures, and Programs
-                      </h6>
-                      <div className="">
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            O0110. Special Treatments, Procedures, and Programs
-                            (Admission)
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              value="chemotherapy"
-                              name="specialTreatmentsAdmission"
-                              checked={formData?.specialTreatmentsAdmission?.includes(
-                                "chemotherapy"
-                              )}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              A1. Chemotherapy
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              value="radiation"
-                              name="specialTreatmentsAdmission"
-                              checked={formData?.specialTreatmentsAdmission?.includes(
-                                "radiation"
-                              )}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              B1. Radiation
-                            </label>
-                          </div>
-
-                          {/* Repeat similar blocks for other treatments, procedures, and programs on admission */}
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              name="specialTreatmentsAdmission"
-                              value="noneOfTheAbove"
-                              checked={formData?.specialTreatmentsAdmission?.includes(
-                                "noneOfTheAbove"
-                              )}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Z1. None of the Above
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            O0110. Special Treatments, Procedures, and Programs
-                            (Discharge)
-                          </label>
-
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              value="chemotherapy"
-                              name="specialTreatmentsDischarge"
-                              checked={formData?.specialTreatmentsDischarge?.includes(
-                                "chemotherapy"
-                              )}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              A1. Chemotherapy
-                            </label>
-                          </div>
-
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              value="radiation"
-                              name="specialTreatmentsDischarge"
-                              checked={formData?.specialTreatmentsDischarge?.includes(
-                                "radiation"
-                              )}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              B1. Radiation
-                            </label>
-                          </div>
-
-                          {/* Repeat similar blocks for other treatments, procedures, and programs on discharge */}
-
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              value="noneOfTheAbove"
-                              name="specialTreatmentsDischarge"
-                              checked={formData?.specialTreatmentsDischarge?.includes(
-                                "noneOfTheAbove"
-                              )}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Z1. None of the Above
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* O0350. Patient’s COVID-19 vaccination is up to date */}
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            O0350. Patient’s COVID-19 vaccination is up to date
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="covidVaccinationUpToDate"
-                              value="0"
-                              checked={
-                                formData?.covidVaccinationUpToDate === "0"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              No, patient is not up to date
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="covidVaccinationUpToDate"
-                              value="1"
-                              checked={
-                                formData?.covidVaccinationUpToDate === "1"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Yes, patient is up to date
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* M1041. Influenza Vaccine Data Collection Period */}
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            M1041. Influenza Vaccine Data Collection Period
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="influenzaVaccinePeriod"
-                              value="0"
-                              checked={formData?.influenzaVaccinePeriod === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              No
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="influenzaVaccinePeriod"
-                              value="1"
-                              checked={formData?.influenzaVaccinePeriod === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Yes
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* M1046. Influenza Vaccine Received */}
-                        {formData?.influenzaVaccinePeriod === "1" && (
-                          <div className="mb-3  col">
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-label mr-2"
-                            >
-                              M1046. Influenza Vaccine Received
-                            </label>
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                type="radio"
-                                className="form-check-input"
-                                name="influenzaVaccineReceived"
-                                value="1"
-                                checked={
-                                  formData?.influenzaVaccineReceived === "1"
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Yes; received from your agency during this
-                                episode of care
-                              </label>
-                            </div>
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                type="radio"
-                                className="form-check-input"
-                                name="influenzaVaccineReceived"
-                                value="2"
-                                checked={
-                                  formData?.influenzaVaccineReceived === "2"
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Yes; received from your agency during a prior
-                                episode of care
-                              </label>
-                            </div>
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                type="radio"
-                                className="form-check-input"
-                                name="influenzaVaccineReceived"
-                                value="3"
-                                checked={
-                                  formData?.influenzaVaccineReceived === "3"
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                Yes; received from another health care provider
-                              </label>
-                            </div>
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                type="radio"
-                                className="form-check-input"
-                                name="influenzaVaccineReceived"
-                                value="4"
-                                checked={
-                                  formData?.influenzaVaccineReceived === "4"
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                No; patient offered and declined
-                              </label>
-                            </div>
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                type="radio"
-                                className="form-check-input"
-                                name="influenzaVaccineReceived"
-                                value="5"
-                                checked={
-                                  formData?.influenzaVaccineReceived === "5"
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                No; patient assessed and determined to have
-                                medical contraindication(s)
-                              </label>
-                            </div>
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                type="radio"
-                                className="form-check-input"
-                                name="influenzaVaccineReceived"
-                                value="6"
-                                checked={
-                                  formData?.influenzaVaccineReceived === "6"
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                No; not indicated – patient does not meet
-                                age/condition guidelines
-                              </label>
-                            </div>
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                type="radio"
-                                className="form-check-input"
-                                name="influenzaVaccineReceived"
-                                value="7"
-                                checked={
-                                  formData?.influenzaVaccineReceived === "7"
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                No; inability to obtain vaccine due to declared
-                                shortage
-                              </label>
-                            </div>
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                type="radio"
-                                className="form-check-input"
-                                name="influenzaVaccineReceived"
-                                value="8"
-                                checked={
-                                  formData?.influenzaVaccineReceived === "8"
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "12px" }}
-                                className="form-check-label"
-                              >
-                                No; patient did not receive the vaccine due to
-                                other reasons
-                              </label>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                      {/* section q  */}
-                      <h6
-                        style={{
-                          // border: "1px solid gray",
-                          padding: "5px",
-                          margin: "5px 0px",
-                          fontSize: "11px",
-                          textAlign: "center",
-                          backgroundColor: "#eee",
-                        }}
-                        className=""
-                      >
-                        Participation in assessment and setting{" "}
-                      </h6>
-                      <div className="mb-3 row">
+                        A. Antipsychotic
+                      </label>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={
+                            formData?.highRiskDrugs?.antipsychotic?.isTaking
+                          }
+                        />
                         <label
                           style={{ fontSize: "12px" }}
-                          className="form-label mr-2"
+                          className="form-check-label"
                         >
-                          M2401. Intervention Synopsis
+                          Is Taking
                         </label>
-
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            b. Falls prevention interventions
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="fallsPrevention"
-                              value="0"
-                              checked={formData?.fallsPrevention === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              No
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="fallsPrevention"
-                              value="1"
-                              checked={formData?.fallsPrevention === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Yes
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="fallsPrevention"
-                              value="NA"
-                              checked={formData?.fallsPrevention === "NA"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Not Applicable
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            c. Depression intervention(s)
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="depressionIntervention"
-                              value="0"
-                              checked={formData?.depressionIntervention === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              No
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="depressionIntervention"
-                              value="1"
-                              checked={formData?.depressionIntervention === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Yes
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="depressionIntervention"
-                              value="NA"
-                              checked={
-                                formData?.depressionIntervention === "NA"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Not Applicable
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            d. Intervention(s) to monitor and mitigate pain
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="painIntervention"
-                              value="0"
-                              checked={formData?.painIntervention === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              No
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="painIntervention"
-                              value="1"
-                              checked={formData?.painIntervention === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Yes
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="painIntervention"
-                              value="NA"
-                              checked={formData?.painIntervention === "NA"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Not Applicable
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            e. Intervention(s) to prevent pressure ulcers
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="pressureUlcerPrevention"
-                              value="0"
-                              checked={
-                                formData?.pressureUlcerPrevention === "0"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              No
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="pressureUlcerPrevention"
-                              value="1"
-                              checked={
-                                formData?.pressureUlcerPrevention === "1"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Yes
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="pressureUlcerPrevention"
-                              value="NA"
-                              checked={
-                                formData?.pressureUlcerPrevention === "NA"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Not Applicable
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="mb-3  col">
-                          <label
-                            style={{ fontSize: "12px" }}
-                            className="form-label mr-2"
-                          >
-                            f. Pressure ulcer treatment based on principles of
-                            moist wound healing
-                          </label>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="pressureUlcerTreatment"
-                              value="0"
-                              checked={formData?.pressureUlcerTreatment === "0"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              No
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="pressureUlcerTreatment"
-                              value="1"
-                              checked={formData?.pressureUlcerTreatment === "1"}
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Yes
-                            </label>
-                          </div>
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="pressureUlcerTreatment"
-                              value="NA"
-                              checked={
-                                formData?.pressureUlcerTreatment === "NA"
-                              }
-                            />
-                            <label
-                              style={{ fontSize: "12px" }}
-                              className="form-check-label"
-                            >
-                              Not Applicable
-                            </label>
-                          </div>
-                        </div>
                       </div>
-                      {/* payer  */}
-                      <div className="col-xl-12 col col-12 mb-md-0 ">
-                        {/* Payer Information */}
-                        <div className="mb-1">
-                          <h6
-                            style={{
-                              border: "1px solid gray",
-                              padding: "5px",
-                              margin: "5px 0px",
-                              fontSize: "11px",
-                              backgroundColor: "#eee",
-                            }}
-                          >
-                            Payer Information
-                          </h6>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={
+                            formData?.highRiskDrugs?.antipsychotic
+                              ?.indicationNoted
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Indication Noted
+                        </label>
+                      </div>
+                    </div>
 
-                          <div className="g-3">
-                            <div className="col">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="mbiNumber"
-                                className="form-label d-block"
-                              >
-                                (M0063) Medicare Beneficiary Identifier (MBI)
-                                Number
-                                <span className="text-danger">*</span>
-                              </label>
-                              {formPayerData?.mbiNumber}
-                            </div>
-                            <div className="col">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="hicNumber"
-                                className="form-label d-block"
-                              >
-                                Health Insurance Claim (HIC) Number
-                              </label>
-                              {formPayerData?.hicNumber}
-                            </div>
-                            <div className="col">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="medicaidNumber"
-                                className="form-label d-block"
-                              >
-                                Medicaid Number{" "}
-                                <span className="text-danger">*</span>
-                              </label>
-                              {formPayerData?.medicaidNumber}
-                            </div>
-                            <div className="col">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="alternateMedicaidNumber"
-                                className="form-label d-block"
-                              >
-                                Alternate Medicaid Number:
-                              </label>
-                              {formPayerData?.alternateMedicaidNumber}
-                            </div>
-                          </div>
-                        </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        E. Anticoagulant
+                      </label>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={
+                            formData?.highRiskDrugs?.anticoagulant?.isTaking
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Is Taking
+                        </label>
+                      </div>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={
+                            formData?.highRiskDrugs?.anticoagulant
+                              ?.indicationNoted
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Indication Noted
+                        </label>
+                      </div>
+                    </div>
 
-                        {/* Insurance Information */}
-                        <div className="mb-1">
-                          <h6
-                            style={{
-                              fontSize: "11px",
-                            }}
-                          >
-                            Insurance Information
-                          </h6>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        F. Antibiotic
+                      </label>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={
+                            formData?.highRiskDrugs?.antibiotic?.isTaking
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Is Taking
+                        </label>
+                      </div>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={
+                            formData?.highRiskDrugs?.antibiotic?.indicationNoted
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Indication Noted
+                        </label>
+                      </div>
+                    </div>
 
-                          <div className="g-3">
-                            <div className="col">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="primaryInsurance"
-                                className="form-label d-block"
-                              >
-                                Primary Insurance{" "}
-                                <span className="text-danger">*</span>
-                              </label>
-                              {formPayerData?.primaryInsurance || "N/A"}
-                            </div>
-                            <div className="col">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="secondaryInsurance"
-                                className="form-label d-block"
-                              >
-                                Secondary Insurance:
-                              </label>
-                              {formPayerData?.secondaryInsurance || "N/A"}
-                            </div>
-                            <div className="col">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="tertiaryInsurance"
-                                className="form-label d-block"
-                              >
-                                Tertiary Insurance:
-                              </label>
-                              {formPayerData?.tertiaryInsurance || "N/A"}
-                            </div>
-                          </div>
-                        </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        H. Opioid
+                      </label>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={formData?.highRiskDrugs?.opioid?.isTaking}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Is Taking
+                        </label>
+                      </div>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={
+                            formData?.highRiskDrugs?.opioid.indicationNoted
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Indication Noted
+                        </label>
+                      </div>
+                    </div>
 
-                        {/* Payer Comments and Selected Templates */}
-                        <div className="mb-1">
-                          <div className="g-3">
-                            <div className="col">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="payerComments"
-                                className="form-label hide-on-print"
-                              >
-                                Payer Comments:
-                              </label>
-                              {formPayerData?.payerComments || "N/A"}
-                            </div>
-                          </div>
-                        </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        I. Antiplatelet
+                      </label>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={
+                            formData?.highRiskDrugs?.antiplatelet?.isTaking
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Is Taking
+                        </label>
+                      </div>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={
+                            formData?.highRiskDrugs?.antiplatelet
+                              .indicationNoted
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Indication Noted
+                        </label>
+                      </div>
+                    </div>
 
-                        {/* Additional UB-04 Locators */}
-                        <div className="mb-1">
-                          <h6
-                            style={{
-                              fontSize: "11px",
-                            }}
-                          >
-                            Additional UB-04 Locators
-                          </h6>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        J. Hypoglycemic (including insulin)
+                      </label>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={
+                            formData?.highRiskDrugs?.hypoglycemic?.isTaking
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Is Taking
+                        </label>
+                      </div>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={
+                            formData?.highRiskDrugs?.hypoglycemic
+                              ?.indicationNoted
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Indication Noted
+                        </label>
+                      </div>
+                    </div>
 
-                          <p>(UB-04 Locators 31 - 34) Occurrence Codes</p>
-                          <div className="g-3">
-                            {formPayerData?.occurrenceCodes?.map(
-                              (code, index) => (
-                                <React.Fragment key={`occurrenceCode-${index}`}>
-                                  <div className="col ">
-                                    <label
-                                      style={{ fontSize: "10px" }}
-                                      htmlFor={`occurrenceCode${index + 1}A`}
-                                      className="form-label d-block"
-                                    >
-                                      {`${31 + Math.floor(index / 2)}A`}{" "}
-                                      Occurrence Code
-                                    </label>
-                                    {formPayerData?.occurrenceCodes[index]
-                                      ?.code || "N/A"}
-                                  </div>
-                                  <div className="col ">
-                                    <label
-                                      style={{ fontSize: "10px" }}
-                                      htmlFor={`occurrenceCode${index + 1}B`}
-                                      className="form-label d-block"
-                                    >
-                                      {`${31 + Math.floor(index / 2)}B`} Date
-                                    </label>
-                                    {formPayerData?.occurrenceCodes[index]
-                                      ?.date || "N/A"}
-                                  </div>
-                                </React.Fragment>
-                              )
-                            )}
-                          </div>
-                        </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Z. None of the above
+                      </label>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={formData?.highRiskDrugs?.none?.isTaking}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Is Taking
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  {/* M2001. Drug Regimen Review */}
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      M2001. Drug Regimen Review
+                    </label>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="drugRegimenReview"
+                        value="0"
+                        checked={formData?.drugRegimenReview === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        No — No issues found during review
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="drugRegimenReview"
+                        value="1"
+                        checked={formData?.drugRegimenReview === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Yes — Issues found during review
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="drugRegimenReview"
+                        value="9"
+                        checked={formData?.drugRegimenReview === "9"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        NA — Patient is not taking any medications
+                      </label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {/* M2003. Medication Follow-up */}
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      M2003. Medication Follow-up
+                    </label>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="medicationFollowUp"
+                        value="0"
+                        checked={formData?.medicationFollowUp === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        No
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="medicationFollowUp"
+                        value="1"
+                        checked={formData?.medicationFollowUp === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Yes
+                      </label>
+                    </div>
+                  </div>
 
-                        <div className="mb-1">
-                          <p>(UB-04 Locators 35 - 36) Occurrence Spans</p>
-                          <div className="g-3">
-                            {formPayerData?.occurrenceSpans?.map(
-                              (span, index) => (
-                                <React.Fragment key={`occurrenceSpan-${index}`}>
-                                  <div className="col ">
-                                    <label
-                                      style={{ fontSize: "10px" }}
-                                      htmlFor={`occurrenceSpan${index + 1}A`}
-                                      className="form-label d-block"
-                                    >
-                                      {`${35 + Math.floor(index / 2)}A`}{" "}
-                                      Occurrence Span Code
-                                    </label>
-                                    {formPayerData?.occurrenceSpans[index]
-                                      ?.code || "N/A"}
-                                  </div>
-                                  <div className="col ">
-                                    <label
-                                      style={{ fontSize: "10px" }}
-                                      htmlFor={`occurrenceSpan${index + 1}B`}
-                                      className="form-label d-block"
-                                    >
-                                      {`${35 + Math.floor(index / 2)}B`}{" "}
-                                      Occurrence Span Start Date
-                                    </label>
-                                    {formPayerData?.occurrenceSpans[index]
-                                      ?.startDate || "N/A"}
-                                  </div>
-                                  <div className="col ">
-                                    <label
-                                      style={{ fontSize: "10px" }}
-                                      htmlFor={`occurrenceSpan${index + 1}C`}
-                                      className="form-label d-block"
-                                    >
-                                      {`${35 + Math.floor(index / 2)}C`}{" "}
-                                      Occurrence Span End Date
-                                    </label>
-                                    {formPayerData?.occurrenceSpans[index]
-                                      ?.endDate || "N/A"}
-                                  </div>
-                                </React.Fragment>
-                              )
-                            )}
-                          </div>
-                        </div>
+                  {/* M2005. Medication Intervention */}
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      M2005. Medication Intervention
+                    </label>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="medicationIntervention"
+                        value="0"
+                        checked={formData?.medicationIntervention === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        No
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="medicationIntervention"
+                        value="1"
+                        checked={formData?.medicationIntervention === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Yes
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="medicationIntervention"
+                        value="9"
+                        checked={formData?.medicationIntervention === "9"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        NA — No potential issues identified or patient is not
+                        taking any medications
+                      </label>
+                    </div>
+                  </div>
 
-                        <div className="mb-1">
-                          <p>(UB-04 Locators 39 - 41) Condition Codes</p>
-                          <div className="g-3">
-                            {formPayerData?.conditionCodes?.map(
-                              (code, index) => (
-                                <div
-                                  key={`conditionCode-${index}`}
-                                  className="col "
-                                >
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    htmlFor={`conditionCode${index + 1}`}
-                                    className="form-label d-block"
-                                  >
-                                    {`${39 + index}`} Condition Code
-                                  </label>
-                                  {formPayerData?.conditionCodes[index] ||
-                                    "N/A"}
-                                </div>
-                              )
-                            )}
-                          </div>
-                        </div>
+                  {/* M2010. Patient/Caregiver High-Risk Drug Education */}
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      M2010. Patient/Caregiver High-Risk Drug Education
+                    </label>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="highRiskDrugEducation"
+                        value="0"
+                        checked={formData?.highRiskDrugEducation === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        No
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="highRiskDrugEducation"
+                        value="1"
+                        checked={formData?.highRiskDrugEducation === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Yes
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="highRiskDrugEducation"
+                        value="NA"
+                        checked={formData?.highRiskDrugEducation === "NA"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        NA — No high-risk drugs or fully knowledgeable
+                      </label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {" "}
+                  {/* M2020. Management of Oral Medications */}
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      M2020. Management of Oral Medications
+                    </label>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="managementOralMedications"
+                        value="0"
+                        checked={formData?.managementOralMedications === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Able to independently take the correct medication(s)
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="managementOralMedications"
+                        value="1"
+                        checked={formData?.managementOralMedications === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Able to take medication(s) if prepared in advance or if
+                        using a drug diary/chart
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="managementOralMedications"
+                        value="2"
+                        checked={formData?.managementOralMedications === "2"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Able to take medication(s) if given reminders
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="managementOralMedications"
+                        value="3"
+                        checked={formData?.managementOralMedications === "3"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Unable to take medication unless administered by another
+                        person
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="managementOralMedications"
+                        value="NA"
+                        checked={formData?.managementOralMedications === "NA"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        NA — No oral medications prescribed
+                      </label>
+                    </div>
+                  </div>
+                  {/* M2030. Management of Injectable Medications */}
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      M2030. Management of Injectable Medications
+                    </label>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="managementInjectableMedications"
+                        value="0"
+                        checked={
+                          formData?.managementInjectableMedications === "0"
+                        }
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Able to independently take the correct medication(s)
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="managementInjectableMedications"
+                        value="1"
+                        checked={
+                          formData?.managementInjectableMedications === "1"
+                        }
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Able to take medication(s) if syringes are prepared in
+                        advance or if using a drug diary/chart
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="managementInjectableMedications"
+                        value="2"
+                        checked={
+                          formData?.managementInjectableMedications === "2"
+                        }
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Able to take medication(s) if given reminders
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="managementInjectableMedications"
+                        value="3"
+                        checked={
+                          formData?.managementInjectableMedications === "3"
+                        }
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Unable to take medication unless administered by another
+                        person
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="managementInjectableMedications"
+                        value="NA"
+                        checked={
+                          formData?.managementInjectableMedications === "NA"
+                        }
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        NA — No injectable medications prescribed
+                      </label>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <h6
+                    style={{
+                      // border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                      textAlign: "center",
+                      backgroundColor: "#eee",
+                    }}
+                    className=""
+                  >
+                    Special Treatments, Procedures, and Programs
+                  </h6>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {" "}
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      O0110. Special Treatments, Procedures, and Programs
+                      (Admission)
+                    </label>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value="chemotherapy"
+                        name="specialTreatmentsAdmission"
+                        checked={formData?.specialTreatmentsAdmission?.includes(
+                          "chemotherapy"
+                        )}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        A1. Chemotherapy
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value="radiation"
+                        name="specialTreatmentsAdmission"
+                        checked={formData?.specialTreatmentsAdmission?.includes(
+                          "radiation"
+                        )}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        B1. Radiation
+                      </label>
+                    </div>
 
-                        {/* Additional Form Fields */}
-                        <div className="mb-1">
-                          <h6
-                            style={{
-                              fontSize: "11px",
-                            }}
-                          >
-                            Additional Form Fields
-                          </h6>
+                    {/* Repeat similar blocks for other treatments, procedures, and programs on admission */}
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        name="specialTreatmentsAdmission"
+                        value="noneOfTheAbove"
+                        checked={formData?.specialTreatmentsAdmission?.includes(
+                          "noneOfTheAbove"
+                        )}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Z1. None of the Above
+                      </label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {" "}
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      O0110. Special Treatments, Procedures, and Programs
+                      (Discharge)
+                    </label>
 
-                          <div className="g-3">
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value="chemotherapy"
+                        name="specialTreatmentsDischarge"
+                        checked={formData?.specialTreatmentsDischarge?.includes(
+                          "chemotherapy"
+                        )}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        A1. Chemotherapy
+                      </label>
+                    </div>
+
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value="radiation"
+                        name="specialTreatmentsDischarge"
+                        checked={formData?.specialTreatmentsDischarge?.includes(
+                          "radiation"
+                        )}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        B1. Radiation
+                      </label>
+                    </div>
+
+                    {/* Repeat similar blocks for other treatments, procedures, and programs on discharge */}
+
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value="noneOfTheAbove"
+                        name="specialTreatmentsDischarge"
+                        checked={formData?.specialTreatmentsDischarge?.includes(
+                          "noneOfTheAbove"
+                        )}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Z1. None of the Above
+                      </label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {" "}
+                  {/* O0350. Patient’s COVID-19 vaccination is up to date */}
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      O0350. Patient’s COVID-19 vaccination is up to date
+                    </label>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="covidVaccinationUpToDate"
+                        value="0"
+                        checked={formData?.covidVaccinationUpToDate === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        No, patient is not up to date
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="covidVaccinationUpToDate"
+                        value="1"
+                        checked={formData?.covidVaccinationUpToDate === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Yes, patient is up to date
+                      </label>
+                    </div>
+                  </div>
+                  {/* M1041. Influenza Vaccine Data Collection Period */}
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      M1041. Influenza Vaccine Data Collection Period
+                    </label>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="influenzaVaccinePeriod"
+                        value="0"
+                        checked={formData?.influenzaVaccinePeriod === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        No
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="influenzaVaccinePeriod"
+                        value="1"
+                        checked={formData?.influenzaVaccinePeriod === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Yes
+                      </label>
+                    </div>
+                  </div>
+                  {/* M1046. Influenza Vaccine Received */}
+                  {formData?.influenzaVaccinePeriod === "1" && (
+                    <div className="mb-3  col">
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-label mr-2"
+                      >
+                        M1046. Influenza Vaccine Received
+                      </label>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="influenzaVaccineReceived"
+                          value="1"
+                          checked={formData?.influenzaVaccineReceived === "1"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Yes; received from your agency during this episode of
+                          care
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="influenzaVaccineReceived"
+                          value="2"
+                          checked={formData?.influenzaVaccineReceived === "2"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Yes; received from your agency during a prior episode
+                          of care
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="influenzaVaccineReceived"
+                          value="3"
+                          checked={formData?.influenzaVaccineReceived === "3"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Yes; received from another health care provider
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="influenzaVaccineReceived"
+                          value="4"
+                          checked={formData?.influenzaVaccineReceived === "4"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          No; patient offered and declined
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="influenzaVaccineReceived"
+                          value="5"
+                          checked={formData?.influenzaVaccineReceived === "5"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          No; patient assessed and determined to have medical
+                          contraindication(s)
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="influenzaVaccineReceived"
+                          value="6"
+                          checked={formData?.influenzaVaccineReceived === "6"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          No; not indicated – patient does not meet
+                          age/condition guidelines
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="influenzaVaccineReceived"
+                          value="7"
+                          checked={formData?.influenzaVaccineReceived === "7"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          No; inability to obtain vaccine due to declared
+                          shortage
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="influenzaVaccineReceived"
+                          value="8"
+                          checked={formData?.influenzaVaccineReceived === "8"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          No; patient did not receive the vaccine due to other
+                          reasons
+                        </label>
+                      </div>
+                    </div>
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <h6
+                    style={{
+                      // border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                      textAlign: "center",
+                      backgroundColor: "#eee",
+                    }}
+                    className=""
+                  >
+                    Participation in assessment and setting{" "}
+                  </h6>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {" "}
+                  <label
+                    style={{ fontSize: "12px" }}
+                    className="form-label mr-2"
+                  >
+                    M2401. Intervention Synopsis
+                  </label>
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      b. Falls prevention interventions
+                    </label>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="fallsPrevention"
+                        value="0"
+                        checked={formData?.fallsPrevention === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        No
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="fallsPrevention"
+                        value="1"
+                        checked={formData?.fallsPrevention === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Yes
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="fallsPrevention"
+                        value="NA"
+                        checked={formData?.fallsPrevention === "NA"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Not Applicable
+                      </label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      c. Depression intervention(s)
+                    </label>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="depressionIntervention"
+                        value="0"
+                        checked={formData?.depressionIntervention === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        No
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="depressionIntervention"
+                        value="1"
+                        checked={formData?.depressionIntervention === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Yes
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="depressionIntervention"
+                        value="NA"
+                        checked={formData?.depressionIntervention === "NA"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Not Applicable
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="mb-3  col">
+                    <label
+                      style={{ fontSize: "12px" }}
+                      className="form-label mr-2"
+                    >
+                      d. Intervention(s) to monitor and mitigate pain
+                    </label>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="painIntervention"
+                        value="0"
+                        checked={formData?.painIntervention === "0"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        No
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="painIntervention"
+                        value="1"
+                        checked={formData?.painIntervention === "1"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Yes
+                      </label>
+                    </div>
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="painIntervention"
+                        value="NA"
+                        checked={formData?.painIntervention === "NA"}
+                      />
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-check-label"
+                      >
+                        Not Applicable
+                      </label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div className="mb-3 row">
+                    <div className="mb-3  col">
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-label mr-2"
+                      >
+                        e. Intervention(s) to prevent pressure ulcers
+                      </label>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="pressureUlcerPrevention"
+                          value="0"
+                          checked={formData?.pressureUlcerPrevention === "0"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          No
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="pressureUlcerPrevention"
+                          value="1"
+                          checked={formData?.pressureUlcerPrevention === "1"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Yes
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="pressureUlcerPrevention"
+                          value="NA"
+                          checked={formData?.pressureUlcerPrevention === "NA"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Not Applicable
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="mb-3  col">
+                      <label
+                        style={{ fontSize: "12px" }}
+                        className="form-label mr-2"
+                      >
+                        f. Pressure ulcer treatment based on principles of moist
+                        wound healing
+                      </label>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="pressureUlcerTreatment"
+                          value="0"
+                          checked={formData?.pressureUlcerTreatment === "0"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          No
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="pressureUlcerTreatment"
+                          value="1"
+                          checked={formData?.pressureUlcerTreatment === "1"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Yes
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="pressureUlcerTreatment"
+                          value="NA"
+                          checked={formData?.pressureUlcerTreatment === "NA"}
+                        />
+                        <label
+                          style={{ fontSize: "12px" }}
+                          className="form-check-label"
+                        >
+                          Not Applicable
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  {" "}
+                  <h6
+                    style={{
+                      border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                      backgroundColor: "#eee",
+                    }}
+                  >
+                    Payer Information
+                  </h6>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div className="mb-1">
+                    <div className="g-3">
+                      <div className="col">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="mbiNumber"
+                          className="form-label d-block"
+                        >
+                          (M0063) Medicare Beneficiary Identifier (MBI) Number
+                          <span className="text-danger">*</span>
+                        </label>
+                        {formPayerData?.mbiNumber}
+                      </div>
+                      <div className="col">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="hicNumber"
+                          className="form-label d-block"
+                        >
+                          Health Insurance Claim (HIC) Number
+                        </label>
+                        {formPayerData?.hicNumber}
+                      </div>
+                      <div className="col">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="medicaidNumber"
+                          className="form-label d-block"
+                        >
+                          Medicaid Number <span className="text-danger">*</span>
+                        </label>
+                        {formPayerData?.medicaidNumber}
+                      </div>
+                      <div className="col">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="alternateMedicaidNumber"
+                          className="form-label d-block"
+                        >
+                          Alternate Medicaid Number:
+                        </label>
+                        {formPayerData?.alternateMedicaidNumber}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Insurance Information */}
+                  <div className="mb-1">
+                    <h6
+                      style={{
+                        fontSize: "11px",
+                      }}
+                    >
+                      Insurance Information
+                    </h6>
+
+                    <div className="g-3">
+                      <div className="col">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="primaryInsurance"
+                          className="form-label d-block"
+                        >
+                          Primary Insurance{" "}
+                          <span className="text-danger">*</span>
+                        </label>
+                        {formPayerData?.primaryInsurance || "N/A"}
+                      </div>
+                      <div className="col">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="secondaryInsurance"
+                          className="form-label d-block"
+                        >
+                          Secondary Insurance:
+                        </label>
+                        {formPayerData?.secondaryInsurance || "N/A"}
+                      </div>
+                      <div className="col">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="tertiaryInsurance"
+                          className="form-label d-block"
+                        >
+                          Tertiary Insurance:
+                        </label>
+                        {formPayerData?.tertiaryInsurance || "N/A"}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Payer Comments and Selected Templates */}
+                  <div className="mb-1">
+                    <div className="g-3">
+                      <div className="col">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="payerComments"
+                          className="form-label hide-on-print"
+                        >
+                          Payer Comments:
+                        </label>
+                        {formPayerData?.payerComments || "N/A"}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div className="row">
+                    {/* Additional UB-04 Locators */}
+                    <div className="mb-1 col-md-4">
+                      <h6
+                        style={{
+                          fontSize: "11px",
+                        }}
+                      >
+                        Additional UB-04 Locators
+                      </h6>
+
+                      <p>(UB-04 Locators 31 - 34) Occurrence Codes</p>
+                      <div className="g-3 ">
+                        {formPayerData?.occurrenceCodes?.map((code, index) => (
+                          <React.Fragment key={`occurrenceCode-${index}`}>
                             <div className="col ">
                               <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="employmentRelated"
+                                style={{ fontSize: "10px" }}
+                                htmlFor={`occurrenceCode${index + 1}A`}
                                 className="form-label d-block"
                               >
-                                Employment Related:
+                                {`${31 + Math.floor(index / 2)}A`} Occurrence
+                                Code
                               </label>
-                              {formPayerData?.employmentRelated || "N/A"}
-                            </div>
-                            <div className="col ">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="autoAccident"
-                                className="form-label d-block"
-                              >
-                                Auto Accident:
-                              </label>
-                              {formPayerData?.autoAccident || "N/A"}
-                            </div>
-                            <div className="col ">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="claimCode"
-                                className="form-label d-block"
-                              >
-                                Claim Code:
-                              </label>
-                              {formPayerData?.claimCode || "N/A"}
-                            </div>
-                            <div className="col ">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="unableToWorkFrom"
-                                className="form-label d-block"
-                              >
-                                Unable to Work From:
-                              </label>
-                              {formPayerData?.unableToWorkFrom || "N/A"}
-                            </div>
-                            <div className="col ">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="unableToWorkTo"
-                                className="form-label d-block"
-                              >
-                                Unable to Work To:
-                              </label>
-                              {formPayerData?.unableToWorkTo || "N/A"}
-                            </div>
-                            <div className="col ">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="hospitalizationStartDate"
-                                className="form-label d-block"
-                              >
-                                Hospitalization Start Date:
-                              </label>
-                              {formPayerData?.hospitalizationStartDate || "N/A"}
-                            </div>
-                            <div className="col ">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="hospitalizationEndDate"
-                                className="form-label d-block"
-                              >
-                                Hospitalization End Date:
-                              </label>
-                              {formPayerData?.hospitalizationEndDate || "N/A"}
-                            </div>
-                            <div className="col ">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="emergencyTreatmentIndicator"
-                                className="form-label d-block"
-                              >
-                                Emergency Treatment Indicator:
-                              </label>
-                              {formPayerData?.emergencyTreatmentIndicator ||
+                              {formPayerData?.occurrenceCodes[index]?.code ||
                                 "N/A"}
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                      {/* physician  */}
-                      <div className="col-xl-12 col col-12 mb-md-0 ">
-                        <h6
-                          style={{
-                            border: "1px solid gray",
-                            padding: "5px",
-                            margin: "5px 0px",
-                            fontSize: "12px",
-                            backgroundColor: "#eee",
-                          }}
-                          className="mt-3"
-                        >
-                          Physician Information
-                        </h6>
-
-                        <div className="">
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="npiNumber"
-                            >
-                              NPI Number:
-                            </label>
-                            {formPhysicianData?.npiNumber || "N/A"}
-                          </div>
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="firstName"
-                            >
-                              First Name:
-                            </label>
-                            {formPhysicianData?.firstName}
-                          </div>
-                        </div>
-                        <div className="">
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="mi"
-                            >
-                              MI:
-                            </label>
-                            {formPhysicianData?.mi || "N/A"}
-                          </div>
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="lastName"
-                            >
-                              Last Name:
-                            </label>
-                            {formPhysicianData?.lastName || "N/A"}
-                          </div>
-                        </div>
-                        <div className="">
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="taxonomyCode"
-                            >
-                              Taxonomy Code:
-                            </label>
-                            {formPhysicianData?.taxonomyCode}
-                          </div>
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="credentials"
-                            >
-                              Credentials:
-                            </label>
-                            {formPhysicianData?.credentials || "N/A"}
-                          </div>
-                        </div>
-                        <div className="">
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="npiNo"
-                            >
-                              NPI No:
-                            </label>
-                            {formPhysicianData?.npiNo || "N/A"}
-                          </div>
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              className="form-label d-block"
-                              htmlFor="medicaidProviderIdentifier"
-                            >
-                              Medicaid Provider Identifier:
-                            </label>
-                            {formPhysicianData?.medicaidProviderIdentifier ||
-                              "N/A"}
-                          </div>
-                        </div>
-
-                        <h6
-                          style={{
-                            fontSize: "11px",
-                          }}
-                          className="mt-3"
-                        >
-                          Physician Address
-                        </h6>
-
-                        <div className="">
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="addressLine1"
-                            >
-                              Address Line 1:
-                            </label>
-
-                            {formPhysicianData?.addressLine1 || "N/A"}
-                          </div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="addressLine2"
-                            >
-                              Address Line 2:
-                            </label>
-                            {formPhysicianData?.addressLine2 || "N/A"}
-                          </div>
-
-                          {/* const [county,setCounty]=useState("") */}
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="city"
-                            >
-                              City: {formPhysicianData?.city || "N/A"}
-                            </label>
-                          </div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="state"
-                            >
-                              State: {formPhysicianData?.state || "N/A"}
-                            </label>
-                          </div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="zip"
-                            >
-                              Zip:
-                            </label>
-                            {formPhysicianData?.zip || "N/A"}
-                          </div>
-
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="primaryPhone"
-                            >
-                              Primary Phone:
-                            </label>
-                            {formPhysicianData?.primaryPhone || "N/A"}
-                          </div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="alternatePhone"
-                            >
-                              Alternate Phone:
-                            </label>
-                            {formPhysicianData?.alternatePhone || "N/A"}
-                          </div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="fax"
-                            >
-                              Fax:
-                            </label>
-                            {formPhysicianData?.fax}
-                          </div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                              htmlFor="email"
-                            >
-                              E-mail:
-                            </label>
-                            {formPhysicianData?.email || "N/A"}
-                          </div>
-
-                          <div className="col w-100">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                            >
-                              Order Delivery Method:
-                            </label>
-                            <div className="">
-                              <div className="form-check col-md-2">
-                                <input
-                                  type="radio"
-                                  className="form-check-input"
-                                  id="deliveryMethodAxxessPhysicianPortal"
-                                  name="deliveryMethod"
-                                  value="AxxessPhysicianPortal"
-                                  checked={
-                                    formPhysicianData?.deliveryMethod ===
-                                    "AxxessPhysicianPortal"
-                                  }
-                                />
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  className="form-label d-block"
-                                  htmlFor="deliveryMethodAxxessPhysicianPortal"
-                                >
-                                  Axxess Physician Portal
-                                </label>
-                              </div>
-                              <div className="form-check col-md-2">
-                                <input
-                                  type="radio"
-                                  className="form-check-input"
-                                  id="deliveryMethodEmail"
-                                  name="deliveryMethod"
-                                  value="Email"
-                                  checked={
-                                    formPhysicianData?.deliveryMethod ===
-                                    "Email"
-                                  }
-                                />
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  className="form-label d-block"
-                                  htmlFor="deliveryMethodEmail"
-                                >
-                                  Email
-                                </label>
-                              </div>
-                              <div className="form-check col-md-2">
-                                <input
-                                  type="radio"
-                                  className="form-check-input"
-                                  id="deliveryMethodPhone"
-                                  name="deliveryMethod"
-                                  value="Phone"
-                                  checked={
-                                    formPhysicianData?.deliveryMethod ===
-                                    "Phone"
-                                  }
-                                />
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  className="form-label d-block"
-                                  htmlFor="deliveryMethodPhone"
-                                >
-                                  Phone
-                                </label>
-                              </div>
-                              <div className="form-check col-md-2">
-                                <input
-                                  type="radio"
-                                  className="form-check-input"
-                                  id="deliveryMethodFax"
-                                  name="deliveryMethod"
-                                  value="Fax"
-                                  checked={
-                                    formPhysicianData?.deliveryMethod === "Fax"
-                                  }
-                                />
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  className="form-label d-block"
-                                  htmlFor="deliveryMethodFax"
-                                >
-                                  Fax
-                                </label>
-                              </div>
-                              <div className="form-check col-md-2">
-                                <input
-                                  type="radio"
-                                  className="form-check-input"
-                                  id="deliveryMethodCourier"
-                                  name="deliveryMethod"
-                                  value="Courier"
-                                  checked={
-                                    formPhysicianData?.deliveryMethod ===
-                                    "Courier"
-                                  }
-                                />
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  className="form-label d-block"
-                                  htmlFor="deliveryMethodCourier"
-                                >
-                                  Courier
-                                </label>
-                              </div>
-                              <div className="form-check col-md-2">
-                                <input
-                                  type="radio"
-                                  className="form-check-input"
-                                  id="deliveryMethodOther"
-                                  name="deliveryMethod"
-                                  value="Other"
-                                  checked={
-                                    formPhysicianData?.deliveryMethod ===
-                                    "Other"
-                                  }
-                                />
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  className="form-label d-block"
-                                  htmlFor="deliveryMethodOther"
-                                >
-                                  Other
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      {/* clinical dignosis  */}
-                      <div className="col-xl-12 col col-12 mb-md-0 ">
-                        {/* Service Required */}
-
-                        <h6
-                          style={{
-                            fontSize: "11px",
-                          }}
-                        >
-                          Service Required
-                        </h6>
-
-                        <div className="">
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label d-block"
-                            >
-                              Service Required
-                            </label>
-                            {["SN", "HHA", "PT", "OT", "ST", "MSW"]?.map(
-                              (service) => (
-                                <div
-                                  style={{
-                                    minHight: 0,
-                                    margin: 0,
-                                    padding: "0px 0px 0px auto",
-                                  }}
-                                  className="form-check"
-                                  key={service}
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id={service}
-                                    name="serviceRequired"
-                                    value={service}
-                                    checked={formClinicalData?.serviceRequired?.includes(
-                                      service
-                                    )}
-                                  />
-                                  <label
-                                    style={{ fontSize: "10px" }}
-                                    className="form-label d-block"
-                                    htmlFor={service}
-                                  >
-                                    {service}
-                                  </label>
-                                </div>
-                              )
-                            )}
-                          </div>
-                          {/* DME Needed */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label d-block"
-                            >
-                              DME Needed
-                            </label>
-                            {[
-                              "bedsideCommode",
-                              "cane",
-                              "elevatedToiletSeat",
-                              "grabBars",
-                              "hospitalBed",
-                              "nebulizer",
-                              "oxygen",
-                              "tubShowerBench",
-                              "walker",
-                              "wheelchair",
-                              "other",
-                            ]?.map((dme) => (
-                              <div
-                                style={{
-                                  minHight: 0,
-                                  margin: 0,
-                                  padding: "0px 0px 0px auto",
-                                }}
-                                className="form-check"
-                                key={dme}
-                              >
-                                <input
-                                  type="checkbox"
-                                  id={dme}
-                                  name="dmeNeeded"
-                                  value={dme}
-                                  checked={formClinicalData?.dmeNeeded?.includes(
-                                    dme
-                                  )}
-                                  className="form-check-input"
-                                />
-                                <label
-                                  style={{ fontSize: "10px" }}
-                                  className="form-label d-block"
-                                  htmlFor={dme}
-                                >
-                                  {dme}
-                                </label>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        {/* Height */}
-                        <div className="">
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="heightValue"
-                              className="form-label d-block"
-                            >
-                              Height
-                            </label>
-                            {formClinicalData?.height?.value || "N/A"}
-                          </div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="heightUnit"
-                              className="form-label d-block"
-                            >
-                              Unit
-                            </label>
-                            {formClinicalData?.height?.unit || "N/A"}
-                          </div>
-                        </div>
-
-                        {/* Weight */}
-                        <div className="">
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="weightValue"
-                              className="form-label d-block"
-                            >
-                              Weight
-                            </label>
-                            {formClinicalData?.weight?.value || "N/A"}
-                          </div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="weightUnit"
-                              className="form-label d-block"
-                            >
-                              Unit
-                            </label>
-                            {formClinicalData?.weight?.unit || "N/A"}
-                          </div>
-                        </div>
-
-                        {/* Primary Diagnosis */}
-                        <div className="">
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="primaryDiagnosis"
-                              className="form-label d-block"
-                            >
-                              Primary Diagnosis
-                            </label>
-                            {formClinicalData?.primaryDiagnosis || "N/A"}
-                          </div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="primaryDiagnosisCode"
-                              className="form-label d-block"
-                            >
-                              Primary Diagnosis Code
-                            </label>
-                            {formClinicalData?.primaryDiagnosisCode || "N/A"}
-                          </div>
-                        </div>
-
-                        <div className="">
-                          {/* Other Diagnoses */}
-                          <div className="">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label d-block"
-                            >
-                              Other Diagnoses
-                            </label>
-                            {formClinicalData?.otherDiagnoses?.map(
-                              (diagnosis, index) => (
-                                <div className="" key={index}>
-                                  <div className="col ">
-                                    <label
-                                      style={{ fontSize: "10px" }}
-                                      htmlFor={`diagnosis-${index}`}
-                                      className="form-label d-block"
-                                    >
-                                      Diagnosis
-                                    </label>
-                                    {diagnosis.diagnosis || "N/A"}
-                                  </div>
-                                  <div className="col ">
-                                    <label
-                                      style={{ fontSize: "10px" }}
-                                      htmlFor={`code-${index}`}
-                                      className="form-label d-block"
-                                    >
-                                      Code
-                                    </label>
-                                    {diagnosis.code || "N/A"}
-                                  </div>
-                                </div>
-                              )
-                            )}
-                          </div>
-
-                          {/* Clinical Comments */}
-                          <div className="">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="clinicalComments"
-                              className="form-label hide-on-print"
-                            >
-                              Clinical Comments
-                            </label>
-                            {formClinicalData?.clinicalComments || "N/A"}
-                          </div>
-                        </div>
-                      </div>
-                      {/* pharmacy  */}
-                      <div className="col-xl-12 col col-12 mb-md-0 ">
-                        <h6
-                          style={{
-                            border: "1px solid gray",
-                            padding: "5px",
-                            margin: "5px 0px",
-                            fontSize: "11px",
-                            backgroundColor: "#eee",
-                          }}
-                        >
-                          Pharmacy Information
-                        </h6>
-
-                        <div className="">
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="pharmacyName"
-                              className="form-label d-block"
-                            >
-                              Pharmacy Name:
-                            </label>
-                            {formPharmacyData?.pharmacyName || "N/A"}
-                          </div>
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="addressLine1"
-                              className="form-label d-block"
-                            >
-                              Address Line 1:
-                            </label>
-                            {formPharmacyData?.addressLine1 || "N/A"}
-                          </div>
-                        </div>
-                        <div className="">
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="addressLine2"
-                              className="form-label d-block"
-                            >
-                              Address Line 2:
-                            </label>
-                            {formPharmacyData?.addressLine2 || "N/A"}
-                          </div>
-                          <div className="col">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="city"
-                              className="form-label d-block"
-                            >
-                              City: {formPharmacyData?.city || "N/A"}
-                            </label>
-                          </div>
-                        </div>
-                        <div className="">
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="state"
-                              className="form-label d-block"
-                            >
-                              State: {formPharmacyData?.state || "N/A"}
-                            </label>
-                          </div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="zip"
-                              className="form-label d-block"
-                            >
-                              Zip:
-                            </label>
-                            {formPharmacyData?.zip || "N/A"}
-                          </div>
-                        </div>
-
-                        <div className="">
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="primaryPhone"
-                              className="form-label d-block"
-                            >
-                              Primary Phone:
-                            </label>
-                            {formPharmacyData?.primaryPhone || "N/A"}
-                          </div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="contactFirstName"
-                              className="form-label d-block"
-                            >
-                              Contact First Name:
-                            </label>
-                            {formPharmacyData?.contactFirstName || "N/A"}
-                          </div>
-                        </div>
-                        <div className="">
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="contactLastName"
-                              className="form-label d-block"
-                            >
-                              Contact Last Name:
-                            </label>
-                            {formPharmacyData?.contactLastName || "N/A"}
-                          </div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="email"
-                              className="form-label d-block"
-                            >
-                              Email:
-                            </label>
-                            {formPharmacyData?.email || "N/A"}
-                          </div>
-                        </div>
-                        <div className="">
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="faxNumber"
-                              className="form-label d-block"
-                            >
-                              Fax Number:
-                            </label>
-                            {formPharmacyData?.faxNumber || "N/A"}
-                          </div>
-
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="comment"
-                              className="form-label d-block"
-                            >
-                              Comment:
-                            </label>
-                            {formPharmacyData?.comment || "N/A"}
-                          </div>
-                        </div>
-
-                        <h6
-                          style={{
-                            fontSize: "11px",
-                          }}
-                        >
-                          Additional Pharmacies
-                        </h6>
-
-                        <div className="">
-                          {formPharmacyData?.additionalPharmacies?.map(
-                            (pharmacy, index) => (
-                              <div key={index} className="col  ">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor={`additionalPharmacy${index + 1}`}
-                                  className="form-label d-block"
-                                >
-                                  Additional Pharmacy {index + 1}
-                                </label>
-                                {pharmacy?.name || "N/A"}
-                              </div>
-                            )
-                          )}
-                        </div>
-                      </div>
-
-                      {/* contact  */}
-                      <div className="col-xl-12 col col-12 mb-md-0 ">
-                        <div className="g-3">
-                          <div className="">
                             <div className="col ">
                               <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="primaryFirstName"
+                                style={{ fontSize: "10px" }}
+                                htmlFor={`occurrenceCode${index + 1}B`}
                                 className="form-label d-block"
                               >
-                                First Name:
+                                {`${31 + Math.floor(index / 2)}B`} Date
                               </label>
-                              {formContactData?.primary?.firstName || "N/A"}
-                            </div>
-                            <div className="col ">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="primaryLastName"
-                                className="form-label d-block"
-                              >
-                                Last Name:
-                              </label>
-                              {formContactData?.primary?.lastName || "N/A"}
-                            </div>
-                          </div>
-                          <div className="">
-                            <div className="col ">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="primaryMobilePhone"
-                                className="form-label d-block"
-                              >
-                                Mobile Phone:
-                              </label>
-                              {formContactData?.primary?.mobilePhone || "N/A"}
-                            </div>
-                            <div className="col ">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="primaryAlternatePhone"
-                                className="form-label d-block"
-                              >
-                                Alternate Phone:
-                              </label>
-                              {formContactData?.primary?.alternatePhone ||
+                              {formPayerData?.occurrenceCodes[index]?.date ||
                                 "N/A"}
                             </div>
-                          </div>
-
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="primaryRelationship"
-                              className="form-label d-block"
-                            >
-                              Relationship:
-                            </label>
-                            <div>
-                              {[
-                                "Spouse",
-                                "Parent",
-                                "Sibling",
-                                "Child",
-                                "Relative",
-                                "Friend",
-                                "Other",
-                              ]?.map((relationship) => (
-                                <div
-                                  key={relationship}
-                                  style={{
-                                    minHight: 0,
-                                    margin: 0,
-                                    padding: "0px 0px 0px auto",
-                                  }}
-                                  className="form-check"
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="primaryRelationship"
-                                    id={`relationship${relationship}`}
-                                    value={relationship}
-                                    checked={
-                                      formContactData?.primary?.relationship ===
-                                      relationship
-                                    }
-                                  />
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    className="form-label d-block"
-                                    htmlFor={`relationship${relationship}`}
-                                  >
-                                    {relationship}
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="primaryEmail"
-                              className="form-label d-block"
-                            >
-                              Email:
-                            </label>
-                            {formContactData?.primary?.email || "N/A"}
-                          </div>
-                          <div className=""></div>
-                          <div className="col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label d-block"
-                            >
-                              Representative:
-                            </label>
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name="primaryRepresentative"
-                                id="primaryLegalRep"
-                                value="Legal Representative"
-                                checked={
-                                  formContactData?.primary?.representative ===
-                                  "Legal Representative"
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "11px" }}
-                                className="form-label d-block"
-                                htmlFor="primaryLegalRep"
-                              >
-                                Legal Representative
-                              </label>
-                            </div>
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name="primaryRepresentative"
-                                id="primaryPatientRep"
-                                value="Patient Selected Representative"
-                                checked={
-                                  formContactData?.primary?.representative ===
-                                  "Patient Selected Representative"
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "11px" }}
-                                className="form-label d-block"
-                                htmlFor="primaryPatientRep"
-                              >
-                                Patient Selected Representative
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="">
-                          <div className="col">
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="primarySameAsPatientAddress"
-                                checked={
-                                  formContactData?.primary?.sameAsPatientAddress
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "11px" }}
-                                className="form-label d-block"
-                                htmlFor="primarySameAsPatientAddress"
-                              >
-                                Same as Patient Address
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="">
-                          {!formContactData?.primary?.sameAsPatientAddress && (
-                            <React.Fragment>
-                              <div className="col">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="primaryAddressLine1"
-                                  className="form-label d-block"
-                                >
-                                  Address Line 1:
-                                </label>
-                                {formContactData?.primary?.addressLine1 ||
-                                  "N/A"}
-                              </div>
-                              <div className="col">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="primaryAddressLine2"
-                                  className="form-label d-block"
-                                >
-                                  Address Line 2:
-                                </label>
-                                {formContactData?.primary?.addressLine2 ||
-                                  "N/A"}
-                              </div>
-                              <div className="col">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="primaryCity"
-                                  className="form-label d-block"
-                                >
-                                  City:{formContactData?.city || "N/A"}
-                                </label>
-                              </div>
-                              <div className="col">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="primaryState"
-                                  className="form-label d-block"
-                                >
-                                  State:{formContactData?.state || "N/A"}
-                                </label>
-                              </div>
-                              <div className="col">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="primaryZip"
-                                  className="form-label d-block"
-                                >
-                                  ZIP:
-                                </label>
-                                {formContactData?.primary?.zip || "N/A"}
-                              </div>
-                            </React.Fragment>
-                          )}
-
-                          {/* Additional Emergency Contacts */}
-                          {formContactData?.additional?.map(
-                            (contact, index) => (
-                              <div key="index" className="g-3">
-                                <div className="col">
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    htmlFor={`additionalFirstName-${index}`}
-                                    className="form-label d-block"
-                                  >
-                                    First Name:
-                                  </label>
-                                  {contact?.firstName || "N/A"}
-                                </div>
-                                <div className="col">
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    htmlFor={`additionalLastName-${index}`}
-                                    className="form-label d-block"
-                                  >
-                                    Last Name:
-                                  </label>
-                                  {contact?.lastName || "N/A"}
-                                </div>
-                                <div className="col">
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    htmlFor={`additionalMobilePhone-${index}`}
-                                    className="form-label d-block"
-                                  >
-                                    Mobile Phone:
-                                  </label>
-                                  {contact?.mobilePhone || "N/A"}
-                                </div>
-                                <div className="col">
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    htmlFor={`additionalAlternatePhone-${index}`}
-                                    className="form-label d-block"
-                                  >
-                                    Alternate Phone:
-                                  </label>
-
-                                  {contact?.alternatePhone || "N/A"}
-                                </div>
-                                <div className="col">
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    htmlFor={`additionalRelationship-${index}`}
-                                    className="form-label d-block"
-                                  >
-                                    Relationship:
-                                  </label>
-                                  <div>
-                                    {[
-                                      "Spouse",
-                                      "Parent",
-                                      "Sibling",
-                                      "Child",
-                                      "Relative",
-                                      "Friend",
-                                      "Other",
-                                    ]?.map((relationship) => (
-                                      <div
-                                        key={relationship}
-                                        style={{
-                                          minHight: 0,
-                                          margin: 0,
-                                          padding: "0px 0px 0px auto",
-                                        }}
-                                        className="form-check"
-                                      >
-                                        <input
-                                          className="form-check-input"
-                                          type="radio"
-                                          name={`additionalRelationship-${index}`}
-                                          id={`additionalRelationship-${index}-${relationship}`}
-                                          value={relationship}
-                                          checked={
-                                            contact?.relationship ===
-                                            relationship
-                                          }
-                                        />
-                                        <label
-                                          className="form-label d-block"
-                                          htmlFor={`additionalRelationship-${index}-${relationship}`}
-                                        >
-                                          {relationship}
-                                        </label>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                                <div className="col">
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    htmlFor={`additionalEmail-${index}`}
-                                    className="form-label d-block"
-                                  >
-                                    Email:
-                                  </label>
-                                  <input
-                                    type="email"
-                                    className="form-control"
-                                    id={`additionalEmail-${index}`}
-                                    value={contact?.email}
-                                    placeholder="Enter Email Address"
-                                  />
-                                </div>
-                                <div className="col">
-                                  <label
-                                    style={{ fontSize: "10px" }}
-                                    className="form-label d-block"
-                                  >
-                                    Representative:
-                                  </label>
-                                  <div
-                                    style={{
-                                      minHight: 0,
-                                      margin: 0,
-                                      padding: "0px 0px 0px auto",
-                                    }}
-                                    className="form-check"
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="radio"
-                                      name={`additionalRepresentative-${index}`}
-                                      id={`additionalLegalRep-${index}`}
-                                      value="Legal Representative"
-                                      checked={
-                                        contact?.representative ===
-                                        "Legal Representative"
-                                      }
-                                    />
-                                    <label
-                                      style={{ fontSize: "11px" }}
-                                      className="form-label d-block"
-                                      htmlFor={`additionalLegalRep-${index}`}
-                                    >
-                                      Legal Representative
-                                    </label>
-                                  </div>
-                                  <div
-                                    style={{
-                                      minHight: 0,
-                                      margin: 0,
-                                      padding: "0px 0px 0px auto",
-                                    }}
-                                    className="form-check"
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="radio"
-                                      name={`additionalRepresentative-${index}`}
-                                      id={`additionalPatientRep-${index}`}
-                                      value="Patient Selected Representative"
-                                      checked={
-                                        contact?.representative ===
-                                        "Patient Selected Representative"
-                                      }
-                                    />
-                                    <label
-                                      style={{ fontSize: "11px" }}
-                                      className="form-label d-block"
-                                      htmlFor={`additionalPatientRep-${index}`}
-                                    >
-                                      Patient Selected Representative
-                                    </label>
-                                  </div>
-                                </div>
-                                <div className="col">
-                                  <div
-                                    style={{
-                                      minHight: 0,
-                                      margin: 0,
-                                      padding: "0px 0px 0px auto",
-                                    }}
-                                    className="form-check"
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      id={`additionalSameAsPatientAddress-${index}`}
-                                      checked={contact?.sameAsPatientAddress}
-                                    />
-                                    <label
-                                      style={{ fontSize: "11px" }}
-                                      className="form-label d-block"
-                                      htmlFor={`additionalSameAsPatientAddress-${index}`}
-                                    >
-                                      Same as Patient Address
-                                    </label>
-                                  </div>
-                                </div>
-                                <div className="">
-                                  {!contact?.sameAsPatientAddress && (
-                                    <React.Fragment>
-                                      <div className="col">
-                                        <label
-                                          htmlFor={`additionalAddressLine1-${index}`}
-                                          className="form-label d-block"
-                                        >
-                                          Address Line 1:
-                                        </label>
-                                        {contact?.addressLine1}
-                                      </div>
-                                      <div className="col">
-                                        <label
-                                          htmlFor={`additionalAddressLine2-${index}`}
-                                          className="form-label d-block"
-                                        >
-                                          Address Line 2:
-                                        </label>
-                                        {contact?.addressLine2}
-                                      </div>
-                                      <div className="col">
-                                        <label
-                                          htmlFor={`additionalCity-${index}`}
-                                          className="form-label d-block"
-                                        >
-                                          City:{formData?.city || "N/A"}
-                                        </label>
-                                      </div>
-                                      <div className="col">
-                                        <label
-                                          htmlFor={`additionalState-${index}`}
-                                          className="form-label d-block"
-                                        >
-                                          State:{formData?.state || "N/A"}
-                                        </label>
-                                      </div>
-                                      <div className="col">
-                                        <label
-                                          htmlFor={`additionalZip-${index}`}
-                                          className="form-label d-block"
-                                        >
-                                          ZIP:
-                                        </label>
-                                        {contact?.zip || "N/A"}
-                                      </div>
-                                    </React.Fragment>
-                                  )}
-                                </div>
-                              </div>
-                            )
-                          )}
-                        </div>
-
-                        <div className="">
-                          {/*  */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label d-block"
-                            >
-                              Representative contacted regarding admission:
-                            </label>
-                            <div>
-                              {[
-                                {
-                                  value: "N/A",
-                                  label:
-                                    "N/A (no legal/patient-selected representative)",
-                                },
-                                {
-                                  value: "legalRepresentative",
-                                  label:
-                                    "Legal Representative contacted regarding admission",
-                                },
-                                {
-                                  value: "patientDecline",
-                                  label:
-                                    "Patient request to decline notice of rights to Patient-Selected Representative",
-                                },
-                                {
-                                  value: "patientSelected",
-                                  label:
-                                    "Patient-Selected Representative contacted regarding admission",
-                                },
-                                {
-                                  value: "legalNotInAgreement",
-                                  label:
-                                    "Legal Representative not in agreement with admission",
-                                },
-                                {
-                                  value: "physicianNotified",
-                                  label: "Physician notified",
-                                },
-                                {
-                                  value: "patientNotified",
-                                  label: "Patient notified",
-                                },
-                              ]?.map((option) => (
-                                <div
-                                  key={option.value}
-                                  style={{
-                                    minHight: 0,
-                                    margin: 0,
-                                    padding: "0px 0px 0px auto",
-                                  }}
-                                  className="form-check"
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="representativeContacted"
-                                    id={`representativeContacted-${option.value}`}
-                                    value={option.value}
-                                    checked={
-                                      formContactData?.representativeContacted ===
-                                      option.value
-                                    }
-                                  />
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    className="form-label d-block"
-                                    htmlFor={`representativeContacted-${option.value}`}
-                                  >
-                                    {option.label}
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          <div className="col ">
-                            {/* Conditional rendering based on the selected representative */}
-                            {formContactData?.representativeContacted ===
-                              "legalRepresentative" && (
-                              <>
-                                <div
-                                  style={{
-                                    minHight: 0,
-                                    margin: 0,
-                                    padding: "0px 0px 0px auto",
-                                  }}
-                                  className="form-check"
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="legalRepresentativeOption"
-                                    id="legalRepOption1"
-                                    value="contactedAvailable"
-                                    checked={
-                                      formContactData?.legalRepresentativeOption ===
-                                      "contactedAvailable"
-                                    }
-                                  />
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    className="form-label d-block"
-                                    htmlFor="legalRepOption1"
-                                  >
-                                    Contacted and will be available for
-                                    admission visit to receive written notice in
-                                    advance of care
-                                  </label>
-                                </div>
-                                <div
-                                  style={{
-                                    minHight: 0,
-                                    margin: 0,
-                                    padding: "0px 0px 0px auto",
-                                  }}
-                                  className="form-check"
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="legalRepresentativeOption"
-                                    id="legalRepOption2"
-                                    value="inAgreementNotAvailable"
-                                    checked={
-                                      formContactData?.legalRepresentativeOption ===
-                                      "inAgreementNotAvailable"
-                                    }
-                                  />
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    className="form-label d-block"
-                                    htmlFor="legalRepOption2"
-                                  >
-                                    In agreement with need for care, but not
-                                    available for admission visit (if this
-                                    person has healthcare decision making
-                                    authority, the HHA must provide notice of
-                                    the patient &apos;s rights prior to
-                                    initiating care. May obtain electronic or
-                                    digital signature)
-                                  </label>
-                                </div>
-                                <div
-                                  style={{
-                                    minHight: 0,
-                                    margin: 0,
-                                    padding: "0px 0px 0px auto",
-                                  }}
-                                  className="form-check"
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="legalRepresentativeOption"
-                                    id="legalRepOption3"
-                                    value="other"
-                                    checked={
-                                      formContactData?.legalRepresentativeOption ===
-                                      "other"
-                                    }
-                                  />
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    className="form-label d-block"
-                                    htmlFor="legalRepOption3"
-                                  >
-                                    Other
-                                  </label>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        </div>
-
-                        {formContactData?.representativeContacted ===
-                          "patientSelected" && (
-                          <>
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name="patientSelectedRepresentativeOption"
-                                id="patientSelectedOption1"
-                                value="contactedAvailable"
-                                checked={
-                                  formContactData?.patientSelectedRepresentativeOption ===
-                                  "contactedAvailable"
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "11px" }}
-                                className="form-label d-block"
-                                htmlFor="patientSelectedOption1"
-                              >
-                                Contacted and will be available for admission
-                                visit to receive written notice in advance of
-                                care
-                              </label>
-                            </div>
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name="patientSelectedRepresentativeOption"
-                                id="patientSelectedOption2"
-                                value="sentCopy"
-                                checked={
-                                  formContactData?.patientSelectedRepresentativeOption ===
-                                  "sentCopy"
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "11px" }}
-                                className="form-label d-block"
-                                htmlFor="patientSelectedOption2"
-                              >
-                                Sent copy, as requested, of notice of rights,
-                                transfer and DC policies provided by mail or
-                                other electronic means (to be received within 4
-                                days)
-                              </label>
-                            </div>
-                            <div
-                              style={{
-                                minHight: 0,
-                                margin: 0,
-                                padding: "0px 0px 0px auto",
-                              }}
-                              className="form-check"
-                            >
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name="patientSelectedRepresentativeOption"
-                                id="patientSelectedOption3"
-                                value="other"
-                                checked={
-                                  formContactData?.patientSelectedRepresentativeOption ===
-                                  "other"
-                                }
-                              />
-                              <label
-                                style={{ fontSize: "11px" }}
-                                className="form-label d-block"
-                                htmlFor="patientSelectedOption3"
-                              >
-                                Other
-                              </label>
-                            </div>
-                          </>
-                        )}
-
-                        <div className="">
-                          <div
-                            style={{
-                              minHight: 0,
-                              margin: 0,
-                              padding: "0px 0px 0px auto",
-                            }}
-                            className="form-check"
-                          >
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              id="doNotContactCAHPS"
-                              checked={formContactData?.doNotContactCAHPS}
-                            />
-                            <label
-                              style={{ fontSize: "11px" }}
-                              className="form-label d-block"
-                              htmlFor="doNotContactCAHPS"
-                            >
-                              Do Not Contact for CAHPS (When checked, please
-                              provide appropriate reason(s).)
-                            </label>
-                          </div>
-                        </div>
-
-                        {formContactData?.doNotContactCAHPS && (
-                          <>
-                            <div className=""></div>
-                            <div className="">
-                              <label
-                                style={{ fontSize: "11px" }}
-                                htmlFor="reasonForNoContact"
-                                className="form-label d-block"
-                              >
-                                Reason for no contact for CAHPS
-                              </label>
-                              <div>
-                                {[
-                                  { value: "", label: "Select reason" },
-                                  {
-                                    value: "endangersHealth",
-                                    label:
-                                      "Endangers health or well being of a home health provider",
-                                  },
-                                  {
-                                    value: "stateRegulatedPatient",
-                                    label: "State regulated patient",
-                                  },
-                                  {
-                                    value: "patientRequest",
-                                    label:
-                                      "Patient request not to be contacted for surveys",
-                                  },
-                                  { value: "other", label: "Other" },
-                                ]?.map((option) => (
-                                  <div
-                                    key={option.value}
-                                    style={{
-                                      minHight: 0,
-                                      margin: 0,
-                                      padding: "0px 0px 0px auto",
-                                    }}
-                                    className="form-check"
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="radio"
-                                      name="reasonForNoContact"
-                                      id={`reasonForNoContact-${option.value}`}
-                                      value={option.value}
-                                      checked={
-                                        formContactData?.reasonForNoContact ===
-                                        option.value
-                                      }
-                                    />
-                                    <label
-                                      className="form-label d-block"
-                                      htmlFor={`reasonForNoContact-${option.value}`}
-                                    >
-                                      {option.label}
-                                    </label>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-
-                            {formContactData?.reasonForNoContact ===
-                              "other" && (
-                              <div className="">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="otherReason"
-                                  className="form-label d-block"
-                                >
-                                  Other reason
-                                </label>
-                                {formContactData?.otherReason || "N/A"}
-                              </div>
-                            )}
-
-                            <div className="">
-                              <div
-                                style={{
-                                  minHight: 0,
-                                  margin: 0,
-                                  padding: "0px 0px 0px auto",
-                                }}
-                                className="form-check"
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  id="alternateCAHPSContact"
-                                  checked={
-                                    formContactData?.alternateCAHPSContact
-                                  }
-                                />
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  className="form-label d-block"
-                                  htmlFor="alternateCAHPSContact"
-                                >
-                                  Alternate CAHPS Contact (Applicable only when
-                                  the patient is physically or mentally
-                                  incapable of completing survey.)
-                                </label>
-                              </div>
-                            </div>
-
-                            {formContactData?.alternateCAHPSContact && (
-                              <>
-                                <div className=" d-flex gap-4">
-                                  <label
-                                    style={{ fontSize: "10px" }}
-                                    className="form-label d-block"
-                                  >
-                                    Same as Primary Emergency Contact
-                                  </label>
-                                  <input
-                                    type="checkbox"
-                                    className="form-check-input"
-                                    id="sameAsPrimaryEmergencyContact"
-                                    checked={
-                                      formContactData
-                                        ?.alternateCAHPSContactDetails
-                                        .sameAsPrimaryEmergencyContact
-                                    }
-                                  />
-                                </div>
-
-                                <div className="">
-                                  <div className="col">
-                                    {!formContactData
-                                      ?.alternateCAHPSContactDetails
-                                      .sameAsPrimaryEmergencyContact && (
-                                      <>
-                                        {/* Add fields for alternate CAHPS contact */}
-                                        <div className="">
-                                          <label
-                                            style={{ fontSize: "11px" }}
-                                            htmlFor="altFirstName"
-                                            className="form-label d-block"
-                                          >
-                                            First Name
-                                          </label>
-                                          {formContactData
-                                            ?.alternateCAHPSContactDetails
-                                            ?.firstName || "N/A"}
-                                        </div>
-                                        <div className="">
-                                          <label
-                                            style={{ fontSize: "11px" }}
-                                            htmlFor="altLastName"
-                                            className="form-label d-block"
-                                          >
-                                            Last Name
-                                          </label>
-                                          {formContactData
-                                            ?.alternateCAHPSContactDetails
-                                            ?.lastName || "N/A"}
-                                        </div>
-                                        <div className="">
-                                          <label
-                                            style={{ fontSize: "11px" }}
-                                            className="form-label d-block"
-                                            htmlFor="altRelationship"
-                                          >
-                                            Relationship
-                                          </label>
-                                          <div>
-                                            {[
-                                              {
-                                                value: "",
-                                                label: "Select Relationship",
-                                              },
-                                              {
-                                                value: "Spouse",
-                                                label: "Spouse",
-                                              },
-                                              {
-                                                value: "Parent",
-                                                label: "Parent",
-                                              },
-                                              {
-                                                value: "Sibling",
-                                                label: "Sibling",
-                                              },
-                                              {
-                                                value: "Child",
-                                                label: "Child",
-                                              },
-                                              {
-                                                value: "Relative",
-                                                label: "Relative",
-                                              },
-                                              {
-                                                value: "Friend",
-                                                label: "Friend",
-                                              },
-                                              {
-                                                value: "Other",
-                                                label: "Other",
-                                              },
-                                            ]?.map((option) => (
-                                              <div
-                                                key={option.value}
-                                                style={{
-                                                  minHight: 0,
-                                                  margin: 0,
-                                                  padding: "0px 0px 0px auto",
-                                                }}
-                                                className="form-check"
-                                              >
-                                                <input
-                                                  className="form-check-input"
-                                                  type="radio"
-                                                  name="relationship"
-                                                  id={`relationship-${option.value}`}
-                                                  value={option.value}
-                                                  checked={
-                                                    formContactData
-                                                      ?.alternateCAHPSContactDetails
-                                                      ?.relationship ===
-                                                    option.value
-                                                  }
-                                                />
-                                                <label
-                                                  className="form-label d-block"
-                                                  htmlFor={`relationship-${option.value}`}
-                                                >
-                                                  {option.label}
-                                                </label>
-                                              </div>
-                                            ))}
-                                          </div>
-                                        </div>
-                                        <div className="">
-                                          <label
-                                            style={{ fontSize: "11px" }}
-                                            htmlFor="altMobilePhone"
-                                            className="form-label d-block"
-                                          >
-                                            Mobile Phone
-                                          </label>
-                                          {formContactData
-                                            ?.alternateCAHPSContactDetails
-                                            ?.mobilePhone || "N/A"}
-                                        </div>
-                                        <div className="">
-                                          <label
-                                            style={{ fontSize: "11px" }}
-                                            htmlFor="altAlternatePhone"
-                                            className="form-label d-block"
-                                          >
-                                            Alternate Phone
-                                          </label>
-                                          {formContactData
-                                            ?.alternateCAHPSContactDetails
-                                            ?.alternatePhone || "N/A"}
-                                        </div>
-                                        <div className="">
-                                          <label
-                                            style={{ fontSize: "11px" }}
-                                            htmlFor="altEmail"
-                                            className="form-label d-block"
-                                          >
-                                            Email
-                                          </label>
-                                          {formContactData
-                                            ?.alternateCAHPSContactDetails
-                                            ?.email || "N/A"}
-                                        </div>
-                                        <div className="">
-                                          <label
-                                            style={{ fontSize: "11px" }}
-                                            htmlFor="altAddressLine1"
-                                            className="form-label d-block"
-                                          >
-                                            Address Line 1
-                                          </label>
-                                          {formContactData
-                                            ?.alternateCAHPSContactDetails
-                                            ?.addressLine1 || "N/A"}
-                                        </div>
-                                        <div className="">
-                                          <label
-                                            style={{ fontSize: "11px" }}
-                                            htmlFor="altAddressLine2"
-                                            className="form-label d-block"
-                                          >
-                                            Address Line 2
-                                          </label>
-                                          {formContactData
-                                            ?.alternateCAHPSContactDetails
-                                            ?.addressLine2 || "N/A"}
-                                        </div>
-                                        <div className="">
-                                          <label
-                                            style={{ fontSize: "11px" }}
-                                            htmlFor="altCity"
-                                            className="form-label d-block"
-                                          >
-                                            City :
-                                            {formContactData?.city || "N/A"}
-                                          </label>
-                                        </div>
-                                        <div className="">
-                                          <label
-                                            style={{ fontSize: "11px" }}
-                                            htmlFor="altState"
-                                            className="form-label d-block"
-                                          >
-                                            State:
-                                            {formContactData?.state || "N/A"}
-                                          </label>
-                                        </div>
-                                        <div className="">
-                                          <label
-                                            style={{ fontSize: "11px" }}
-                                            htmlFor="altZIP"
-                                            className="form-label d-block"
-                                          >
-                                            ZIP Code
-                                          </label>
-                                          {formContactData
-                                            ?.alternateCAHPSContactDetails
-                                            ?.zip || "N/A"}
-                                        </div>
-                                        <div className="">
-                                          <label
-                                            style={{ fontSize: "11px" }}
-                                            htmlFor="altCounty"
-                                            className="form-label d-block"
-                                          >
-                                            County
-                                          </label>
-                                        </div>
-                                      </>
-                                    )}
-                                  </div>
-                                </div>
-                              </>
-                            )}
-                          </>
-                        )}
-                        <h6
-                          style={{
-                            border: "1px solid gray",
-                            padding: "5px",
-                            margin: "5px 0px",
-                            fontSize: "11px",
-                            backgroundColor: "#eee",
-                          }}
-                        >
-                          Contact
-                        </h6>
-                        {/* contract-conment  */}
-                        <div className="contacts-comments mt-5">
-                          <div className="comments-section">
-                            {/* Comments input */}
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label my-2"
-                            >
-                              Contacts Comments
-                            </label>
-
-                            {formContactData?.comments}
-                          </div>
-                        </div>
+                          </React.Fragment>
+                        ))}
                       </div>
-                      {/* emergency preparedness */}
-                      <div className="col-xl-12 col col-12 mb-md-0 ">
-                        {/* Emergency Triage Information */}
+                    </div>
 
-                        <h6
-                          style={{
-                            fontSize: "11px",
-                          }}
+                    <div className="mb-1 col-md-4">
+                      <p>(UB-04 Locators 35 - 36) Occurrence Spans</p>
+                      <div className="g-3">
+                        {formPayerData?.occurrenceSpans?.map((span, index) => (
+                          <React.Fragment key={`occurrenceSpan-${index}`}>
+                            <div className="col ">
+                              <label
+                                style={{ fontSize: "10px" }}
+                                htmlFor={`occurrenceSpan${index + 1}A`}
+                                className="form-label d-block"
+                              >
+                                {`${35 + Math.floor(index / 2)}A`} Occurrence
+                                Span Code
+                              </label>
+                              {formPayerData?.occurrenceSpans[index]?.code ||
+                                "N/A"}
+                            </div>
+                            <div className="col ">
+                              <label
+                                style={{ fontSize: "10px" }}
+                                htmlFor={`occurrenceSpan${index + 1}B`}
+                                className="form-label d-block"
+                              >
+                                {`${35 + Math.floor(index / 2)}B`} Occurrence
+                                Span Start Date
+                              </label>
+                              {formPayerData?.occurrenceSpans[index]
+                                ?.startDate || "N/A"}
+                            </div>
+                            <div className="col ">
+                              <label
+                                style={{ fontSize: "10px" }}
+                                htmlFor={`occurrenceSpan${index + 1}C`}
+                                className="form-label d-block"
+                              >
+                                {`${35 + Math.floor(index / 2)}C`} Occurrence
+                                Span End Date
+                              </label>
+                              {formPayerData?.occurrenceSpans[index]?.endDate ||
+                                "N/A"}
+                            </div>
+                          </React.Fragment>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mb-1 col-md-4">
+                      <p>(UB-04 Locators 39 - 41) Condition Codes</p>
+                      <div className="g-3">
+                        {formPayerData?.conditionCodes?.map((code, index) => (
+                          <div key={`conditionCode-${index}`} className="col ">
+                            <label
+                              style={{ fontSize: "11px" }}
+                              htmlFor={`conditionCode${index + 1}`}
+                              className="form-label d-block"
+                            >
+                              {`${39 + index}`} Condition Code
+                            </label>
+                            {formPayerData?.conditionCodes[index] || "N/A"}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {" "}
+                  {/* Payer Information */}
+                  {/* Additional Form Fields */}
+                  <div className="mb-1">
+                    <h6
+                      style={{
+                        fontSize: "11px",
+                      }}
+                    >
+                      Additional Form Fields
+                    </h6>
+
+                    <div className="g-3">
+                      <div className="col ">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="employmentRelated"
+                          className="form-label d-block"
                         >
-                          Emergency Triage
-                        </h6>
+                          Employment Related:
+                        </label>
+                        {formPayerData?.employmentRelated || "N/A"}
+                      </div>
+                      <div className="col ">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="autoAccident"
+                          className="form-label d-block"
+                        >
+                          Auto Accident:
+                        </label>
+                        {formPayerData?.autoAccident || "N/A"}
+                      </div>
+                      <div className="col ">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="claimCode"
+                          className="form-label d-block"
+                        >
+                          Claim Code:
+                        </label>
+                        {formPayerData?.claimCode || "N/A"}
+                      </div>
+                      <div className="col ">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="unableToWorkFrom"
+                          className="form-label d-block"
+                        >
+                          Unable to Work From:
+                        </label>
+                        {formPayerData?.unableToWorkFrom || "N/A"}
+                      </div>
+                      <div className="col ">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="unableToWorkTo"
+                          className="form-label d-block"
+                        >
+                          Unable to Work To:
+                        </label>
+                        {formPayerData?.unableToWorkTo || "N/A"}
+                      </div>
+                      <div className="col ">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="hospitalizationStartDate"
+                          className="form-label d-block"
+                        >
+                          Hospitalization Start Date:
+                        </label>
+                        {formPayerData?.hospitalizationStartDate || "N/A"}
+                      </div>
+                      <div className="col ">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="hospitalizationEndDate"
+                          className="form-label d-block"
+                        >
+                          Hospitalization End Date:
+                        </label>
+                        {formPayerData?.hospitalizationEndDate || "N/A"}
+                      </div>
+                      <div className="col ">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="emergencyTreatmentIndicator"
+                          className="form-label d-block"
+                        >
+                          Emergency Treatment Indicator:
+                        </label>
+                        {formPayerData?.emergencyTreatmentIndicator || "N/A"}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  {" "}
+                  <h6
+                    style={{
+                      border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "12px",
+                      backgroundColor: "#eee",
+                    }}
+                    className="mt-3"
+                  >
+                    Physician Information
+                  </h6>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {" "}
+                  <div className="">
+                    <div className=" col ">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label my-2"
+                        htmlFor="npiNumber"
+                      >
+                        NPI Number:
+                      </label>
+                      {formPhysicianData?.npiNumber || "N/A"}
+                    </div>
+                    <div className=" col ">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label my-2"
+                        htmlFor="firstName"
+                      >
+                        First Name:
+                      </label>
+                      {formPhysicianData?.firstName}
+                    </div>
+                  </div>
+                  <div className="">
+                    <div className=" col ">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label my-2"
+                        htmlFor="mi"
+                      >
+                        MI:
+                      </label>
+                      {formPhysicianData?.mi || "N/A"}
+                    </div>
+                    <div className=" col ">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label my-2"
+                        htmlFor="lastName"
+                      >
+                        Last Name:
+                      </label>
+                      {formPhysicianData?.lastName || "N/A"}
+                    </div>
+                  </div>
+                  <div className="">
+                    <div className=" col ">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label my-2"
+                        htmlFor="taxonomyCode"
+                      >
+                        Taxonomy Code:
+                      </label>
+                      {formPhysicianData?.taxonomyCode}
+                    </div>
+                    <div className=" col ">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label my-2"
+                        htmlFor="credentials"
+                      >
+                        Credentials:
+                      </label>
+                      {formPhysicianData?.credentials || "N/A"}
+                    </div>
+                  </div>
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="npiNo"
+                    >
+                      NPI No:
+                    </label>
+                    {formPhysicianData?.npiNo || "N/A"}
+                  </div>
+                </td>
+                <td>
+                  {" "}
+                  <div className="">
+                    <div className=" col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        className="form-label d-block"
+                        htmlFor="medicaidProviderIdentifier"
+                      >
+                        Medicaid Provider Identifier:
+                      </label>
+                      {formPhysicianData?.medicaidProviderIdentifier || "N/A"}
+                    </div>
+                  </div>{" "}
+                  <h6
+                    style={{
+                      fontSize: "11px",
+                    }}
+                    className="mt-3"
+                  >
+                    Physician Address
+                  </h6>
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="addressLine1"
+                    >
+                      Address Line 1:
+                    </label>
 
-                        <div className="">
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="emergencyTriage"
-                              className="form-label d-block"
-                            >
-                              Emergency Triage
-                            </label>
-                            <div>
-                              <input
-                                type="radio"
-                                name="emergencyTriage"
-                                id="emergencyTriage1"
-                                value="1"
-                                checked={
-                                  formEmergencyData?.emergencyTriage === "1"
-                                }
-                              />{" "}
-                              1. Life-threatening (or potential) and requires
-                              ongoing medical treatment.
-                              <br />
-                              <input
-                                type="radio"
-                                name="emergencyTriage"
-                                id="emergencyTriage2"
-                                value="2"
-                                checked={
-                                  formEmergencyData?.emergencyTriage === "2"
-                                }
-                              />{" "}
-                              2. Not life-threatening but would suffer severe
-                              adverse effects from interruption of services.
-                              <br />
-                              <input
-                                type="radio"
-                                name="emergencyTriage"
-                                id="emergencyTriage3"
-                                value="3"
-                                checked={
-                                  formEmergencyData?.emergencyTriage === "3"
-                                }
-                              />{" "}
-                              3. Visits could be postponed 24-48 hours without
-                              adverse effects.
-                              <br />
-                              <input
-                                type="radio"
-                                name="emergencyTriage"
-                                id="emergencyTriage4"
-                                value="4"
-                                checked={
-                                  formEmergencyData?.emergencyTriage === "4"
-                                }
-                              />{" "}
-                              4. Visits could be postponed 72-96 hours without
-                              adverse effects.
-                            </div>
-                          </div>
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="additionalInfo"
-                              className="form-label d-block"
-                            >
-                              Additional Emergency Preparedness Information
-                            </label>
-                            <div>
-                              <input
-                                type="checkbox"
-                                name="additionalInfo"
-                                id="needsAssistance"
-                                value="needsAssistance"
-                                checked={formEmergencyData?.additionalInfo?.includes(
-                                  "needsAssistance"
-                                )}
-                              />{" "}
-                              Needs assistance during an emergency
-                            </div>
-                            <div>
-                              <input
-                                type="checkbox"
-                                name="additionalInfo"
-                                id="contactWithOfficials"
-                                value="contactWithOfficials"
-                                checked={formEmergencyData?.additionalInfo?.includes(
-                                  "contactWithOfficials"
-                                )}
-                              />{" "}
-                              Contact made with local/state emergency
-                              preparedness officials regarding patient in need
-                              of help during an evacuation
-                            </div>
-                            <div>
-                              <input
-                                type="checkbox"
-                                name="additionalInfo"
-                                id="medicalNeeds"
-                                value="medicalNeeds"
-                                checked={formEmergencyData?.additionalInfo?.includes(
-                                  "medicalNeeds"
-                                )}
-                              />{" "}
-                              Medical Needs/Equipment (i.e., bedbound, oxygen,
-                              vent, IV cardiac meds other DME)
-                            </div>
-                            {formEmergencyData?.additionalInfo
-                              ?.medicalNeeds && (
-                              <div>
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="medicalNeedsInfo"
-                                  className="form-label d-block"
-                                >
-                                  Medical Needs/Equipment Details
-                                </label>
-                                {formEmergencyData?.medicalNeedsInfo || "N/A"}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Additional Emergency Preparedness Information */}
-                        <div className="">
-                          <div className="col">
-                            {formEmergencyData?.additionalComments || "N/A"}
-                          </div>
-                        </div>
-
-                        <div className="">
-                          <div className="col">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="evacuationZone"
-                              className="form-label d-block"
-                            >
-                              Evacuation Zone
-                            </label>
-                            {formEmergencyData?.evacuationZone || "N/A"}
-                          </div>
-                          <div className="col my-2">
-                            <input
-                              type="checkbox"
-                              name="evacuationAddress"
-                              id="evacuationAddress"
-                              checked={formEmergencyData?.evacuationAddress}
-                            />{" "}
-                            Same as Emergency Contact
-                          </div>
-                        </div>
-                        {/* Address Fields */}
-                        {!formEmergencyData?.evacuationAddress && (
-                          <div>
-                            <div className="">
-                              <div className="col  ">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="addressLine1"
-                                >
-                                  Address Line 1
-                                </label>
-                                {formEmergencyData?.addressLine1 || "N/A"}
-                              </div>
-                              <div className="col  ">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="addressLine2"
-                                >
-                                  Address Line 2
-                                </label>
-                                {formEmergencyData?.addressLine2 || "N/A"}
-                              </div>
-                            </div>
-
-                            <div className="">
-                              <div className="col  ">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="state"
-                                >
-                                  State:{formEmergencyData?.state || "N/A"}
-                                </label>
-                              </div>
-                              <div className="col  ">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="city"
-                                >
-                                  City :{formEmergencyData?.city || "N/A"}
-                                </label>
-                              </div>
-                            </div>
-                            <div className="">
-                              <div className="col  ">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="state"
-                                >
-                                  County:{formEmergencyData?.county || "N/A"}
-                                </label>
-                              </div>
-                              <div className="col  ">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="zip"
-                                >
-                                  ZIP Code
-                                </label>
-                                {formEmergencyData?.zip || "N/A"}
-                              </div>
-                            </div>
-                            <div className="">
-                              <div className="col  ">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="zip"
-                                >
-                                  Mobile Phone
-                                </label>
-                                {formEmergencyData?.mobilePhone || "N/A"}
-                              </div>
-                              <div className="col  ">
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  htmlFor="zip"
-                                >
-                                  Alternative MobilePhone
-                                </label>
-                                {formEmergencyData?.altMobilePhone || "N/A"}
-                              </div>
-                            </div>
-                            <div className="col">
-                              <div className="col my-2">
-                                <input
-                                  type="checkbox"
-                                  name="evacuationAddress"
-                                  id="evacuationAddress"
-                                  checked={
-                                    formEmergencyData?.evacuationAddress ||
-                                    "N/A"
-                                  }
-                                />{" "}
-                                Set as visit location
-                              </div>
-                            </div>
-                          </div>
-                        )}
-
-                        <div className="">
+                    {formPhysicianData?.addressLine1 || "N/A"}
+                  </div>
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="addressLine2"
+                    >
+                      Address Line 2:
+                    </label>
+                    {formPhysicianData?.addressLine2 || "N/A"}
+                  </div>
+                  {/* const [county,setCounty]=useState("") */}
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="city"
+                    >
+                      City: {formPhysicianData?.city || "N/A"}
+                    </label>
+                  </div>
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="state"
+                    >
+                      State: {formPhysicianData?.state || "N/A"}
+                    </label>
+                  </div>
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="zip"
+                    >
+                      Zip:
+                    </label>
+                    {formPhysicianData?.zip || "N/A"}
+                  </div>
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="primaryPhone"
+                    >
+                      Primary Phone:
+                    </label>
+                    {formPhysicianData?.primaryPhone || "N/A"}
+                  </div>
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="alternatePhone"
+                    >
+                      Alternate Phone:
+                    </label>
+                    {formPhysicianData?.alternatePhone || "N/A"}
+                  </div>
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="fax"
+                    >
+                      Fax:
+                    </label>
+                    {formPhysicianData?.fax}
+                  </div>
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label my-2"
+                      htmlFor="email"
+                    >
+                      E-mail:
+                    </label>
+                    {formPhysicianData?.email || "N/A"}
+                  </div>
+                </td>
+                <td>
+                  <div className="">
+                    <div className="col w-100">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label my-2"
+                      >
+                        Order Delivery Method:
+                      </label>
+                      <div className="">
+                        <div className="form-check col-md-2">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            id="deliveryMethodAxxessPhysicianPortal"
+                            name="deliveryMethod"
+                            value="AxxessPhysicianPortal"
+                            checked={
+                              formPhysicianData?.deliveryMethod ===
+                              "AxxessPhysicianPortal"
+                            }
+                          />
                           <label
                             style={{ fontSize: "11px" }}
-                            htmlFor="comments"
                             className="form-label d-block"
+                            htmlFor="deliveryMethodAxxessPhysicianPortal"
                           >
-                            Comments
+                            Axxess Physician Portal
                           </label>
-                          {formEmergencyData?.comments || "N/A"}
                         </div>
-                      </div>
-                      {/* advance directives  */}
-                      <div className="col-xl-12 col col-12 mb-md-0 ">
-                        <div className="">
-                          <h6
-                            style={{
-                              fontSize: "11px",
-                            }}
+                        <div className="form-check col-md-2">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            id="deliveryMethodEmail"
+                            name="deliveryMethod"
+                            value="Email"
+                            checked={
+                              formPhysicianData?.deliveryMethod === "Email"
+                            }
+                          />
+                          <label
+                            style={{ fontSize: "11px" }}
+                            className="form-label d-block"
+                            htmlFor="deliveryMethodEmail"
                           >
-                            Advance Care Plan/Admission
-                          </h6>
-
-                          <div className="col">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="admission"
-                              className="form-label d-block"
-                            >
-                              Does this patient have an advance care plan or a
-                              surrogate decision-maker AND able to provide legal
-                              documentation for the home health medical record?
-                            </label>
-                            <div>
-                              <input
-                                type="radio"
-                                name="admission"
-                                id="admissionYes"
-                                value="Yes"
-                                checked={formDirectiveData?.admission === "Yes"}
-                              />{" "}
-                              Yes
-                              <br />
-                              <input
-                                type="radio"
-                                name="admission"
-                                id="admissionNo"
-                                value="No"
-                                checked={formDirectiveData?.admission === "No"}
-                              />{" "}
-                              No
-                            </div>
-                          </div>
+                            Email
+                          </label>
                         </div>
-                        <div className="">
-                          <div className="col">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="comment"
-                              className="form-label d-block my-2"
-                            >
-                              Comments
-                            </label>
-
-                            {formDirectiveData?.comment || "N/A"}
-                          </div>
+                        <div className="form-check col-md-2">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            id="deliveryMethodPhone"
+                            name="deliveryMethod"
+                            value="Phone"
+                            checked={
+                              formPhysicianData?.deliveryMethod === "Phone"
+                            }
+                          />
+                          <label
+                            style={{ fontSize: "11px" }}
+                            className="form-label d-block"
+                            htmlFor="deliveryMethodPhone"
+                          >
+                            Phone
+                          </label>
                         </div>
-                      </div>
-                      {/* referral information  */}
-                      <div className="col-xl-12 col col-12 mb-md-0">
-                        <h6
-                          style={{
-                            border: "1px solid gray",
-                            padding: "5px",
-                            margin: "5px 0px",
-                            fontSize: "11px",
-                            backgroundColor: "#eee",
-                          }}
-                        >
-                          Referring Information
-                        </h6>
-
-                        <div className="">
-                          {/* Referring Physician */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="referringPhysician"
-                              className="form-label d-block"
-                            >
-                              Referring Physician
-                            </label>
-                            {formReferralData?.referringPhysician || "N/A"}
-                          </div>
-
-                          {/* NPI */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="npi"
-                              className="form-label d-block"
-                            >
-                              NPI
-                            </label>
-                            {formReferralData?.npi}
-                          </div>
+                        <div className="form-check col-md-2">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            id="deliveryMethodFax"
+                            name="deliveryMethod"
+                            value="Fax"
+                            checked={
+                              formPhysicianData?.deliveryMethod === "Fax"
+                            }
+                          />
+                          <label
+                            style={{ fontSize: "11px" }}
+                            className="form-label d-block"
+                            htmlFor="deliveryMethodFax"
+                          >
+                            Fax
+                          </label>
                         </div>
-
-                        <div className="">
-                          {/* Face-to-Face Evaluation */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="faceToFaceEvaluation"
-                              className="form-label d-block"
-                            >
-                              Face-to-Face Evaluation
-                            </label>
-                            <div>
-                              <div
-                                style={{
-                                  minHight: 0,
-                                  margin: 0,
-                                  padding: "0px 0px 0px auto",
-                                }}
-                                className="form-check"
-                              >
-                                <input
-                                  type="radio"
-                                  className="form-check-input"
-                                  name="faceToFaceEvaluation"
-                                  id="faceToFaceEvaluationNA"
-                                  value="N/A"
-                                  checked={
-                                    formReferralData?.faceToFaceEvaluation ===
-                                    "N/A"
-                                  }
-                                />
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  className="form-label d-block"
-                                  htmlFor="faceToFaceEvaluationNA"
-                                >
-                                  N/A
-                                </label>
-                              </div>
-                              <div
-                                style={{
-                                  minHight: 0,
-                                  margin: 0,
-                                  padding: "0px 0px 0px auto",
-                                }}
-                                className="form-check"
-                              >
-                                <input
-                                  type="radio"
-                                  className="form-check-input"
-                                  name="faceToFaceEvaluation"
-                                  id="faceToFaceEvaluationDate"
-                                  value="Date of Face-to-Face Visit"
-                                  checked={
-                                    formReferralData?.faceToFaceEvaluation ===
-                                    "Date of Face-to-Face Visit"
-                                  }
-                                />
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  className="form-label d-block"
-                                  htmlFor="faceToFaceEvaluationDate"
-                                >
-                                  Date of Face-to-Face Visit
-                                </label>
-                                {formReferralData?.faceToFaceEvaluation ===
-                                  "Date of Face-to-Face Visit" && (
-                                  <div className="my-2 ml-5">
-                                    {formReferralData?.faceToFaceEvaluationDate ||
-                                      "N/A"}
-                                  </div>
-                                )}
-                              </div>
-                              <div
-                                style={{
-                                  minHight: 0,
-                                  margin: 0,
-                                  padding: "0px 0px 0px auto",
-                                }}
-                                className="form-check"
-                              >
-                                <input
-                                  type="radio"
-                                  className="form-check-input"
-                                  name="faceToFaceEvaluation"
-                                  id="faceToFaceEvaluation30Days"
-                                  value="Face-to-Face to be completed within 30days"
-                                  checked={
-                                    formReferralData?.faceToFaceEvaluation ===
-                                    "Face-to-Face to be completed within 30days"
-                                  }
-                                />
-                                <label
-                                  style={{ fontSize: "11px" }}
-                                  className="form-label d-block"
-                                  htmlFor="faceToFaceEvaluation30Days"
-                                >
-                                  Face-to-Face to be completed within 30 days
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="certifyingPhysician"
-                              className="form-label d-block"
-                            >
-                              Certifying Physician
-                            </label>
-                            {formReferralData?.certifyingPhysician || "N/A"}
-                          </div>
+                        <div className="form-check col-md-2">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            id="deliveryMethodCourier"
+                            name="deliveryMethod"
+                            value="Courier"
+                            checked={
+                              formPhysicianData?.deliveryMethod === "Courier"
+                            }
+                          />
+                          <label
+                            style={{ fontSize: "11px" }}
+                            className="form-label d-block"
+                            htmlFor="deliveryMethodCourier"
+                          >
+                            Courier
+                          </label>
                         </div>
-
-                        <div className="">
-                          {/* Certifying Physician */}
-
-                          {/* Attending Physician */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "10px" }}
-                              className="form-label d-block"
-                            >
-                              Attending Physician
-                            </label>
-                            <div>
-                              {[
-                                {
-                                  value:
-                                    "Non-Healthcare Facility Point of Origin",
-                                  label:
-                                    "Non-Healthcare Facility Point of Origin",
-                                },
-                                {
-                                  value: "Clinic or Physician's Office",
-                                  label: "Clinic or Physician's Office",
-                                },
-                                {
-                                  value: "Transfer From Hospital",
-                                  label: "Transfer From Hospital",
-                                },
-                                {
-                                  value: "Transfer From SNF",
-                                  label: "Transfer From SNF",
-                                },
-                                {
-                                  value: "Court/Law Enforcement",
-                                  label: "Court/Law Enforcement",
-                                },
-                                {
-                                  value: "Information Not Available",
-                                  label: "Information Not Available",
-                                },
-                                {
-                                  value: "Emergency Room",
-                                  label: "Emergency Room",
-                                },
-                              ]?.map((option) => (
-                                <div
-                                  key={option.value}
-                                  style={{
-                                    minHight: 0,
-                                    margin: 0,
-                                    padding: "0px 0px 0px auto",
-                                  }}
-                                  className="form-check"
-                                >
-                                  <input
-                                    type="radio"
-                                    className="form-check-input"
-                                    name="attendingPhysician"
-                                    id={`attendingPhysician-${option.value}`}
-                                    value={option.value}
-                                    checked={
-                                      formReferralData?.attendingPhysician ===
-                                      option.value
-                                    }
-                                  />
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    className="form-label d-block"
-                                    htmlFor={`attendingPhysician-${option.value}`}
-                                  >
-                                    {option.label}
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          {/* Admission Source */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="admissionSource"
-                              className="form-label d-block"
-                            >
-                              Admission Source
-                            </label>
-                            {formReferralData?.admissionSource || "N/A"}
-                          </div>
-
-                          {/* Name of Referral Source */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="nameOfReferralSource"
-                              className="form-label d-block"
-                            >
-                              Name of Referral Source
-                            </label>
-                            {formReferralData?.nameOfReferralSource}
-                          </div>
-
-                          {/* Referral Date */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="referralDate"
-                              className="form-label d-block"
-                            >
-                              Referral Date
-                            </label>
-                            {formReferralData?.referralDate || "N/A"}
-                          </div>
-
-                          {/* Inquiry Date */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="inquiryDate"
-                              className="form-label d-block"
-                            >
-                              Inquiry Date
-                            </label>
-                            {formReferralData?.inquiryDate || "N/A"}
-                          </div>
-
-                          {/* Community Liaison */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="communityLiaison"
-                              className="form-label d-block"
-                            >
-                              Community Liaison
-                            </label>
-                            <div>
-                              {[
-                                { value: "", label: "Select" },
-                                {
-                                  value: "Elieth Kamala RN",
-                                  label: "Elieth Kamala RN",
-                                },
-                              ]?.map((option) => (
-                                <div
-                                  key={option.value}
-                                  style={{
-                                    minHight: 0,
-                                    margin: 0,
-                                    padding: "0px 0px 0px auto",
-                                  }}
-                                  className="form-check"
-                                >
-                                  <input
-                                    type="radio"
-                                    className="form-check-input"
-                                    name="communityLiaison"
-                                    id={`communityLiaison-${option.value}`}
-                                    value={option.value}
-                                    checked={
-                                      formReferralData?.communityLiaison ===
-                                      option.value
-                                    }
-                                  />
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    className="form-label d-block"
-                                    htmlFor={`communityLiaison-${option.value}`}
-                                  >
-                                    {option.label}
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          {/* Internal Referral Source */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="internalReferralSource"
-                              className="form-label d-block"
-                            >
-                              Internal Referral Source
-                            </label>
-                            <div>
-                              {[
-                                {
-                                  value: "CHAP Surveyor",
-                                  label: "CHAP Surveyor",
-                                },
-                                {
-                                  value: "Deqa Ahmed RN",
-                                  label: "Deqa Ahmed RN",
-                                },
-                              ]?.map((option) => (
-                                <div
-                                  key={option.value}
-                                  style={{
-                                    minHight: 0,
-                                    margin: 0,
-                                    padding: "0px 0px 0px auto",
-                                  }}
-                                  className="form-check"
-                                >
-                                  <input
-                                    type="radio"
-                                    className="form-check-input"
-                                    name="internalReferralSource"
-                                    id={`internalReferralSource-${option.value}`}
-                                    value={option.value}
-                                    checked={
-                                      formReferralData?.internalReferralSource ===
-                                      option.value
-                                    }
-                                  />
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    className="form-label d-block"
-                                    htmlFor={`internalReferralSource-${option.value}`}
-                                  >
-                                    {option.label}
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          {/* Facility Referral Source */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="facilityReferralSource"
-                              className="form-label d-block"
-                            >
-                              Facility Referral Source
-                            </label>
-                            <div>
-                              {[{ value: "", label: "Select option" }]?.map(
-                                (option) => (
-                                  <div
-                                    key={option.value}
-                                    style={{
-                                      minHight: 0,
-                                      margin: 0,
-                                      padding: "0px 0px 0px auto",
-                                    }}
-                                    className="form-check"
-                                  >
-                                    <input
-                                      type="radio"
-                                      className="form-check-input"
-                                      name="facilityReferralSource"
-                                      id={`facilityReferralSource-${option.value}`}
-                                      value={option.value}
-                                      checked={
-                                        formReferralData?.facilityReferralSource ===
-                                        option.value
-                                      }
-                                    />
-                                    <label
-                                      className="form-label d-block"
-                                      htmlFor={`facilityReferralSource-${option.value}`}
-                                    >
-                                      {option.label}
-                                    </label>
-                                  </div>
-                                )
-                              )}
-                            </div>
-                          </div>
-
-                          {/* Type of Inpatient Admission */}
-                          <div className=" col ">
-                            <label
-                              style={{ fontSize: "11px" }}
-                              htmlFor="typeOfInpatientAdmission"
-                              className="form-label d-block"
-                            >
-                              Type of Inpatient Admission
-                            </label>
-                            <div>
-                              {[
-                                { value: "Emergency", label: "Emergency" },
-                                { value: "Urgent", label: "Urgent" },
-                                { value: "Elective", label: "Elective" },
-                                { value: "Newborn", label: "Newborn" },
-                                { value: "Trauma", label: "Trauma" },
-                                { value: "Information", label: "Information" },
-                                {
-                                  value: "Not Available",
-                                  label: "Not Available",
-                                },
-                              ]?.map((option) => (
-                                <div
-                                  key={option.value}
-                                  style={{
-                                    minHight: 0,
-                                    margin: 0,
-                                    padding: "0px 0px 0px auto",
-                                  }}
-                                  className="form-check"
-                                >
-                                  <input
-                                    type="radio"
-                                    className="form-check-input"
-                                    name="typeOfInpatientAdmission"
-                                    id={`typeOfInpatientAdmission-${option.value}`}
-                                    value={option.value}
-                                    checked={
-                                      formReferralData?.typeOfInpatientAdmission ===
-                                      option.value
-                                    }
-                                  />
-                                  <label
-                                    style={{ fontSize: "11px" }}
-                                    className="form-label d-block"
-                                    htmlFor={`typeOfInpatientAdmission-${option.value}`}
-                                  >
-                                    {option.label}
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
+                        <div className="form-check col-md-2">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            id="deliveryMethodOther"
+                            name="deliveryMethod"
+                            value="Other"
+                            checked={
+                              formPhysicianData?.deliveryMethod === "Other"
+                            }
+                          />
+                          <label
+                            style={{ fontSize: "11px" }}
+                            className="form-label d-block"
+                            htmlFor="deliveryMethodOther"
+                          >
+                            Other
+                          </label>
                         </div>
                       </div>
                     </div>
                   </div>
                 </td>
               </tr>
+              <tr>
+                <td colSpan="3">
+                  <h6
+                    style={{
+                      border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "12px",
+                      backgroundColor: "#eee",
+                    }}
+                  >
+                    Service Required
+                  </h6>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {" "}
+                  <div className="row">
+                    <div className=" col-md-6 ">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
+                        Service Required
+                      </label>
+                      {["SN", "HHA", "PT", "OT", "ST", "MSW"]?.map(
+                        (service) => (
+                          <div
+                            style={{
+                              minHight: 0,
+                              margin: 0,
+                              padding: "0px 0px 0px auto",
+                            }}
+                            className="form-check d-flex align-items-cener gap-1"
+                            key={service}
+                          >
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              id={service}
+                              name="serviceRequired"
+                              value={service}
+                              checked={formClinicalData?.serviceRequired?.includes(
+                                service
+                              )}
+                            />
+                            <label
+                              style={{ fontSize: "10px" }}
+                              className="form-label d-block"
+                              htmlFor={service}
+                            >
+                              {service}
+                            </label>
+                          </div>
+                        )
+                      )}
+                    </div>
+                    {/* DME Needed */}
+                    <div className=" col-md-6 ">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
+                        DME Needed
+                      </label>
+                      {[
+                        "bedsideCommode",
+                        "cane",
+                        "elevatedToiletSeat",
+                        "grabBars",
+                        "hospitalBed",
+                        "nebulizer",
+                        "oxygen",
+                        "tubShowerBench",
+                        "walker",
+                        "wheelchair",
+                        "other",
+                      ]?.map((dme) => (
+                        <div
+                          style={{
+                            minHight: 0,
+                            margin: 0,
+                            padding: "0px 0px 0px auto",
+                          }}
+                          className="form-check d-flex align-items-cener gap-1"
+                          key={dme}
+                        >
+                          <input
+                            type="checkbox"
+                            id={dme}
+                            name="dmeNeeded"
+                            value={dme}
+                            checked={formClinicalData?.dmeNeeded?.includes(dme)}
+                            className="form-check-input"
+                          />
+                          <label
+                            style={{ fontSize: "10px" }}
+                            className="form-label d-block"
+                            htmlFor={dme}
+                          >
+                            {dme}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {" "}
+                  {/* Height */}
+                  <div className="">
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="heightValue"
+                        className="form-label d-block"
+                      >
+                        Height
+                      </label>
+                      {formClinicalData?.height?.value || "N/A"}
+                    </div>
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="heightUnit"
+                        className="form-label d-block"
+                      >
+                        Unit
+                      </label>
+                      {formClinicalData?.height?.unit || "N/A"}
+                    </div>
+                  </div>
+                  {/* Weight */}
+                  <div className="">
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="weightValue"
+                        className="form-label d-block"
+                      >
+                        Weight
+                      </label>
+                      {formClinicalData?.weight?.value || "N/A"}
+                    </div>
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="weightUnit"
+                        className="form-label d-block"
+                      >
+                        Unit
+                      </label>
+                      {formClinicalData?.weight?.unit || "N/A"}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {/* Primary Diagnosis */}
+                  <div className="">
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="primaryDiagnosis"
+                        className="form-label d-block"
+                      >
+                        Primary Diagnosis
+                      </label>
+                      {formClinicalData?.primaryDiagnosis || "N/A"}
+                    </div>
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="primaryDiagnosisCode"
+                        className="form-label d-block"
+                      >
+                        Primary Diagnosis Code
+                      </label>
+                      {formClinicalData?.primaryDiagnosisCode || "N/A"}
+                    </div>
+                  </div>
+
+                  <div className="">
+                    {/* Other Diagnoses */}
+                    <div className="">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
+                        Other Diagnoses
+                      </label>
+                      {formClinicalData?.otherDiagnoses?.map(
+                        (diagnosis, index) => (
+                          <div className="" key={index}>
+                            <div className="col ">
+                              <label
+                                style={{ fontSize: "10px" }}
+                                htmlFor={`diagnosis-${index}`}
+                                className="form-label d-block"
+                              >
+                                Diagnosis
+                              </label>
+                              {diagnosis.diagnosis || "N/A"}
+                            </div>
+                            <div className="col ">
+                              <label
+                                style={{ fontSize: "10px" }}
+                                htmlFor={`code-${index}`}
+                                className="form-label d-block"
+                              >
+                                Code
+                              </label>
+                              {diagnosis.code || "N/A"}
+                            </div>
+                          </div>
+                        )
+                      )}
+                    </div>
+
+                    {/* Clinical Comments */}
+                    <div className="">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="clinicalComments"
+                        className="form-label hide-on-print"
+                      >
+                        Clinical Comments
+                      </label>
+                      {formClinicalData?.clinicalComments || "N/A"}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <h6
+                    style={{
+                      border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                      backgroundColor: "#eee",
+                    }}
+                  >
+                    Pharmacy Information
+                  </h6>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div className="">
+                    <div className=" col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="pharmacyName"
+                        className="form-label d-block"
+                      >
+                        Pharmacy Name:
+                      </label>
+                      {formPharmacyData?.pharmacyName || "N/A"}
+                    </div>
+                    <div className=" col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="addressLine1"
+                        className="form-label d-block"
+                      >
+                        Address Line 1:
+                      </label>
+                      {formPharmacyData?.addressLine1 || "N/A"}
+                    </div>
+                  </div>{" "}
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="addressLine2"
+                      className="form-label d-block"
+                    >
+                      Address Line 2:
+                    </label>
+                    {formPharmacyData?.addressLine2 || "N/A"}
+                  </div>
+                  <div className="">
+                    <div className="col">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="city"
+                        className="form-label d-block"
+                      >
+                        City: {formPharmacyData?.city || "N/A"}
+                      </label>
+                    </div>
+                  </div>
+                  <div className="">
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="state"
+                        className="form-label d-block"
+                      >
+                        State: {formPharmacyData?.state || "N/A"}
+                      </label>
+                    </div>
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="zip"
+                        className="form-label d-block"
+                      >
+                        Zip:
+                      </label>
+                      {formPharmacyData?.zip || "N/A"}
+                    </div>
+                  </div>
+                  <div className="">
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="primaryPhone"
+                        className="form-label d-block"
+                      >
+                        Primary Phone:
+                      </label>
+                      {formPharmacyData?.primaryPhone || "N/A"}
+                    </div>
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="contactFirstName"
+                        className="form-label d-block"
+                      >
+                        Contact First Name:
+                      </label>
+                      {formPharmacyData?.contactFirstName || "N/A"}
+                    </div>
+                  </div>
+                  <div className="">
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="contactLastName"
+                        className="form-label d-block"
+                      >
+                        Contact Last Name:
+                      </label>
+                      {formPharmacyData?.contactLastName || "N/A"}
+                    </div>
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="email"
+                        className="form-label d-block"
+                      >
+                        Email:
+                      </label>
+                      {formPharmacyData?.email || "N/A"}
+                    </div>
+                  </div>{" "}
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="faxNumber"
+                      className="form-label d-block"
+                    >
+                      Fax Number:
+                    </label>
+                    {formPharmacyData?.faxNumber || "N/A"}
+                  </div>
+                </td>
+                <td>
+                  <div className="">
+                    <div className=" col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="comment"
+                        className="form-label d-block"
+                      >
+                        Comment:
+                      </label>
+                      {formPharmacyData?.comment || "N/A"}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <h6
+                    style={{
+                      fontSize: "11px",
+                    }}
+                  >
+                    Additional Pharmacies
+                  </h6>
+
+                  <div className="">
+                    {formPharmacyData?.additionalPharmacies?.map(
+                      (pharmacy, index) => (
+                        <div key={index} className="col  ">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor={`additionalPharmacy${index + 1}`}
+                            className="form-label d-block"
+                          >
+                            Additional Pharmacy {index + 1}
+                          </label>
+                          {pharmacy?.name || "N/A"}
+                        </div>
+                      )
+                    )}
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  {" "}
+                  <h6
+                    style={{
+                      border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                      backgroundColor: "#eee",
+                    }}
+                  >
+                    Contact
+                  </h6>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div className="">
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="primaryFirstName"
+                        className="form-label d-block"
+                      >
+                        First Name:
+                      </label>
+                      {formContactData?.primary?.firstName || "N/A"}
+                    </div>
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="primaryLastName"
+                        className="form-label d-block"
+                      >
+                        Last Name:
+                      </label>
+                      {formContactData?.primary?.lastName || "N/A"}
+                    </div>
+                  </div>
+                  <div className="">
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="primaryMobilePhone"
+                        className="form-label d-block"
+                      >
+                        Mobile Phone:
+                      </label>
+                      {formContactData?.primary?.mobilePhone || "N/A"}
+                    </div>
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="primaryAlternatePhone"
+                        className="form-label d-block"
+                      >
+                        Alternate Phone:
+                      </label>
+                      {formContactData?.primary?.alternatePhone || "N/A"}
+                    </div>
+                  </div>
+
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="primaryRelationship"
+                      className="form-label d-block"
+                    >
+                      Relationship:
+                    </label>
+                    <div>
+                      {[
+                        "Spouse",
+                        "Parent",
+                        "Sibling",
+                        "Child",
+                        "Relative",
+                        "Friend",
+                        "Other",
+                      ]?.map((relationship) => (
+                        <div
+                          key={relationship}
+                          style={{
+                            minHight: 0,
+                            margin: 0,
+                            padding: "0px 0px 0px auto",
+                          }}
+                          className="form-check d-flex align-items-cener gap-1"
+                        >
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="primaryRelationship"
+                            id={`relationship${relationship}`}
+                            value={relationship}
+                            checked={
+                              formContactData?.primary?.relationship ===
+                              relationship
+                            }
+                          />
+                          <label
+                            style={{ fontSize: "11px" }}
+                            className="form-label d-block"
+                            htmlFor={`relationship${relationship}`}
+                          >
+                            {relationship}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="primaryEmail"
+                      className="form-label d-block"
+                    >
+                      Email:
+                    </label>
+                    {formContactData?.primary?.email || "N/A"}
+                  </div>
+                </td>
+                <td>
+                  {" "}
+                  <div className="">
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="primaryFirstName"
+                        className="form-label d-block"
+                      >
+                        First Name:
+                      </label>
+                      {formContactData?.primary?.firstName || "N/A"}
+                    </div>
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="primaryLastName"
+                        className="form-label d-block"
+                      >
+                        Last Name:
+                      </label>
+                      {formContactData?.primary?.lastName || "N/A"}
+                    </div>
+                  </div>
+                  <div className="">
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="primaryMobilePhone"
+                        className="form-label d-block"
+                      >
+                        Mobile Phone:
+                      </label>
+                      {formContactData?.primary?.mobilePhone || "N/A"}
+                    </div>
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="primaryAlternatePhone"
+                        className="form-label d-block"
+                      >
+                        Alternate Phone:
+                      </label>
+                      {formContactData?.primary?.alternatePhone || "N/A"}
+                    </div>
+                  </div>
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="primaryRelationship"
+                      className="form-label d-block"
+                    >
+                      Relationship:
+                    </label>
+                    <div>
+                      {[
+                        "Spouse",
+                        "Parent",
+                        "Sibling",
+                        "Child",
+                        "Relative",
+                        "Friend",
+                        "Other",
+                      ]?.map((relationship) => (
+                        <div
+                          key={relationship}
+                          style={{
+                            minHight: 0,
+                            margin: 0,
+                            padding: "0px 0px 0px auto",
+                          }}
+                          className="form-check d-flex align-items-cener gap-1"
+                        >
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="primaryRelationship"
+                            id={`relationship${relationship}`}
+                            value={relationship}
+                            checked={
+                              formContactData?.primary?.relationship ===
+                              relationship
+                            }
+                          />
+                          <label
+                            style={{ fontSize: "11px" }}
+                            className="form-label d-block"
+                            htmlFor={`relationship${relationship}`}
+                          >
+                            {relationship}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="primaryEmail"
+                      className="form-label d-block"
+                    >
+                      Email:
+                    </label>
+                    {formContactData?.primary?.email || "N/A"}
+                  </div>
+                </td>
+                <td>
+                  <div className="g-3">
+                    <div className="col ">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
+                        Representative:
+                      </label>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="primaryRepresentative"
+                          id="primaryLegalRep"
+                          value="Legal Representative"
+                          checked={
+                            formContactData?.primary?.representative ===
+                            "Legal Representative"
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          className="form-label d-block"
+                          htmlFor="primaryLegalRep"
+                        >
+                          Legal Representative
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="primaryRepresentative"
+                          id="primaryPatientRep"
+                          value="Patient Selected Representative"
+                          checked={
+                            formContactData?.primary?.representative ===
+                            "Patient Selected Representative"
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          className="form-label d-block"
+                          htmlFor="primaryPatientRep"
+                        >
+                          Patient Selected Representative
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="">
+                    {!formContactData?.primary?.sameAsPatientAddress && (
+                      <React.Fragment>
+                        <div className="col">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor="primaryAddressLine1"
+                            className="form-label d-block"
+                          >
+                            Address Line 1:
+                          </label>
+                          {formContactData?.primary?.addressLine1 || "N/A"}
+                        </div>
+                        <div className="col">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor="primaryAddressLine2"
+                            className="form-label d-block"
+                          >
+                            Address Line 2:
+                          </label>
+                          {formContactData?.primary?.addressLine2 || "N/A"}
+                        </div>
+                        <div className="col">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor="primaryCity"
+                            className="form-label d-block"
+                          >
+                            City:{formContactData?.city || "N/A"}
+                          </label>
+                        </div>
+                        <div className="col">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor="primaryState"
+                            className="form-label d-block"
+                          >
+                            State:{formContactData?.state || "N/A"}
+                          </label>
+                        </div>
+                        <div className="col">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor="primaryZip"
+                            className="form-label d-block"
+                          >
+                            ZIP:
+                          </label>
+                          {formContactData?.primary?.zip || "N/A"}
+                        </div>
+                      </React.Fragment>
+                    )}
+
+                    {/* Additional Emergency Contacts */}
+                    {formContactData?.additional?.map((contact, index) => (
+                      <div key="index" className="g-3">
+                        <div className="col">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor={`additionalFirstName-${index}`}
+                            className="form-label d-block"
+                          >
+                            First Name:
+                          </label>
+                          {contact?.firstName || "N/A"}
+                        </div>
+                        <div className="col">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor={`additionalLastName-${index}`}
+                            className="form-label d-block"
+                          >
+                            Last Name:
+                          </label>
+                          {contact?.lastName || "N/A"}
+                        </div>
+                        <div className="col">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor={`additionalMobilePhone-${index}`}
+                            className="form-label d-block"
+                          >
+                            Mobile Phone:
+                          </label>
+                          {contact?.mobilePhone || "N/A"}
+                        </div>
+                        <div className="col">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor={`additionalAlternatePhone-${index}`}
+                            className="form-label d-block"
+                          >
+                            Alternate Phone:
+                          </label>
+
+                          {contact?.alternatePhone || "N/A"}
+                        </div>
+                        <div className="col">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor={`additionalRelationship-${index}`}
+                            className="form-label d-block"
+                          >
+                            Relationship:
+                          </label>
+                          <div>
+                            {[
+                              "Spouse",
+                              "Parent",
+                              "Sibling",
+                              "Child",
+                              "Relative",
+                              "Friend",
+                              "Other",
+                            ]?.map((relationship) => (
+                              <div
+                                key={relationship}
+                                style={{
+                                  minHight: 0,
+                                  margin: 0,
+                                  padding: "0px 0px 0px auto",
+                                }}
+                                className="form-check d-flex align-items-cener gap-1"
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name={`additionalRelationship-${index}`}
+                                  id={`additionalRelationship-${index}-${relationship}`}
+                                  value={relationship}
+                                  checked={
+                                    contact?.relationship === relationship
+                                  }
+                                />
+                                <label
+                                  className="form-label d-block"
+                                  htmlFor={`additionalRelationship-${index}-${relationship}`}
+                                >
+                                  {relationship}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="col">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor={`additionalEmail-${index}`}
+                            className="form-label d-block"
+                          >
+                            Email:
+                          </label>
+                          <input
+                            type="email"
+                            className="form-control"
+                            id={`additionalEmail-${index}`}
+                            value={contact?.email}
+                            placeholder="Enter Email Address"
+                          />
+                        </div>
+                        <div className="col">
+                          <label
+                            style={{ fontSize: "10px" }}
+                            className="form-label d-block"
+                          >
+                            Representative:
+                          </label>
+                          <div
+                            style={{
+                              minHight: 0,
+                              margin: 0,
+                              padding: "0px 0px 0px auto",
+                            }}
+                            className="form-check d-flex align-items-cener gap-1"
+                          >
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name={`additionalRepresentative-${index}`}
+                              id={`additionalLegalRep-${index}`}
+                              value="Legal Representative"
+                              checked={
+                                contact?.representative ===
+                                "Legal Representative"
+                              }
+                            />
+                            <label
+                              style={{ fontSize: "11px" }}
+                              className="form-label d-block"
+                              htmlFor={`additionalLegalRep-${index}`}
+                            >
+                              Legal Representative
+                            </label>
+                          </div>
+                          <div
+                            style={{
+                              minHight: 0,
+                              margin: 0,
+                              padding: "0px 0px 0px auto",
+                            }}
+                            className="form-check d-flex align-items-cener gap-1"
+                          >
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name={`additionalRepresentative-${index}`}
+                              id={`additionalPatientRep-${index}`}
+                              value="Patient Selected Representative"
+                              checked={
+                                contact?.representative ===
+                                "Patient Selected Representative"
+                              }
+                            />
+                            <label
+                              style={{ fontSize: "11px" }}
+                              className="form-label d-block"
+                              htmlFor={`additionalPatientRep-${index}`}
+                            >
+                              Patient Selected Representative
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col">
+                          <div
+                            style={{
+                              minHight: 0,
+                              margin: 0,
+                              padding: "0px 0px 0px auto",
+                            }}
+                            className="form-check d-flex align-items-cener gap-1"
+                          >
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              id={`additionalSameAsPatientAddress-${index}`}
+                              checked={contact?.sameAsPatientAddress}
+                            />
+                            <label
+                              style={{ fontSize: "11px" }}
+                              className="form-label d-block"
+                              htmlFor={`additionalSameAsPatientAddress-${index}`}
+                            >
+                              Same as Patient Address
+                            </label>
+                          </div>
+                        </div>
+                        <div className="">
+                          {!contact?.sameAsPatientAddress && (
+                            <React.Fragment>
+                              <div className="col">
+                                <label
+                                  htmlFor={`additionalAddressLine1-${index}`}
+                                  className="form-label d-block"
+                                >
+                                  Address Line 1:
+                                </label>
+                                {contact?.addressLine1}
+                              </div>
+                              <div className="col">
+                                <label
+                                  htmlFor={`additionalAddressLine2-${index}`}
+                                  className="form-label d-block"
+                                >
+                                  Address Line 2:
+                                </label>
+                                {contact?.addressLine2}
+                              </div>
+                              <div className="col">
+                                <label
+                                  htmlFor={`additionalCity-${index}`}
+                                  className="form-label d-block"
+                                >
+                                  City:{formData?.city || "N/A"}
+                                </label>
+                              </div>
+                              <div className="col">
+                                <label
+                                  htmlFor={`additionalState-${index}`}
+                                  className="form-label d-block"
+                                >
+                                  State:{formData?.state || "N/A"}
+                                </label>
+                              </div>
+                              <div className="col">
+                                <label
+                                  htmlFor={`additionalZip-${index}`}
+                                  className="form-label d-block"
+                                >
+                                  ZIP:
+                                </label>
+                                {contact?.zip || "N/A"}
+                              </div>
+                            </React.Fragment>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="">
+                    {/*  */}
+                    <div className=" col ">
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label d-block"
+                      >
+                        Representative contacted regarding admission:
+                      </label>
+                      <div>
+                        {[
+                          {
+                            value: "N/A",
+                            label:
+                              "N/A (no legal/patient-selected representative)",
+                          },
+                          {
+                            value: "legalRepresentative",
+                            label:
+                              "Legal Representative contacted regarding admission",
+                          },
+                          {
+                            value: "patientDecline",
+                            label:
+                              "Patient request to decline notice of rights to Patient-Selected Representative",
+                          },
+                          {
+                            value: "patientSelected",
+                            label:
+                              "Patient-Selected Representative contacted regarding admission",
+                          },
+                          {
+                            value: "legalNotInAgreement",
+                            label:
+                              "Legal Representative not in agreement with admission",
+                          },
+                          {
+                            value: "physicianNotified",
+                            label: "Physician notified",
+                          },
+                          {
+                            value: "patientNotified",
+                            label: "Patient notified",
+                          },
+                        ]?.map((option) => (
+                          <div
+                            key={option.value}
+                            style={{
+                              minHight: 0,
+                              margin: 0,
+                              padding: "0px 0px 0px auto",
+                            }}
+                            className="form-check d-flex align-items-cener gap-1"
+                          >
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="representativeContacted"
+                              id={`representativeContacted-${option.value}`}
+                              value={option.value}
+                              checked={
+                                formContactData?.representativeContacted ===
+                                option.value
+                              }
+                            />
+                            <label
+                              style={{ fontSize: "11px" }}
+                              className="form-label d-block"
+                              htmlFor={`representativeContacted-${option.value}`}
+                            >
+                              {option.label}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="col ">
+                      {/* Conditional rendering based on the selected representative */}
+                      {formContactData?.representativeContacted ===
+                        "legalRepresentative" && (
+                        <>
+                          <div
+                            style={{
+                              minHight: 0,
+                              margin: 0,
+                              padding: "0px 0px 0px auto",
+                            }}
+                            className="form-check d-flex align-items-cener gap-1"
+                          >
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="legalRepresentativeOption"
+                              id="legalRepOption1"
+                              value="contactedAvailable"
+                              checked={
+                                formContactData?.legalRepresentativeOption ===
+                                "contactedAvailable"
+                              }
+                            />
+                            <label
+                              style={{ fontSize: "11px" }}
+                              className="form-label d-block"
+                              htmlFor="legalRepOption1"
+                            >
+                              Contacted and will be available for admission
+                              visit to receive written notice in advance of care
+                            </label>
+                          </div>
+                          <div
+                            style={{
+                              minHight: 0,
+                              margin: 0,
+                              padding: "0px 0px 0px auto",
+                            }}
+                            className="form-check d-flex align-items-cener gap-1"
+                          >
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="legalRepresentativeOption"
+                              id="legalRepOption2"
+                              value="inAgreementNotAvailable"
+                              checked={
+                                formContactData?.legalRepresentativeOption ===
+                                "inAgreementNotAvailable"
+                              }
+                            />
+                            <label
+                              style={{ fontSize: "11px" }}
+                              className="form-label d-block"
+                              htmlFor="legalRepOption2"
+                            >
+                              In agreement with need for care, but not available
+                              for admission visit (if this person has healthcare
+                              decision making authority, the HHA must provide
+                              notice of the patient &apos;s rights prior to
+                              initiating care. May obtain electronic or digital
+                              signature)
+                            </label>
+                          </div>
+                          <div
+                            style={{
+                              minHight: 0,
+                              margin: 0,
+                              padding: "0px 0px 0px auto",
+                            }}
+                            className="form-check d-flex align-items-cener gap-1"
+                          >
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="legalRepresentativeOption"
+                              id="legalRepOption3"
+                              value="other"
+                              checked={
+                                formContactData?.legalRepresentativeOption ===
+                                "other"
+                              }
+                            />
+                            <label
+                              style={{ fontSize: "11px" }}
+                              className="form-label d-block"
+                              htmlFor="legalRepOption3"
+                            >
+                              Other
+                            </label>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  {formContactData?.representativeContacted ===
+                    "patientSelected" && (
+                    <>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="patientSelectedRepresentativeOption"
+                          id="patientSelectedOption1"
+                          value="contactedAvailable"
+                          checked={
+                            formContactData?.patientSelectedRepresentativeOption ===
+                            "contactedAvailable"
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          className="form-label d-block"
+                          htmlFor="patientSelectedOption1"
+                        >
+                          Contacted and will be available for admission visit to
+                          receive written notice in advance of care
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="patientSelectedRepresentativeOption"
+                          id="patientSelectedOption2"
+                          value="sentCopy"
+                          checked={
+                            formContactData?.patientSelectedRepresentativeOption ===
+                            "sentCopy"
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          className="form-label d-block"
+                          htmlFor="patientSelectedOption2"
+                        >
+                          Sent copy, as requested, of notice of rights, transfer
+                          and DC policies provided by mail or other electronic
+                          means (to be received within 4 days)
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="patientSelectedRepresentativeOption"
+                          id="patientSelectedOption3"
+                          value="other"
+                          checked={
+                            formContactData?.patientSelectedRepresentativeOption ===
+                            "other"
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          className="form-label d-block"
+                          htmlFor="patientSelectedOption3"
+                        >
+                          Other
+                        </label>
+                      </div>
+                    </>
+                  )}
+
+                  <div className="">
+                    <div
+                      style={{
+                        minHight: 0,
+                        margin: 0,
+                        padding: "0px 0px 0px auto",
+                      }}
+                      className="form-check d-flex align-items-cener gap-1"
+                    >
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="doNotContactCAHPS"
+                        checked={formContactData?.doNotContactCAHPS}
+                      />
+                      <label
+                        style={{ fontSize: "11px" }}
+                        className="form-label d-block"
+                        htmlFor="doNotContactCAHPS"
+                      >
+                        Do Not Contact for CAHPS (When checked, please provide
+                        appropriate reason(s).)
+                      </label>
+                    </div>
+                  </div>
+
+                  {formContactData?.doNotContactCAHPS && (
+                    <>
+                      <div className=""></div>
+                      <div className="">
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          htmlFor="reasonForNoContact"
+                          className="form-label d-block"
+                        >
+                          Reason for no contact for CAHPS
+                        </label>
+                        <div>
+                          {[
+                            { value: "", label: "Select reason" },
+                            {
+                              value: "endangersHealth",
+                              label:
+                                "Endangers health or well being of a home health provider",
+                            },
+                            {
+                              value: "stateRegulatedPatient",
+                              label: "State regulated patient",
+                            },
+                            {
+                              value: "patientRequest",
+                              label:
+                                "Patient request not to be contacted for surveys",
+                            },
+                            { value: "other", label: "Other" },
+                          ]?.map((option) => (
+                            <div
+                              key={option.value}
+                              style={{
+                                minHight: 0,
+                                margin: 0,
+                                padding: "0px 0px 0px auto",
+                              }}
+                              className="form-check d-flex align-items-cener gap-1"
+                            >
+                              <input
+                                className="form-check-input"
+                                type="radio"
+                                name="reasonForNoContact"
+                                id={`reasonForNoContact-${option.value}`}
+                                value={option.value}
+                                checked={
+                                  formContactData?.reasonForNoContact ===
+                                  option.value
+                                }
+                              />
+                              <label
+                                className="form-label d-block"
+                                htmlFor={`reasonForNoContact-${option.value}`}
+                              >
+                                {option.label}
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {formContactData?.reasonForNoContact === "other" && (
+                        <div className="">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor="otherReason"
+                            className="form-label d-block"
+                          >
+                            Other reason
+                          </label>
+                          {formContactData?.otherReason || "N/A"}
+                        </div>
+                      )}
+
+                      <div className="">
+                        <div
+                          style={{
+                            minHight: 0,
+                            margin: 0,
+                            padding: "0px 0px 0px auto",
+                          }}
+                          className="form-check d-flex align-items-cener gap-1"
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="alternateCAHPSContact"
+                            checked={formContactData?.alternateCAHPSContact}
+                          />
+                          <label
+                            style={{ fontSize: "11px" }}
+                            className="form-label d-block"
+                            htmlFor="alternateCAHPSContact"
+                          >
+                            Alternate CAHPS Contact (Applicable only when the
+                            patient is physically or mentally incapable of
+                            completing survey.)
+                          </label>
+                        </div>
+                      </div>
+
+                      {formContactData?.alternateCAHPSContact && (
+                        <>
+                          <div className="">
+                            <div className="col">
+                              {!formContactData?.alternateCAHPSContactDetails
+                                .sameAsPrimaryEmergencyContact && (
+                                <>
+                                  {/* Add fields for alternate CAHPS contact */}
+                                  <div className="">
+                                    <label
+                                      style={{ fontSize: "11px" }}
+                                      htmlFor="altFirstName"
+                                      className="form-label d-block"
+                                    >
+                                      First Name
+                                    </label>
+                                    {formContactData
+                                      ?.alternateCAHPSContactDetails
+                                      ?.firstName || "N/A"}
+                                  </div>
+                                  <div className="">
+                                    <label
+                                      style={{ fontSize: "11px" }}
+                                      htmlFor="altLastName"
+                                      className="form-label d-block"
+                                    >
+                                      Last Name
+                                    </label>
+                                    {formContactData
+                                      ?.alternateCAHPSContactDetails
+                                      ?.lastName || "N/A"}
+                                  </div>
+                                  <div className="">
+                                    <label
+                                      style={{ fontSize: "11px" }}
+                                      className="form-label d-block"
+                                      htmlFor="altRelationship"
+                                    >
+                                      Relationship
+                                    </label>
+                                    <div>
+                                      {[
+                                        {
+                                          value: "",
+                                          label: "Select Relationship",
+                                        },
+                                        {
+                                          value: "Spouse",
+                                          label: "Spouse",
+                                        },
+                                        {
+                                          value: "Parent",
+                                          label: "Parent",
+                                        },
+                                        {
+                                          value: "Sibling",
+                                          label: "Sibling",
+                                        },
+                                        {
+                                          value: "Child",
+                                          label: "Child",
+                                        },
+                                        {
+                                          value: "Relative",
+                                          label: "Relative",
+                                        },
+                                        {
+                                          value: "Friend",
+                                          label: "Friend",
+                                        },
+                                        {
+                                          value: "Other",
+                                          label: "Other",
+                                        },
+                                      ]?.map((option) => (
+                                        <div
+                                          key={option.value}
+                                          style={{
+                                            minHight: 0,
+                                            margin: 0,
+                                            padding: "0px 0px 0px auto",
+                                          }}
+                                          className="form-check d-flex align-items-cener gap-1"
+                                        >
+                                          <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="relationship"
+                                            id={`relationship-${option.value}`}
+                                            value={option.value}
+                                            checked={
+                                              formContactData
+                                                ?.alternateCAHPSContactDetails
+                                                ?.relationship === option.value
+                                            }
+                                          />
+                                          <label
+                                            className="form-label d-block"
+                                            htmlFor={`relationship-${option.value}`}
+                                          >
+                                            {option.label}
+                                          </label>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  <div className="">
+                                    <label
+                                      style={{ fontSize: "11px" }}
+                                      htmlFor="altMobilePhone"
+                                      className="form-label d-block"
+                                    >
+                                      Mobile Phone
+                                    </label>
+                                    {formContactData
+                                      ?.alternateCAHPSContactDetails
+                                      ?.mobilePhone || "N/A"}
+                                  </div>
+                                  <div className="">
+                                    <label
+                                      style={{ fontSize: "11px" }}
+                                      htmlFor="altAlternatePhone"
+                                      className="form-label d-block"
+                                    >
+                                      Alternate Phone
+                                    </label>
+                                    {formContactData
+                                      ?.alternateCAHPSContactDetails
+                                      ?.alternatePhone || "N/A"}
+                                  </div>
+                                  <div className="">
+                                    <label
+                                      style={{ fontSize: "11px" }}
+                                      htmlFor="altEmail"
+                                      className="form-label d-block"
+                                    >
+                                      Email
+                                    </label>
+                                    {formContactData
+                                      ?.alternateCAHPSContactDetails?.email ||
+                                      "N/A"}
+                                  </div>
+                                  <div className="">
+                                    <label
+                                      style={{ fontSize: "11px" }}
+                                      htmlFor="altAddressLine1"
+                                      className="form-label d-block"
+                                    >
+                                      Address Line 1
+                                    </label>
+                                    {formContactData
+                                      ?.alternateCAHPSContactDetails
+                                      ?.addressLine1 || "N/A"}
+                                  </div>
+                                  <div className="">
+                                    <label
+                                      style={{ fontSize: "11px" }}
+                                      htmlFor="altAddressLine2"
+                                      className="form-label d-block"
+                                    >
+                                      Address Line 2
+                                    </label>
+                                    {formContactData
+                                      ?.alternateCAHPSContactDetails
+                                      ?.addressLine2 || "N/A"}
+                                  </div>
+                                  <div className="">
+                                    <label
+                                      style={{ fontSize: "11px" }}
+                                      htmlFor="altCity"
+                                      className="form-label d-block"
+                                    >
+                                      City :{formContactData?.city || "N/A"}
+                                    </label>
+                                  </div>
+                                  <div className="">
+                                    <label
+                                      style={{ fontSize: "11px" }}
+                                      htmlFor="altState"
+                                      className="form-label d-block"
+                                    >
+                                      State:
+                                      {formContactData?.state || "N/A"}
+                                    </label>
+                                  </div>
+                                  <div className="">
+                                    <label
+                                      style={{ fontSize: "11px" }}
+                                      htmlFor="altZIP"
+                                      className="form-label d-block"
+                                    >
+                                      ZIP Code
+                                    </label>
+                                    {formContactData
+                                      ?.alternateCAHPSContactDetails?.zip ||
+                                      "N/A"}
+                                  </div>
+                                  <div className="">
+                                    <label
+                                      style={{ fontSize: "11px" }}
+                                      htmlFor="altCounty"
+                                      className="form-label d-block"
+                                    >
+                                      County
+                                    </label>
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </>
+                  )}
+                  {/* contract-conment  */}
+                  <div className="contacts-comments mt-5">
+                    <div className="comments-section">
+                      {/* Comments input */}
+                      <label
+                        style={{ fontSize: "10px" }}
+                        className="form-label my-2"
+                      >
+                        Contacts Comments
+                      </label>
+
+                      {formContactData?.comments}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <h6
+                    style={{
+                      border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                      backgroundColor: "#eee",
+                    }}
+                  >
+                    {" "}
+                    Emergency Preparedness
+                  </h6>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {" "}
+                  <div className="">
+                    <div className=" col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="emergencyTriage"
+                        className="form-label d-block"
+                      >
+                        Emergency Triage
+                      </label>
+                      <div>
+                        <input
+                          type="radio"
+                          name="emergencyTriage"
+                          id="emergencyTriage1"
+                          value="1"
+                          checked={formEmergencyData?.emergencyTriage === "1"}
+                        />{" "}
+                        1. Life-threatening (or potential) and requires ongoing
+                        medical treatment.
+                        <br />
+                        <input
+                          type="radio"
+                          name="emergencyTriage"
+                          id="emergencyTriage2"
+                          value="2"
+                          checked={formEmergencyData?.emergencyTriage === "2"}
+                        />{" "}
+                        2. Not life-threatening but would suffer severe adverse
+                        effects from interruption of services.
+                        <br />
+                        <input
+                          type="radio"
+                          name="emergencyTriage"
+                          id="emergencyTriage3"
+                          value="3"
+                          checked={formEmergencyData?.emergencyTriage === "3"}
+                        />{" "}
+                        3. Visits could be postponed 24-48 hours without adverse
+                        effects.
+                        <br />
+                        <input
+                          type="radio"
+                          name="emergencyTriage"
+                          id="emergencyTriage4"
+                          value="4"
+                          checked={formEmergencyData?.emergencyTriage === "4"}
+                        />{" "}
+                        4. Visits could be postponed 72-96 hours without adverse
+                        effects.
+                      </div>
+                    </div>
+                    <div className=" col ">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="additionalInfo"
+                        className="form-label d-block"
+                      >
+                        Additional Emergency Preparedness Information
+                      </label>
+                      <div>
+                        <input
+                          type="checkbox"
+                          name="additionalInfo"
+                          id="needsAssistance"
+                          value="needsAssistance"
+                          checked={formEmergencyData?.additionalInfo?.includes(
+                            "needsAssistance"
+                          )}
+                        />{" "}
+                        Needs assistance during an emergency
+                      </div>
+                      <div>
+                        <input
+                          type="checkbox"
+                          name="additionalInfo"
+                          id="contactWithOfficials"
+                          value="contactWithOfficials"
+                          checked={formEmergencyData?.additionalInfo?.includes(
+                            "contactWithOfficials"
+                          )}
+                        />{" "}
+                        Contact made with local/state emergency preparedness
+                        officials regarding patient in need of help during an
+                        evacuation
+                      </div>
+                      <div>
+                        <input
+                          type="checkbox"
+                          name="additionalInfo"
+                          id="medicalNeeds"
+                          value="medicalNeeds"
+                          checked={formEmergencyData?.additionalInfo?.includes(
+                            "medicalNeeds"
+                          )}
+                        />{" "}
+                        Medical Needs/Equipment (i.e., bedbound, oxygen, vent,
+                        IV cardiac meds other DME)
+                      </div>
+                      {formEmergencyData?.additionalInfo?.medicalNeeds && (
+                        <div>
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor="medicalNeedsInfo"
+                            className="form-label d-block"
+                          >
+                            Medical Needs/Equipment Details
+                          </label>
+                          {formEmergencyData?.medicalNeedsInfo || "N/A"}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <h6 style={{ fontSize: "12px" }}>Additional Comments</h6>
+                  {/* Additional Emergency Preparedness Information */}
+                  <div className="">
+                    <div className="col">
+                      {formEmergencyData?.additionalComments || "N/A"}
+                    </div>
+                  </div>
+                  <div className="">
+                    <div className="col">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="evacuationZone"
+                        className="form-label d-block"
+                      >
+                        Evacuation Zone
+                      </label>
+                      {formEmergencyData?.evacuationZone || "N/A"}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div className="col my-2">
+                    <h6 style={{ fontSize: "12px" }}>Emergency Contact</h6>
+                  </div>
+                  {!formEmergencyData?.evacuationAddress && (
+                    <div>
+                      <div className="">
+                        <div className="col  ">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor="addressLine1"
+                          >
+                            Address Line 1
+                          </label>
+                          {formEmergencyData?.addressLine1 || "N/A"}
+                        </div>
+                        <div className="col  ">
+                          <label
+                            style={{ fontSize: "11px" }}
+                            htmlFor="addressLine2"
+                          >
+                            Address Line 2
+                          </label>
+                          {formEmergencyData?.addressLine2 || "N/A"}
+                        </div>
+                      </div>
+
+                      <div className="">
+                        <div className="col  ">
+                          <label style={{ fontSize: "11px" }} htmlFor="state">
+                            State:{formEmergencyData?.state || "N/A"}
+                          </label>
+                        </div>
+                        <div className="col  ">
+                          <label style={{ fontSize: "11px" }} htmlFor="city">
+                            City :{formEmergencyData?.city || "N/A"}
+                          </label>
+                        </div>
+                      </div>
+                      <div className="">
+                        <div className="col  ">
+                          <label style={{ fontSize: "11px" }} htmlFor="state">
+                            County:{formEmergencyData?.county || "N/A"}
+                          </label>
+                        </div>
+                        <div className="col  ">
+                          <label style={{ fontSize: "11px" }} htmlFor="zip">
+                            ZIP Code
+                          </label>
+                          {formEmergencyData?.zip || "N/A"}
+                        </div>
+                      </div>
+                      <div className="">
+                        <div className="col  ">
+                          <label style={{ fontSize: "11px" }} htmlFor="zip">
+                            Mobile Phone
+                          </label>
+                          {formEmergencyData?.mobilePhone || "N/A"}
+                        </div>
+                        <div className="col  ">
+                          <label style={{ fontSize: "11px" }} htmlFor="zip">
+                            Alternative MobilePhone
+                          </label>
+                          {formEmergencyData?.altMobilePhone || "N/A"}
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="col my-2">
+                          <input
+                            type="checkbox"
+                            name="evacuationAddress"
+                            id="evacuationAddress"
+                            checked={
+                              formEmergencyData?.evacuationAddress || "N/A"
+                            }
+                          />{" "}
+                          Set as visit location
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  <div className="">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="comments"
+                      className="form-label d-block"
+                    >
+                      Comments
+                    </label>
+                    {formEmergencyData?.comments || "N/A"}
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <h6
+                    style={{
+                      fontSize: "11px",
+                    }}
+                  >
+                    Advance Care Plan/Admission
+                  </h6>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <div className="">
+                    <div className="col">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="admission"
+                        className="form-label d-block"
+                      >
+                        Does this patient have an advance care plan or a
+                        surrogate decision-maker AND able to provide legal
+                        documentation for the home health medical record?
+                      </label>
+                      <div>
+                        <input
+                          type="radio"
+                          name="admission"
+                          id="admissionYes"
+                          value="Yes"
+                          checked={formDirectiveData?.admission === "Yes"}
+                        />{" "}
+                        Yes
+                        <br />
+                        <input
+                          type="radio"
+                          name="admission"
+                          id="admissionNo"
+                          value="No"
+                          checked={formDirectiveData?.admission === "No"}
+                        />{" "}
+                        No
+                      </div>
+                    </div>
+                  </div>
+                  <div className="">
+                    <div className="col">
+                      <label
+                        style={{ fontSize: "11px" }}
+                        htmlFor="comment"
+                        className="form-label d-block my-2"
+                      >
+                        Comments
+                      </label>
+
+                      {formDirectiveData?.comment || "N/A"}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  {" "}
+                  <h6
+                    style={{
+                      border: "1px solid gray",
+                      padding: "5px",
+                      margin: "5px 0px",
+                      fontSize: "11px",
+                      backgroundColor: "#eee",
+                    }}
+                  >
+                    Referring Information
+                  </h6>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {" "}
+                  {/* Referring Physician */}
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="referringPhysician"
+                      className="form-label d-block"
+                    >
+                      Referring Physician
+                    </label>
+                    {formReferralData?.referringPhysician || "N/A"}
+                  </div>
+                  {/* NPI */}
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="npi"
+                      className="form-label d-block"
+                    >
+                      NPI
+                    </label>
+                    {formReferralData?.npi}
+                  </div>
+                  {/* Face-to-Face Evaluation */}
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="faceToFaceEvaluation"
+                      className="form-label d-block"
+                    >
+                      Face-to-Face Evaluation
+                    </label>
+                    <div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="faceToFaceEvaluation"
+                          id="faceToFaceEvaluationNA"
+                          value="N/A"
+                          checked={
+                            formReferralData?.faceToFaceEvaluation === "N/A"
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          className="form-label d-block"
+                          htmlFor="faceToFaceEvaluationNA"
+                        >
+                          N/A
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="faceToFaceEvaluation"
+                          id="faceToFaceEvaluationDate"
+                          value="Date of Face-to-Face Visit"
+                          checked={
+                            formReferralData?.faceToFaceEvaluation ===
+                            "Date of Face-to-Face Visit"
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          className="form-label d-block"
+                          htmlFor="faceToFaceEvaluationDate"
+                        >
+                          Date of Face-to-Face Visit
+                        </label>
+                        {formReferralData?.faceToFaceEvaluation ===
+                          "Date of Face-to-Face Visit" && (
+                          <div className="my-2 ml-5">
+                            {formReferralData?.faceToFaceEvaluationDate ||
+                              "N/A"}
+                          </div>
+                        )}
+                      </div>
+                      <div
+                        style={{
+                          minHight: 0,
+                          margin: 0,
+                          padding: "0px 0px 0px auto",
+                        }}
+                        className="form-check d-flex align-items-cener gap-1"
+                      >
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="faceToFaceEvaluation"
+                          id="faceToFaceEvaluation30Days"
+                          value="Face-to-Face to be completed within 30days"
+                          checked={
+                            formReferralData?.faceToFaceEvaluation ===
+                            "Face-to-Face to be completed within 30days"
+                          }
+                        />
+                        <label
+                          style={{ fontSize: "11px", dispaly: "inline-block" }}
+                          className="form-label d-block"
+                          htmlFor="faceToFaceEvaluation30Days"
+                        >
+                          Face-to-Face to be completed within 30 days
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="certifyingPhysician"
+                      className="form-label d-block"
+                    >
+                      Certifying Physician
+                    </label>
+                    {formReferralData?.certifyingPhysician || "N/A"}
+                  </div>
+                  {/* Certifying Physician */}
+                  {/* Attending Physician */}
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "10px" }}
+                      className="form-label d-block"
+                    >
+                      Attending Physician
+                    </label>
+                    <div>
+                      {[
+                        {
+                          value: "Non-Healthcare Facility Point of Origin",
+                          label: "Non-Healthcare Facility Point of Origin",
+                        },
+                        {
+                          value: "Clinic or Physician's Office",
+                          label: "Clinic or Physician's Office",
+                        },
+                        {
+                          value: "Transfer From Hospital",
+                          label: "Transfer From Hospital",
+                        },
+                        {
+                          value: "Transfer From SNF",
+                          label: "Transfer From SNF",
+                        },
+                        {
+                          value: "Court/Law Enforcement",
+                          label: "Court/Law Enforcement",
+                        },
+                        {
+                          value: "Information Not Available",
+                          label: "Information Not Available",
+                        },
+                        {
+                          value: "Emergency Room",
+                          label: "Emergency Room",
+                        },
+                      ]?.map((option) => (
+                        <div
+                          key={option.value}
+                          style={{
+                            minHight: 0,
+                            margin: 0,
+                            padding: "0px 0px 0px auto",
+                          }}
+                          className="form-check d-flex align-items-cener gap-1"
+                        >
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            name="attendingPhysician"
+                            id={`attendingPhysician-${option.value}`}
+                            value={option.value}
+                            checked={
+                              formReferralData?.attendingPhysician ===
+                              option.value
+                            }
+                          />
+                          <label
+                            style={{ fontSize: "11px" }}
+                            className="form-label d-block"
+                            htmlFor={`attendingPhysician-${option.value}`}
+                          >
+                            {option.label}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {" "}
+                  {/* Admission Source */}
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="admissionSource"
+                      className="form-label d-block"
+                    >
+                      Admission Source
+                    </label>
+                    {formReferralData?.admissionSource || "N/A"}
+                  </div>
+                  {/* Name of Referral Source */}
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="nameOfReferralSource"
+                      className="form-label d-block"
+                    >
+                      Name of Referral Source
+                    </label>
+                    {formReferralData?.nameOfReferralSource}
+                  </div>
+                  {/* Referral Date */}
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="referralDate"
+                      className="form-label d-block"
+                    >
+                      Referral Date
+                    </label>
+                    {formReferralData?.referralDate || "N/A"}
+                  </div>
+                  {/* Inquiry Date */}
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="inquiryDate"
+                      className="form-label d-block"
+                    >
+                      Inquiry Date
+                    </label>
+                    {formReferralData?.inquiryDate || "N/A"}
+                  </div>
+                  {/* Community Liaison */}
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="communityLiaison"
+                      className="form-label d-block"
+                    >
+                      Community Liaison
+                    </label>
+                    <div>
+                      {[
+                        { value: "", label: "Select" },
+                        {
+                          value: "Elieth Kamala RN",
+                          label: "Elieth Kamala RN",
+                        },
+                      ]?.map((option) => (
+                        <div
+                          key={option.value}
+                          style={{
+                            minHight: 0,
+                            margin: 0,
+                            padding: "0px 0px 0px auto",
+                          }}
+                          className="form-check d-flex align-items-cener gap-1"
+                        >
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            name="communityLiaison"
+                            id={`communityLiaison-${option.value}`}
+                            value={option.value}
+                            checked={
+                              formReferralData?.communityLiaison ===
+                              option.value
+                            }
+                          />
+                          <label
+                            style={{ fontSize: "11px" }}
+                            className="form-label d-block"
+                            htmlFor={`communityLiaison-${option.value}`}
+                          >
+                            {option.label}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Internal Referral Source */}
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="internalReferralSource"
+                      className="form-label d-block"
+                    >
+                      Internal Referral Source
+                    </label>
+                    <div>
+                      {[
+                        {
+                          value: "CHAP Surveyor",
+                          label: "CHAP Surveyor",
+                        },
+                        {
+                          value: "Deqa Ahmed RN",
+                          label: "Deqa Ahmed RN",
+                        },
+                      ]?.map((option) => (
+                        <div
+                          key={option.value}
+                          style={{
+                            minHight: 0,
+                            margin: 0,
+                            padding: "0px 0px 0px auto",
+                          }}
+                          className="form-check d-flex align-items-cener gap-1"
+                        >
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            name="internalReferralSource"
+                            id={`internalReferralSource-${option.value}`}
+                            value={option.value}
+                            checked={
+                              formReferralData?.internalReferralSource ===
+                              option.value
+                            }
+                          />
+                          <label
+                            style={{ fontSize: "11px" }}
+                            className="form-label d-block"
+                            htmlFor={`internalReferralSource-${option.value}`}
+                          >
+                            {option.label}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {/* Facility Referral Source */}
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="facilityReferralSource"
+                      className="form-label d-block"
+                    >
+                      Facility Referral Source
+                    </label>
+                    <div>
+                      {[{ value: "", label: "Select option" }]?.map(
+                        (option) => (
+                          <div
+                            key={option.value}
+                            style={{
+                              minHight: 0,
+                              margin: 0,
+                              padding: "0px 0px 0px auto",
+                            }}
+                            className="form-check d-flex align-items-cener gap-1"
+                          >
+                            <input
+                              type="radio"
+                              className="form-check-input"
+                              name="facilityReferralSource"
+                              id={`facilityReferralSource-${option.value}`}
+                              value={option.value}
+                              checked={
+                                formReferralData?.facilityReferralSource ===
+                                option.value
+                              }
+                            />
+                            <label
+                              className="form-label d-block"
+                              htmlFor={`facilityReferralSource-${option.value}`}
+                            >
+                              {option.label}
+                            </label>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Type of Inpatient Admission */}
+                  <div className=" col ">
+                    <label
+                      style={{ fontSize: "11px" }}
+                      htmlFor="typeOfInpatientAdmission"
+                      className="form-label d-block"
+                    >
+                      Type of Inpatient Admission
+                    </label>
+                    <div>
+                      {[
+                        { value: "Emergency", label: "Emergency" },
+                        { value: "Urgent", label: "Urgent" },
+                        { value: "Elective", label: "Elective" },
+                        { value: "Newborn", label: "Newborn" },
+                        { value: "Trauma", label: "Trauma" },
+                        { value: "Information", label: "Information" },
+                        {
+                          value: "Not Available",
+                          label: "Not Available",
+                        },
+                      ]?.map((option) => (
+                        <div
+                          key={option.value}
+                          style={{
+                            minHight: 0,
+                            margin: 0,
+                            padding: "0px 0px 0px auto",
+                          }}
+                          className="form-check d-flex align-items-cener gap-1"
+                        >
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            name="typeOfInpatientAdmission"
+                            id={`typeOfInpatientAdmission-${option.value}`}
+                            value={option.value}
+                            checked={
+                              formReferralData?.typeOfInpatientAdmission ===
+                              option.value
+                            }
+                          />
+                          <label
+                            style={{ fontSize: "11px" }}
+                            className="form-label d-block"
+                            htmlFor={`typeOfInpatientAdmission-${option.value}`}
+                          >
+                            {option.label}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </td>
+              </tr>
             </tbody>
             <tfoot className="footer-print">
-              <span>Carelink Solution</span>
+              <tr>
+                <td colSpan="3">
+                  <span style={{ display: "block" }}>Carelink Solution</span>
+                </td>
+              </tr>
             </tfoot>
           </table>
           {/* Content */}

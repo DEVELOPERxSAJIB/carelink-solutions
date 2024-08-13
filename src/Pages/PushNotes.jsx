@@ -59,6 +59,7 @@ const PushNotes = () => {
 
     socket.current.on("realTimeMsgGet", (data) => {
       console.log(data);
+
     });
 
     return () => {
@@ -68,6 +69,7 @@ const PushNotes = () => {
 
   useEffect(() => {
     if (newChat?.chat) {
+      console.log(newChat.chat)
       socket.current.emit("realTimeMsgSend", newChat.chat);
     }
   }, [newChat?.chat]);
