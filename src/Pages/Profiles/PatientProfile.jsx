@@ -3,9 +3,12 @@ import avater from "../../assets/img/avatars/1.png";
 import MainLoader from "../../utils/Loaders/MainLoader";
 import moment from "moment";
 import { useGetPatientByIdQuery } from "../../Redux/api/PatientApi";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetContactByPatientIdQuery } from "../../Redux/api/Contact";
 import { useEffect } from "react";
+import SinglePatient from "../Patient/SinglePatient";
+
+
 
 const PatientProfile = () => {
 
@@ -28,10 +31,12 @@ const PatientProfile = () => {
 
   return (
     <>
+    
       {isLoading ? (
         <MainLoader />
       ) : (
         <>
+        <SinglePatient />
           <div className="row">
             <div className="col-12">
               <div className="card mb-6">

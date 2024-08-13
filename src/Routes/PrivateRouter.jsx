@@ -164,7 +164,7 @@ const privateRouter = [
           },
           {
             path: "/patients/:id",
-            element: <SinglePatient />,
+            element: <PatientProfile />,
           },
           {
             path: "/review-email-log",
@@ -482,10 +482,6 @@ const privateRouter = [
           {
             path: "/profile-settings",
             element: <Settings />,
-          },
-          {
-            path: "/patient/:id",
-            element: <PatientProfile />,
           },
           {
             path: "/*",

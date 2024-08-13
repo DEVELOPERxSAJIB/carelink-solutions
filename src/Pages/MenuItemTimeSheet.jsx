@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { FaRegFolder } from "react-icons/fa";
 import DataTable from "../components/Tables/DynamicTable";
 import useFormFields from "./../hook/useFormHook";
@@ -11,27 +10,31 @@ import {
   useUpdateTimeSheetMutation,
   useDeleteTimeSheetMutation,
 } from "../Redux/api/Timesheet.js";
-import { useGetAllSubUsersQuery } from "../Redux/api/SubUserApi.js";
 import AuthLoader from "./../utils/Loaders/AuthLoader";
 import swal from "sweetalert";
 import EditModal from "./../components/Models/EditModal";
 import DatePicker from "react-datepicker";
-// Function to get the start and end dates of the current week
-import { useMeQuery } from "../Redux/api/UserApi";
-import { showToast } from './../utils/Toastify';
+import { useGetAllCaregiverQuery, useMeQuery } from "../Redux/api/UserApi";
+import { showToast } from "./../utils/Toastify";
+
 const MenuItemTimeSheet = () => {
   const { data: lgData } = useMeQuery();
   const [editId, setEditId] = useState("");
   const [show, setShow] = useState("");
   const [date, setDate] = useState("");
 
-  const { data: subUsers } = useGetAllSubUsersQuery();
+  const [ipAddress, setIpAddress] = useState("");
+  const [geoLocation, setGeoLocation] = useState("");
+  const { location } = geoLocation;
+
+  const { data: caregiver } = useGetAllCaregiverQuery();
+
   const [
     createTimeSheet,
     { data: createData, isSuccess: isCreateSuccess, error: createError },
   ] = useCreateTimeSheetMutation();
   const { data, isLoading, refetch } = useGetAllTimeSheetsQuery();
-  //console.log(data);
+
   const [
     updateTimeSheet,
     { data: updateData, isSuccess: isUpdateSuccess, error: updateError },
@@ -45,6 +48,7 @@ const MenuItemTimeSheet = () => {
       error: deleteError,
     },
   ] = useDeleteTimeSheetMutation();
+
   const columns = [
     { header: "Id", field: "_id" },
     { header: "Date of service", field: "dateOfService" },
@@ -67,14 +71,13 @@ const MenuItemTimeSheet = () => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        
         deleteTimeSheet(rowData._id);
-      } 
+      }
     });
   };
 
   const initialState = {
-    individual: "",
+    caregiver: "",
     dateOfService: "",
     clockInTime: "",
     milesUsed: "",
@@ -85,11 +88,11 @@ const MenuItemTimeSheet = () => {
 
   const [formData, handleChange, setFormData, resetForm] =
     useFormFields(initialState);
+
   const handleEdit = (rowData) => {
     setEditId(rowData._id);
     setShow(true);
-    setDate(rowData.dateOfService)
-    //console.log(rowData);
+    setDate(rowData.dateOfService);
     setFormData({
       individual: rowData.individual?._id,
       clockInTime: rowData.clockInTime,
@@ -103,19 +106,19 @@ const MenuItemTimeSheet = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editId) {
-      formData.dateOfService= date
+      formData.dateOfService = date;
       updateTimeSheet({ timesheetId: editId, timeSheetData: formData });
-      resetForm()
+      resetForm();
     } else {
-      formData.dateOfService= date
+      formData.dateOfService = date;
       createTimeSheet(formData);
-      resetForm()
     }
     resetForm();
   };
+
   const initialState2 = {
     staff: "",
-    individual: "",
+    caregiver: "",
     dateOfService: "",
     clockInTime: "",
     milesUsed: "0",
@@ -123,15 +126,59 @@ const MenuItemTimeSheet = () => {
     service: "",
     memo: "",
     reasonCode: "",
+    shift: "",
   };
 
   const [formData2, handleChange2, resetForm2] = useFormFields(initialState2);
 
   const handleSubmit2 = (e) => {
     e.preventDefault();
-    // handleSave(formData); // Implement your save logic here
     resetForm2();
   };
+
+  useEffect(() => {
+    getVisitorIP();
+    getGeoLocation();
+  }, []);
+
+  useEffect(() => {
+    if (ipAddress) {
+      getGeoLocation(ipAddress);
+    }
+  }, [ipAddress]);
+
+  const getVisitorIP = async () => {
+    try {
+      const response = await fetch(`https://api.ipify.org`);
+      const data = await response.text();
+      setIpAddress(data);
+      console.log("IP Address:", data);
+    } catch (error) {
+      console.log("Failed to get visitor IP", error);
+    }
+  };
+
+  const getGeoLocation = async (ip) => {
+    try {
+      const response = await fetch(
+        `https://geo.ipify.org/api/v2/country,city?apiKey=at_UObEx5y8kKx9uc4b27B52I5sMf3H8&ipAddress=${ip}`
+      );
+      const data = await response.json();
+      setGeoLocation(data);
+    } catch (error) {
+      console.log("Failed to get geolocation", error);
+    }
+  };
+
+  const formatTimeZone = (location) => {
+    // Extract data from location object
+    const dateTime = new Date().toLocaleString("en-GB", {
+      timeZone: location?.timezone,
+    });
+
+    return `${dateTime}`;
+  };
+
   useEffect(() => {
     if (isCreateSuccess) {
       refetch();
@@ -142,171 +189,189 @@ const MenuItemTimeSheet = () => {
     if (isUpdateSuccess) {
       refetch();
     }
-  }, [isCreateSuccess, isDeleteSuccess, isUpdateSuccess]);
+  }, [
+    isCreateSuccess,
+    isDeleteSuccess,
+    isUpdateSuccess,
+    location,
+    refetch,
+    resetForm,
+  ]);
   useEffect(() => {
     showToast("success", updateData?.message);
     showToast("success", createData?.message);
     showToast("error", updateError?.data?.message);
     showToast("error", createError?.data?.message);
   }, [
-    updateData?.message,createData?.message,createError?.data?.message,
+    updateData?.message,
+    createData?.message,
+    createError?.data?.message,
     updateError?.data?.message,
   ]);
 
+  
+  useEffect(() => {
+    const data = formatTimeZone(location)
+    setFormData((prev) => ({
+      ...prev,
+      clockInLocation : `${location?.city} ${location?.region} ${location?.country} ${data}`
+    }))
+  }, [location])
+
+
   if (isLoading || isDeleteLoading) return <AuthLoader />;
+
   return (
     <div className="card">
       <TableHeader title="Timesheet" className="py-3 pt-5 fs-3 card-header" />
       <div className="card-body">
-        
         <div className="gap-3 d-flex flex-wrap">
-        {lgData?.payload?.user?.curd?.includes("create") &&
-          <PopupModal id="addWebTimesheetModal" title="Add Web Timesheet">
-            <form onSubmit={handleSubmit} className="w-100">
-             
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="individual" className="form-label">
-                    Individual
-                  </label>
-                  <select
-                    id="individual"
-                    name="individual"
-                    className="form-control"
-                    value={formData?.individual}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="">Please Select Individual First</option>
-                    {subUsers?.payload?.subUsers.map((item, index) => (
-                      <option key={index} value={item._id}>
-                        {item.firstName} {item.lastName}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                {formData?.individual && (
-                  <>
-                    <div className="col-md-6 mb-3">
-                      <label htmlFor="dateOfService" className="form-label">
-                        Date of Service
-                      </label>
-                      {/* <input
-                        type="date"
-                        id="dateOfService"
-                        name="dateOfService"
-                        className="form-control"
-                        value={formData?.dateOfService}
-                        onChange={handleChange}
-                        required
-                      /> */}
-                      <DatePicker
-                        selected={date}
-                        className="form-control"
-                        onChange={(date) => setDate(date)}
-                      />
-                    </div>
-                    <div className="col-md-6 mb-3">
-                      <label htmlFor="clockInTime" className="form-label">
-                        Clock In Time
-                      </label>
-                      <input
-                        type="time"
-                        id="clockInTime"
-                        name="clockInTime"
-                        className="form-control"
-                        value={formData?.clockInTime}
-                        onChange={handleChange}
-                        placeholder="Clock In Time"
-                        required
-                      />
-                    </div>
-                    <div className="col-md-6 mb-3">
-                      <label htmlFor="milesUsed" className="form-label">
-                        Miles Used
-                      </label>
-                      <input
-                        type="number"
-                        id="milesUsed"
-                        name="milesUsed"
-                        className="form-control"
-                        value={formData?.milesUsed}
-                        onChange={handleChange}
-                        placeholder="Miles Used"
-                        required
-                      />
-                    </div>
-                    <div className="col-md-6 mb-3">
-                      <label htmlFor="clockInLocation" className="form-label">
-                        Clock In Location
-                      </label>
-                      <input
-                        type="text"
-                        id="clockInLocation"
-                        name="clockInLocation"
-                        className="form-control"
-                        value={formData?.clockInLocation}
-                        onChange={handleChange}
-                        placeholder="Clock In Location"
-                        required
-                      />
-                    </div>
-                    <div className="col-md-6 mb-3">
-                      <label htmlFor="service" className="form-label">
-                        Service
-                      </label>
-                      <select
-                        id="service"
-                        name="service"
-                        className="form-select"
-                        value={formData?.service}
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="">Select</option>
-                        <option value="Awake">Awake</option>
-                        <option value="OSOC">OSOC</option>
-                        <option value="Training">Training</option>
-                        <option value="PTO">PTO</option>
-                        <option value="Meeting">Meeting</option>
-                        <option value="Active">Active</option>
-                        <option value="sleep">sleep</option>
-                        <option value="other">other</option>
-                      </select>
-                    </div>
-                    <div className="col-md-12 mb-3">
-                      <label htmlFor="memo" className="form-label">
-                        Memo
-                      </label>
-                      <textarea
-                        id="memo"
-                        name="memo"
-                        className="form-control"
-                        value={formData?.memo}
-                        onChange={handleChange}
-                        placeholder="Memo"
-                      />
-                    </div>
-                    <div className="d-flex justify-content-end">
-                      <button type="submit" className="btn btn-primary">
-                        Add Web Timesheet
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
-            </form>
-          </PopupModal>
-        }
-          {show && (
-            <EditModal style={{
-              minWidth: "70%",
-              maxWidth: "70%",
-              maxHeight: "80vh",
-              overflowY: "scroll",
-            }} onClose={setShow}>
+          {lgData?.payload?.user?.curd?.includes("create") && (
+            <PopupModal id="addWebTimesheetModal" title="Add Web Timesheet">
               <form onSubmit={handleSubmit} className="w-100">
-                
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label htmlFor="caregiver" className="form-label">
+                      Caregiver
+                    </label>
+                    <select
+                      id="caregiver"
+                      name="caregiver"
+                      className="form-control"
+                      value={formData?.caregiver}
+                      onChange={handleChange}
+                    >
+                      <option value="">Please Select Caregiver First</option>
+                      {caregiver?.payload?.users?.map((item, index) => (
+                        <option key={index} value={item._id}>
+                          {item.firstName} {item.lastName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {formData?.caregiver && (
+                    <>
+                      <div className="col-md-6 mb-3">
+                        <label htmlFor="dateOfService" className="form-label">
+                          Date of Service
+                        </label>
+                        <DatePicker
+                          selected={date}
+                          className="form-control"
+                          onChange={(date) => setDate(date)}
+                        />
+                      </div>
+                      <div className="col-md-6 mb-3">
+                        <label htmlFor="clockInTime" className="form-label">
+                          Clock In Time
+                        </label>
+                        <input
+                          type="time"
+                          id="clockInTime"
+                          name="clockInTime"
+                          className="form-control"
+                          value={formData?.clockInTime}
+                          onChange={handleChange}
+                          placeholder="Clock In Time"
+                        />
+                      </div>
+                      <div className="col-md-6 mb-3">
+                        <label htmlFor="milesUsed" className="form-label">
+                          Miles Used
+                        </label>
+                        <input
+                          type="number"
+                          id="milesUsed"
+                          name="milesUsed"
+                          className="form-control"
+                          value={formData?.milesUsed}
+                          onChange={handleChange}
+                          placeholder="Miles Used"
+                        />
+                      </div>
+                      <div className="col-md-12 mb-3">
+                        <label htmlFor="clockInLocation" className="form-label">
+                          Clock In Location
+                        </label>
+                        <input
+                          type="text"
+                          id="clockInLocation"
+                          name="clockInLocation"
+                          className="form-control"
+                          value={formData.clockInLocation}
+                          onChange={handleChange}
+                          disabled
+                          placeholder="Clock In Location"
+                        />
+                      </div>
+                      <div className="col-md-6 mb-3">
+                        <label htmlFor="service" className="form-label">
+                          Service
+                        </label>
+                        <select
+                          id="service"
+                          name="service"
+                          className="form-select"
+                          value={formData?.service}
+                          onChange={handleChange}
+                        >
+                          <option value="">Select</option>
+                          <option value="personalCare">Personal Care</option>
+                          <option value="medicationReminder">
+                            Medication Reminder
+                          </option>
+                          <option value="homemaking">Homemaking</option>
+                          <option value="activityAssistance">
+                            Activity Assistance
+                          </option>
+                          <option value="equipmentCare">Equipment Care</option>
+                        </select>
+                      </div>
+                      <div className="col-md-6 mb-3">
+                        <label htmlFor="shift" className="form-label">
+                          Shift
+                        </label>
+                        <select
+                          id="shift"
+                          name="shift"
+                          className="form-select"
+                          value={formData?.shift}
+                          onChange={handleChange}
+                        >
+                          <option value="">Select</option>
+                          <option value="1st Shift">1st Shift</option>
+                          <option value="2nd Shift">2nd Shift</option>
+                          <option value="3rd Shift">3rd Shift</option>
+                        </select>
+                      </div>
+                      <div className="col-md-12 mb-3">
+                        <label htmlFor="signature" className="form-label">
+                          Memo
+                        </label>
+                        <input type="file" id="signature" />
+                      </div>
+                      <div className="d-flex justify-content-end">
+                        <button type="submit" className="btn btn-primary">
+                          Add Web Timesheet
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </form>
+            </PopupModal>
+          )}
+          {show && (
+            <EditModal
+              style={{
+                minWidth: "70%",
+                maxWidth: "70%",
+                maxHeight: "80vh",
+                overflowY: "scroll",
+              }}
+              onClose={setShow}
+            >
+              <form onSubmit={handleSubmit} className="w-100">
                 <div className="row">
                   <div className="col-md-6 mb-3">
                     <label htmlFor="individual" className="form-label">
@@ -318,7 +383,6 @@ const MenuItemTimeSheet = () => {
                       className="form-control"
                       value={formData?.individual}
                       onChange={handleChange}
-                      required
                     >
                       <option value="">Please Select Individual First</option>
                       {subUsers?.payload?.subUsers.map((item, index) => (
@@ -335,10 +399,10 @@ const MenuItemTimeSheet = () => {
                           Date of Service
                         </label>
                         <DatePicker
-                        selected={date}
-                        className="form-control"
-                        onChange={(date) => setDate(date)}
-                      />
+                          selected={date}
+                          className="form-control"
+                          onChange={(date) => setDate(date)}
+                        />
                       </div>
                       <div className="col-md-6 mb-3">
                         <label htmlFor="clockInTime" className="form-label">
@@ -352,7 +416,6 @@ const MenuItemTimeSheet = () => {
                           value={formData?.clockInTime}
                           onChange={handleChange}
                           placeholder="Clock In Time"
-                          required
                         />
                       </div>
                       <div className="col-md-6 mb-3">
@@ -367,7 +430,6 @@ const MenuItemTimeSheet = () => {
                           value={formData?.milesUsed}
                           onChange={handleChange}
                           placeholder="Miles Used"
-                          required
                         />
                       </div>
                       <div className="col-md-6 mb-3">
@@ -382,7 +444,6 @@ const MenuItemTimeSheet = () => {
                           value={formData?.clockInLocation}
                           onChange={handleChange}
                           placeholder="Clock In Location"
-                          required
                         />
                       </div>
                       <div className="col-md-6 mb-3">
@@ -395,7 +456,6 @@ const MenuItemTimeSheet = () => {
                           className="form-select"
                           value={formData?.service}
                           onChange={handleChange}
-                          required
                         >
                           <option value="">Select</option>
                           <option value="Awake">Awake</option>
@@ -455,47 +515,48 @@ const MenuItemTimeSheet = () => {
               <span className="d-none d-sm-inline-block">Reports</span>
             </span>
           </button>
-          {lgData?.payload?.user?.curd?.includes("delete") &&
-          <button
-            className="btn btn-warning waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-history me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">History</span>
-            </span>
-          </button>
-          }
-           {lgData?.payload?.user?.curd?.includes("delete") &&
-           
-          <button
-            style={{ background: "#9fd74d", color: "#fff" }}
-            className="btn waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <FaRegFolder size={22} className="me-1" />{" "}
-              <span className="d-none d-sm-inline-block">Archive</span>
-            </span>
-          </button>
-           }
-            {lgData?.payload?.user?.curd?.includes("delete") &&
-          <button
-            className="btn btn-secondary waves-effect waves-light"
-            tabIndex={0}
-            aria-controls="DataTables_Table_0"
-            type="button"
-          >
-            <span className="d-flex align-items-center">
-              <i className="ti ti-trash me-sm-1" />{" "}
-              <span className="d-none d-sm-inline-block">Delete Selected</span>
-            </span>
-          </button>
-            }
+          {lgData?.payload?.user?.curd?.includes("delete") && (
+            <button
+              className="btn btn-warning waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-history me-sm-1" />{" "}
+                <span className="d-none d-sm-inline-block">History</span>
+              </span>
+            </button>
+          )}
+          {lgData?.payload?.user?.curd?.includes("delete") && (
+            <button
+              style={{ background: "#9fd74d", color: "#fff" }}
+              className="btn waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <FaRegFolder size={22} className="me-1" />{" "}
+                <span className="d-none d-sm-inline-block">Archive</span>
+              </span>
+            </button>
+          )}
+          {lgData?.payload?.user?.curd?.includes("delete") && (
+            <button
+              className="btn btn-secondary waves-effect waves-light"
+              tabIndex={0}
+              aria-controls="DataTables_Table_0"
+              type="button"
+            >
+              <span className="d-flex align-items-center">
+                <i className="ti ti-trash me-sm-1" />{" "}
+                <span className="d-none d-sm-inline-block">
+                  Delete Selected
+                </span>
+              </span>
+            </button>
+          )}
           <PopupModal id="Add_Manual_Timesheet" title="Add Manual Timesheet">
             <form onSubmit={handleSubmit2} className="w-100">
               <div className="row">
@@ -509,7 +570,6 @@ const MenuItemTimeSheet = () => {
                     className="form-control"
                     value={formData2.staff}
                     onChange={handleChange2}
-                    required
                   >
                     <option value="">Select Staff</option>
                     <option value="Augustine Mulai">Augustine Mulai</option>
@@ -525,7 +585,6 @@ const MenuItemTimeSheet = () => {
                     className="form-control"
                     value={formData2.individual}
                     onChange={handleChange2}
-                    required
                   >
                     <option value="">Please Select Individual First</option>
                     <option value="Adnan Sidirijal">Adnan Sidirijal</option>
@@ -545,7 +604,6 @@ const MenuItemTimeSheet = () => {
                         value={formData2.dateOfService}
                         onChange={handleChange}
                         placeholder="Date of Service"
-                        required
                       />
                     </div>
                     <div className="col-md-6 mb-3">
@@ -560,7 +618,6 @@ const MenuItemTimeSheet = () => {
                         value={formData2.clockInTime}
                         onChange={handleChange}
                         placeholder="Clock In Time"
-                        required
                       />
                     </div>
                     <div className="col-md-6 mb-3">
@@ -575,7 +632,6 @@ const MenuItemTimeSheet = () => {
                         value={formData2.milesUsed}
                         onChange={handleChange}
                         placeholder="Miles Used"
-                        required
                       />
                     </div>
                     <div className="col-md-6 mb-3">
@@ -590,7 +646,6 @@ const MenuItemTimeSheet = () => {
                         value={formData2.clockInLocation}
                         onChange={handleChange}
                         placeholder="Clock In Location"
-                        required
                       />
                     </div>
                     <div className="col-md-6 mb-3">
@@ -603,7 +658,6 @@ const MenuItemTimeSheet = () => {
                         className="form-select"
                         value={formData2.service}
                         onChange={handleChange}
-                        required
                       >
                         <option value="">Select</option>
                         {/* Add more service options here */}
@@ -619,7 +673,6 @@ const MenuItemTimeSheet = () => {
                         className="form-select"
                         value={formData?.reasonCode}
                         onChange={handleChange}
-                        required
                       >
                         <option value="">Select</option>
                         {/* Add more reason code options here */}
