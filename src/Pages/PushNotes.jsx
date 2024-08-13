@@ -8,6 +8,7 @@ import { useGetAllUsersQuery, useMeQuery } from "../Redux/api/UserApi";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { getChatState, setChatData } from "./../Redux/slices/ChatSlic";
+import EmojiPicker from "emoji-picker-react";
 
 import {
   useCreateChatMutation,
@@ -19,6 +20,7 @@ const PushNotes = () => {
   const [activeChat, setActiveChat] = useState(null);
   const [chatUser, setChatUser] = useState(null);
   const [chat, setChat] = useState("");
+  const [showEmoji, setShowEmoji] = useState(false);
   const { chatsData } = useSelector(getChatState);
   const [activeUser, setActiveUser] = useState([]);
   const [chatImage, setChatImage] = useState(null);
@@ -32,7 +34,6 @@ const PushNotes = () => {
     isLoading: isChatLoading,
   } = useGetAllChatsQuery(chatUser?._id);
   const { data: chatUsers } = useGetAllChatsUsersQuery();
-  console.log(chatUsers);
   const [createChat, { data: newChat, isSuccess: isNewChatSuccess, error }] =
     useCreateChatMutation();
 
@@ -60,6 +61,9 @@ const PushNotes = () => {
 
   const handleEmojiSelect = (emojiObject) => {
     setChat((prevState) => prevState + " " + emojiObject.emoji);
+  };
+  const handleEmoji = () => {
+    setShowEmoji(!showEmoji);
   };
 
   useEffect(() => {
@@ -99,6 +103,18 @@ const PushNotes = () => {
       dispatch(setChatData(chats?.chats));
     }
   }, [chats?.chats, dispatch]);
+  const emojiClose = useRef();
+  const handleClose = (e) => {
+    if (emojiClose.current && !emojiClose.current.contains(e.target)) {
+      setShowEmoji(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClose);
+    return () => {
+      document.removeEventListener("mousedown", handleClose);
+    };
+  }, []);
   return (
     <div className="row">
       <div className="container-xxl flex-grow-1 container-p-y">
@@ -319,7 +335,16 @@ const PushNotes = () => {
                               className="chat-contact-list-item mb-1"
                             >
                               <a className="d-flex align-items-center">
-                                <div className="flex-shrink-0 avatar avatar-online">
+                                <div
+                                  className={`flex-shrink-0 avatar ${
+                                    activeUser.some(
+                                      (item) =>
+                                        item.userId === item?.userInfo?._id
+                                    )
+                                      ? "avatar-online"
+                                      : "avatar-offline"
+                                  }`}
+                                >
                                   <img
                                     src={avatar}
                                     alt="Avatar"
@@ -365,49 +390,60 @@ const PushNotes = () => {
                   <li className="chat-contact-list-item contact-list-item-0 d-none">
                     <h6 className=" mb-0">No Contacts Found</h6>
                   </li>
-                  {users?.payload?.users
-                    ?.filter(
-                      (user) =>
-                        !chatUsers?.chats?.some(
-                          (chat) =>
-                            chat?.senderId !== user?._id ||
-                            chat?.receiverId !== user?._id
-                        )
-                    )
-                    ?.map((item, index) => {
-                      return (
-                        <li
-                          key={index}
-                          onClick={() => handleChatCreate(item?.userInfo)}
-                          className="chat-contact-list-item mb-0"
-                        >
-                          <a className="d-flex align-items-center">
-                            <div className="flex-shrink-0 avatar">
-                              <img
-                                src={avatar}
-                                alt="Avatar"
-                                className="rounded-circle"
-                              />
-                            </div>
-                            <div className="chat-contact-info flex-grow-1 ms-4">
-                              <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                                {item?.userInfo?.firstName} {""}
-                                {item?.userInfo?.lastName}
-                              </h6>
-                              <small className="chat-contact-status text-truncate">
-                                {item?.userInfo?.role}
-                              </small>
-                            </div>
-                          </a>
-                        </li>
-                      );
-                    })}
+                  {users?.payload?.users?.filter(
+                    (user) =>
+                      !chatUsers?.chats?.some(
+                        (chat) =>
+                          chat?.senderId !== user?._id ||
+                          chat?.receiverId !== user?._id
+                      )
+                  ).length > 0 ? (
+                    users?.payload?.users
+                      ?.filter(
+                        (user) =>
+                          !chatUsers?.chats?.some(
+                            (chat) =>
+                              chat?.senderId !== user?._id ||
+                              chat?.receiverId !== user?._id
+                          )
+                      )
+                      ?.map((item, index) => {
+                        return (
+                          <li
+                            key={index}
+                            onClick={() => handleChatCreate(item?.userInfo)}
+                            className="chat-contact-list-item mb-0"
+                          >
+                            <a className="d-flex align-items-center">
+                              <div className="flex-shrink-0 avatar">
+                                <img
+                                  src={avatar}
+                                  alt="Avatar"
+                                  className="rounded-circle"
+                                />
+                              </div>
+                              <div className="chat-contact-info flex-grow-1 ms-4">
+                                <h6 className="chat-contact-name text-truncate m-0 fw-normal">
+                                  {item?.userInfo?.firstName}
+                                  {item?.userInfo?.lastName}
+                                </h6>
+                                <small className="chat-contact-status text-truncate">
+                                  {item?.userInfo?.role}
+                                </small>
+                              </div>
+                            </a>
+                          </li>
+                        );
+                      })
+                  ) : (
+                    <p className="text-center">No contacts</p>
+                  )}
                 </ul>
               </div>
             </div>
             {/* /Chat contacts */}
             {/* Chat History */}
-            {chatUser && (
+            {chatUser ? (
               <div className="col app-chat-history">
                 <div className="chat-history-wrapper">
                   <div className="chat-history-header border-bottom">
@@ -498,11 +534,17 @@ const PushNotes = () => {
                               key={index}
                               className={`chat-message ${
                                 item?.senderId !== chatUser?._id
-                                  ? "chat-message-right"
+                                  ? "chat-message-right text-light"
                                   : ""
                               } `}
                             >
-                              <div className="d-flex overflow-hidden">
+                              <div
+                                className={`d-flex overflow-hidden ${
+                                  item?.senderId !== chatUser?._id
+                                    ? ""
+                                    : "flex-row-reverse"
+                                } `}
+                              >
                                 <div className="chat-message-wrapper flex-grow-1">
                                   <div className="chat-message-text">
                                     <p className="mb-0">
@@ -561,6 +603,12 @@ const PushNotes = () => {
                           <i className="ti ti-paperclip ti-md cursor-pointer btn btn-sm btn-text-secondary btn-icon rounded-pill mx-1 text-heading" />
                           <input type="file" id="attach-doc" hidden="true" />
                         </label>
+                        <span className="btn" onClick={handleEmoji}>
+                          <i
+                            style={{ color: "#ffd900" }}
+                            className="ti ti-mood-happy"
+                          ></i>
+                        </span>
                         <button
                           type="submit"
                           className="btn btn-primary d-flex send-msg-btn"
@@ -570,11 +618,27 @@ const PushNotes = () => {
                           </span>
                           <i className="ti ti-send ti-16px ms-md-2 ms-0" />
                         </button>
+                        {showEmoji && (
+                          <div
+                            ref={emojiClose}
+                            style={{
+                              position: "absolute",
+                              bottom: "100px",
+                              right: "50px",
+                            }}
+                          >
+                            <EmojiPicker onEmojiClick={handleEmojiSelect} />
+                          </div>
+                        )}
                       </div>
                     </form>
                   </div>
                 </div>
               </div>
+            ) : (
+              <p className="text-success m-auto p-auto">
+                Welcome,chat and connect!
+              </p>
             )}
 
             {/* /Chat History */}

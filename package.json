@@ -18,6 +18,7 @@
     "copy-to-clipboard": "^3.3.3",
     "countries-list": "^3.1.0",
     "datatables.net-bs5": "^2.0.8",
+    "emoji-picker-react": "^4.11.1",
     "file-saver": "^2.0.5",
     "flatpickr": "^3.0.6",
     "framer-motion": "^11.2.13",
