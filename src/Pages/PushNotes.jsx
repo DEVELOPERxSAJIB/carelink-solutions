@@ -6,22 +6,33 @@ import calling from "../assets/audio/ringing-151670.mp3";
 import endCall from "../assets/audio/end-call-120633.mp3";
 import { useGetAllUsersQuery, useMeQuery } from "../Redux/api/UserApi";
 import moment from "moment";
+import { useSelector, useDispatch } from "react-redux";
+import { getChatState, setChatData } from "./../Redux/slices/ChatSlic";
+
 import {
   useCreateChatMutation,
   useGetAllChatsQuery,
 } from "../Redux/api/ChatApi";
 const PushNotes = () => {
+  const dispatch = useDispatch();
   const [activeChat, setActiveChat] = useState(null);
   const [chatUser, setChatUser] = useState(null);
   const [chat, setChat] = useState("");
+  const { chatsData } = useSelector(getChatState);
   const [activeUser, setActiveUser] = useState([]);
   const [chatImage, setChatImage] = useState(null);
   const socket = useRef(null);
   const scrollChat = useRef(null);
   const { data: user } = useMeQuery();
   const { data: users } = useGetAllUsersQuery();
-  const { data: chats, refetch, isLoading: isChatLoading } = useGetAllChatsQuery(chatUser?._id);
-  const [createChat, { data: newChat, isSuccess: isNewChatSuccess, error }] = useCreateChatMutation();
+  const {
+    data: chats,
+    refetch,
+    isLoading: isChatLoading,
+  } = useGetAllChatsQuery(chatUser?._id);
+  const [createChat, { data: newChat, isSuccess: isNewChatSuccess, error }] =
+    useCreateChatMutation();
+
   const handleChatCreate = (user) => {
     setActiveChat(user);
     setChatUser(user);
@@ -51,37 +62,42 @@ const PushNotes = () => {
   useEffect(() => {
     socket.current = io("http://localhost:5050");
 
-    socket.current.emit("setActiveUser", user);
+    socket.current.emit("setActiveUser", user?.payload?.user);
 
     socket.current.on("getActiveUser", (data) => {
       setActiveUser(data);
     });
 
     socket.current.on("realTimeMsgGet", (data) => {
-      console.log(data);
-
+      dispatch(setChatData([...(chatsData || []), data]));
     });
 
     return () => {
       socket.current.disconnect();
     };
-  }, [user]);
+  }, [user, dispatch, chatsData]);
 
   useEffect(() => {
     if (newChat?.chat) {
-      console.log(newChat.chat)
       socket.current.emit("realTimeMsgSend", newChat.chat);
     }
   }, [newChat?.chat]);
 
   useEffect(() => {
     scrollChat.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chats])
+  }, [chatsData,chats?.chats]);
 
+  useEffect(() => {
+    refetch();
+  }, [chatUser, refetch, newChat]);
+
+  useEffect(() => {
+    if (chats?.chats) {
+      dispatch(setChatData(chats?.chats));
+    }
+  }, [chats?.chats, dispatch]);
   return (
     <div className="row">
-    
-
       <div className="container-xxl flex-grow-1 container-p-y">
         <div></div>
         <div className="app-chat card overflow-hidden">
@@ -402,8 +418,6 @@ const PushNotes = () => {
                         </div>
                       </div>
                       <div className="d-flex gap-3 align-items-center">
-                       
-
                         <i className="ti ti-search ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill" />
                         <div className="dropdown">
                           <button
@@ -455,8 +469,8 @@ const PushNotes = () => {
                   </div>
                   <div className="chat-history-body ">
                     <ul className="list-unstyled chat-history chat-scrollbar">
-                      {chats?.chats?.length > 0 ? (
-                        chats?.chats?.map((item, index) => {
+                      {chatsData?.length > 0 ? (
+                        chatsData?.map((item, index) => {
                           return (
                             <li
                               key={index}
@@ -496,6 +510,7 @@ const PushNotes = () => {
                       ) : (
                         <p className="text-center">No Chat</p>
                       )}
+                      <li ref={scrollChat}></li>
                     </ul>
                   </div>
                   {/* Chat message form */}
@@ -525,7 +540,6 @@ const PushNotes = () => {
                           <input type="file" id="attach-doc" hidden="true" />
                         </label>
                         <button
-                        
                           type="submit"
                           className="btn btn-primary d-flex send-msg-btn"
                         >
