@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import DataTable from "../../components/Tables/DynamicTable";
 import { Link } from "react-router-dom";
-import { useProcessRegisterMutation } from "../../Redux/api/UserApi";
+import { useProcessSubRegisterMutation } from "../../Redux/api/UserApi";
 import StateSelect from "../../components/FormElement/StateSelect";
 import CitySelect from "../../components/FormElement/CitySelect";
 import CountySelect from "../../components/FormElement/CountySelect";
@@ -139,7 +139,7 @@ const Compliance = () => {
   };
 
   const [processRegister, { error, isSuccess, isLoading, isError }] =
-    useProcessRegisterMutation();
+    useProcessSubRegisterMutation();
   const [selectedState, setSelectedState] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedCounty, setSelectedCounty] = useState(null);

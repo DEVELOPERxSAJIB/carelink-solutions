@@ -54,6 +54,14 @@ export const UserApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "User" }],
     }),
+    processSubRegister: builder.mutation({
+      query: (userData) => ({
+        url: "auth//process-register/sub",
+        method: "POST",
+        body: userData,
+      }),
+      invalidatesTags: [{ type: "User" }],
+    }),
     verifyRegister: builder.mutation({
       query: (token) => ({
         url: `auth/verify-register`,
@@ -238,6 +246,7 @@ export const {
   useGetAllComplianceQuery,
   useMeQuery,
   useProcessRegisterMutation,
+  useProcessSubRegisterMutation,
   useUpdateUserMutation,
   useUpdateAdminMutation,
   useUpdateProviderMutation,

@@ -3,7 +3,7 @@ import DataTable from "../../components/Tables/DynamicTable";
 import useCSVOperations from "../../hook/useExportData";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useProcessRegisterMutation } from "../../Redux/api/UserApi";
+import { useProcessSubRegisterMutation } from "../../Redux/api/UserApi";
 import StateSelect from "../../components/FormElement/StateSelect";
 import CitySelect from "../../components/FormElement/CitySelect";
 import CountySelect from "../../components/FormElement/CountySelect";
@@ -33,6 +33,13 @@ const Admin = () => {
   const { data: logData } = useMeQuery();
   const { data: addedBy } = useMeQuery();
   const { data, refetch } = useGetAllAdminQuery();
+  const [processSubRegister, { error, isSuccess, isLoading, isError }] =
+  useProcessSubRegisterMutation();
+const [selectedState, setSelectedState] = useState(null);
+const [selectedCity, setSelectedCity] = useState(null);
+const [selectedCounty, setSelectedCounty] = useState(null);
+const { handleCSVFileUpload, handleExportSelected, handleDeleteSelected } =
+  useCSVOperations(data, columns);
   const [
     updateUser,
     {
@@ -95,7 +102,7 @@ const Admin = () => {
     if (editId) {
       updateUser({ userId: editId, userData: updatedData });
     } else {
-      processRegister(updatedData);
+      processSubRegister(updatedData);
     }
   };
 
@@ -142,13 +149,7 @@ const Admin = () => {
     });
   };
 
-  const [processRegister, { error, isSuccess, isLoading, isError }] =
-    useProcessRegisterMutation();
-  const [selectedState, setSelectedState] = useState(null);
-  const [selectedCity, setSelectedCity] = useState(null);
-  const [selectedCounty, setSelectedCounty] = useState(null);
-  const { handleCSVFileUpload, handleExportSelected, handleDeleteSelected } =
-    useCSVOperations(data, columns);
+ 
   useEffect(() => {
     if (isSuccess) {
       reset();

@@ -21,22 +21,25 @@ const PushNotes = () => {
   const [chatUser, setChatUser] = useState(null);
   const [chat, setChat] = useState("");
   const [showEmoji, setShowEmoji] = useState(false);
+  const [dropMenu, setDropMenu] = useState(false);
   const { chatsData } = useSelector(getChatState);
   const [activeUser, setActiveUser] = useState([]);
   const [chatImage, setChatImage] = useState(null);
+  const [preview, setPreview] = useState(null);
   const socket = useRef(null);
   const scrollChat = useRef(null);
+  const emojiClose = useRef();
   const { data: user } = useMeQuery();
   const { data: users } = useGetAllUsersQuery();
   const {
     data: chats,
     refetch,
-    isLoading: isChatLoading,
+    isLoading,
   } = useGetAllChatsQuery(chatUser?._id);
   const { data: chatUsers } = useGetAllChatsUsersQuery();
-  const [createChat, { data: newChat, isSuccess: isNewChatSuccess, error }] =
+  const [createChat, { data: newChat, isSuccess: isNewChatSuccess,error }] =
     useCreateChatMutation();
-
+console.log(error)
   const handleChatCreate = (user) => {
     setActiveChat(user);
     setChatUser(user);
@@ -49,6 +52,7 @@ const PushNotes = () => {
       form_data.append("chat", chat);
       form_data.append("receiverId", activeChat._id);
       form_data.append("chat-image", chatImage);
+
       createChat(form_data);
       setChat("");
       setChatImage(null);
@@ -57,6 +61,7 @@ const PushNotes = () => {
 
   const handleChatPhoto = (e) => {
     setChatImage(e.target.files[0]);
+    setPreview(URL.createObjectURL(e.target.files[0]));
   };
 
   const handleEmojiSelect = (emojiObject) => {
@@ -96,14 +101,20 @@ const PushNotes = () => {
 
   useEffect(() => {
     refetch();
-  }, [chatUser, refetch, newChat]);
+    if (isNewChatSuccess) {
+      setPreview(null);
+    }
+  }, [chatUser, refetch, newChat, isNewChatSuccess]);
 
   useEffect(() => {
     if (chats?.chats) {
       dispatch(setChatData(chats?.chats));
     }
   }, [chats?.chats, dispatch]);
-  const emojiClose = useRef();
+
+  const handleDropdown=()=>{
+    setDropMenu(!dropMenu)
+  }
   const handleClose = (e) => {
     if (emojiClose.current && !emojiClose.current.contains(e.target)) {
       setShowEmoji(false);
@@ -118,7 +129,7 @@ const PushNotes = () => {
   return (
     <div className="row">
       <div className="container-xxl flex-grow-1 container-p-y">
-        <div></div>
+        
         <div className="app-chat card overflow-hidden">
           <div className="row g-0">
             {/* Sidebar Left */}
@@ -449,12 +460,14 @@ const PushNotes = () => {
                   <div className="chat-history-header border-bottom">
                     <div className="d-flex justify-content-between align-items-center">
                       <div className="d-flex overflow-hidden align-items-center">
+                        <button onClick={handleDropdown} className="btn btn-sm">
                         <i
-                          className="ti ti-menu-2 ti-lg cursor-pointer d-lg-none d-block me-4"
+                          className="ti ti-menu-2 ti-lg cursor-pointer d-lg-none d-block "
                           data-bs-toggle="sidebar"
                           data-overlay=""
                           data-target="#app-chat-contacts"
                         />
+                        </button>
                         <div className="flex-shrink-0 avatar avatar-online">
                           <img
                             src={avatar}
@@ -475,7 +488,7 @@ const PushNotes = () => {
                           </small>
                         </div>
                       </div>
-                      <div className="d-flex gap-3 align-items-center">
+                      {dropMenu && <div className="d-flex gap-3 align-items-center">
                         <i className="ti ti-search ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill" />
                         <div className="dropdown">
                           <button
@@ -522,7 +535,8 @@ const PushNotes = () => {
                             </a>
                           </div>
                         </div>
-                      </div>
+                      </div>}
+                     
                     </div>
                   </div>
                   <div className="chat-history-body ">
@@ -578,11 +592,20 @@ const PushNotes = () => {
                     </ul>
                   </div>
                   {/* Chat message form */}
-                  <div className="chat-history-footer shadow-xs">
+                  <div className="chat-history-footer shadow-xs position-relative">
                     <form
                       onSubmit={handleMessageSend}
                       className="form-send-message d-flex justify-content-between align-items-center"
                     >
+                      <div style={{ position: "absolute", bottom: "55px" }}>
+                        {preview && (
+                          <img
+                            style={{ width: "50px", height: "50px" }}
+                            src={preview}
+                            alt=""
+                          />
+                        )}
+                      </div>
                       <input
                         value={chat}
                         onChange={(e) => setChat(e.target.value)}
@@ -601,7 +624,12 @@ const PushNotes = () => {
                           className="form-label  d-flex align-items-center mb-0"
                         >
                           <i className="ti ti-paperclip ti-md cursor-pointer btn btn-sm btn-text-secondary btn-icon rounded-pill mx-1 text-heading" />
-                          <input type="file" id="attach-doc" hidden="true" />
+                          <input
+                            type="file"
+                            onChange={handleChatPhoto}
+                            id="attach-doc"
+                            hidden="true"
+                          />
                         </label>
                         <span className="btn" onClick={handleEmoji}>
                           <i

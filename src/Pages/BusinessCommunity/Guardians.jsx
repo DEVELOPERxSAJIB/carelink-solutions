@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import DataTable from "../../components/Tables/DynamicTable";
 import { Link } from "react-router-dom";
-import { useProcessRegisterMutation } from "../../Redux/api/UserApi";
+import { useProcessSubRegisterMutation } from "../../Redux/api/UserApi";
 import StateSelect from "../../components/FormElement/StateSelect";
 import CitySelect from "../../components/FormElement/CitySelect";
 import CountySelect from "../../components/FormElement/CountySelect";
@@ -92,7 +92,7 @@ const Guardians = () => {
     if (editId) {
       updateGuardian({ userId: editId, userData: updatedData });
     } else {
-      processRegister(updatedData);
+      processSubRegister(updatedData);
     }
   };
 
@@ -134,8 +134,8 @@ const Guardians = () => {
     });
   };
 
-  const [processRegister, { error, isSuccess, isLoading, isError }] =
-    useProcessRegisterMutation();
+  const [processSubRegister, { error, isSuccess, isLoading, isError }] =
+    useProcessSubRegisterMutation();
   const [selectedState, setSelectedState] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedCounty, setSelectedCounty] = useState(null);
