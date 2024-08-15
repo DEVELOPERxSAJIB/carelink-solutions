@@ -23,7 +23,7 @@ export const ChatApi = rootApi.injectEndpoints({
     }),
     getAllChatsUsers: builder.query({
       query: (userId) => ({
-        url: `chats`,
+        url: `chats/chatUser/${userId}`,
         method: "GET",
       }),
       providesTags: (result, error) => [{ type: "Chat" }],

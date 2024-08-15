@@ -19,27 +19,88 @@ const PushNotes = () => {
   const dispatch = useDispatch();
   const [activeChat, setActiveChat] = useState(null);
   const [chatUser, setChatUser] = useState(null);
+  const [videoChat, setVideoChat] = useState(false);
   const [chat, setChat] = useState("");
   const [showEmoji, setShowEmoji] = useState(false);
   const [dropMenu, setDropMenu] = useState(false);
-  const { chatsData } = useSelector(getChatState);
-  const [activeUser, setActiveUser] = useState([]);
   const [chatImage, setChatImage] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [incomingCall, setIncomingCall] = useState(null);
+  const [localStream, setLocalStream] = useState(null);
+  const [remoteStream, setRemoteStream] = useState(null);
+  const [activeUser, setActiveUser] = useState([]);
+
   const socket = useRef(null);
   const scrollChat = useRef(null);
-  const emojiClose = useRef();
+  const emojiClose = useRef(null);
+  const peer = useRef(new RTCPeerConnection());
+
+  const { chatsData } = useSelector(getChatState);
   const { data: user } = useMeQuery();
   const { data: users } = useGetAllUsersQuery();
-  const {
-    data: chats,
-    refetch,
-    isLoading,
-  } = useGetAllChatsQuery(chatUser?._id);
-  const { data: chatUsers } = useGetAllChatsUsersQuery();
-  const [createChat, { data: newChat, isSuccess: isNewChatSuccess,error }] =
+  const { data: chats, refetch } = useGetAllChatsQuery(chatUser?._id);
+  const { data: loginChats } = useGetAllChatsUsersQuery(
+    user?.payload?.user?._id
+  );
+
+  const [createChat, { data: newChat, isSuccess: isNewChatSuccess }] =
     useCreateChatMutation();
-console.log(error)
+
+  useEffect(() => {
+    socket.current = io("http://localhost:5050");
+
+    socket.current.emit("setActiveUser", user?.payload?.user);
+
+    socket.current.on("getActiveUser", (data) => {
+      setActiveUser(data);
+    });
+
+    socket.current.on("realTimeMsgGet", (data) => {
+      dispatch(setChatData([...(chatsData || []), data]));
+    });
+
+    socket.current.on("callUser", handleIncomingCall);
+    socket.current.on("callAccepted", handleCallAccepted);
+    socket.current.on("receiveIceCandidate", handleIceCandidate);
+
+    return () => {
+      socket.current.disconnect();
+    };
+  }, [user, dispatch, chatsData]);
+
+  useEffect(() => {
+    if (newChat?.chat) {
+      socket.current.emit("realTimeMsgSend", newChat.chat);
+    }
+  }, [newChat?.chat]);
+
+  useEffect(() => {
+    scrollChat.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatsData, chats?.chats]);
+
+  useEffect(() => {
+    refetch();
+    if (isNewChatSuccess) {
+      setPreview(null);
+    }
+  }, [chatUser, refetch, newChat, isNewChatSuccess]);
+
+  useEffect(() => {
+    if (chats?.chats) {
+      dispatch(setChatData(chats?.chats));
+    } else {
+      dispatch(setChatData([]));
+    }
+    refetch();
+  }, [chats, dispatch, refetch]);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClose);
+    return () => {
+      document.removeEventListener("mousedown", handleClose);
+    };
+  }, []);
+
   const handleChatCreate = (user) => {
     setActiveChat(user);
     setChatUser(user);
@@ -67,69 +128,138 @@ console.log(error)
   const handleEmojiSelect = (emojiObject) => {
     setChat((prevState) => prevState + " " + emojiObject.emoji);
   };
+
   const handleEmoji = () => {
     setShowEmoji(!showEmoji);
   };
 
-  useEffect(() => {
-    socket.current = io("http://localhost:5050");
+  const handleDropdown = () => {
+    setDropMenu(!dropMenu);
+  };
 
-    socket.current.emit("setActiveUser", user?.payload?.user);
-
-    socket.current.on("getActiveUser", (data) => {
-      setActiveUser(data);
-    });
-
-    socket.current.on("realTimeMsgGet", (data) => {
-      dispatch(setChatData([...(chatsData || []), data]));
-    });
-
-    return () => {
-      socket.current.disconnect();
-    };
-  }, [user, dispatch, chatsData]);
-
-  useEffect(() => {
-    if (newChat?.chat) {
-      socket.current.emit("realTimeMsgSend", newChat.chat);
-    }
-  }, [newChat?.chat]);
-
-  useEffect(() => {
-    scrollChat.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatsData, chats?.chats]);
-
-  useEffect(() => {
-    refetch();
-    if (isNewChatSuccess) {
-      setPreview(null);
-    }
-  }, [chatUser, refetch, newChat, isNewChatSuccess]);
-
-  useEffect(() => {
-    if (chats?.chats) {
-      dispatch(setChatData(chats?.chats));
-    }
-  }, [chats?.chats, dispatch]);
-
-  const handleDropdown=()=>{
-    setDropMenu(!dropMenu)
-  }
   const handleClose = (e) => {
     if (emojiClose.current && !emojiClose.current.contains(e.target)) {
       setShowEmoji(false);
     }
   };
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClose);
-    return () => {
-      document.removeEventListener("mousedown", handleClose);
-    };
-  }, []);
+
+  const handleIncomingCall = (data) => {
+    setIncomingCall(data);
+  };
+
+  const handleCallAccepted = (signal) => {
+    peer?.current
+      .setRemoteDescription(new RTCSessionDescription(signal))
+      .catch((error) =>
+        console.error("Error setting remote description:", error)
+      );
+  };
+
+  const handleIceCandidate = (candidate) => {
+    peer?.current
+      .addIceCandidate(new RTCIceCandidate(candidate))
+      .catch((error) => console.error("Error adding ICE candidate:", error));
+  };
+
+  const initiateCall = () => {
+    setVideoChat(true);
+
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then((stream) => {
+        setLocalStream(stream);
+        stream
+          .getTracks()
+          .forEach((track) => peer?.current?.addTrack(track, stream));
+
+        peer?.current
+          ?.createOffer()
+          .then((offer) => {
+            peer?.current?.setLocalDescription(offer);
+            socket.current.emit("callUser", {
+              userId: chatUser._id,
+              signalData: offer,
+            });
+          })
+          .catch((error) => console.error("Error creating offer:", error));
+      })
+      .catch((error) => console.error("Error accessing media devices:", error));
+  };
+
+  const acceptCall = () => {
+    setIncomingCall(null);
+    setVideoChat(true);
+
+    peer?.current
+      .setRemoteDescription(new RTCSessionDescription(incomingCall.signal))
+      .then(() => peer?.current?.createAnswer())
+      .then((answer) => {
+        peer?.current?.setLocalDescription(answer);
+        socket.current.emit("answerCall", {
+          signal: answer,
+          userId: incomingCall.userId,
+        });
+      })
+      .catch((error) => console.error("Error handling call:", error));
+  };
+
+  const declineCall = () => {
+    setIncomingCall(null);
+    socket.current.emit("callDeclined", { userId: incomingCall.userId });
+  };
+
+  const toggleAudio = () => {
+    if (localStream) {
+      const audioTrack = localStream.getAudioTracks()[0];
+      audioTrack.enabled = !audioTrack.enabled;
+      console.log(audioTrack.enabled ? "Audio Unmuted" : "Audio Muted");
+    }
+  };
+
+  const toggleVideo = () => {
+    if (localStream) {
+      const videoTrack = localStream.getVideoTracks()[0];
+      videoTrack.enabled = !videoTrack.enabled;
+      console.log(videoTrack.enabled ? "Camera On" : "Camera Off");
+    }
+  };
+
+  const endCall = () => {
+    if (peer.current) {
+      peer.current.close();
+      peer.current = null;
+      socket.current.emit("endCall", { userId: chatUser._id });
+      setVideoChat(false);
+      setChatUser(null);
+    }
+    if (localStream) {
+      localStream.getTracks().forEach((track) => track.stop());
+      setLocalStream(null);
+    }
+  };
+  // Users who have an existing chat with the logged-in user
+  const filteredChattedUsers = users?.payload?.users?.filter((user) =>
+    loginChats?.chats?.some(
+      (chat) =>
+        chat?.senderId === user?.userInfo?._id ||
+        chat?.receiverId === user?.userInfo?._id
+    )
+  );
+
+  // Users who do not have an existing chat with the logged-in user
+  const filteredNonChattedUsers = users?.payload?.users?.filter(
+    (user) =>
+      !loginChats?.chats?.some(
+        (chat) =>
+          chat?.senderId === user?.userInfo?._id ||
+          chat?.receiverId === user?.userInfo?._id
+      )
+  );
+  // audio and vieo calling
+
   return (
     <div className="row">
       <div className="container-xxl flex-grow-1 container-p-y">
-        
         <div className="app-chat card overflow-hidden">
           <div className="row g-0">
             {/* Sidebar Left */}
@@ -284,7 +414,7 @@ console.log(error)
               <div className="sidebar-header h-px-75 px-5 border-bottom d-flex align-items-center">
                 <div className="d-flex align-items-center me-6 me-lg-0">
                   <div
-                    className="flex-shrink-0 avatar avatar-online me-4"
+                    className="flex-shrink-0 avatar  me-4"
                     data-bs-toggle="sidebar"
                     data-overlay="app-overlay-ex"
                     data-target="#app-chat-sidebar-left"
@@ -327,66 +457,58 @@ console.log(error)
                   <li className="chat-contact-list-item chat-contact-list-item-title mt-0">
                     <h5 className="text-primary mb-0">Chats</h5>
                   </li>
-                  {users?.payload?.users?.length > 0 ? (
+                  {filteredChattedUsers?.length > 0 ? (
                     <>
-                      {users?.payload?.users
-                        ?.filter(
-                          (user) =>
-                            !chatUsers?.chats?.some(
-                              (chat) =>
-                                chat?.senderId === user?._id ||
-                                chat?.receiverId === user?._id
-                            )
-                        )
-                        ?.map((item, index) => {
-                          return (
-                            <li
-                              key={index}
-                              onClick={() => handleChatCreate(item?.userInfo)}
-                              className="chat-contact-list-item mb-1"
-                            >
-                              <a className="d-flex align-items-center">
-                                <div
-                                  className={`flex-shrink-0 avatar ${
-                                    activeUser.some(
-                                      (item) =>
-                                        item.userId === item?.userInfo?._id
-                                    )
-                                      ? "avatar-online"
-                                      : "avatar-offline"
-                                  }`}
-                                >
-                                  <img
-                                    src={avatar}
-                                    alt="Avatar"
-                                    className="rounded-circle"
-                                  />
-                                </div>
-                                <div className="chat-contact-info flex-grow-1 ms-4">
-                                  <div className="d-flex justify-content-between align-items-center">
-                                    <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                                      {item?.userInfo?.firstName}
-                                      {item?.userInfo?.lastName}
-                                    </h6>
-                                    <small className="">
-                                      {moment(item?.createdAt).fromNow()}
-                                    </small>
-                                  </div>
-                                  <small className="chat-contact-status text-truncate">
-                                    {item?.lastMsg?.message?.text}
-                                  </small>
-                                </div>
-                              </a>
-                            </li>
+                      {filteredChattedUsers?.map((item, index) => {
+                        return (
+                          <li
+                            key={index}
+                            onClick={() => handleChatCreate(item?.userInfo)}
+                            className="chat-contact-list-item mb-1"
+                          >
+                            <a className="d-flex align-items-center">
+                              <div
+                                className={`flex-shrink-0 avatar ${
+                                  activeUser?.some(
+                                    (activeItem) =>
+                                      activeItem.userId === item?.userInfo?._id
+                                  )
+                                    ? "avatar-online"
+                                    : "avatar-offline"
+                                }`}
+                              >
+                                <img
+                                  src={avatar}
+                                  alt="Avatar"
+                                  className="rounded-circle"
+                                />
+                              </div>
 
-                            // avatar avatar-busy
-                            // avatar avatar-offline
-                          );
-                        })}
+                              <div className="chat-contact-info flex-grow-1 ms-4">
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <h6 className="chat-contact-name text-truncate m-0 fw-normal">
+                                    {item?.userInfo?.firstName}
+                                    {item?.userInfo?.lastName}
+                                  </h6>
+                                </div>
+                                <small className="chat-contact-status text-truncate">
+                                  {item?.lastMsg?.message?.text}
+                                </small>
+                                <small className="">
+                                  {moment(item?.lastMsg?.createdAt).fromNow()}
+                                </small>
+                              </div>
+                            </a>
+                          </li>
+
+                          // avatar avatar-busy
+                          // avatar avatar-offline
+                        );
+                      })}
                     </>
                   ) : (
-                    <li className="chat-contact-list-item chat-list-item-0 d-none">
-                      <h6 className=" mb-0">No Chats Found</h6>
+                    <li className="chat-contact-list-item chat-list-item-0">
+                      <h6 className=" mb-0 text-danger">No Chats Found</h6>
                     </li>
                   )}
                 </ul>
@@ -398,276 +520,355 @@ console.log(error)
                   <li className="chat-contact-list-item chat-contact-list-item-title mt-0">
                     <h5 className="text-primary mb-0">Contacts</h5>
                   </li>
-                  <li className="chat-contact-list-item contact-list-item-0 d-none">
-                    <h6 className=" mb-0">No Contacts Found</h6>
-                  </li>
-                  {users?.payload?.users?.filter(
-                    (user) =>
-                      !chatUsers?.chats?.some(
-                        (chat) =>
-                          chat?.senderId !== user?._id ||
-                          chat?.receiverId !== user?._id
-                      )
-                  ).length > 0 ? (
-                    users?.payload?.users
-                      ?.filter(
-                        (user) =>
-                          !chatUsers?.chats?.some(
-                            (chat) =>
-                              chat?.senderId !== user?._id ||
-                              chat?.receiverId !== user?._id
-                          )
-                      )
-                      ?.map((item, index) => {
-                        return (
-                          <li
-                            key={index}
-                            onClick={() => handleChatCreate(item?.userInfo)}
-                            className="chat-contact-list-item mb-0"
-                          >
-                            <a className="d-flex align-items-center">
-                              <div className="flex-shrink-0 avatar">
-                                <img
-                                  src={avatar}
-                                  alt="Avatar"
-                                  className="rounded-circle"
-                                />
-                              </div>
-                              <div className="chat-contact-info flex-grow-1 ms-4">
-                                <h6 className="chat-contact-name text-truncate m-0 fw-normal">
-                                  {item?.userInfo?.firstName}
-                                  {item?.userInfo?.lastName}
-                                </h6>
-                                <small className="chat-contact-status text-truncate">
-                                  {item?.userInfo?.role}
-                                </small>
-                              </div>
-                            </a>
-                          </li>
-                        );
-                      })
+
+                  {filteredNonChattedUsers?.length > 0 ? (
+                    filteredNonChattedUsers?.map((item, index) => {
+                      return (
+                        <li
+                          key={index}
+                          onClick={() => handleChatCreate(item?.userInfo)}
+                          className="chat-contact-list-item mb-0"
+                        >
+                          <a className="d-flex align-items-center">
+                            <div className="flex-shrink-0 avatar">
+                              <img
+                                src={avatar}
+                                alt="Avatar"
+                                className="rounded-circle"
+                              />
+                            </div>
+                            <div className="chat-contact-info flex-grow-1 ms-4">
+                              <h6 className="chat-contact-name text-truncate m-0 fw-normal">
+                                {item?.userInfo?.firstName}
+                                {item?.userInfo?.lastName}
+                              </h6>
+                              <small className="chat-contact-status text-truncate">
+                                {item?.userInfo?.role}
+                              </small>
+                            </div>
+                          </a>
+                        </li>
+                      );
+                    })
                   ) : (
-                    <p className="text-center">No contacts</p>
+                    <li className="chat-contact-list-item contact-list-item-0 ">
+                      <h6 className=" mb-0 text-danger">No Contacts Found</h6>
+                    </li>
                   )}
                 </ul>
               </div>
             </div>
             {/* /Chat contacts */}
             {/* Chat History */}
-            {chatUser ? (
-              <div className="col app-chat-history">
-                <div className="chat-history-wrapper">
-                  <div className="chat-history-header border-bottom">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div className="d-flex overflow-hidden align-items-center">
-                        <button onClick={handleDropdown} className="btn btn-sm">
-                        <i
-                          className="ti ti-menu-2 ti-lg cursor-pointer d-lg-none d-block "
-                          data-bs-toggle="sidebar"
-                          data-overlay=""
-                          data-target="#app-chat-contacts"
-                        />
-                        </button>
-                        <div className="flex-shrink-0 avatar avatar-online">
-                          <img
-                            src={avatar}
-                            alt="Avatar"
-                            className="rounded-circle"
-                            data-bs-toggle="sidebar"
-                            data-overlay=""
-                            data-target="#app-chat-sidebar-right"
-                          />
-                        </div>
-                        <div className="chat-contact-info flex-grow-1 ms-4">
-                          <h6 className="m-0 fw-normal">
-                            {chatUser?.firstName}
-                            {chatUser?.lastName}
-                          </h6>
-                          <small className="user-status text-body">
-                            {chatUser?.role}
-                          </small>
-                        </div>
-                      </div>
-                      {dropMenu && <div className="d-flex gap-3 align-items-center">
-                        <i className="ti ti-search ti-md cursor-pointer d-sm-inline-flex d-none me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill" />
-                        <div className="dropdown">
+            <div className="col app-chat-history">
+              <div className="chat-history-wrapper">
+                {chatUser ? (
+                  <>
+                    <div className="chat-history-header border-bottom">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex overflow-hidden align-items-center">
                           <button
-                            className="btn btn-sm btn-icon btn-text-secondary text-white rounded-pill dropdown-toggle hide-arrow"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="true"
-                            id="chat-header-actions"
+                            onClick={handleDropdown}
+                            className="btn btn-sm"
                           >
-                            <i className="ti ti-dots-vertical ti-md" />
+                            <i
+                              className="ti ti-menu-2 ti-lg cursor-pointer d-lg-none d-block "
+                              data-bs-toggle="sidebar"
+                              data-overlay=""
+                              data-target="#app-chat-contacts"
+                            />
                           </button>
                           <div
-                            className="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="chat-header-actions"
+                            className={`flex-shrink-0 avatar  ${
+                              activeUser?.some(
+                                (item) => item.userId === chatUser._id
+                              )
+                                ? "avatar-online"
+                                : "avatar-offline"
+                            }`}
                           >
-                            <a
-                              className="dropdown-item"
-                              href="javascript:void(0);"
-                            >
-                              View Contact
-                            </a>
-                            <a
-                              className="dropdown-item"
-                              href="javascript:void(0);"
-                            >
-                              Mute Notifications
-                            </a>
-                            <a
-                              className="dropdown-item"
-                              href="javascript:void(0);"
-                            >
-                              Block Contact
-                            </a>
-                            <a
-                              className="dropdown-item"
-                              href="javascript:void(0);"
-                            >
-                              Clear Chat
-                            </a>
-                            <a
-                              className="dropdown-item"
-                              href="javascript:void(0);"
-                            >
-                              Report
-                            </a>
+                            <img
+                              src={avatar}
+                              alt="Avatar"
+                              className="rounded-circle"
+                              data-bs-toggle="sidebar"
+                              data-overlay=""
+                              data-target="#app-chat-sidebar-right"
+                            />
+                          </div>
+                          <div className="chat-contact-info flex-grow-1 ms-4">
+                            <h6 className="m-0 fw-normal">
+                              {chatUser?.firstName}
+                              {chatUser?.lastName}
+                            </h6>
+                            <small className="user-status text-body">
+                              {chatUser?.role}
+                            </small>
                           </div>
                         </div>
-                      </div>}
-                     
-                    </div>
-                  </div>
-                  <div className="chat-history-body ">
-                    <ul className="list-unstyled chat-history chat-scrollbar">
-                      {chatsData?.length > 0 ? (
-                        chatsData?.map((item, index) => {
-                          return (
-                            <li
-                              key={index}
-                              className={`chat-message ${
-                                item?.senderId !== chatUser?._id
-                                  ? "chat-message-right text-light"
-                                  : ""
-                              } `}
-                            >
-                              <div
-                                className={`d-flex overflow-hidden ${
-                                  item?.senderId !== chatUser?._id
-                                    ? ""
-                                    : "flex-row-reverse"
-                                } `}
+                        {dropMenu && (
+                          <div className="d-flex gap-3 align-items-center">
+                            <i className="ti ti-search ti-md cursor-pointer d-sm-inline-flex  me-1 btn btn-sm btn-text-secondary text-white btn-icon rounded-pill" />
+                            <div className="dropdown">
+                              <button
+                                className="btn btn-sm btn-icon btn-text-secondary text-white rounded-pill dropdown-toggle hide-arrow"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="true"
+                                id="chat-header-actions"
                               >
-                                <div className="chat-message-wrapper flex-grow-1">
-                                  <div className="chat-message-text">
-                                    <p className="mb-0">
-                                      {item?.message?.text}
-                                    </p>
-                                  </div>
-                                  <div className="text-end  mt-1">
-                                    <i className="ti ti-checks ti-16px text-success me-1" />
-                                    <small>
-                                      {moment(item?.createdAt).fromNow()}
-                                    </small>
-                                  </div>
-                                </div>
-                                <div className="user-avatar flex-shrink-0 ms-4">
-                                  <div className="avatar avatar-sm">
-                                    <img
-                                      src={avatar}
-                                      alt="Avatar"
-                                      className="rounded-circle"
-                                    />
-                                  </div>
-                                </div>
+                                <i className="ti ti-dots-vertical ti-md" />
+                              </button>
+                              <div
+                                className="dropdown-menu dropdown-menu-end"
+                                aria-labelledby="chat-header-actions"
+                              >
+                                <a className="dropdown-item" href="#">
+                                  View Contact
+                                </a>
+                                <a className="dropdown-item" href="#">
+                                  Mute Notifications
+                                </a>
+                                <a className="dropdown-item" href="#">
+                                  Block Contact
+                                </a>
+                                <a className="dropdown-item" href="#">
+                                  Clear Chat
+                                </a>
+                                <a className="dropdown-item" href="#">
+                                  Report
+                                </a>
                               </div>
-                            </li>
-                          );
-                        })
-                      ) : (
-                        <p className="text-center">No Chat</p>
-                      )}
-                      <li ref={scrollChat}></li>
-                    </ul>
-                  </div>
-                  {/* Chat message form */}
-                  <div className="chat-history-footer shadow-xs position-relative">
-                    <form
-                      onSubmit={handleMessageSend}
-                      className="form-send-message d-flex justify-content-between align-items-center"
-                    >
-                      <div style={{ position: "absolute", bottom: "55px" }}>
-                        {preview && (
-                          <img
-                            style={{ width: "50px", height: "50px" }}
-                            src={preview}
-                            alt=""
-                          />
-                        )}
-                      </div>
-                      <input
-                        value={chat}
-                        onChange={(e) => setChat(e.target.value)}
-                        className="form-control message-input border-0 me-4 shadow-none"
-                        placeholder="Type your message here..."
-                      />
-                      <div className="message-actions d-flex justify-center align-items-center">
-                        <label
-                          htmlFor="attach-doc"
-                          className="form-label d-block mb-0"
-                        >
-                          <i className="speech-to-text ti ti-microphone ti-md btn btn-sm btn-text-secondary btn-icon rounded-pill cursor-pointer text-heading" />
-                        </label>
-                        <label
-                          htmlFor="attach-doc"
-                          className="form-label  d-flex align-items-center mb-0"
-                        >
-                          <i className="ti ti-paperclip ti-md cursor-pointer btn btn-sm btn-text-secondary btn-icon rounded-pill mx-1 text-heading" />
-                          <input
-                            type="file"
-                            onChange={handleChatPhoto}
-                            id="attach-doc"
-                            hidden="true"
-                          />
-                        </label>
-                        <span className="btn" onClick={handleEmoji}>
-                          <i
-                            style={{ color: "#ffd900" }}
-                            className="ti ti-mood-happy"
-                          ></i>
-                        </span>
-                        <button
-                          type="submit"
-                          className="btn btn-primary d-flex send-msg-btn"
-                        >
-                          <span className="align-middle d-md-inline-block d-none">
-                            Send
-                          </span>
-                          <i className="ti ti-send ti-16px ms-md-2 ms-0" />
-                        </button>
-                        {showEmoji && (
-                          <div
-                            ref={emojiClose}
-                            style={{
-                              position: "absolute",
-                              bottom: "100px",
-                              right: "50px",
-                            }}
-                          >
-                            <EmojiPicker onEmojiClick={handleEmojiSelect} />
+                            </div>
                           </div>
                         )}
+                        <div className="call d-flex gap-3 align-items-center">
+                          <button
+                            className="btn btn-sm btn-danger"
+                            onClick={initiateCall}
+                          >
+                            <i className="ti ti-phone"></i>
+                          </button>
+                          <button
+                            className="btn btn-sm btn-danger"
+                            onClick={initiateCall}
+                          >
+                            <i className="ti ti-video"></i>
+                          </button>
+                        </div>
                       </div>
-                    </form>
+                    </div>
+                    <div className="chat-history-body ">
+                      {incomingCall && (
+                        <div
+                          style={{ zIndex: 100 ,left:0,padding:"0 10px 0 10px"}}
+                          className="position-absolute d-flex align-items-center gap-3 justify-content-between top-0 left-0 bg-secondary w-100 text-light"
+                        >
+                          <p>Incoming call from {incomingCall.userId}</p>
+                          <div className="d-flex gap-3 align-items-center ">
+                            <button
+                              className="btn btn-sm btn-success"
+                              onClick={acceptCall}
+                            >
+                              accept
+                            </button>
+                            <button
+                              className="btn btn-sm btn-danger"
+                              onClick={declineCall}
+                            >
+                              decline
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      <ul className="list-unstyled chat-history chat-scrollbar">
+                        {chatsData && chatsData?.length > 0 ? (
+                          chatsData?.map((item, index) => {
+                            return (
+                              <li
+                                key={index}
+                                className={`chat-message ${
+                                  item?.senderId !== chatUser?._id
+                                    ? "chat-message-right text-light"
+                                    : ""
+                                } `}
+                              >
+                                <div
+                                  className={`d-flex overflow-hidden ${
+                                    item?.senderId !== chatUser?._id
+                                      ? ""
+                                      : "flex-row-reverse"
+                                  } `}
+                                >
+                                  <div className="chat-message-wrapper flex-grow-1">
+                                    <div className="chat-message-text">
+                                      <p className="mb-0">
+                                        {item?.message?.text}
+                                      </p>
+                                    </div>
+                                    <div className="text-end  mt-1">
+                                      <i className="ti ti-checks ti-16px text-success me-1" />
+                                      <small>
+                                        {moment(item?.createdAt).fromNow()}
+                                      </small>
+                                    </div>
+                                  </div>
+                                  <div className="user-avatar flex-shrink-0 ms-4">
+                                    <div className="avatar avatar-sm">
+                                      <img
+                                        src={avatar}
+                                        alt="Avatar"
+                                        className="rounded-circle"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            );
+                          })
+                        ) : (
+                          <p className="text-center">No Chat</p>
+                        )}
+                        <li ref={scrollChat}></li>
+                      </ul>
+                    </div>
+                    {/* Chat message form */}
+                    <div className="chat-history-footer shadow-xs position-relative">
+                      <form
+                        onSubmit={handleMessageSend}
+                        className="form-send-message d-flex justify-content-between align-items-center"
+                      >
+                        <div style={{ position: "absolute", bottom: "55px" }}>
+                          {preview && (
+                            <img
+                              style={{ width: "50px", height: "50px" }}
+                              src={preview}
+                              alt=""
+                            />
+                          )}
+                        </div>
+                        <input
+                          value={chat}
+                          onChange={(e) => setChat(e.target.value)}
+                          className="form-control message-input border-0 me-4 shadow-none"
+                          placeholder="Type your message here..."
+                        />
+                        <div className="message-actions d-flex justify-center align-items-center">
+                          <label
+                            htmlFor="attach-doc"
+                            className="form-label d-block mb-0"
+                          >
+                            <i className="speech-to-text ti ti-microphone ti-md btn btn-sm btn-text-secondary btn-icon rounded-pill cursor-pointer text-heading" />
+                          </label>
+                          <label
+                            htmlFor="attach-doc"
+                            className="form-label  d-flex align-items-center mb-0"
+                          >
+                            <i className="ti ti-paperclip ti-md cursor-pointer btn btn-sm btn-text-secondary btn-icon rounded-pill mx-1 text-heading" />
+                            <input
+                              type="file"
+                              onChange={handleChatPhoto}
+                              id="attach-doc"
+                              hidden="true"
+                            />
+                          </label>
+                          <span className="btn" onClick={handleEmoji}>
+                            <i
+                              style={{ color: "#ffd900" }}
+                              className="ti ti-mood-happy"
+                            ></i>
+                          </span>
+                          <button
+                            type="submit"
+                            className="btn btn-primary d-flex send-msg-btn"
+                          >
+                            <span className="align-middle d-md-inline-block ">
+                              Send
+                            </span>
+                            <i className="ti ti-send ti-16px ms-md-2 ms-0" />
+                          </button>
+                          {showEmoji && (
+                            <div
+                              ref={emojiClose}
+                              style={{
+                                position: "absolute",
+                                bottom: "100px",
+                                right: "50px",
+                              }}
+                            >
+                              <EmojiPicker onEmojiClick={handleEmojiSelect} />
+                            </div>
+                          )}
+                        </div>
+                      </form>
+                    </div>
+                  </>
+                ) : (
+                  !videoChat && (
+                    <p
+                      style={{
+                        margin: "0 auto",
+                        display: "flex",
+                        width: "100%",
+                        height: "70vh",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                      className="text-success m-auto p-auto"
+                    >
+                      Welcome,chat and connect!
+                    </p>
+                  )
+                )}
+                {videoChat && !chatUser && (
+                  <div className="">
+                    {localStream && (
+                      <video
+                        style={{ width: "100%", height: "100%" }}
+                        ref={(video) =>
+                          video && (video.srcObject = localStream)
+                        }
+                        autoPlay
+                        muted
+                      />
+                    )}
+                    {remoteStream && (
+                      <video
+                        style={{ width: "100%", height: "100%" }}
+                        ref={(video) =>
+                          video && (video.srcObject = remoteStream)
+                        }
+                        autoPlay
+                      />
+                    )}
+
+                    <div className="d-flex gap-5 w-100 align-items-center justify-content-center mr-5 position-absolute bottom-5 right-5">
+                      <button
+                        className=" btn btn-sm btn-danger"
+                        onClick={toggleAudio}
+                      >
+                        {" "}
+                        <i className="ti ti-microphone-off"></i>
+                      </button>
+                      <button
+                        className=" btn btn-sm btn-danger"
+                        onClick={toggleVideo}
+                      >
+                        {" "}
+                        <i className="ti ti-camera-off"></i>
+                      </button>
+                      <button
+                        className=" btn btn-sm btn-danger"
+                        onClick={endCall}
+                      >
+                        {" "}
+                        <i className="ti ti-phone-off"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
-            ) : (
-              <p className="text-success m-auto p-auto">
-                Welcome,chat and connect!
-              </p>
-            )}
+            </div>
 
             {/* /Chat History */}
             {/* Sidebar Right */}
