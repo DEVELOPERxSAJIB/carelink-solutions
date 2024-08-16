@@ -50,7 +50,7 @@ const PushNotes = () => {
     useCreateChatMutation();
 
   useEffect(() => {
-    socket.current = io("http://localhost:5050");
+    socket.current = io("https://carelinks-server.onrender.com/api/v1/");
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
     socket?.current?.on("realTimeMsgGet", (data) =>
@@ -836,16 +836,16 @@ const PushNotes = () => {
                           </p>
                           <div className="d-flex gap-3 align-items-center ">
                             <button
-                              className="btn btn-sm btn-success"
+                              className="btn btn-sm btn-success d-flex align-items-center gap-2"
                               onClick={acceptCall}
                             >
-                              accept
+                             <i className="ti ti-phone"></i> accept
                             </button>
                             <button
-                              className="btn btn-sm btn-danger"
+                              className="btn btn-sm btn-danger d-flex align-items-center gap-2"
                               onClick={declineCall}
                             >
-                              decline
+                            <i className="ti ti-phone-off"></i>   decline
                             </button>
                           </div>
                         </div>
