@@ -1,4 +1,3 @@
-import PopupModal from "./../components/Models/PopupModel";
 import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import avatar from "../../src/assets/img/avatars/7.png";
@@ -33,7 +32,7 @@ const PushNotes = () => {
   const socket = useRef(null);
   const scrollChat = useRef(null);
   const emojiClose = useRef(null);
-  const peer = useRef(new RTCPeerConnection());
+  const peer = useRef(null);
 
   const { chatsData } = useSelector(getChatState);
   const { data: user } = useMeQuery();
@@ -42,35 +41,28 @@ const PushNotes = () => {
   const { data: loginChats } = useGetAllChatsUsersQuery(
     user?.payload?.user?._id
   );
-
   const [createChat, { data: newChat, isSuccess: isNewChatSuccess }] =
     useCreateChatMutation();
 
   useEffect(() => {
     socket.current = io("http://localhost:5050");
-
-    socket.current.emit("setActiveUser", user?.payload?.user);
-
-    socket.current.on("getActiveUser", (data) => {
-      setActiveUser(data);
-    });
-
-    socket.current.on("realTimeMsgGet", (data) => {
-      dispatch(setChatData([...(chatsData || []), data]));
-    });
-
-    socket.current.on("callUser", handleIncomingCall);
-    socket.current.on("callAccepted", handleCallAccepted);
-    socket.current.on("receiveIceCandidate", handleIceCandidate);
-
+    socket?.current?.emit("setActiveUser", user?.payload?.user);
+    socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
+    socket?.current?.on("realTimeMsgGet", (data) =>
+      dispatch(setChatData([...(chatsData || []), data]))
+    );
+    socket?.current?.on("offer", handleIncomingCall);
+    socket?.current?.on("call-accept", handleCallAccepted);
+    socket?.current?.on("icecandidate", handleIceCandidate);
+    socket?.current?.on("end-call", handleEndCall);
     return () => {
-      socket.current.disconnect();
+      socket?.current?.disconnect();
     };
   }, [user, dispatch, chatsData]);
 
   useEffect(() => {
     if (newChat?.chat) {
-      socket.current.emit("realTimeMsgSend", newChat.chat);
+      socket?.current?.emit("realTimeMsgSend", newChat.chat);
     }
   }, [newChat?.chat]);
 
@@ -145,10 +137,12 @@ const PushNotes = () => {
 
   const handleIncomingCall = (data) => {
     setIncomingCall(data);
+    console.log(data);
   };
 
   const handleCallAccepted = (signal) => {
-    peer?.current
+    setVideoChat(true);
+    peer.current
       .setRemoteDescription(new RTCSessionDescription(signal))
       .catch((error) =>
         console.error("Error setting remote description:", error)
@@ -156,56 +150,146 @@ const PushNotes = () => {
   };
 
   const handleIceCandidate = (candidate) => {
-    peer?.current
-      .addIceCandidate(new RTCIceCandidate(candidate))
-      .catch((error) => console.error("Error adding ICE candidate:", error));
+    // Ensure candidate is valid
+    if (!candidate) {
+      console.warn("Received invalid ICE candidate");
+      return;
+    }
+
+    // Check if peer connection is initialized
+    if (peer.current) {
+      peer.current
+        .addIceCandidate(new RTCIceCandidate(candidate))
+        .catch((error) => console.error("Error adding ICE candidate:", error));
+    } else {
+      console.warn("Peer connection is not initialized");
+    }
+  };
+
+  const initializePeerConnection = () => {
+    if (!peer.current) {
+      peer.current = new RTCPeerConnection();
+
+      peer.current.onicecandidate = (event) => {
+        if (event.candidate) {
+          console.log("Sending ICE candidate");
+          socket?.current?.emit("icecandidate", {
+            userData: chatUser,
+            candidate: event.candidate,
+          });
+        }
+      };
+
+      peer.current.ontrack = (event) => {
+        setRemoteStream(event.streams[0]);
+      };
+    }
   };
 
   const initiateCall = () => {
     setVideoChat(true);
 
+    // Initialize peer if not already initialized
+    initializePeerConnection();
+
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
       .then((stream) => {
+        console.log("Media stream acquired");
         setLocalStream(stream);
         stream
           .getTracks()
-          .forEach((track) => peer?.current?.addTrack(track, stream));
+          .forEach((track) => peer.current?.addTrack(track, stream));
 
-        peer?.current
-          ?.createOffer()
-          .then((offer) => {
-            peer?.current?.setLocalDescription(offer);
-            socket.current.emit("callUser", {
-              userId: chatUser._id,
-              signalData: offer,
-            });
-          })
-          .catch((error) => console.error("Error creating offer:", error));
+        return peer.current.createOffer();
       })
-      .catch((error) => console.error("Error accessing media devices:", error));
+      .then((offer) => {
+        console.log("Offer created", offer);
+        return peer.current.setLocalDescription(offer);
+      })
+      .then(() => {
+        console.log("Offer sent");
+        socket?.current?.emit("offer", {
+          userData: chatUser,
+          offer: peer.current.localDescription,
+        });
+      })
+      .catch((error) => {
+        console.error("Error during call initiation:", error);
+      });
   };
 
   const acceptCall = () => {
+    console.log(incomingCall)
+    if (!incomingCall || !incomingCall.offer) {
+      console.error("Incoming call signal is missing or invalid");
+      return;
+    }
+
     setIncomingCall(null);
     setVideoChat(true);
 
-    peer?.current
-      .setRemoteDescription(new RTCSessionDescription(incomingCall.signal))
-      .then(() => peer?.current?.createAnswer())
-      .then((answer) => {
-        peer?.current?.setLocalDescription(answer);
-        socket.current.emit("answerCall", {
-          signal: answer,
-          userId: incomingCall.userId,
+    peer.current = new RTCPeerConnection();
+    peer.current.onicecandidate = (event) => {
+      if (event.candidate) {
+        socket?.current?.emit("icecandidate", {
+          userData: incomingCall.userData,
+          candidate: event.candidate,
+        });
+      }
+    };
+
+    peer.current.ontrack = (event) => {
+      setRemoteStream(event.streams[0]);
+    };
+
+    navigator.mediaDevices.enumerateDevices()
+  .then((devices) => {
+    const videoDevices = devices.filter(device => device.kind === 'videoinput');
+    if (videoDevices.length === 0) {
+      console.error("No video devices available.");
+      return;
+    }
+
+    return navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+  })
+  .then((stream) => {
+    setLocalStream(stream);
+    stream.getTracks().forEach((track) => peer?.current?.addTrack(track, stream));
+
+    peer.current
+      .setRemoteDescription(new RTCSessionDescription(incomingCall.offer))
+      .then(() => peer.current.createAnswer())
+      .then((answer) => peer.current.setLocalDescription(answer))
+      .then(() => {
+        socket?.current?.emit("answer", {
+          answer: peer.current.localDescription,
+          userData: incomingCall.userData,
         });
       })
-      .catch((error) => console.error("Error handling call:", error));
+      .catch((error) => console.error("Error during call acceptance:", error));
+  })
+  .catch((error) => {
+    if (error.name === 'NotAllowedError') {
+      console.error("Permission to access media devices was denied.");
+    } else if (error.name === 'NotFoundError') {
+      console.error("No media devices found.");
+    } else if (error.name === 'NotReadableError') {
+      console.error("Media devices are already in use.");
+    } else if (error.name === 'OverconstrainedError') {
+      console.error("Constraints could not be satisfied.");
+    } else {
+      console.error("Error accessing media devices:", error);
+    }
+  });
+
   };
 
   const declineCall = () => {
     setIncomingCall(null);
-    socket.current.emit("callDeclined", { userId: incomingCall.userId });
+    socket?.current?.emit("call-decline", {
+      userData: incomingCall.userData,
+    });
   };
 
   const toggleAudio = () => {
@@ -226,15 +310,36 @@ const PushNotes = () => {
 
   const endCall = () => {
     if (peer.current) {
-      peer.current.close();
+      peer?.current?.close();
       peer.current = null;
-      socket.current.emit("endCall", { userId: chatUser._id });
+      socket?.current?.emit("call-ended", { userData: chatUser });
       setVideoChat(false);
       setChatUser(null);
     }
     if (localStream) {
       localStream.getTracks().forEach((track) => track.stop());
       setLocalStream(null);
+    }
+    if (remoteStream) {
+      remoteStream.getTracks().forEach((track) => track.stop());
+      setRemoteStream(null);
+    }
+  };
+
+  const handleEndCall = (data) => {
+    console.log(data)
+    setVideoChat(false);
+    if (peer.current) {
+      peer?.current?.close();
+      peer.current = null;
+    }
+    if (localStream) {
+      localStream.getTracks().forEach((track) => track.stop());
+      setLocalStream(null);
+    }
+    if (remoteStream) {
+      remoteStream.getTracks().forEach((track) => track.stop());
+      setRemoteStream(null);
     }
   };
   // Users who have an existing chat with the logged-in user
@@ -256,7 +361,21 @@ const PushNotes = () => {
       )
   );
   // audio and vieo calling
-
+  const stopMediaDevices = (stream) => {
+    stream.getTracks().forEach((track) => {
+      track.stop();
+    });
+  };
+  
+  // Cleanup when component unmounts or localStream changes
+  useEffect(() => {
+    return () => {
+      if (localStream) {
+        stopMediaDevices(localStream);
+      }
+    };
+  }, [localStream]);
+  
   return (
     <div className="row">
       <div className="container-xxl flex-grow-1 container-p-y">
@@ -562,7 +681,7 @@ const PushNotes = () => {
             {/* Chat History */}
             <div className="col app-chat-history">
               <div className="chat-history-wrapper">
-                {chatUser ? (
+                {chatUser && !videoChat ? (
                   <>
                     <div className="chat-history-header border-bottom">
                       <div className="d-flex justify-content-between align-items-center">
@@ -660,10 +779,16 @@ const PushNotes = () => {
                     <div className="chat-history-body ">
                       {incomingCall && (
                         <div
-                          style={{ zIndex: 100 ,left:0,padding:"0 10px 0 10px"}}
+                          style={{
+                            zIndex: 100,
+                            left: 0,
+                            padding: "0 10px 0 10px",
+                          }}
                           className="position-absolute d-flex align-items-center gap-3 justify-content-between top-0 left-0 bg-secondary w-100 text-light"
                         >
-                          <p>Incoming call from {incomingCall.userId}</p>
+                          <p>
+                            Incoming call from {incomingCall?.userData?.name}
+                          </p>
                           <div className="d-flex gap-3 align-items-center ">
                             <button
                               className="btn btn-sm btn-success"
@@ -820,49 +945,42 @@ const PushNotes = () => {
                     </p>
                   )
                 )}
-                {videoChat && !chatUser && (
-                  <div className="">
-                    {localStream && (
+                {/* {incomingCall && (
+                  <div className="incoming-call">
+                    <h6>Incoming Call from {incomingCall.name}</h6>
+                    <button onClick={acceptCall} className="btn btn-success">
+                      Accept
+                    </button>
+                    <button onClick={declineCall} className="btn btn-danger">
+                      Decline
+                    </button>
+                  </div>
+                )} */}
+
+                {videoChat && (
+                  <div className="video-chat-container">
+                    <div className="video-streams">
                       <video
-                        style={{ width: "100%", height: "100%" }}
-                        ref={(video) =>
-                          video && (video.srcObject = localStream)
-                        }
+                        ref={(ref) => ref && (ref.srcObject = localStream)}
                         autoPlay
                         muted
+                        className="local-video"
                       />
-                    )}
-                    {remoteStream && (
                       <video
-                        style={{ width: "100%", height: "100%" }}
-                        ref={(video) =>
-                          video && (video.srcObject = remoteStream)
-                        }
+                        ref={(ref) => ref && (ref.srcObject = remoteStream)}
                         autoPlay
+                        className="remote-video"
                       />
-                    )}
-
-                    <div className="d-flex gap-5 w-100 align-items-center justify-content-center mr-5 position-absolute bottom-5 right-5">
-                      <button
-                        className=" btn btn-sm btn-danger"
-                        onClick={toggleAudio}
-                      >
-                        {" "}
-                        <i className="ti ti-microphone-off"></i>
+                    </div>
+                    <div className="video-controls">
+                      <button onClick={toggleAudio} className="btn btn-icon">
+                        <i className="ti ti-microphone" />
                       </button>
-                      <button
-                        className=" btn btn-sm btn-danger"
-                        onClick={toggleVideo}
-                      >
-                        {" "}
-                        <i className="ti ti-camera-off"></i>
+                      <button onClick={toggleVideo} className="btn btn-icon">
+                        <i className="ti ti-camera" />
                       </button>
-                      <button
-                        className=" btn btn-sm btn-danger"
-                        onClick={endCall}
-                      >
-                        {" "}
-                        <i className="ti ti-phone-off"></i>
+                      <button onClick={endCall} className="btn btn-danger">
+                        End Call
                       </button>
                     </div>
                   </div>
