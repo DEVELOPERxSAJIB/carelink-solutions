@@ -28,6 +28,7 @@ const PushNotes = () => {
   const [localStream, setLocalStream] = useState(null);
   const [remoteStream, setRemoteStream] = useState(null);
   const [activeUser, setActiveUser] = useState([]);
+  const [sidebar, setSidebar] = useState(false);
 
   const socket = useRef(null);
   const scrollChat = useRef(null);
@@ -96,6 +97,7 @@ const PushNotes = () => {
   const handleChatCreate = (user) => {
     setActiveChat(user);
     setChatUser(user);
+    setSidebar(false);
   };
 
   const handleMessageSend = (e) => {
@@ -220,7 +222,7 @@ const PushNotes = () => {
   };
 
   const acceptCall = () => {
-    console.log(incomingCall)
+    console.log(incomingCall);
     if (!incomingCall || !incomingCall.offer) {
       console.error("Incoming call signal is missing or invalid");
       return;
@@ -243,46 +245,55 @@ const PushNotes = () => {
       setRemoteStream(event.streams[0]);
     };
 
-    navigator.mediaDevices.enumerateDevices()
-  .then((devices) => {
-    const videoDevices = devices.filter(device => device.kind === 'videoinput');
-    if (videoDevices.length === 0) {
-      console.error("No video devices available.");
-      return;
-    }
+    navigator.mediaDevices
+      .enumerateDevices()
+      .then((devices) => {
+        const videoDevices = devices.filter(
+          (device) => device.kind === "videoinput"
+        );
+        if (videoDevices.length === 0) {
+          console.error("No video devices available.");
+          return;
+        }
 
-    return navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-  })
-  .then((stream) => {
-    setLocalStream(stream);
-    stream.getTracks().forEach((track) => peer?.current?.addTrack(track, stream));
-
-    peer.current
-      .setRemoteDescription(new RTCSessionDescription(incomingCall.offer))
-      .then(() => peer.current.createAnswer())
-      .then((answer) => peer.current.setLocalDescription(answer))
-      .then(() => {
-        socket?.current?.emit("answer", {
-          answer: peer.current.localDescription,
-          userData: incomingCall.userData,
+        return navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
         });
       })
-      .catch((error) => console.error("Error during call acceptance:", error));
-  })
-  .catch((error) => {
-    if (error.name === 'NotAllowedError') {
-      console.error("Permission to access media devices was denied.");
-    } else if (error.name === 'NotFoundError') {
-      console.error("No media devices found.");
-    } else if (error.name === 'NotReadableError') {
-      console.error("Media devices are already in use.");
-    } else if (error.name === 'OverconstrainedError') {
-      console.error("Constraints could not be satisfied.");
-    } else {
-      console.error("Error accessing media devices:", error);
-    }
-  });
+      .then((stream) => {
+        setLocalStream(stream);
+        stream
+          .getTracks()
+          .forEach((track) => peer?.current?.addTrack(track, stream));
 
+        peer.current
+          .setRemoteDescription(new RTCSessionDescription(incomingCall.offer))
+          .then(() => peer.current.createAnswer())
+          .then((answer) => peer.current.setLocalDescription(answer))
+          .then(() => {
+            socket?.current?.emit("answer", {
+              answer: peer.current.localDescription,
+              userData: incomingCall.userData,
+            });
+          })
+          .catch((error) =>
+            console.error("Error during call acceptance:", error)
+          );
+      })
+      .catch((error) => {
+        if (error.name === "NotAllowedError") {
+          console.error("Permission to access media devices was denied.");
+        } else if (error.name === "NotFoundError") {
+          console.error("No media devices found.");
+        } else if (error.name === "NotReadableError") {
+          console.error("Media devices are already in use.");
+        } else if (error.name === "OverconstrainedError") {
+          console.error("Constraints could not be satisfied.");
+        } else {
+          console.error("Error accessing media devices:", error);
+        }
+      });
   };
 
   const declineCall = () => {
@@ -327,7 +338,7 @@ const PushNotes = () => {
   };
 
   const handleEndCall = (data) => {
-    console.log(data)
+    console.log(data);
     setVideoChat(false);
     if (peer.current) {
       peer?.current?.close();
@@ -341,6 +352,10 @@ const PushNotes = () => {
       remoteStream.getTracks().forEach((track) => track.stop());
       setRemoteStream(null);
     }
+  };
+
+  const handleSidebar = () => {
+    setSidebar(!sidebar);
   };
   // Users who have an existing chat with the logged-in user
   const filteredChattedUsers = users?.payload?.users?.filter((user) =>
@@ -366,7 +381,7 @@ const PushNotes = () => {
       track.stop();
     });
   };
-  
+
   // Cleanup when component unmounts or localStream changes
   useEffect(() => {
     return () => {
@@ -375,7 +390,7 @@ const PushNotes = () => {
       }
     };
   }, [localStream]);
-  
+
   return (
     <div className="row">
       <div className="container-xxl flex-grow-1 container-p-y">
@@ -392,12 +407,14 @@ const PushNotes = () => {
                 </div>
                 <h5 className="mt-4 mb-0">John Doe</h5>
                 <span>Admin</span>
-                <i
-                  className="ti ti-x ti-lg cursor-pointer close-sidebar"
-                  data-bs-toggle="sidebar"
-                  data-overlay=""
-                  data-target="#app-chat-sidebar-left"
-                />
+                <button className="btn" onClick={() => setSidebar(false)}>
+                  <i
+                    className="ti ti-x ti-lg cursor-pointer close-sidebar"
+                    data-bs-toggle="sidebar"
+                    data-overlay=""
+                    data-target="#app-chat-sidebar-left"
+                  />
+                </button>
               </div>
               <div className="sidebar-body px-6 pb-6">
                 <div className="my-6">
@@ -527,7 +544,9 @@ const PushNotes = () => {
             {/* /Sidebar Left*/}
             {/* Chat & Contacts */}
             <div
-              className="col app-chat-contacts app-sidebar flex-grow-0 overflow-hidden border-end"
+              className={`col app-chat-contacts app-sidebar bg-white flex-grow-0 overflow-hidden border-end ${
+                sidebar ? "show" : ""
+              }`}
               id="app-chat-contacts"
             >
               <div className="sidebar-header h-px-75 px-5 border-bottom d-flex align-items-center">
@@ -560,12 +579,14 @@ const PushNotes = () => {
                     />
                   </div>
                 </div>
-                <i
-                  className="ti ti-x ti-lg cursor-pointer position-absolute top-50 end-0 translate-middle d-lg-none d-block"
-                  data-overlay=""
-                  data-bs-toggle="sidebar"
-                  data-target="#app-chat-contacts"
-                />
+                <button onClick={() => setSidebar(false)} className="btn">
+                  <i
+                    className="ti ti-x ti-lg cursor-pointer position-absolute top-50 end-0 translate-middle d-lg-none d-block"
+                    data-overlay=""
+                    data-bs-toggle="sidebar"
+                    data-target="#app-chat-contacts"
+                  />
+                </button>
               </div>
               <div className="sidebar-body">
                 {/* Chats */}
@@ -687,7 +708,7 @@ const PushNotes = () => {
                       <div className="d-flex justify-content-between align-items-center">
                         <div className="d-flex overflow-hidden align-items-center">
                           <button
-                            onClick={handleDropdown}
+                            onClick={() => setSidebar(!sidebar)}
                             className="btn btn-sm"
                           >
                             <i
@@ -930,7 +951,7 @@ const PushNotes = () => {
                   </>
                 ) : (
                   !videoChat && (
-                    <p
+                    <div
                       style={{
                         margin: "0 auto",
                         display: "flex",
@@ -938,11 +959,19 @@ const PushNotes = () => {
                         height: "70vh",
                         alignItems: "center",
                         justifyContent: "center",
+                        flexDirection: "column",
                       }}
-                      className="text-success m-auto p-auto"
                     >
-                      Welcome,chat and connect!
-                    </p>
+                      <p className="text-success">
+                        Welcome,chat and connect!
+                      </p>
+                      <button
+                        className="btn btn-primary"
+                        onClick={handleSidebar}
+                      >
+                        Start Conversation
+                      </button>
+                    </div>
                   )
                 )}
                 {/* {incomingCall && (
@@ -1000,12 +1029,14 @@ const PushNotes = () => {
                 </div>
                 <h5 className="mt-4 mb-0">Felecia Rower</h5>
                 <span>NextJS Developer</span>
-                <i
-                  className="ti ti-x ti-lg cursor-pointer close-sidebar d-block"
-                  data-bs-toggle="sidebar"
-                  data-overlay=""
-                  data-target="#app-chat-sidebar-right"
-                />
+                <button onClick={() => setSidebar(false)}>
+                  <i
+                    className="ti ti-x ti-lg cursor-pointer close-sidebar d-block"
+                    data-bs-toggle="sidebar"
+                    data-overlay=""
+                    data-target="#app-chat-sidebar-right"
+                  />
+                </button>
               </div>
               <div className="sidebar-body p-6 pt-0">
                 <div className="my-6">
