@@ -52,7 +52,12 @@ const PushNotes = () => {
 
   useEffect(() => {
     // socket.current = io("http://localhost:5050");
-     socket.current = io("https://carelinks-server.onrender.com");
+     // Ensure you're using the correct protocol (https:// for secure, wss:// for WebSockets over HTTPS)
+socket.current = io("https://carelinks-server.onrender.com", {
+  transports: ['websocket', 'polling'],
+  withCredentials: true
+});
+
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
     socket?.current?.on("realTimeMsgGet", (data) =>
