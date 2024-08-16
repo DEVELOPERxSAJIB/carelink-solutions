@@ -22,6 +22,7 @@ const PushNotes = () => {
   const [activeChat, setActiveChat] = useState(null);
   const [chatUser, setChatUser] = useState(null);
   const [videoChat, setVideoChat] = useState(false);
+  const [audioChat, setAudioChat] = useState(false);
   const [chat, setChat] = useState("");
   const [showEmoji, setShowEmoji] = useState(false);
   const [dropMenu, setDropMenu] = useState(false);
@@ -52,11 +53,11 @@ const PushNotes = () => {
 
   useEffect(() => {
     // socket.current = io("http://localhost:5050");
-     // Ensure you're using the correct protocol (https:// for secure, wss:// for WebSockets over HTTPS)
-socket.current = io("wss://carelinks-server.onrender.com", {
-  transports: ['websocket', 'polling'],
-  withCredentials: true
-});
+    // Ensure you're using the correct protocol (https:// for secure, wss:// for WebSockets over HTTPS)
+    socket.current = io("https://carelinks-server.onrender.com", {
+      transports: ['websocket', 'polling'],
+      withCredentials: true
+    });
 
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
@@ -139,8 +140,6 @@ socket.current = io("wss://carelinks-server.onrender.com", {
     setShowEmoji(!showEmoji);
   };
 
-
-
   const handleClose = (e) => {
     if (emojiClose.current && !emojiClose.current.contains(e.target)) {
       setShowEmoji(false);
@@ -149,13 +148,18 @@ socket.current = io("wss://carelinks-server.onrender.com", {
 
   const handleIncomingCall = (data) => {
     setIncomingCall(data);
-    callingAudio.play()
+    callingAudio.play();
     console.log(data);
   };
 
   const handleCallAccepted = (signal) => {
-    setVideoChat(true);
-    callingAudio.pause()
+    if (signal.type === "video") {
+      setVideoChat(true);
+    } else {
+      setAudioChat(true);
+    }
+
+    callingAudio.pause();
     peer.current
       .setRemoteDescription(new RTCSessionDescription(signal))
       .catch((error) =>
@@ -182,11 +186,14 @@ socket.current = io("wss://carelinks-server.onrender.com", {
   const peerConnectionConfig = {
     iceServers: [
       { urls: "stun:stun.l.google.com:19302" }, // Google's public STUN server
-      { urls: "turn:your-turn-server.com", username: "user", credential: "pass" } // Example TURN server
-    ]
+      {
+        urls: "turn:your-turn-server.com",
+        username: "user",
+        credential: "pass",
+      }, // Example TURN server
+    ],
   };
-  
- 
+
   const initializePeerConnection = () => {
     if (!peer?.current) {
       peer.current = new RTCPeerConnection(peerConnectionConfig);
@@ -209,12 +216,43 @@ socket.current = io("wss://carelinks-server.onrender.com", {
 
   const initiateCall = () => {
     setVideoChat(true);
-
     // Initialize peer if not already initialized
     initializePeerConnection();
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
+      .then((stream) => {
+        console.log("Media stream acquired");
+        setLocalStream(stream);
+        stream
+          .getTracks()
+          .forEach((track) => peer.current?.addTrack(track, stream));
+
+        return peer.current.createOffer();
+      })
+      .then((offer) => {
+        return peer.current.setLocalDescription(offer);
+      })
+      .then(() => {
+        console.log("Offer sent");
+        socket?.current?.emit("offer", {
+          userData: chatUser,
+          offer: peer.current.localDescription,
+          type: "video",
+        });
+      })
+      .catch((error) => {
+        console.error("Error during call initiation:", error);
+      });
+  };
+  const initiateAudioCall = () => {
+    setAudioChat(true);
+
+    // Initialize peer if not already initialized
+    initializePeerConnection();
+
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
       .then((stream) => {
         console.log("Media stream acquired");
         setLocalStream(stream);
@@ -233,6 +271,7 @@ socket.current = io("wss://carelinks-server.onrender.com", {
         socket?.current?.emit("offer", {
           userData: chatUser,
           offer: peer.current.localDescription,
+          type: "audio",
         });
       })
       .catch((error) => {
@@ -241,14 +280,18 @@ socket.current = io("wss://carelinks-server.onrender.com", {
   };
 
   const acceptCall = () => {
-    callingAudio.pause()
+    callingAudio.pause();
     if (!incomingCall || !incomingCall.offer) {
       console.error("Incoming call signal is missing or invalid");
       return;
     }
-
-    setIncomingCall(null);
-    setVideoChat(true);
+    if (incomingCall.type === "video") {
+      setIncomingCall(null);
+      setVideoChat(true);
+    } else {
+      setIncomingCall(null);
+      setAudioChat(true);
+    }
 
     peer.current = new RTCPeerConnection(peerConnectionConfig);
     peer.current.onicecandidate = (event) => {
@@ -256,6 +299,7 @@ socket.current = io("wss://carelinks-server.onrender.com", {
         socket?.current?.emit("icecandidate", {
           userData: incomingCall.userData,
           candidate: event.candidate,
+          type: incomingCall.type === "video" ? "video" : "audio",
         });
       }
     };
@@ -276,7 +320,7 @@ socket.current = io("wss://carelinks-server.onrender.com", {
         }
 
         return navigator.mediaDevices.getUserMedia({
-          video: true,
+          video: incomingCall.type === "video" ? true : false,
           audio: true,
         });
       })
@@ -285,7 +329,6 @@ socket.current = io("wss://carelinks-server.onrender.com", {
         stream
           .getTracks()
           .forEach((track) => peer?.current?.addTrack(track, stream));
-
         peer.current
           .setRemoteDescription(new RTCSessionDescription(incomingCall.offer))
           .then(() => peer.current.createAnswer())
@@ -294,6 +337,7 @@ socket.current = io("wss://carelinks-server.onrender.com", {
             socket?.current?.emit("answer", {
               answer: peer.current.localDescription,
               userData: incomingCall.userData,
+              type: incomingCall.type === "video" ? "video" : "audio",
             });
           })
           .catch((error) =>
@@ -317,15 +361,15 @@ socket.current = io("wss://carelinks-server.onrender.com", {
 
   const declineCall = () => {
     setIncomingCall(null);
-    callingAudio.pause()
+    callingAudio.pause();
     socket?.current?.emit("call-decline", {
       userData: chatUser,
     });
-    createChat({chat:"missed call",receiverId:chatUser?._id});
+    createChat({ chat: "missed call", receiverId: chatUser?._id });
   };
 
   const toggleAudio = () => {
-    setIsMute(!isMute)
+    setIsMute(!isMute);
 
     if (localStream) {
       const audioTrack = localStream.getAudioTracks()[0];
@@ -335,7 +379,7 @@ socket.current = io("wss://carelinks-server.onrender.com", {
   };
 
   const toggleVideo = () => {
-    setIsCam(!isCam)
+    setIsCam(!isCam);
     if (localStream) {
       const videoTrack = localStream.getVideoTracks()[0];
       videoTrack.enabled = !videoTrack.enabled;
@@ -344,17 +388,17 @@ socket.current = io("wss://carelinks-server.onrender.com", {
   };
 
   const endCall = () => {
-    
     if (peer.current) {
       peer?.current?.close();
       peer.current = null;
       socket?.current?.emit("end-call", { userData: chatUser });
       setVideoChat(false);
+      setAudioChat(false);
       const form_data = new FormData();
       form_data.append("chat", chat);
       form_data.append("receiverId", activeChat._id);
 
-      createChat({chat:"call end",receiverId:chatUser?._id});
+      createChat({ chat: "call end", receiverId: chatUser?._id });
     }
     if (localStream) {
       localStream.getTracks().forEach((track) => track.stop());
@@ -364,13 +408,14 @@ socket.current = io("wss://carelinks-server.onrender.com", {
       remoteStream.getTracks().forEach((track) => track.stop());
       setRemoteStream(null);
     }
-    endCallAudio.play()
+    endCallAudio.play();
   };
 
-  const handleEndCall = (data) => {
-    setIncomingCall(null)
-  
+  const handleEndCall = () => {
+    setIncomingCall(null);
+
     setVideoChat(false);
+    setAudioChat(false);
     if (peer.current) {
       peer?.current?.close();
       peer.current = null;
@@ -383,11 +428,11 @@ socket.current = io("wss://carelinks-server.onrender.com", {
       remoteStream.getTracks().forEach((track) => track.stop());
       setRemoteStream(null);
     }
-    endCallAudio.paly()
+    endCallAudio.paly();
   };
-  const handleCallDecline = (data) => {
+  const handleCallDecline = () => {
     setIncomingCall(null);
-    callingAudio.pause()
+    callingAudio.pause();
     if (peer.current) {
       peer.current.close();
       peer.current = null;
@@ -406,7 +451,8 @@ socket.current = io("wss://carelinks-server.onrender.com", {
     }
     // Update UI or state to reflect that the call was declined
     setVideoChat(false);
-    endCallAudio.paly()
+    setAudioChat(false);
+    endCallAudio.paly();
   };
 
   const handleSidebar = () => {
@@ -742,7 +788,7 @@ socket.current = io("wss://carelinks-server.onrender.com", {
             {/* Chat History */}
             <div className="col app-chat-history">
               <div className="chat-history-wrapper">
-                {chatUser && !videoChat ? (
+                {chatUser && !videoChat && !audioChat ? (
                   <>
                     <div className="chat-history-header border-bottom">
                       <div className="d-flex justify-content-between align-items-center">
@@ -824,7 +870,7 @@ socket.current = io("wss://carelinks-server.onrender.com", {
                         <div className="call d-flex gap-3 align-items-center">
                           <button
                             className="btn btn-sm btn-danger"
-                            onClick={initiateCall}
+                            onClick={initiateAudioCall}
                           >
                             <i className="ti ti-phone"></i>
                           </button>
@@ -848,20 +894,24 @@ socket.current = io("wss://carelinks-server.onrender.com", {
                           className="position-absolute d-flex align-items-center gap-3 justify-content-between top-0 left-0 bg-secondary w-100 text-light"
                         >
                           <p className="mt-3 text-success">
-                             <span className="text-white">{incomingCall?.userData?.firstName} {incomingCall?.userData?.lastName}</span> is calling...
+                            <span className="text-white">
+                              {incomingCall?.userData?.firstName}{" "}
+                              {incomingCall?.userData?.lastName}
+                            </span>{" "}
+                            is calling...
                           </p>
                           <div className="d-flex gap-3 align-items-center ">
                             <button
                               className="btn btn-sm btn-success d-flex align-items-center gap-2"
                               onClick={acceptCall}
                             >
-                             <i className="ti ti-phone"></i> accept
+                              <i className="ti ti-phone"></i> accept
                             </button>
                             <button
                               className="btn btn-sm btn-danger d-flex align-items-center gap-2"
                               onClick={declineCall}
                             >
-                            <i className="ti ti-phone-off"></i>   decline
+                              <i className="ti ti-phone-off"></i> decline
                             </button>
                           </div>
                         </div>
@@ -888,7 +938,15 @@ socket.current = io("wss://carelinks-server.onrender.com", {
                                 >
                                   <div className="chat-message-wrapper flex-grow-1">
                                     <div className="chat-message-text">
-                                      <p className={`mb-0 ${item?.message?.text=="missed call"||item?.message?.text=="call end"?"text-danger":""}`}>
+                                      <p
+                                        className={`mb-0 ${
+                                          item?.message?.text ==
+                                            "missed call" ||
+                                          item?.message?.text == "call end"
+                                            ? "text-danger"
+                                            : ""
+                                        }`}
+                                      >
                                         {item?.message?.text}
                                       </p>
                                     </div>
@@ -990,7 +1048,7 @@ socket.current = io("wss://carelinks-server.onrender.com", {
                     </div>
                   </>
                 ) : (
-                  !videoChat && (
+                  !videoChat &&!audioChat && (
                     <div
                       style={{
                         margin: "0 auto",
@@ -1012,34 +1070,94 @@ socket.current = io("wss://carelinks-server.onrender.com", {
                     </div>
                   )
                 )}
-               
 
                 {videoChat && (
-                  <div style={{width:"100%",height:"100%"}} className="video-chat-container border d-flex flex-column align-items-center justify-content-center">
-                    <div style={{width:"100%",height:"100%"}} className="video-streams border overflow-hidden">
+                  <div
+                    style={{ width: "100%", height: "100%" }}
+                    className="video-chat-container border d-flex flex-column align-items-center justify-content-center"
+                  >
+                    <div
+                      style={{ width: "100%", height: "100%" }}
+                      className="video-streams border overflow-hidden"
+                    >
                       <video
-                        style={{height:"",width:"100%"}}
+                        style={{ height: "", width: "100%" }}
                         ref={(ref) => ref && (ref.srcObject = localStream)}
                         autoPlay
                         muted
                         className="local-video"
                       />
                       <video
-                       style={{height:"",width:"100%"}}
+                        style={{ height: "", width: "100%" }}
                         ref={(ref) => ref && (ref.srcObject = remoteStream)}
                         autoPlay
                         className="remote-video"
                       />
                     </div>
-                    <div style={{position:"absolute",zIndex:50,bottom:"10px"}} className="video-controls  d-flex align-items-center justify-content-end gap-3 mr-5 mt-auto">
-                      <button onClick={toggleAudio} className="btn btn-secondary">
-                        {isMute?<i className="ti ti-microphone" />:<i className="ti ti-microphone-off" />}
+                    <div
+                      style={{
+                        position: "absolute",
+                        zIndex: 50,
+                        bottom: "10px",
+                      }}
+                      className="video-controls  d-flex align-items-center justify-content-end gap-3 mr-5 mt-auto"
+                    >
+                      <button
+                        onClick={toggleAudio}
+                        className="btn btn-secondary"
+                      >
+                        {isMute ? (
+                          <i className="ti ti-microphone" />
+                        ) : (
+                          <i className="ti ti-microphone-off" />
+                        )}
                       </button>
-                      <button onClick={toggleVideo} className="btn btn-secondary">
-                        {isCam?<i className="ti ti-camera" />:<i className="ti ti-camera-off" />}
+                      <button
+                        onClick={toggleVideo}
+                        className="btn btn-secondary"
+                      >
+                        {isCam ? (
+                          <i className="ti ti-camera" />
+                        ) : (
+                          <i className="ti ti-camera-off" />
+                        )}
                       </button>
                       <button onClick={endCall} className="btn btn-danger">
-                      <i className="ti ti-phone-off" />
+                        <i className="ti ti-phone-off" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {audioChat && (
+                  <div
+                    style={{ width: "100%", height: "100%" }}
+                    className="video-chat-container border d-flex flex-column align-items-center justify-content-center bg-danger"
+                  >
+                    <div
+                      style={{ width: "100%", height: "100%" }}
+                      className="video-streams border overflow-hidden"
+                    ></div>
+                    <div
+                      style={{
+                        position: "absolute",
+                        zIndex: 50,
+                        bottom: "10px",
+                      }}
+                      className="video-controls  d-flex align-items-center justify-content-end gap-3 mr-5 mt-auto"
+                    >
+                      <button
+                        onClick={toggleAudio}
+                        className="btn btn-secondary"
+                      >
+                        {isMute ? (
+                          <i className="ti ti-microphone" />
+                        ) : (
+                          <i className="ti ti-microphone-off" />
+                        )}
+                      </button>
+
+                      <button onClick={endCall} className="btn btn-danger">
+                        <i className="ti ti-phone-off" />
                       </button>
                     </div>
                   </div>
