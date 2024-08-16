@@ -16,6 +16,7 @@ import {
 } from "../Redux/api/ChatApi";
 const callingAudio = new Audio(calling);
 const endCallAudio = new Audio(endCall);
+callingAudio.loop = true;
 const PushNotes = () => {
   const dispatch = useDispatch();
   const [activeChat, setActiveChat] = useState(null);
@@ -50,7 +51,8 @@ const PushNotes = () => {
     useCreateChatMutation();
 
   useEffect(() => {
-    socket.current = io("https://carelinks-server.onrender.com/api/v1/");
+    // socket.current = io("http://localhost:5050");
+     socket.current = io("https://carelinks-server.onrender.com");
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
     socket?.current?.on("realTimeMsgGet", (data) =>
@@ -148,6 +150,7 @@ const PushNotes = () => {
 
   const handleCallAccepted = (signal) => {
     setVideoChat(true);
+    callingAudio.pause()
     peer.current
       .setRemoteDescription(new RTCSessionDescription(signal))
       .catch((error) =>
@@ -171,10 +174,17 @@ const PushNotes = () => {
       console.warn("Peer connection is not initialized");
     }
   };
-
+  const peerConnectionConfig = {
+    iceServers: [
+      { urls: "stun:stun.l.google.com:19302" }, // Google's public STUN server
+      { urls: "turn:your-turn-server.com", username: "user", credential: "pass" } // Example TURN server
+    ]
+  };
+  
+ 
   const initializePeerConnection = () => {
     if (!peer?.current) {
-      peer.current = new RTCPeerConnection();
+      peer.current = new RTCPeerConnection(peerConnectionConfig);
 
       peer.current.onicecandidate = (event) => {
         if (event.candidate) {
@@ -235,7 +245,7 @@ const PushNotes = () => {
     setIncomingCall(null);
     setVideoChat(true);
 
-    peer.current = new RTCPeerConnection();
+    peer.current = new RTCPeerConnection(peerConnectionConfig);
     peer.current.onicecandidate = (event) => {
       if (event.candidate) {
         socket?.current?.emit("icecandidate", {
@@ -372,6 +382,7 @@ const PushNotes = () => {
   };
   const handleCallDecline = (data) => {
     setIncomingCall(null);
+    callingAudio.pause()
     if (peer.current) {
       peer.current.close();
       peer.current = null;
