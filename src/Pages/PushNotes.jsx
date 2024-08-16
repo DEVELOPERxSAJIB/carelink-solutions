@@ -53,7 +53,7 @@ const PushNotes = () => {
   useEffect(() => {
     // socket.current = io("http://localhost:5050");
      // Ensure you're using the correct protocol (https:// for secure, wss:// for WebSockets over HTTPS)
-socket.current = io("https://carelinks-server.onrender.com", {
+socket.current = io("wss://carelinks-server.onrender.com", {
   transports: ['websocket', 'polling'],
   withCredentials: true
 });
