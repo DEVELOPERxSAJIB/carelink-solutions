@@ -14,6 +14,8 @@ import {
   useGetAllChatsQuery,
   useGetAllChatsUsersQuery,
 } from "../Redux/api/ChatApi";
+const callingAudio = new Audio(calling);
+const endCallAudio = new Audio(endCall);
 const PushNotes = () => {
   const dispatch = useDispatch();
   const [activeChat, setActiveChat] = useState(null);
@@ -29,6 +31,8 @@ const PushNotes = () => {
   const [remoteStream, setRemoteStream] = useState(null);
   const [activeUser, setActiveUser] = useState([]);
   const [sidebar, setSidebar] = useState(false);
+  const [isMute, setIsMute] = useState(false);
+  const [isCam, setIsCam] = useState(false);
 
   const socket = useRef(null);
   const scrollChat = useRef(null);
@@ -56,6 +60,7 @@ const PushNotes = () => {
     socket?.current?.on("call-accept", handleCallAccepted);
     socket?.current?.on("icecandidate", handleIceCandidate);
     socket?.current?.on("end-call", handleEndCall);
+    socket?.current?.on("call-decline", handleCallDecline);
     return () => {
       socket?.current?.disconnect();
     };
@@ -127,9 +132,7 @@ const PushNotes = () => {
     setShowEmoji(!showEmoji);
   };
 
-  const handleDropdown = () => {
-    setDropMenu(!dropMenu);
-  };
+
 
   const handleClose = (e) => {
     if (emojiClose.current && !emojiClose.current.contains(e.target)) {
@@ -139,6 +142,7 @@ const PushNotes = () => {
 
   const handleIncomingCall = (data) => {
     setIncomingCall(data);
+    callingAudio.play()
     console.log(data);
   };
 
@@ -151,17 +155,17 @@ const PushNotes = () => {
       );
   };
 
-  const handleIceCandidate = (candidate) => {
+  const handleIceCandidate = (data) => {
     // Ensure candidate is valid
-    if (!candidate) {
+    if (!data?.candidate) {
       console.warn("Received invalid ICE candidate");
       return;
     }
 
     // Check if peer connection is initialized
-    if (peer.current) {
-      peer.current
-        .addIceCandidate(new RTCIceCandidate(candidate))
+    if (peer?.current) {
+      peer?.current
+        ?.addIceCandidate(new RTCIceCandidate(data?.candidate))
         .catch((error) => console.error("Error adding ICE candidate:", error));
     } else {
       console.warn("Peer connection is not initialized");
@@ -169,7 +173,7 @@ const PushNotes = () => {
   };
 
   const initializePeerConnection = () => {
-    if (!peer.current) {
+    if (!peer?.current) {
       peer.current = new RTCPeerConnection();
 
       peer.current.onicecandidate = (event) => {
@@ -222,7 +226,7 @@ const PushNotes = () => {
   };
 
   const acceptCall = () => {
-    console.log(incomingCall);
+    callingAudio.pause()
     if (!incomingCall || !incomingCall.offer) {
       console.error("Incoming call signal is missing or invalid");
       return;
@@ -298,12 +302,16 @@ const PushNotes = () => {
 
   const declineCall = () => {
     setIncomingCall(null);
+    callingAudio.pause()
     socket?.current?.emit("call-decline", {
-      userData: incomingCall.userData,
+      userData: chatUser,
     });
+    createChat({chat:"missed call",receiverId:chatUser?._id});
   };
 
   const toggleAudio = () => {
+    setIsMute(!isMute)
+
     if (localStream) {
       const audioTrack = localStream.getAudioTracks()[0];
       audioTrack.enabled = !audioTrack.enabled;
@@ -312,6 +320,7 @@ const PushNotes = () => {
   };
 
   const toggleVideo = () => {
+    setIsCam(!isCam)
     if (localStream) {
       const videoTrack = localStream.getVideoTracks()[0];
       videoTrack.enabled = !videoTrack.enabled;
@@ -320,12 +329,17 @@ const PushNotes = () => {
   };
 
   const endCall = () => {
+    
     if (peer.current) {
       peer?.current?.close();
       peer.current = null;
-      socket?.current?.emit("call-ended", { userData: chatUser });
+      socket?.current?.emit("end-call", { userData: chatUser });
       setVideoChat(false);
-      setChatUser(null);
+      const form_data = new FormData();
+      form_data.append("chat", chat);
+      form_data.append("receiverId", activeChat._id);
+
+      createChat({chat:"call end",receiverId:chatUser?._id});
     }
     if (localStream) {
       localStream.getTracks().forEach((track) => track.stop());
@@ -335,10 +349,12 @@ const PushNotes = () => {
       remoteStream.getTracks().forEach((track) => track.stop());
       setRemoteStream(null);
     }
+    endCallAudio.play()
   };
 
   const handleEndCall = (data) => {
-    console.log(data);
+    setIncomingCall(null)
+  
     setVideoChat(false);
     if (peer.current) {
       peer?.current?.close();
@@ -352,6 +368,29 @@ const PushNotes = () => {
       remoteStream.getTracks().forEach((track) => track.stop());
       setRemoteStream(null);
     }
+    endCallAudio.paly()
+  };
+  const handleCallDecline = (data) => {
+    setIncomingCall(null);
+    if (peer.current) {
+      peer.current.close();
+      peer.current = null;
+    }
+
+    // Stop all tracks and release local media resources
+    if (localStream) {
+      localStream.getTracks().forEach((track) => track.stop());
+      setLocalStream(null);
+    }
+
+    // Stop all tracks and release remote media resources
+    if (remoteStream) {
+      remoteStream.getTracks().forEach((track) => track.stop());
+      setRemoteStream(null);
+    }
+    // Update UI or state to reflect that the call was declined
+    setVideoChat(false);
+    endCallAudio.paly()
   };
 
   const handleSidebar = () => {
@@ -375,21 +414,6 @@ const PushNotes = () => {
           chat?.receiverId === user?.userInfo?._id
       )
   );
-  // audio and vieo calling
-  const stopMediaDevices = (stream) => {
-    stream.getTracks().forEach((track) => {
-      track.stop();
-    });
-  };
-
-  // Cleanup when component unmounts or localStream changes
-  useEffect(() => {
-    return () => {
-      if (localStream) {
-        stopMediaDevices(localStream);
-      }
-    };
-  }, [localStream]);
 
   return (
     <div className="row">
@@ -807,8 +831,8 @@ const PushNotes = () => {
                           }}
                           className="position-absolute d-flex align-items-center gap-3 justify-content-between top-0 left-0 bg-secondary w-100 text-light"
                         >
-                          <p>
-                            Incoming call from {incomingCall?.userData?.name}
+                          <p className="mt-3 text-success">
+                             <span className="text-white">{incomingCall?.userData?.firstName} {incomingCall?.userData?.lastName}</span> is calling...
                           </p>
                           <div className="d-flex gap-3 align-items-center ">
                             <button
@@ -848,7 +872,7 @@ const PushNotes = () => {
                                 >
                                   <div className="chat-message-wrapper flex-grow-1">
                                     <div className="chat-message-text">
-                                      <p className="mb-0">
+                                      <p className={`mb-0 ${item?.message?.text=="missed call"||item?.message?.text=="call end"?"text-danger":""}`}>
                                         {item?.message?.text}
                                       </p>
                                     </div>
@@ -962,9 +986,7 @@ const PushNotes = () => {
                         flexDirection: "column",
                       }}
                     >
-                      <p className="text-success">
-                        Welcome,chat and connect!
-                      </p>
+                      <p className="text-success">Welcome,chat and connect!</p>
                       <button
                         className="btn btn-primary"
                         onClick={handleSidebar}
@@ -974,42 +996,34 @@ const PushNotes = () => {
                     </div>
                   )
                 )}
-                {/* {incomingCall && (
-                  <div className="incoming-call">
-                    <h6>Incoming Call from {incomingCall.name}</h6>
-                    <button onClick={acceptCall} className="btn btn-success">
-                      Accept
-                    </button>
-                    <button onClick={declineCall} className="btn btn-danger">
-                      Decline
-                    </button>
-                  </div>
-                )} */}
+               
 
                 {videoChat && (
-                  <div className="video-chat-container">
-                    <div className="video-streams">
+                  <div style={{width:"100%",height:"100%"}} className="video-chat-container border d-flex flex-column align-items-center justify-content-center">
+                    <div style={{width:"100%",height:"100%"}} className="video-streams border overflow-hidden">
                       <video
+                        style={{height:"",width:"100%"}}
                         ref={(ref) => ref && (ref.srcObject = localStream)}
                         autoPlay
                         muted
                         className="local-video"
                       />
                       <video
+                       style={{height:"",width:"100%"}}
                         ref={(ref) => ref && (ref.srcObject = remoteStream)}
                         autoPlay
                         className="remote-video"
                       />
                     </div>
-                    <div className="video-controls">
-                      <button onClick={toggleAudio} className="btn btn-icon">
-                        <i className="ti ti-microphone" />
+                    <div style={{position:"absolute",zIndex:50,bottom:"10px"}} className="video-controls  d-flex align-items-center justify-content-end gap-3 mr-5 mt-auto">
+                      <button onClick={toggleAudio} className="btn btn-secondary">
+                        {isMute?<i className="ti ti-microphone" />:<i className="ti ti-microphone-off" />}
                       </button>
-                      <button onClick={toggleVideo} className="btn btn-icon">
-                        <i className="ti ti-camera" />
+                      <button onClick={toggleVideo} className="btn btn-secondary">
+                        {isCam?<i className="ti ti-camera" />:<i className="ti ti-camera-off" />}
                       </button>
                       <button onClick={endCall} className="btn btn-danger">
-                        End Call
+                      <i className="ti ti-phone-off" />
                       </button>
                     </div>
                   </div>
