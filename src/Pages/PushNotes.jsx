@@ -55,8 +55,8 @@ const PushNotes = () => {
     // socket.current = io("http://localhost:5050");
     // Ensure you're using the correct protocol (https:// for secure, wss:// for WebSockets over HTTPS)
     socket.current = io("https://carelinks-server.onrender.com", {
-      transports: ['websocket', 'polling'],
-      withCredentials: true
+      transports: ["websocket", "polling"],
+      withCredentials: true,
     });
 
     socket?.current?.emit("setActiveUser", user?.payload?.user);
@@ -152,7 +152,7 @@ const PushNotes = () => {
     console.log(data);
     setTimeout(() => {
       callingAudio.pause();
-    }, 30000)
+    }, 30000);
   };
 
   const handleCallAccepted = (signal) => {
@@ -193,7 +193,7 @@ const PushNotes = () => {
         urls: "stun:stun1.l.google.com:19302",
         username: "user",
         credential: "pass",
-      }, 
+      },
     ],
   };
 
@@ -284,7 +284,6 @@ const PushNotes = () => {
 
   const acceptCall = () => {
     callingAudio.pause();
-    endCallAudio.play();
     if (!incomingCall || !incomingCall.offer) {
       console.error("Incoming call signal is missing or invalid");
       return;
@@ -373,16 +372,6 @@ const PushNotes = () => {
     createChat({ chat: "missed call", receiverId: chatUser?._id });
   };
 
-
-useEffect(()=>{
-  if(incomingCall){
-    setTimeout(() => {
-      declineCall()
-    }, 30000)
-  }
-},[incomingCall])
-
-
   const toggleAudio = () => {
     setIsMute(!isMute);
 
@@ -409,6 +398,7 @@ useEffect(()=>{
       socket?.current?.emit("end-call", { userData: chatUser });
       setVideoChat(false);
       setAudioChat(false);
+      setIncomingCall(null);
       const form_data = new FormData();
       form_data.append("chat", chat);
       form_data.append("receiverId", activeChat._id);
@@ -1065,7 +1055,8 @@ useEffect(()=>{
                     </div>
                   </>
                 ) : (
-                  !videoChat &&!audioChat && (
+                  !videoChat &&
+                  !audioChat && (
                     <div
                       style={{
                         margin: "0 auto",
@@ -1148,12 +1139,16 @@ useEffect(()=>{
                 {audioChat && (
                   <div
                     style={{ width: "100%", height: "100%" }}
-                    className="video-chat-container border d-flex flex-column align-items-center justify-content-center bg-danger"
+                    className="video-chat-container border d-flex flex-column align-items-center justify-content-center h-100"
                   >
                     <div
-                      style={{ width: "100%", height: "100%" }}
+                      style={{ width: "100%", height: "100%", }}
                       className="video-streams border overflow-hidden"
-                    ></div>
+                    >
+                   <img src={incomingCall?.userData?.avatar?incomingCall?.userData?.avatar:""} alt="" />
+                    <h6>{incomingCall?.userData?.firstName}
+                    {incomingCall?.userData?.lastName}</h6>
+                    </div>
                     <div
                       style={{
                         position: "absolute",
