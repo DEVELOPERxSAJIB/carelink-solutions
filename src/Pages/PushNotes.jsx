@@ -33,8 +33,8 @@ const PushNotes = () => {
   const [remoteStream, setRemoteStream] = useState(null);
   const [activeUser, setActiveUser] = useState([]);
   const [sidebar, setSidebar] = useState(false);
-  const [isMute, setIsMute] = useState(false);
-  const [isCam, setIsCam] = useState(false);
+  const [isMute, setIsMute] = useState(true);
+  const [isCam, setIsCam] = useState(true);
   const [candidate, setCandidate] = useState({});
   const [receiver, setReceiver] = useState(true);
 
@@ -909,16 +909,16 @@ const PushNotes = () => {
                             left: 0,
                             padding: "0 10px 0 10px",
                           }}
-                          className="position-absolute d-flex align-items-center gap-3 justify-content-between top-0 left-0 bg-secondary w-100 text-light"
+                          className="position-absolute d-flex align-items-center gap-3 justify-content-between top-0 left-0 bg-primary shadow w-100 text-light flex-wrap p-5"
                         >
-                          <p className="mt-3 text-success">
+                          <p className="mt-3 text-success text-capitalize">
                             <span className="text-white">
                               {incomingCall?.callerData?.firstName}{" "}
                               {incomingCall?.callerData?.lastName}
                             </span>{" "}
                             is calling...
                           </p>
-                          <div className="d-flex gap-3 align-items-center ">
+                          <div className="d-flex gap-3 align-items-center  ml-auto">
                             <button
                               className="btn btn-sm btn-success d-flex align-items-center gap-2"
                               onClick={acceptCall}
@@ -1099,7 +1099,7 @@ const PushNotes = () => {
                       style={{ width: "100%", height: "100%" }}
                       className="video-streams border overflow-hidden"
                     >
-                      <video
+                      {isCam && <><video
                         style={{ height: "", width: "100%" }}
                         ref={(ref) => ref && (ref.srcObject = localStream)}
                         autoPlay
@@ -1111,13 +1111,13 @@ const PushNotes = () => {
                         ref={(ref) => ref && (ref.srcObject = remoteStream)}
                         autoPlay
                         className="remote-video"
-                      />
+                      /></>}
                     </div>
                     <div style={{
                         position: "absolute",
                         zIndex: 50,
-                        top: "10px",
-                        right: "10px",
+                        bottom: "50px",
+                        right: "",
                       }}>
                     {candidate && !receiver ? (
                       <div className="video-streams overflow-hidden d-flex flex-column gap-1 justify-content-center align-items-center">
