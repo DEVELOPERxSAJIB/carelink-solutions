@@ -35,6 +35,8 @@ const PushNotes = () => {
   const [sidebar, setSidebar] = useState(false);
   const [isMute, setIsMute] = useState(false);
   const [isCam, setIsCam] = useState(false);
+  const [candidate, setCandidate] = useState({});
+  const [receiver, setReceiver] = useState(true);
 
   const socket = useRef(null);
   const scrollChat = useRef(null);
@@ -149,19 +151,19 @@ const PushNotes = () => {
   const handleIncomingCall = (data) => {
     setIncomingCall(data);
     callingAudio.play();
-    console.log(data);
     setTimeout(() => {
       callingAudio.pause();
     }, 30000);
   };
 
   const handleCallAccepted = (signal) => {
+    console.log(signal);
+    setReceiver(false);
     if (signal.type === "video") {
       setVideoChat(true);
     } else {
       setAudioChat(true);
     }
-
     callingAudio.pause();
     peer.current
       .setRemoteDescription(new RTCSessionDescription(signal))
@@ -172,11 +174,11 @@ const PushNotes = () => {
 
   const handleIceCandidate = (data) => {
     // Ensure candidate is valid
+    setCandidate(data.callerData);
     if (!data?.candidate) {
       console.warn("Received invalid ICE candidate");
       return;
     }
-
     // Check if peer connection is initialized
     if (peer?.current) {
       peer?.current
@@ -207,6 +209,7 @@ const PushNotes = () => {
           socket?.current?.emit("icecandidate", {
             userData: chatUser,
             candidate: event.candidate,
+            callerData: user?.payload?.user,
           });
         }
       };
@@ -242,6 +245,7 @@ const PushNotes = () => {
           userData: chatUser,
           offer: peer.current.localDescription,
           type: "video",
+          callerData: user?.payload?.user,
         });
       })
       .catch((error) => {
@@ -250,7 +254,7 @@ const PushNotes = () => {
   };
   const initiateAudioCall = () => {
     setAudioChat(true);
-
+    setReceiver(chatUser);
     // Initialize peer if not already initialized
     initializePeerConnection();
 
@@ -275,6 +279,7 @@ const PushNotes = () => {
           userData: chatUser,
           offer: peer.current.localDescription,
           type: "audio",
+          callerData: user?.payload?.user,
         });
       })
       .catch((error) => {
@@ -303,6 +308,7 @@ const PushNotes = () => {
           userData: incomingCall.userData,
           candidate: event.candidate,
           type: incomingCall.type === "video" ? "video" : "audio",
+          callerData: user?.payload?.user,
         });
       }
     };
@@ -341,6 +347,7 @@ const PushNotes = () => {
               answer: peer.current.localDescription,
               userData: incomingCall.userData,
               type: incomingCall.type === "video" ? "video" : "audio",
+              callerData: user?.payload?.user,
             });
           })
           .catch((error) =>
@@ -368,6 +375,7 @@ const PushNotes = () => {
     endCallAudio.play();
     socket?.current?.emit("call-decline", {
       userData: chatUser,
+      callerData: user?.payload?.user,
     });
     createChat({ chat: "missed call", receiverId: chatUser?._id });
   };
@@ -395,7 +403,10 @@ const PushNotes = () => {
     if (peer.current) {
       peer?.current?.close();
       peer.current = null;
-      socket?.current?.emit("end-call", { userData: chatUser });
+      socket?.current?.emit("end-call", {
+        userData: chatUser,
+        callerData: user?.payload?.user,
+      });
       setVideoChat(false);
       setAudioChat(false);
       setIncomingCall(null);
@@ -794,7 +805,7 @@ const PushNotes = () => {
             {/* /Chat contacts */}
             {/* Chat History */}
             <div className="col app-chat-history">
-              <div className="chat-history-wrapper">
+              <div className="chat-history-wrapper w-100 h-100">
                 {chatUser && !videoChat && !audioChat ? (
                   <>
                     <div className="chat-history-header border-bottom">
@@ -891,7 +902,7 @@ const PushNotes = () => {
                       </div>
                     </div>
                     <div className="chat-history-body ">
-                      {incomingCall && (
+                      {incomingCall?.callerData && (
                         <div
                           style={{
                             zIndex: 100,
@@ -902,8 +913,8 @@ const PushNotes = () => {
                         >
                           <p className="mt-3 text-success">
                             <span className="text-white">
-                              {incomingCall?.userData?.firstName}{" "}
-                              {incomingCall?.userData?.lastName}
+                              {incomingCall?.callerData?.firstName}{" "}
+                              {incomingCall?.callerData?.lastName}
                             </span>{" "}
                             is calling...
                           </p>
@@ -1082,7 +1093,7 @@ const PushNotes = () => {
                 {videoChat && (
                   <div
                     style={{ width: "100%", height: "100%" }}
-                    className="video-chat-container border d-flex flex-column align-items-center justify-content-center"
+                    className="video-chat-container border d-flex bg-primary flex-column align-items-center justify-content-center"
                   >
                     <div
                       style={{ width: "100%", height: "100%" }}
@@ -1101,6 +1112,46 @@ const PushNotes = () => {
                         autoPlay
                         className="remote-video"
                       />
+                    </div>
+                    <div style={{
+                        position: "absolute",
+                        zIndex: 50,
+                        top: "10px",
+                        right: "10px",
+                      }}>
+                    {candidate && !receiver ? (
+                      <div className="video-streams overflow-hidden d-flex flex-column gap-1 justify-content-center align-items-center">
+                        <img
+                          style={{
+                            width: "70px",
+                            height: "70px",
+                            borderRadius: "100%",
+                          }}
+                          src={candidate?.avatar ? candidate?.avatar : ""}
+                          alt=""
+                        />
+                        <h6 className="text-capitalize text-white">
+                          {candidate?.firstName}
+                          {candidate?.lastName}
+                        </h6>
+                      </div>
+                    ) : (
+                      <div className="video-streams overflow-hidden d-flex flex-column gap-1 justify-content-center align-items-center">
+                        <img
+                          style={{
+                            width: "70px",
+                            height: "70px",
+                            borderRadius: "100%",
+                          }}
+                          src={chatUser?.avatar ? chatUser?.avatar : avatar}
+                          alt=""
+                        />
+                        <h6 className="text-capitalize text-light">
+                          {chatUser?.firstName}
+                          {chatUser?.lastName}
+                        </h6>
+                      </div>
+                    )}
                     </div>
                     <div
                       style={{
@@ -1137,18 +1188,41 @@ const PushNotes = () => {
                   </div>
                 )}
                 {audioChat && (
-                  <div
-                    style={{ width: "100%", height: "100%" }}
-                    className="video-chat-container border d-flex flex-column align-items-center justify-content-center h-100"
-                  >
-                    <div
-                      style={{ width: "100%", height: "100%", }}
-                      className="video-streams border overflow-hidden"
-                    >
-                   <img src={incomingCall?.userData?.avatar?incomingCall?.userData?.avatar:""} alt="" />
-                    <h6>{incomingCall?.userData?.firstName}
-                    {incomingCall?.userData?.lastName}</h6>
-                    </div>
+                  <div className="video-chat-container border bg-primary d-flex flex-column align-items-center justify-content-center h-100">
+                    {candidate && !receiver ? (
+                      <div className="video-streams overflow-hidden d-flex flex-column gap-4 justify-content-center align-items-center">
+                        <img
+                          style={{
+                            width: "70px",
+                            height: "70px",
+                            borderRadius: "100%",
+                          }}
+                          src={candidate?.avatar ? candidate?.avatar : avatar}
+                          alt=""
+                        />
+                        <h4 className="text-capitalize text-white">
+                          {candidate?.firstName}
+                          {candidate?.lastName}
+                        </h4>
+                      </div>
+                    ) : (
+                      <div className="video-streams overflow-hidden d-flex flex-column gap-4 justify-content-center align-items-center">
+                        <img
+                          style={{
+                            width: "70px",
+                            height: "70px",
+                            borderRadius: "100%",
+                          }}
+                          src={chatUser?.avatar ? chatUser?.avatar : avatar}
+                          alt=""
+                        />
+                        <h4 className="text-capitalize text-white">
+                          {chatUser?.firstName}
+                          {chatUser?.lastName}
+                        </h4>
+                      </div>
+                    )}
+
                     <div
                       style={{
                         position: "absolute",
