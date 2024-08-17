@@ -152,7 +152,7 @@ const PushNotes = () => {
     console.log(data);
     setTimeout(() => {
       callingAudio.pause();
-    }, 5000)
+    }, 30000)
   };
 
   const handleCallAccepted = (signal) => {
@@ -378,7 +378,7 @@ useEffect(()=>{
   if(incomingCall){
     setTimeout(() => {
       declineCall()
-    }, 10000)
+    }, 30000)
   }
 },[incomingCall])
 
