@@ -150,6 +150,9 @@ const PushNotes = () => {
     setIncomingCall(data);
     callingAudio.play();
     console.log(data);
+    setTimeout(() => {
+      callingAudio.pause();
+    }, 5000)
   };
 
   const handleCallAccepted = (signal) => {
@@ -187,10 +190,10 @@ const PushNotes = () => {
     iceServers: [
       { urls: "stun:stun.l.google.com:19302" }, // Google's public STUN server
       {
-        urls: "turn:your-turn-server.com",
+        urls: "stun:stun1.l.google.com:19302",
         username: "user",
         credential: "pass",
-      }, // Example TURN server
+      }, 
     ],
   };
 
@@ -281,6 +284,7 @@ const PushNotes = () => {
 
   const acceptCall = () => {
     callingAudio.pause();
+    endCallAudio.play();
     if (!incomingCall || !incomingCall.offer) {
       console.error("Incoming call signal is missing or invalid");
       return;
@@ -362,11 +366,22 @@ const PushNotes = () => {
   const declineCall = () => {
     setIncomingCall(null);
     callingAudio.pause();
+    endCallAudio.play();
     socket?.current?.emit("call-decline", {
       userData: chatUser,
     });
     createChat({ chat: "missed call", receiverId: chatUser?._id });
   };
+
+
+useEffect(()=>{
+  if(incomingCall){
+    setTimeout(() => {
+      declineCall()
+    }, 10000)
+  }
+},[incomingCall])
+
 
   const toggleAudio = () => {
     setIsMute(!isMute);
@@ -408,9 +423,9 @@ const PushNotes = () => {
       remoteStream.getTracks().forEach((track) => track.stop());
       setRemoteStream(null);
     }
+    callingAudio.pause();
     endCallAudio.play();
   };
-
   const handleEndCall = () => {
     setIncomingCall(null);
 
@@ -428,7 +443,8 @@ const PushNotes = () => {
       remoteStream.getTracks().forEach((track) => track.stop());
       setRemoteStream(null);
     }
-    endCallAudio.paly();
+    callingAudio.pause();
+    endCallAudio.play();
   };
   const handleCallDecline = () => {
     setIncomingCall(null);
@@ -452,7 +468,8 @@ const PushNotes = () => {
     // Update UI or state to reflect that the call was declined
     setVideoChat(false);
     setAudioChat(false);
-    endCallAudio.paly();
+    callingAudio.pause();
+    endCallAudio.play();
   };
 
   const handleSidebar = () => {
