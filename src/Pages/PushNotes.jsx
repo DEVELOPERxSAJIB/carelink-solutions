@@ -171,7 +171,14 @@ const PushNotes = () => {
         console.error("Error setting remote description:", error)
       );
   };
-
+  const peerConnectionConfig = {
+    iceServers: [
+      { urls: "stun:stun.l.google.com:19302" },
+      {
+        urls: "stun:stun1.l.google.com:19302",
+      },
+    ],
+  };
   const handleIceCandidate = (data) => {
     // Ensure candidate is valid
     setCandidate(data.callerData);
@@ -188,16 +195,7 @@ const PushNotes = () => {
       console.warn("Peer connection is not initialized");
     }
   };
-  const peerConnectionConfig = {
-    iceServers: [
-      { urls: "stun:stun.l.google.com:19302" }, // Google's public STUN server
-      {
-        urls: "stun:stun1.l.google.com:19302",
-        username: "user",
-        credential: "pass",
-      },
-    ],
-  };
+ 
 
   const initializePeerConnection = () => {
     if (!peer?.current) {
@@ -905,17 +903,20 @@ const PushNotes = () => {
                       {incomingCall?.callerData && (
                         <div
                           style={{
-                            zIndex: 100,
+                            zIndex: 10000,
                             left: 0,
                             padding: "0 10px 0 10px",
+                            position:"absolute",
+                            top:0,
+                            
                           }}
-                          className="position-absolute d-flex align-items-center gap-3 justify-content-between top-0 left-0 bg-primary shadow w-100 text-light flex-wrap p-2"
+                          className="d-flex align-items-center gap-3 justify-content-between  bg-primary shadow w-100 text-light flex-wrap p-2"
                         >
                           <p className="mt-3 text-success text-capitalize">
                             <span className="text-white">
-                              {incomingCall?.callerData?.firstName}{" "}
+                              {incomingCall?.callerData?.firstName}
                               {incomingCall?.callerData?.lastName}
-                            </span>{" "}
+                            </span>
                             is calling...
                           </p>
                           <div className="d-flex gap-3 align-items-center  ml-auto">
