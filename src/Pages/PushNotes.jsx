@@ -909,7 +909,7 @@ const PushNotes = () => {
                             left: 0,
                             padding: "0 10px 0 10px",
                           }}
-                          className="position-absolute d-flex align-items-center gap-3 justify-content-between top-0 left-0 bg-primary shadow w-100 text-light flex-wrap p-5"
+                          className="position-absolute d-flex align-items-center gap-3 justify-content-between top-0 left-0 bg-primary shadow w-100 text-light flex-wrap p-2"
                         >
                           <p className="mt-3 text-success text-capitalize">
                             <span className="text-white">
