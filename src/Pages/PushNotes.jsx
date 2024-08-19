@@ -42,6 +42,7 @@ const PushNotes = () => {
   const emojiClose = useRef(null);
   const peer = useRef(null);
 
+
   const { chatsData } = useSelector(getChatState);
   const { data: user } = useMeQuery();
   const { data: users } = useGetAllUsersQuery();
@@ -54,7 +55,7 @@ const PushNotes = () => {
 
   useEffect(() => {
     // socket.current = io("ws://localhost:5050");
-    socket.current = io("wss://carelinks-server.onrender.com");
+    socket.current = io("https://carelinks-server.onrender.com");
 
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
@@ -152,7 +153,6 @@ const PushNotes = () => {
   }, []);
 
   const handleCallAccepted = useCallback((signal) => {
-    console.log(signal);
     setReceiver(false);
     if (signal.type === "video") {
       setVideoChat(true);
@@ -196,7 +196,7 @@ const PushNotes = () => {
   );
 
   // Function to initialize the peer connection
-  const initializePeerConnection = useCallback(() => {
+  const initializePeerConnection = () => {
     if (!peer?.current) {
       peer.current = new RTCPeerConnection(peerConnectionConfig);
 
@@ -210,12 +210,11 @@ const PushNotes = () => {
 
       peer.current.ontrack = (event) => {
         setRemoteStream(event.streams[0]);
-        console.log(event);
       };
 
       console.log("Peer connection initialized:", peer.current);
     }
-  }, [peerConnectionConfig]);
+  };
 
   // Example usage: Ensure to initialize the peer connection early in the process
   initializePeerConnection();
@@ -227,7 +226,7 @@ const PushNotes = () => {
       .getUserMedia({ video: true, audio: true })
       .then((stream) => {
         console.log("Media stream acquired");
-        console.log(stream);
+
         setLocalStream(stream);
         stream
           .getTracks()
@@ -239,7 +238,6 @@ const PushNotes = () => {
         return peer.current.setLocalDescription(offer);
       })
       .then(() => {
-        console.log("Offer sent");
         socket?.current?.emit("offer", {
           userData: chatUser,
           offer: peer.current.localDescription,
@@ -258,9 +256,7 @@ const PushNotes = () => {
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
-        console.log("Media stream acquired");
         setLocalStream(stream);
-        console.log(stream.getTracks());
         stream
           .getTracks()
           .forEach((track) => peer.current?.addTrack(track, stream));
@@ -271,7 +267,6 @@ const PushNotes = () => {
         return peer.current.setLocalDescription(offer);
       })
       .then(() => {
-        console.log("Offer sent");
         socket?.current?.emit("offer", {
           userData: chatUser,
           offer: peer.current.localDescription,
@@ -472,6 +467,8 @@ const PushNotes = () => {
   const handleSidebar = () => {
     setSidebar(!sidebar);
   };
+
+
   // Users who have an existing chat with the logged-in user
   const filteredChattedUsers = users?.payload?.users?.filter((user) =>
     loginChats?.chats?.some(
@@ -1099,31 +1096,37 @@ const PushNotes = () => {
                     >
                       {/* {isCam && ( */}
                       <>
-                        <video
-                          style={{
-                            height: "100px",
-                            width: "100px",
-                            marginLeft: "20px",
-                            borderRadius: "100%",
-                          }}
-                          ref={(ref) =>
-                            ref && localStream && (ref.srcObject = localStream)
-                          }
-                          autoPlay
-                          muted
-                          className="local-video"
-                        />
-                        <video
-                          ref={(video) => {
-                            if (video && remoteStream) {
-                              video.srcObject = remoteStream;
-                            }
-                          }}
-                          autoPlay
-                          muted={false} // Ensure the remote stream is not muted
-                        />
+                        <>
+                          {/* <video
+                            ref={(video) => {
+                              if (video) {
+                                video.srcObject = localStream;
+                                video.play();
+                              }
+                            }}
+                            autoPlay
+                            muted
+                            style={{
+                              width: "30%",
+                              position: "absolute",
+                              bottom: 0,
+                              right: 0,
+                            }}
+                          ></video> */}
+                           
+                            <video
+                              ref={(video) => {
+                                if (video) {
+                                  video.srcObject = remoteStream;
+                                  video.play();
+                                }
+                              }}
+                              autoPlay
+                              style={{ width: "100%", border: "2px solid red" }}
+                            ></video>
+                          
+                        </>
                       </>
-                      {/* )} */}
                     </div>
                     <div
                       style={{
@@ -1234,6 +1237,12 @@ const PushNotes = () => {
                           {chatUser?.firstName}
                           {chatUser?.lastName}
                         </h4>
+                        <audio ref={(video) => {
+                              if (video) {
+                                video.srcObject = localStream;
+                                video.play();
+                              }
+                            }}></audio>
                       </div>
                     )}
 
