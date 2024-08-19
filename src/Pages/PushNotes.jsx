@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import io from "socket.io-client";
 import avatar from "../../src/assets/img/avatars/7.png";
 import calling from "../assets/audio/ringing-151670.mp3";
@@ -37,7 +37,6 @@ const PushNotes = () => {
   const [isCam, setIsCam] = useState(true);
   const [candidate, setCandidate] = useState({});
   const [receiver, setReceiver] = useState(true);
-
   const socket = useRef(null);
   const scrollChat = useRef(null);
   const emojiClose = useRef(null);
@@ -54,12 +53,8 @@ const PushNotes = () => {
     useCreateChatMutation();
 
   useEffect(() => {
-    // socket.current = io("http://localhost:5050");
-    // Ensure you're using the correct protocol (https:// for secure, wss:// for WebSockets over HTTPS)
-    socket.current = io("https://carelinks-server.onrender.com", {
-      transports: ["websocket", "polling"],
-      withCredentials: true,
-    });
+    // socket.current = io("ws://localhost:5050");
+    socket.current = io("wss://carelinks-server.onrender.com");
 
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
@@ -148,15 +143,16 @@ const PushNotes = () => {
     }
   };
 
-  const handleIncomingCall = (data) => {
+  const handleIncomingCall = useCallback((data) => {
     setIncomingCall(data);
     callingAudio.play();
     setTimeout(() => {
       callingAudio.pause();
     }, 30000);
-  };
+  }, []);
 
-  const handleCallAccepted = (signal) => {
+  const handleCallAccepted = useCallback((signal) => {
+    console.log(signal);
     setReceiver(false);
     if (signal.type === "video") {
       setVideoChat(true);
@@ -165,62 +161,42 @@ const PushNotes = () => {
     }
     callingAudio.pause();
     peer.current
-      .setRemoteDescription(new RTCSessionDescription(signal))
+      .setRemoteDescription(signal)
       .catch((error) =>
         console.error("Error setting remote description:", error)
       );
-  };
+  }, []);
   const peerConnectionConfig = {
     iceServers: [
       { urls: "stun:stun.l.google.com:19302" },
       {
-        urls: "stun:stun1.l.google.com:19302",
+        urls: "stun:global.stun.twilio.com:3478",
       },
     ],
+    iceCandidatePoolSize: 10,
   };
   let iceCandidateQueue = []; // Queue to store ICE candidates before setting the remote description
   let remoteDescriptionSet = false; // Flag to track if the remote description has been set
 
-  function handleIceCandidate(candidate) {
-    if (remoteDescriptionSet) {
-      // If the remote description is already set, add the ICE candidate directly
-      peerConnection
-        .addIceCandidate(new RTCIceCandidate(candidate))
-        .catch((error) => {
-          console.error("Error adding ICE candidate:", error);
-        });
-    } else {
-      // Otherwise, queue the ICE candidate to be added later
-      iceCandidateQueue.push(candidate);
-    }
-  }
-
-  function handleRemoteDescription(sdp) {
-    // Set the remote description
-    peerConnection
-      .setRemoteDescription(new RTCSessionDescription(sdp))
-      .then(() => {
-        remoteDescriptionSet = true;
-
-        // Add any queued ICE candidates now that the remote description is set
-        iceCandidateQueue.forEach((candidate) => {
-          peer?.current
-            ?.addIceCandidate(new RTCIceCandidate(candidate))
-            .catch((error) => {
-              console.error("Error adding queued ICE candidate:", error);
-            });
-        });
-
-        // Clear the queue
-        iceCandidateQueue = [];
-      })
-      .catch((error) => {
-        console.error("Error setting remote description:", error);
-      });
-  }
+  const handleIceCandidate = useCallback(
+    (candidate) => {
+      if (remoteDescriptionSet) {
+        // If the remote description is already set, add the ICE candidate directly
+        peer.current
+          .addIceCandidate(new RTCIceCandidate(candidate))
+          .catch((error) => {
+            console.error("Error adding ICE candidate:", error);
+          });
+      } else {
+        // Otherwise, queue the ICE candidate to be added later
+        iceCandidateQueue.push(candidate);
+      }
+    },
+    [iceCandidateQueue, remoteDescriptionSet]
+  );
 
   // Function to initialize the peer connection
-  const initializePeerConnection = () => {
+  const initializePeerConnection = useCallback(() => {
     if (!peer?.current) {
       peer.current = new RTCPeerConnection(peerConnectionConfig);
 
@@ -234,11 +210,12 @@ const PushNotes = () => {
 
       peer.current.ontrack = (event) => {
         setRemoteStream(event.streams[0]);
+        console.log(event);
       };
 
       console.log("Peer connection initialized:", peer.current);
     }
-  };
+  }, [peerConnectionConfig]);
 
   // Example usage: Ensure to initialize the peer connection early in the process
   initializePeerConnection();
@@ -250,6 +227,7 @@ const PushNotes = () => {
       .getUserMedia({ video: true, audio: true })
       .then((stream) => {
         console.log("Media stream acquired");
+        console.log(stream);
         setLocalStream(stream);
         stream
           .getTracks()
@@ -282,7 +260,7 @@ const PushNotes = () => {
       .then((stream) => {
         console.log("Media stream acquired");
         setLocalStream(stream);
-        console.log(stream.getTracks())
+        console.log(stream.getTracks());
         stream
           .getTracks()
           .forEach((track) => peer.current?.addTrack(track, stream));
@@ -320,7 +298,6 @@ const PushNotes = () => {
       setAudioChat(true);
     }
 
-    peer.current = new RTCPeerConnection(peerConnectionConfig);
     peer.current.onicecandidate = (event) => {
       if (event.candidate) {
         socket?.current?.emit("icecandidate", {
@@ -446,7 +423,7 @@ const PushNotes = () => {
     callingAudio.pause();
     endCallAudio.play();
   };
-  const handleEndCall = () => {
+  const handleEndCall = useCallback(() => {
     setIncomingCall(null);
 
     setVideoChat(false);
@@ -465,8 +442,8 @@ const PushNotes = () => {
     }
     callingAudio.pause();
     endCallAudio.play();
-  };
-  const handleCallDecline = () => {
+  }, [localStream, remoteStream]);
+  const handleCallDecline = useCallback(() => {
     setIncomingCall(null);
     callingAudio.pause();
     if (peer.current) {
@@ -490,7 +467,7 @@ const PushNotes = () => {
     setAudioChat(false);
     callingAudio.pause();
     endCallAudio.play();
-  };
+  }, [localStream, remoteStream]);
 
   const handleSidebar = () => {
     setSidebar(!sidebar);
@@ -1120,23 +1097,33 @@ const PushNotes = () => {
                       style={{ width: "100%", height: "100%" }}
                       className="video-streams border overflow-hidden"
                     >
-                      {isCam && (
-                        <>
-                          <video
-                            style={{ height: "", width: "100%" }}
-                            ref={(ref) => ref && (ref.srcObject = localStream)}
-                            autoPlay
-                            muted
-                            className="local-video"
-                          />
-                          <video
-                            style={{ height: "", width: "100%" }}
-                            ref={(ref) => ref && (ref.srcObject = remoteStream)}
-                            autoPlay
-                            className="remote-video"
-                          />
-                        </>
-                      )}
+                      {/* {isCam && ( */}
+                      <>
+                        <video
+                          style={{
+                            height: "100px",
+                            width: "100px",
+                            marginLeft: "20px",
+                            borderRadius: "100%",
+                          }}
+                          ref={(ref) =>
+                            ref && localStream && (ref.srcObject = localStream)
+                          }
+                          autoPlay
+                          muted
+                          className="local-video"
+                        />
+                        <video
+                          ref={(video) => {
+                            if (video && remoteStream) {
+                              video.srcObject = remoteStream;
+                            }
+                          }}
+                          autoPlay
+                          muted={false} // Ensure the remote stream is not muted
+                        />
+                      </>
+                      {/* )} */}
                     </div>
                     <div
                       style={{
