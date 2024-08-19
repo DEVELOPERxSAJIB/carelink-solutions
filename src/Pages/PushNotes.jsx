@@ -157,7 +157,6 @@ const PushNotes = () => {
   };
 
   const handleCallAccepted = (signal) => {
-    console.log(signal);
     setReceiver(false);
     if (signal.type === "video") {
       setVideoChat(true);
@@ -179,35 +178,56 @@ const PushNotes = () => {
       },
     ],
   };
-  const handleIceCandidate = (data) => {
-    // Ensure candidate is valid
-    setCandidate(data.callerData);
-    if (!data?.candidate) {
-      console.warn("Received invalid ICE candidate");
-      return;
-    }
-    // Check if peer connection is initialized
-    if (peer?.current) {
-      peer?.current
-        ?.addIceCandidate(new RTCIceCandidate(data?.candidate))
-        .catch((error) => console.error("Error adding ICE candidate:", error));
-    } else {
-      console.warn("Peer connection is not initialized");
-    }
-  };
- 
+  let iceCandidateQueue = []; // Queue to store ICE candidates before setting the remote description
+  let remoteDescriptionSet = false; // Flag to track if the remote description has been set
 
+  function handleIceCandidate(candidate) {
+    if (remoteDescriptionSet) {
+      // If the remote description is already set, add the ICE candidate directly
+      peerConnection
+        .addIceCandidate(new RTCIceCandidate(candidate))
+        .catch((error) => {
+          console.error("Error adding ICE candidate:", error);
+        });
+    } else {
+      // Otherwise, queue the ICE candidate to be added later
+      iceCandidateQueue.push(candidate);
+    }
+  }
+
+  function handleRemoteDescription(sdp) {
+    // Set the remote description
+    peerConnection
+      .setRemoteDescription(new RTCSessionDescription(sdp))
+      .then(() => {
+        remoteDescriptionSet = true;
+
+        // Add any queued ICE candidates now that the remote description is set
+        iceCandidateQueue.forEach((candidate) => {
+          peer?.current
+            ?.addIceCandidate(new RTCIceCandidate(candidate))
+            .catch((error) => {
+              console.error("Error adding queued ICE candidate:", error);
+            });
+        });
+
+        // Clear the queue
+        iceCandidateQueue = [];
+      })
+      .catch((error) => {
+        console.error("Error setting remote description:", error);
+      });
+  }
+
+  // Function to initialize the peer connection
   const initializePeerConnection = () => {
     if (!peer?.current) {
       peer.current = new RTCPeerConnection(peerConnectionConfig);
 
       peer.current.onicecandidate = (event) => {
         if (event.candidate) {
-          console.log("Sending ICE candidate");
           socket?.current?.emit("icecandidate", {
-            userData: chatUser,
             candidate: event.candidate,
-            callerData: user?.payload?.user,
           });
         }
       };
@@ -215,13 +235,16 @@ const PushNotes = () => {
       peer.current.ontrack = (event) => {
         setRemoteStream(event.streams[0]);
       };
+
+      console.log("Peer connection initialized:", peer.current);
     }
   };
 
+  // Example usage: Ensure to initialize the peer connection early in the process
+  initializePeerConnection();
+
   const initiateCall = () => {
     setVideoChat(true);
-    // Initialize peer if not already initialized
-    initializePeerConnection();
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
@@ -253,14 +276,13 @@ const PushNotes = () => {
   const initiateAudioCall = () => {
     setAudioChat(true);
     setReceiver(chatUser);
-    // Initialize peer if not already initialized
-    initializePeerConnection();
 
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
         console.log("Media stream acquired");
         setLocalStream(stream);
+        console.log(stream.getTracks())
         stream
           .getTracks()
           .forEach((track) => peer.current?.addTrack(track, stream));
@@ -268,7 +290,6 @@ const PushNotes = () => {
         return peer.current.createOffer();
       })
       .then((offer) => {
-        console.log("Offer created", offer);
         return peer.current.setLocalDescription(offer);
       })
       .then(() => {
@@ -906,9 +927,8 @@ const PushNotes = () => {
                             zIndex: 10000,
                             left: 0,
                             padding: "0 10px 0 10px",
-                            position:"absolute",
-                            top:0,
-                            
+                            position: "absolute",
+                            top: 0,
                           }}
                           className="d-flex align-items-center gap-3 justify-content-between  bg-primary shadow w-100 text-light flex-wrap p-2"
                         >
@@ -1100,59 +1120,65 @@ const PushNotes = () => {
                       style={{ width: "100%", height: "100%" }}
                       className="video-streams border overflow-hidden"
                     >
-                      {isCam && <><video
-                        style={{ height: "", width: "100%" }}
-                        ref={(ref) => ref && (ref.srcObject = localStream)}
-                        autoPlay
-                        muted
-                        className="local-video"
-                      />
-                      <video
-                        style={{ height: "", width: "100%" }}
-                        ref={(ref) => ref && (ref.srcObject = remoteStream)}
-                        autoPlay
-                        className="remote-video"
-                      /></>}
+                      {isCam && (
+                        <>
+                          <video
+                            style={{ height: "", width: "100%" }}
+                            ref={(ref) => ref && (ref.srcObject = localStream)}
+                            autoPlay
+                            muted
+                            className="local-video"
+                          />
+                          <video
+                            style={{ height: "", width: "100%" }}
+                            ref={(ref) => ref && (ref.srcObject = remoteStream)}
+                            autoPlay
+                            className="remote-video"
+                          />
+                        </>
+                      )}
                     </div>
-                    <div style={{
+                    <div
+                      style={{
                         position: "absolute",
                         zIndex: 50,
                         bottom: "50px",
                         right: "",
-                      }}>
-                    {candidate && !receiver ? (
-                      <div className="video-streams overflow-hidden d-flex flex-column gap-1 justify-content-center align-items-center">
-                        <img
-                          style={{
-                            width: "70px",
-                            height: "70px",
-                            borderRadius: "100%",
-                          }}
-                          src={candidate?.avatar ? candidate?.avatar : ""}
-                          alt=""
-                        />
-                        <h6 className="text-capitalize text-white">
-                          {candidate?.firstName}
-                          {candidate?.lastName}
-                        </h6>
-                      </div>
-                    ) : (
-                      <div className="video-streams overflow-hidden d-flex flex-column gap-1 justify-content-center align-items-center">
-                        <img
-                          style={{
-                            width: "70px",
-                            height: "70px",
-                            borderRadius: "100%",
-                          }}
-                          src={chatUser?.avatar ? chatUser?.avatar : avatar}
-                          alt=""
-                        />
-                        <h6 className="text-capitalize text-light">
-                          {chatUser?.firstName}
-                          {chatUser?.lastName}
-                        </h6>
-                      </div>
-                    )}
+                      }}
+                    >
+                      {candidate && !receiver ? (
+                        <div className="video-streams overflow-hidden d-flex flex-column gap-1 justify-content-center align-items-center">
+                          <img
+                            style={{
+                              width: "70px",
+                              height: "70px",
+                              borderRadius: "100%",
+                            }}
+                            src={candidate?.avatar ? candidate?.avatar : ""}
+                            alt=""
+                          />
+                          <h6 className="text-capitalize text-white">
+                            {candidate?.firstName}
+                            {candidate?.lastName}
+                          </h6>
+                        </div>
+                      ) : (
+                        <div className="video-streams overflow-hidden d-flex flex-column gap-1 justify-content-center align-items-center">
+                          <img
+                            style={{
+                              width: "70px",
+                              height: "70px",
+                              borderRadius: "100%",
+                            }}
+                            src={chatUser?.avatar ? chatUser?.avatar : avatar}
+                            alt=""
+                          />
+                          <h6 className="text-capitalize text-light">
+                            {chatUser?.firstName}
+                            {chatUser?.lastName}
+                          </h6>
+                        </div>
+                      )}
                     </div>
                     <div
                       style={{
