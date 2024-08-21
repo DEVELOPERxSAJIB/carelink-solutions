@@ -303,7 +303,7 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
   });
   useEffect(() => {
     // socket.current = io("ws://localhost:5050");
-    const socket = io('wss://carelinks-server.onrender.com');
+     socket.current = io('wss://carelinks-server.onrender.com');
     socket?.current?.on("connect", () => {
       console.log("Connected to socket server");
     });
