@@ -44,10 +44,7 @@ const PushNotes = () => {
 
   useEffect(() => {
     // socket.current = io("ws://localhost:5050");
-    const socket = io('wss://carelinks-server.onrender.com', {
-      transports: ['websocket'],
-      secure: true, // Use `secure: true` if your server requires SSL/TLS
-    });
+    const socket = io('wss://carelinks-server.onrender.com');
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
     socket?.current?.on("offer", ({ userData, offer }) => {
