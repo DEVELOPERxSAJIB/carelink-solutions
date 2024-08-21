@@ -4,6 +4,7 @@ import { useCreateChatMutation } from "../Redux/api/ChatApi";
 import callingAudioMusic from "../assets/audio/ringing-151670.mp3";
 import endCallAudioMusice from "../assets/audio/end-call-120633.mp3";
 import { showToast } from "./../utils/Toastify";
+import avatar from "../../src/assets/img/avatars/7.png";
 const callingAudio = new Audio(callingAudioMusic);
 const endCallAudio = new Audio(endCallAudioMusice);
 callingAudio.loop = true;
@@ -60,7 +61,8 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
   }, [offer]);
 
   const handleIncomingCall = async (offer) => {
-    const pc = new RTCPeerConnection(iceServers);
+    
+      const pc = new RTCPeerConnection(iceServers);
     peerConnection.current = pc;
     await pc.setRemoteDescription(new RTCSessionDescription(offer));
     callingAudio.play();
@@ -83,6 +85,7 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
     localStream.current.getTracks().forEach((track) => {
       pc.addTrack(track, localStream.current);
     });
+    
   };
 
   const acceptCall = async () => {
@@ -300,7 +303,10 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
   });
   useEffect(() => {
     // socket.current = io("ws://localhost:5050");
-    socket.current = io("wss://carelinks-server.onrender.com");
+    const socket = io('wss://carelinks-server.onrender.com', {
+      transports: ['websocket'],
+      secure: true, // Use `secure: true` if your server requires SSL/TLS
+    });
     socket.current.on("connect", () => {
       console.log("Connected to socket server");
     });
@@ -379,30 +385,44 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
           playsInline
         ></video>
 
-        <video
-          id="localVideo"
-          style={{
+       <div  style={{
             width: `${"100px"}`,
             height: "100px",
             borderRadius: "100px",
+            border:"1px solid gray",
             position: "absolute",
+            background:"black",
             top: 50,
             right: 50,
             zIndex: 100,
+            overflow:"hidden"
+          }}>
+       <video
+          id="localVideo"
+          style={{
+            width: `${"100%"}`,
+            height: "100%",
           }}
           autoPlay
           muted
         ></video>
+       </div>
 
-        {chatUser && (
-          <div className="video-streams w-100  overflow-hidden d-flex flex-column gap-1 justify-content-center align-items-center position-absolute bottom-10">
+
+          <div style={{position:"absolute",
+                zIndex:200,
+                bottom:"5%",
+                left:"50%",
+                transform:"translateX(-50%)"
+                }} className="video-streams w-100   overflow-hidden d-flex flex-column gap-1 justify-content-center align-items-center ">
             <img
               style={{
-                width: "70px",
-                height: "70px",
+                width: "40px",
+                height: "40px",
                 borderRadius: "100%",
+                
               }}
-              src={chatUser?.avatar ? chatUser?.avatar : ""}
+              src={chatUser?.avatar ? chatUser?.avatar : avatar}
               alt=""
             />
             <h6 className="text-capitalize text-white">
@@ -410,14 +430,14 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
               {chatUser?.lastName}
             </h6>
           </div>
-        )}
+        
         <div
           style={{
             position: "absolute",
             zIndex: 50,
             bottom: "10px",
             left: "50%",
-            transform: "translateX(-150px)",
+            transform: "translateX(-50%)",
           }}
           className="video-controls  d-flex align-items-center justify-content-end gap-3 mr-5 mt-auto"
         >
