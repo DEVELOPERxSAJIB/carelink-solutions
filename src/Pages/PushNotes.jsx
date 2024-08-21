@@ -43,8 +43,8 @@ const PushNotes = () => {
     useCreateChatMutation();
 
   useEffect(() => {
-    socket.current = io("ws://localhost:5050");
-    // socket.current = io("wss://carelinks-server.onrender.com");
+    // socket.current = io("ws://localhost:5050");
+    socket.current = io("wss://carelinks-server.onrender.com");
     console.log(socket.current);
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
@@ -63,7 +63,7 @@ const PushNotes = () => {
     return () => {
       socket?.current?.disconnect();
     };
-  }, [chatsData,dispatch,user?.payload?.user]);
+  }, [videoChat]);
 
   useEffect(() => {
     if (newChat?.chat) {

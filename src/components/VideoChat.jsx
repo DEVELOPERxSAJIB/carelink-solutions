@@ -382,7 +382,7 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
         <video
           id="localVideo"
           style={{
-            width: "100px",
+            width: `${"100px"}`,
             height: "100px",
             borderRadius: "100px",
             position: "absolute",
