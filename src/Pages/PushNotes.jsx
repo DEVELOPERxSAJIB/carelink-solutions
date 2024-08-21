@@ -48,13 +48,12 @@ const PushNotes = () => {
       transports: ['websocket'],
       secure: true, // Use `secure: true` if your server requires SSL/TLS
     });
-    console.log(socket.current);
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
-    socket.current.on("offer", ({ userData, offer }) => {
+    socket?.current?.on("offer", ({ userData, offer }) => {
       setVideoChat(true);
     });
-    socket.current.on("end-call", ({ userData, offer }) => {
+    socket?.current?.on("end-call", ({ userData, offer }) => {
       setVideoChat(false);
       
     });

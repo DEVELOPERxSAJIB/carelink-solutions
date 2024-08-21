@@ -307,18 +307,18 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
       transports: ['websocket'],
       secure: true, // Use `secure: true` if your server requires SSL/TLS
     });
-    socket.current.on("connect", () => {
+    socket?.current?.on("connect", () => {
       console.log("Connected to socket server");
     });
 
-    socket.current.emit("setActiveUser", user);
-    socket.current.on("offer", ({ userData, offer }) => {
+    socket?.current?.emit("setActiveUser", user);
+    socket?.current?.on("offer", ({ userData, offer }) => {
       setIncomingCall(userData);
       setOffer(offer); // Store the offer
     });
-    socket.current.on("answer", handleAnswer);
-    socket.current.on("call-decline", handleCallDecline);
-    socket.current.on("end-call", handleEndCall);
+    socket?.current?.on("answer", handleAnswer);
+    socket?.current?.on("call-decline", handleCallDecline);
+    socket?.current?.on("end-call", handleEndCall);
 
     return () => {
       if (socket.current) {
