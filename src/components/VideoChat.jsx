@@ -28,23 +28,9 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
 
   useEffect(() => {
     const localStreamInit = async () => {
-      const constraints = {
-        audio: {
-          echoCancellation: true, // Enable echo cancellation
-          noiseSuppression: true, // Enable noise suppression
-          autoGainControl: true, // Enable automatic gain control
-          sampleRate: 48000, // Optional: Set sample rate (48 kHz is common)
-          sampleSize: 16, // Optional: Sample size (16-bit is common)
-        },
-        video: {
-          // facingMode: "user", // Use the front camera (change to 'environment' for rear camera)
-          width: { ideal: 1280 }, // Optional: Set ideal width for high-definition video
-          height: { ideal: 720 }, // Optional: Set ideal height for high-definition video
-          frameRate: { ideal: 30 }, // Optional: Set frame rate for smooth video
-        },
-      };
+      
       const localStreamData = await navigator.mediaDevices.getUserMedia(
-        constraints
+        {video:true,audio:true}
       );
       document.getElementById("localVideo").srcObject = localStreamData;
       localStreamData.getAudioTracks()[0].enabled = true;
