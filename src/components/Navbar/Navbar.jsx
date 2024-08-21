@@ -109,7 +109,7 @@ const Navbar = () => {
           <li className="nav-item dropdown-style-switcher dropdown">
             <a
               className="nav-link btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow"
-              href="javascript:void(0);"
+              href="#"
               data-bs-toggle="dropdown"
             >
               <i className="ti ti-md" />
@@ -118,7 +118,7 @@ const Navbar = () => {
               <li>
                 <a
                   className="dropdown-item"
-                  href="javascript:void(0);"
+                  href="#"
                   data-theme="light"
                 >
                   <span className="align-middle">
@@ -130,7 +130,7 @@ const Navbar = () => {
               <li>
                 <a
                   className="dropdown-item"
-                  href="javascript:void(0);"
+                  href="#"
                   data-theme="dark"
                 >
                   <span className="align-middle">
@@ -142,7 +142,7 @@ const Navbar = () => {
               <li>
                 <a
                   className="dropdown-item"
-                  href="javascript:void(0);"
+                  href="#"
                   data-theme="system"
                 >
                   <span className="align-middle">
@@ -177,7 +177,7 @@ const Navbar = () => {
                 <div className="dropdown-header d-flex align-items-center py-3">
                   <h6 className="mb-0 me-auto">Shortcuts</h6>
                   <a
-                    href="javascript:void(0)"
+                    href="#"
                     className="btn btn-text-secondary rounded-pill btn-icon dropdown-shortcuts-add"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
@@ -303,7 +303,7 @@ const Navbar = () => {
                   <div className="d-flex align-items-center h6 mb-0">
                     <span className="badge bg-label-primary me-2">8 New</span>
                     <a
-                      href="javascript:void(0)"
+                      href="#"
                       className="btn btn-text-secondary rounded-pill btn-icon dropdown-notifications-all"
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
@@ -332,13 +332,13 @@ const Navbar = () => {
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-read"
                         >
                           <span className="badge badge-dot" />
                         </a>
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-archive"
                         >
                           <span className="ti ti-x" />
@@ -364,13 +364,13 @@ const Navbar = () => {
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-read"
                         >
                           <span className="badge badge-dot" />
                         </a>
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-archive"
                         >
                           <span className="ti ti-x" />
@@ -398,13 +398,13 @@ const Navbar = () => {
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-read"
                         >
                           <span className="badge badge-dot" />
                         </a>
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-archive"
                         >
                           <span className="ti ti-x" />
@@ -432,13 +432,13 @@ const Navbar = () => {
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-read"
                         >
                           <span className="badge badge-dot" />
                         </a>
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-archive"
                         >
                           <span className="ti ti-x" />
@@ -468,13 +468,13 @@ const Navbar = () => {
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-read"
                         >
                           <span className="badge badge-dot" />
                         </a>
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-archive"
                         >
                           <span className="ti ti-x" />
@@ -502,13 +502,13 @@ const Navbar = () => {
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-read"
                         >
                           <span className="badge badge-dot" />
                         </a>
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-archive"
                         >
                           <span className="ti ti-x" />
@@ -536,13 +536,13 @@ const Navbar = () => {
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-read"
                         >
                           <span className="badge badge-dot" />
                         </a>
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-archive"
                         >
                           <span className="ti ti-x" />
@@ -570,13 +570,13 @@ const Navbar = () => {
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-read"
                         >
                           <span className="badge badge-dot" />
                         </a>
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-archive"
                         >
                           <span className="ti ti-x" />
@@ -602,13 +602,13 @@ const Navbar = () => {
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-read"
                         >
                           <span className="badge badge-dot" />
                         </a>
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           className="dropdown-notifications-archive"
                         >
                           <span className="ti ti-x" />

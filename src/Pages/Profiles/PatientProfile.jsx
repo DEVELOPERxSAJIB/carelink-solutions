@@ -86,7 +86,7 @@ const PatientProfile = () => {
                         </ul>
                       </div>
                       <a
-                        href="javascript:void(0)"
+                        href="#"
                         className="btn btn-primary mb-1"
                       >
                         <i className="ti ti-user-check ti-xs me-2" />
@@ -104,7 +104,7 @@ const PatientProfile = () => {
               <div className="nav-align-top">
                 <ul className="nav nav-pills flex-column flex-sm-row mb-6 gap-2 gap-lg-0">
                   <li className="nav-item">
-                    <a className="nav-link active" href="javascript:void(0);">
+                    <a className="nav-link active" href="#">
                       <i className="ti-sm ti ti-user-check me-1_5" /> Profile
                     </a>
                   </li>
@@ -393,7 +393,7 @@ const PatientProfile = () => {
                             <li>
                               <a
                                 className="dropdown-item"
-                                href="javascript:void(0);"
+                                href="#"
                               >
                                 Share connections
                               </a>
@@ -401,7 +401,7 @@ const PatientProfile = () => {
                             <li>
                               <a
                                 className="dropdown-item"
-                                href="javascript:void(0);"
+                                href="#"
                               >
                                 Suggest edits
                               </a>
@@ -412,7 +412,7 @@ const PatientProfile = () => {
                             <li>
                               <a
                                 className="dropdown-item"
-                                href="javascript:void(0);"
+                                href="#"
                               >
                                 Report bug
                               </a>
@@ -560,7 +560,7 @@ const PatientProfile = () => {
                             <li>
                               <a
                                 className="dropdown-item"
-                                href="javascript:void(0);"
+                                href="#"
                               >
                                 Share teams
                               </a>
@@ -568,7 +568,7 @@ const PatientProfile = () => {
                             <li>
                               <a
                                 className="dropdown-item"
-                                href="javascript:void(0);"
+                                href="#"
                               >
                                 Suggest edits
                               </a>
@@ -579,7 +579,7 @@ const PatientProfile = () => {
                             <li>
                               <a
                                 className="dropdown-item"
-                                href="javascript:void(0);"
+                                href="#"
                               >
                                 Report bug
                               </a>

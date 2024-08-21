@@ -1,22 +1,18 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import io from "socket.io-client";
 import avatar from "../../src/assets/img/avatars/7.png";
-import calling from "../assets/audio/ringing-151670.mp3";
-import endCall from "../assets/audio/end-call-120633.mp3";
 import { useGetAllUsersQuery, useMeQuery } from "../Redux/api/UserApi";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { getChatState, setChatData } from "./../Redux/slices/ChatSlic";
 import EmojiPicker from "emoji-picker-react";
-
+import VideoChat from "./../components/VideoChat";
 import {
   useCreateChatMutation,
   useGetAllChatsQuery,
   useGetAllChatsUsersQuery,
 } from "../Redux/api/ChatApi";
-const callingAudio = new Audio(calling);
-const endCallAudio = new Audio(endCall);
-callingAudio.loop = true;
+
 const PushNotes = () => {
   const dispatch = useDispatch();
   const [activeChat, setActiveChat] = useState(null);
@@ -28,20 +24,13 @@ const PushNotes = () => {
   const [dropMenu, setDropMenu] = useState(false);
   const [chatImage, setChatImage] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [incomingCall, setIncomingCall] = useState(null);
-  const [localStream, setLocalStream] = useState(null);
-  const [remoteStream, setRemoteStream] = useState(null);
+
   const [activeUser, setActiveUser] = useState([]);
   const [sidebar, setSidebar] = useState(false);
-  const [isMute, setIsMute] = useState(true);
-  const [isCam, setIsCam] = useState(true);
-  const [candidate, setCandidate] = useState({});
-  const [receiver, setReceiver] = useState(true);
+
   const socket = useRef(null);
   const scrollChat = useRef(null);
   const emojiClose = useRef(null);
-  const peer = useRef(null);
-
 
   const { chatsData } = useSelector(getChatState);
   const { data: user } = useMeQuery();
@@ -54,23 +43,27 @@ const PushNotes = () => {
     useCreateChatMutation();
 
   useEffect(() => {
-    // socket.current = io("ws://localhost:5050");
-    socket.current = io("https://carelinks-server.onrender.com");
-
+    socket.current = io("ws://localhost:5050");
+    // socket.current = io("wss://carelinks-server.onrender.com");
+    console.log(socket.current);
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
+    socket.current.on("offer", ({ userData, offer }) => {
+      setVideoChat(true);
+    });
+    socket.current.on("end-call", ({ userData, offer }) => {
+      setVideoChat(false);
+      
+    });
+
     socket?.current?.on("realTimeMsgGet", (data) =>
       dispatch(setChatData([...(chatsData || []), data]))
     );
-    socket?.current?.on("offer", handleIncomingCall);
-    socket?.current?.on("call-accept", handleCallAccepted);
-    socket?.current?.on("icecandidate", handleIceCandidate);
-    socket?.current?.on("end-call", handleEndCall);
-    socket?.current?.on("call-decline", handleCallDecline);
+
     return () => {
       socket?.current?.disconnect();
     };
-  }, [user, dispatch, chatsData]);
+  }, [chatsData,dispatch,user?.payload?.user]);
 
   useEffect(() => {
     if (newChat?.chat) {
@@ -144,330 +137,13 @@ const PushNotes = () => {
     }
   };
 
-  const handleIncomingCall = useCallback((data) => {
-    setIncomingCall(data);
-    callingAudio.play();
-    setTimeout(() => {
-      callingAudio.pause();
-    }, 30000);
-  }, []);
-
-  const handleCallAccepted = useCallback((signal) => {
-    setReceiver(false);
-    if (signal.type === "video") {
-      setVideoChat(true);
-    } else {
-      setAudioChat(true);
-    }
-    callingAudio.pause();
-    peer.current
-      .setRemoteDescription(signal)
-      .catch((error) =>
-        console.error("Error setting remote description:", error)
-      );
-  }, []);
-  const peerConnectionConfig = {
-    iceServers: [
-      { urls: "stun:stun.l.google.com:19302" },
-      {
-        urls: "stun:global.stun.twilio.com:3478",
-      },
-    ],
-    iceCandidatePoolSize: 10,
-  };
-  let iceCandidateQueue = []; // Queue to store ICE candidates before setting the remote description
-  let remoteDescriptionSet = false; // Flag to track if the remote description has been set
-
-  const handleIceCandidate = useCallback(
-    (candidate) => {
-      if (remoteDescriptionSet) {
-        // If the remote description is already set, add the ICE candidate directly
-        peer.current
-          .addIceCandidate(new RTCIceCandidate(candidate))
-          .catch((error) => {
-            console.error("Error adding ICE candidate:", error);
-          });
-      } else {
-        // Otherwise, queue the ICE candidate to be added later
-        iceCandidateQueue.push(candidate);
-      }
-    },
-    [iceCandidateQueue, remoteDescriptionSet]
-  );
-
-  // Function to initialize the peer connection
-  const initializePeerConnection = () => {
-    if (!peer?.current) {
-      peer.current = new RTCPeerConnection(peerConnectionConfig);
-
-      peer.current.onicecandidate = (event) => {
-        if (event.candidate) {
-          socket?.current?.emit("icecandidate", {
-            candidate: event.candidate,
-          });
-        }
-      };
-
-      peer.current.ontrack = (event) => {
-        setRemoteStream(event.streams[0]);
-      };
-
-      console.log("Peer connection initialized:", peer.current);
-    }
-  };
-
-  // Example usage: Ensure to initialize the peer connection early in the process
-  initializePeerConnection();
-
-  const initiateCall = () => {
+  const createOffer = () => {
     setVideoChat(true);
-
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        console.log("Media stream acquired");
-
-        setLocalStream(stream);
-        stream
-          .getTracks()
-          .forEach((track) => peer.current?.addTrack(track, stream));
-
-        return peer.current.createOffer();
-      })
-      .then((offer) => {
-        return peer.current.setLocalDescription(offer);
-      })
-      .then(() => {
-        socket?.current?.emit("offer", {
-          userData: chatUser,
-          offer: peer.current.localDescription,
-          type: "video",
-          callerData: user?.payload?.user,
-        });
-      })
-      .catch((error) => {
-        console.error("Error during call initiation:", error);
-      });
   };
-  const initiateAudioCall = () => {
-    setAudioChat(true);
-    setReceiver(chatUser);
-
-    navigator.mediaDevices
-      .getUserMedia({ audio: true })
-      .then((stream) => {
-        setLocalStream(stream);
-        stream
-          .getTracks()
-          .forEach((track) => peer.current?.addTrack(track, stream));
-
-        return peer.current.createOffer();
-      })
-      .then((offer) => {
-        return peer.current.setLocalDescription(offer);
-      })
-      .then(() => {
-        socket?.current?.emit("offer", {
-          userData: chatUser,
-          offer: peer.current.localDescription,
-          type: "audio",
-          callerData: user?.payload?.user,
-        });
-      })
-      .catch((error) => {
-        console.error("Error during call initiation:", error);
-      });
-  };
-
-  const acceptCall = () => {
-    callingAudio.pause();
-    if (!incomingCall || !incomingCall.offer) {
-      console.error("Incoming call signal is missing or invalid");
-      return;
-    }
-    if (incomingCall.type === "video") {
-      setIncomingCall(null);
-      setVideoChat(true);
-    } else {
-      setIncomingCall(null);
-      setAudioChat(true);
-    }
-
-    peer.current.onicecandidate = (event) => {
-      if (event.candidate) {
-        socket?.current?.emit("icecandidate", {
-          userData: incomingCall.userData,
-          candidate: event.candidate,
-          type: incomingCall.type === "video" ? "video" : "audio",
-          callerData: user?.payload?.user,
-        });
-      }
-    };
-
-    peer.current.ontrack = (event) => {
-      setRemoteStream(event.streams[0]);
-    };
-
-    navigator.mediaDevices
-      .enumerateDevices()
-      .then((devices) => {
-        const videoDevices = devices.filter(
-          (device) => device.kind === "videoinput"
-        );
-        if (videoDevices.length === 0) {
-          console.error("No video devices available.");
-          return;
-        }
-
-        return navigator.mediaDevices.getUserMedia({
-          video: incomingCall.type === "video" ? true : false,
-          audio: true,
-        });
-      })
-      .then((stream) => {
-        setLocalStream(stream);
-        stream
-          .getTracks()
-          .forEach((track) => peer?.current?.addTrack(track, stream));
-        peer.current
-          .setRemoteDescription(new RTCSessionDescription(incomingCall.offer))
-          .then(() => peer.current.createAnswer())
-          .then((answer) => peer.current.setLocalDescription(answer))
-          .then(() => {
-            socket?.current?.emit("answer", {
-              answer: peer.current.localDescription,
-              userData: incomingCall.userData,
-              type: incomingCall.type === "video" ? "video" : "audio",
-              callerData: user?.payload?.user,
-            });
-          })
-          .catch((error) =>
-            console.error("Error during call acceptance:", error)
-          );
-      })
-      .catch((error) => {
-        if (error.name === "NotAllowedError") {
-          console.error("Permission to access media devices was denied.");
-        } else if (error.name === "NotFoundError") {
-          console.error("No media devices found.");
-        } else if (error.name === "NotReadableError") {
-          console.error("Media devices are already in use.");
-        } else if (error.name === "OverconstrainedError") {
-          console.error("Constraints could not be satisfied.");
-        } else {
-          console.error("Error accessing media devices:", error);
-        }
-      });
-  };
-
-  const declineCall = () => {
-    setIncomingCall(null);
-    callingAudio.pause();
-    endCallAudio.play();
-    socket?.current?.emit("call-decline", {
-      userData: chatUser,
-      callerData: user?.payload?.user,
-    });
-    createChat({ chat: "missed call", receiverId: chatUser?._id });
-  };
-
-  const toggleAudio = () => {
-    setIsMute(!isMute);
-
-    if (localStream) {
-      const audioTrack = localStream.getAudioTracks()[0];
-      audioTrack.enabled = !audioTrack.enabled;
-      console.log(audioTrack.enabled ? "Audio Unmuted" : "Audio Muted");
-    }
-  };
-
-  const toggleVideo = () => {
-    setIsCam(!isCam);
-    if (localStream) {
-      const videoTrack = localStream.getVideoTracks()[0];
-      videoTrack.enabled = !videoTrack.enabled;
-      console.log(videoTrack.enabled ? "Camera On" : "Camera Off");
-    }
-  };
-
-  const endCall = () => {
-    if (peer.current) {
-      peer?.current?.close();
-      peer.current = null;
-      socket?.current?.emit("end-call", {
-        userData: chatUser,
-        callerData: user?.payload?.user,
-      });
-      setVideoChat(false);
-      setAudioChat(false);
-      setIncomingCall(null);
-      const form_data = new FormData();
-      form_data.append("chat", chat);
-      form_data.append("receiverId", activeChat._id);
-
-      createChat({ chat: "call end", receiverId: chatUser?._id });
-    }
-    if (localStream) {
-      localStream.getTracks().forEach((track) => track.stop());
-      setLocalStream(null);
-    }
-    if (remoteStream) {
-      remoteStream.getTracks().forEach((track) => track.stop());
-      setRemoteStream(null);
-    }
-    callingAudio.pause();
-    endCallAudio.play();
-  };
-  const handleEndCall = useCallback(() => {
-    setIncomingCall(null);
-
-    setVideoChat(false);
-    setAudioChat(false);
-    if (peer.current) {
-      peer?.current?.close();
-      peer.current = null;
-    }
-    if (localStream) {
-      localStream.getTracks().forEach((track) => track.stop());
-      setLocalStream(null);
-    }
-    if (remoteStream) {
-      remoteStream.getTracks().forEach((track) => track.stop());
-      setRemoteStream(null);
-    }
-    callingAudio.pause();
-    endCallAudio.play();
-  }, [localStream, remoteStream]);
-  const handleCallDecline = useCallback(() => {
-    setIncomingCall(null);
-    callingAudio.pause();
-    if (peer.current) {
-      peer.current.close();
-      peer.current = null;
-    }
-
-    // Stop all tracks and release local media resources
-    if (localStream) {
-      localStream.getTracks().forEach((track) => track.stop());
-      setLocalStream(null);
-    }
-
-    // Stop all tracks and release remote media resources
-    if (remoteStream) {
-      remoteStream.getTracks().forEach((track) => track.stop());
-      setRemoteStream(null);
-    }
-    // Update UI or state to reflect that the call was declined
-    setVideoChat(false);
-    setAudioChat(false);
-    callingAudio.pause();
-    endCallAudio.play();
-  }, [localStream, remoteStream]);
 
   const handleSidebar = () => {
     setSidebar(!sidebar);
   };
-
 
   // Users who have an existing chat with the logged-in user
   const filteredChattedUsers = users?.payload?.users?.filter((user) =>
@@ -490,6 +166,7 @@ const PushNotes = () => {
 
   return (
     <div className="row">
+      {/* <VideoChat/> */}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="app-chat card overflow-hidden">
           <div className="row g-0">
@@ -881,13 +558,13 @@ const PushNotes = () => {
                         <div className="call d-flex gap-3 align-items-center">
                           <button
                             className="btn btn-sm btn-danger"
-                            onClick={initiateAudioCall}
+                            onClick={createOffer}
                           >
                             <i className="ti ti-phone"></i>
                           </button>
                           <button
                             className="btn btn-sm btn-danger"
-                            onClick={initiateCall}
+                            onClick={createOffer}
                           >
                             <i className="ti ti-video"></i>
                           </button>
@@ -895,41 +572,6 @@ const PushNotes = () => {
                       </div>
                     </div>
                     <div className="chat-history-body ">
-                      {incomingCall?.callerData && (
-                        <div
-                          style={{
-                            zIndex: 10000,
-                            left: 0,
-                            padding: "0 10px 0 10px",
-                            position: "absolute",
-                            top: 0,
-                          }}
-                          className="d-flex align-items-center gap-3 justify-content-between  bg-primary shadow w-100 text-light flex-wrap p-2"
-                        >
-                          <p className="mt-3 text-success text-capitalize">
-                            <span className="text-white">
-                              {incomingCall?.callerData?.firstName}
-                              {incomingCall?.callerData?.lastName}
-                            </span>
-                            is calling...
-                          </p>
-                          <div className="d-flex gap-3 align-items-center  ml-auto">
-                            <button
-                              className="btn btn-sm btn-success d-flex align-items-center gap-2"
-                              onClick={acceptCall}
-                            >
-                              <i className="ti ti-phone"></i> accept
-                            </button>
-                            <button
-                              className="btn btn-sm btn-danger d-flex align-items-center gap-2"
-                              onClick={declineCall}
-                            >
-                              <i className="ti ti-phone-off"></i> decline
-                            </button>
-                          </div>
-                        </div>
-                      )}
-
                       <ul className="list-unstyled chat-history chat-scrollbar">
                         {chatsData && chatsData?.length > 0 ? (
                           chatsData?.map((item, index) => {
@@ -1086,190 +728,12 @@ const PushNotes = () => {
                 )}
 
                 {videoChat && (
-                  <div
-                    style={{ width: "100%", height: "100%" }}
-                    className="video-chat-container border d-flex bg-primary flex-column align-items-center justify-content-center"
-                  >
-                    <div
-                      style={{ width: "100%", height: "100%" }}
-                      className="video-streams border overflow-hidden"
-                    >
-                      {/* {isCam && ( */}
-                      <>
-                        <>
-                          {/* <video
-                            ref={(video) => {
-                              if (video) {
-                                video.srcObject = localStream;
-                                video.play();
-                              }
-                            }}
-                            autoPlay
-                            muted
-                            style={{
-                              width: "30%",
-                              position: "absolute",
-                              bottom: 0,
-                              right: 0,
-                            }}
-                          ></video> */}
-                           
-                            <video
-                              ref={(video) => {
-                                if (video) {
-                                  video.srcObject = remoteStream;
-                                  video.play();
-                                }
-                              }}
-                              autoPlay
-                              style={{ width: "100%", border: "2px solid red" }}
-                            ></video>
-                          
-                        </>
-                      </>
-                    </div>
-                    <div
-                      style={{
-                        position: "absolute",
-                        zIndex: 50,
-                        bottom: "50px",
-                        right: "",
-                      }}
-                    >
-                      {candidate && !receiver ? (
-                        <div className="video-streams overflow-hidden d-flex flex-column gap-1 justify-content-center align-items-center">
-                          <img
-                            style={{
-                              width: "70px",
-                              height: "70px",
-                              borderRadius: "100%",
-                            }}
-                            src={candidate?.avatar ? candidate?.avatar : ""}
-                            alt=""
-                          />
-                          <h6 className="text-capitalize text-white">
-                            {candidate?.firstName}
-                            {candidate?.lastName}
-                          </h6>
-                        </div>
-                      ) : (
-                        <div className="video-streams overflow-hidden d-flex flex-column gap-1 justify-content-center align-items-center">
-                          <img
-                            style={{
-                              width: "70px",
-                              height: "70px",
-                              borderRadius: "100%",
-                            }}
-                            src={chatUser?.avatar ? chatUser?.avatar : avatar}
-                            alt=""
-                          />
-                          <h6 className="text-capitalize text-light">
-                            {chatUser?.firstName}
-                            {chatUser?.lastName}
-                          </h6>
-                        </div>
-                      )}
-                    </div>
-                    <div
-                      style={{
-                        position: "absolute",
-                        zIndex: 50,
-                        bottom: "10px",
-                      }}
-                      className="video-controls  d-flex align-items-center justify-content-end gap-3 mr-5 mt-auto"
-                    >
-                      <button
-                        onClick={toggleAudio}
-                        className="btn btn-secondary"
-                      >
-                        {isMute ? (
-                          <i className="ti ti-microphone" />
-                        ) : (
-                          <i className="ti ti-microphone-off" />
-                        )}
-                      </button>
-                      <button
-                        onClick={toggleVideo}
-                        className="btn btn-secondary"
-                      >
-                        {isCam ? (
-                          <i className="ti ti-camera" />
-                        ) : (
-                          <i className="ti ti-camera-off" />
-                        )}
-                      </button>
-                      <button onClick={endCall} className="btn btn-danger">
-                        <i className="ti ti-phone-off" />
-                      </button>
-                    </div>
-                  </div>
-                )}
-                {audioChat && (
-                  <div className="video-chat-container border bg-primary d-flex flex-column align-items-center justify-content-center h-100">
-                    {candidate && !receiver ? (
-                      <div className="video-streams overflow-hidden d-flex flex-column gap-4 justify-content-center align-items-center">
-                        <img
-                          style={{
-                            width: "70px",
-                            height: "70px",
-                            borderRadius: "100%",
-                          }}
-                          src={candidate?.avatar ? candidate?.avatar : avatar}
-                          alt=""
-                        />
-                        <h4 className="text-capitalize text-white">
-                          {candidate?.firstName}
-                          {candidate?.lastName}
-                        </h4>
-                      </div>
-                    ) : (
-                      <div className="video-streams overflow-hidden d-flex flex-column gap-4 justify-content-center align-items-center">
-                        <img
-                          style={{
-                            width: "70px",
-                            height: "70px",
-                            borderRadius: "100%",
-                          }}
-                          src={chatUser?.avatar ? chatUser?.avatar : avatar}
-                          alt=""
-                        />
-                        <h4 className="text-capitalize text-white">
-                          {chatUser?.firstName}
-                          {chatUser?.lastName}
-                        </h4>
-                        <audio ref={(video) => {
-                              if (video) {
-                                video.srcObject = localStream;
-                                video.play();
-                              }
-                            }}></audio>
-                      </div>
-                    )}
-
-                    <div
-                      style={{
-                        position: "absolute",
-                        zIndex: 50,
-                        bottom: "10px",
-                      }}
-                      className="video-controls  d-flex align-items-center justify-content-end gap-3 mr-5 mt-auto"
-                    >
-                      <button
-                        onClick={toggleAudio}
-                        className="btn btn-secondary"
-                      >
-                        {isMute ? (
-                          <i className="ti ti-microphone" />
-                        ) : (
-                          <i className="ti ti-microphone-off" />
-                        )}
-                      </button>
-
-                      <button onClick={endCall} className="btn btn-danger">
-                        <i className="ti ti-phone-off" />
-                      </button>
-                    </div>
-                  </div>
+                  <VideoChat
+                    setVideoChat={setVideoChat}
+                    chatUser={chatUser}
+                    user={user?.payload?.user}
+                    socket={socket}
+                  />
                 )}
               </div>
             </div>
