@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { io } from "socket.io-client";
-import { useCreateChatMutation } from "../Redux/api/ChatApi";
-import callingAudioMusic from "../assets/audio/ringing-151670.mp3";
-import endCallAudioMusice from "../assets/audio/end-call-120633.mp3";
-import { showToast } from "./../utils/Toastify";
-import avatar from "../../src/assets/img/avatars/7.png";
+import { useCreateChatMutation } from "../../Redux/api/ChatApi";
+import callingAudioMusic from "../../assets/audio/ringing-151670.mp3";
+import endCallAudioMusice from "../../assets/audio/end-call-120633.mp3";
+import { showToast } from "./../../utils/Toastify";
+import avatar from "../../../src/assets/img/avatars/7.png";
 const callingAudio = new Audio(callingAudioMusic);
 const endCallAudio = new Audio(endCallAudioMusice);
 callingAudio.loop = true;
@@ -28,10 +28,10 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
 
   useEffect(() => {
     const localStreamInit = async () => {
-      
-      const localStreamData = await navigator.mediaDevices.getUserMedia(
-        {video:true,audio:true}
-      );
+      const localStreamData = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
       document.getElementById("localVideo").srcObject = localStreamData;
       localStreamData.getAudioTracks()[0].enabled = true;
       localStream.current = localStreamData;
@@ -47,8 +47,7 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
   }, [offer]);
 
   const handleIncomingCall = async (offer) => {
-    
-      const pc = new RTCPeerConnection(iceServers);
+    const pc = new RTCPeerConnection(iceServers);
     peerConnection.current = pc;
     await pc.setRemoteDescription(new RTCSessionDescription(offer));
     callingAudio.play();
@@ -60,9 +59,10 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
 
     pc.onicecandidate = (event) => {
       if (event.candidate) {
-        socket.current.emit("new-ice-candidate", {
+        socket.current.emit("icecandidate", {
           candidate: event.candidate,
-          to: chatUser._id,
+          userData: chatUser,
+          type: "video",
         });
       }
     };
@@ -71,7 +71,6 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
     localStream.current.getTracks().forEach((track) => {
       pc.addTrack(track, localStream.current);
     });
-    
   };
 
   const acceptCall = async () => {
@@ -107,6 +106,7 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
           socket.current.emit("answer", {
             answer: pc.localDescription,
             userData: chatUser,
+            type: "video",
           });
         }
       };
@@ -150,6 +150,7 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
             socket.current.emit("offer", {
               offer: pc.localDescription,
               userData: chatUser,
+              type: "video",
             });
           }
         };
@@ -177,9 +178,11 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
     callingAudio.pause();
     endCallAudio.play();
     setIsCalling(false);
+    setVideoChat(false);
     // Emit call decline event
     socket?.current?.emit("call-decline", {
       userData: chatUser,
+      type: "video",
       callerData: user,
     });
 
@@ -216,6 +219,7 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
       setVideoChat(false);
       socket?.current?.emit("end-call", {
         userData: chatUser,
+        type: "video",
         callerData: user,
       });
       setIncomingCall(null);
@@ -261,11 +265,14 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
     callingAudio.pause();
     endCallAudio.play();
   }, [setVideoChat]);
-
+  const handleCancel = () => {
+    setVideoChat(false);
+    callingAudio.pause();
+  };
   const handleCallDecline = useCallback(() => {
     setIncomingCall(null);
     callingAudio.pause();
-
+    setVideoChat(false);
     if (peerConnection.current) {
       peerConnection.current.close();
       peerConnection.current = null;
@@ -314,7 +321,7 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
         peerConnection.current.close();
       }
     };
-  }, [user, handleEndCall, handleCallDecline,chatUser]);
+  }, [user, handleEndCall, handleCallDecline, chatUser]);
   return (
     <div
       style={{ width: "100%", height: "100%" }}
@@ -322,7 +329,7 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
     >
       <div
         style={{ width: "100%", height: "100%" }}
-        className="video-streams border overflow-hidden"
+        className="video-streams border overflow-hidden "
       >
         {incomingCall && (
           <div
@@ -333,15 +340,12 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
               position: "absolute",
               top: 0,
             }}
-            className="d-flex align-items-center gap-3 justify-content-between  bg-primary shadow w-100 text-light flex-wrap p-2"
+            className="d-flex bg-primary align-items-center gap-3 justify-content-between  bg-primary shadow w-100 text-light flex-wrap p-2"
           >
-            <p className="mt-3 text-success text-capitalize">
-              <span className="text-white">
-                {incomingCall?.firstName}
-                {incomingCall?.lastName}
-              </span> 
-                  is calling...
-            </p>
+            <span className="mt-3 text-success text-capitalize mb-0 pb-0">
+              <span className="text-white">{incomingCall?.firstName}</span>
+              is calling...
+            </span>
             <div className="d-flex gap-3 align-items-center  ml-auto">
               <button
                 className="btn btn-sm btn-success d-flex align-items-center gap-2"
@@ -358,62 +362,48 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
             </div>
           </div>
         )}
-        <video
-          id="remoteVideo"
+        <div
           style={{
             width: "100%",
-            height: "100%",
+            height: "700px",
+            background: "black",
           }}
-          autoPlay
-          playsInline
-        ></video>
-
-       <div  style={{
+        >
+          <video
+            id="remoteVideo"
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+            autoPlay
+            playsInline
+          ></video>
+        </div>
+        <div
+          style={{
             width: `${"100px"}`,
             height: "100px",
             borderRadius: "100px",
-            border:"1px solid gray",
+            border: "1px solid gray",
             position: "absolute",
-            background:"black",
+            background: "black",
             top: 50,
             right: 50,
             zIndex: 100,
-            overflow:"hidden"
-          }}>
-       <video
-          id="localVideo"
-          style={{
-            width: `${"100%"}`,
-            height: "100%",
+            overflow: "hidden",
           }}
-          autoPlay
-          muted
-        ></video>
-       </div>
+        >
+          <video
+            id="localVideo"
+            style={{
+              width: `${"100%"}`,
+              height: "100%",
+            }}
+            autoPlay
+            muted
+          ></video>
+        </div>
 
-
-          <div style={{position:"absolute",
-                zIndex:200,
-                bottom:"5%",
-                left:"50%",
-                transform:"translateX(-50%)"
-                }} className="video-streams w-100   overflow-hidden d-flex flex-column gap-1 justify-content-center align-items-center ">
-            <img
-              style={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "100%",
-                
-              }}
-              src={chatUser?.avatar ? chatUser?.avatar : avatar}
-              alt=""
-            />
-            <h6 className="text-capitalize text-white">
-              {chatUser?.firstName}
-              {chatUser?.lastName}
-            </h6>
-          </div>
-        
         <div
           style={{
             position: "absolute",
@@ -421,17 +411,35 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
             bottom: "10px",
             left: "50%",
             transform: "translateX(-50%)",
+            boxShadow: "0px 0px 10px purple",
           }}
-          className="video-controls  d-flex align-items-center justify-content-end gap-3 mr-5 mt-auto"
+          className="video-controls bg-primary p-2 rounded  d-flex align-items-center justify-content-end gap-3 mr-5 mt-auto"
         >
-          <button onClick={toggleAudio} className="btn btn-secondary">
+          <div className="d-flex gap-2 align-items-center">
+            <img
+              style={{
+                width: "30px",
+                height: "30px",
+                borderRadius: "100%",
+              }}
+              src={chatUser?.avatar ? chatUser?.avatar : avatar}
+              alt=""
+            />
+            <p
+              style={{ marginBottom: 0, paddingBottom: 0 }}
+              className="text-capitalize text-white fs-6 truncate"
+            >
+              {chatUser?.firstName}
+            </p>
+          </div>
+          <button onClick={toggleAudio} className="btn btn-dark">
             {isMute ? (
               <i className="ti ti-microphone" />
             ) : (
               <i className="ti ti-microphone-off" />
             )}
           </button>
-          <button onClick={toggleVideo} className="btn btn-secondary">
+          <button onClick={toggleVideo} className="btn btn-dark">
             {isCam ? (
               <i className="ti ti-camera" />
             ) : (
@@ -444,9 +452,14 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
               <i className="ti ti-phone-off" />
             </button>
           ) : (
-            <button onClick={createOffer} className="btn btn-sm btn-success">
-              <i className="ti ti-phone"></i>
-            </button>
+            !incomingCall && <div className="d-flex gap-2">
+              <button onClick={createOffer} className="btn btn-sm btn-success">
+                <i className="ti ti-phone"></i>
+              </button>
+               <button onClick={handleCancel} className="btn btn-sm btn-danger">
+                Cancel
+              </button>
+            </div>
           )}
         </div>
       </div>

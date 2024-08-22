@@ -6,7 +6,8 @@ import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { getChatState, setChatData } from "./../Redux/slices/ChatSlic";
 import EmojiPicker from "emoji-picker-react";
-import VideoChat from "./../components/VideoChat";
+import VideoChat from "../components/Chat/VideoChat";
+import AudioChat from "../components/Chat/AudioChat";
 import {
   useCreateChatMutation,
   useGetAllChatsQuery,
@@ -47,12 +48,22 @@ const PushNotes = () => {
      socket.current=io('wss://carelinks-server.onrender.com');
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
-    socket?.current?.on("offer", ({ userData, offer }) => {
-      setVideoChat(true);
+    socket?.current?.on("offer", ({ type }) => {
+      if (type === "video") {
+        setVideoChat(true);
+      } else {
+        setAudioChat(true);
+      }
     });
+
     socket?.current?.on("end-call", ({ userData, offer }) => {
       setVideoChat(false);
-      
+      setAudioChat(false);
+    });
+    socket?.current?.on("call-decline", ({ userData, offer }) => {
+      console.log(offer)
+      setVideoChat(false);
+      setAudioChat(false);
     });
 
     socket?.current?.on("realTimeMsgGet", (data) =>
@@ -62,7 +73,7 @@ const PushNotes = () => {
     return () => {
       socket?.current?.disconnect();
     };
-  }, [videoChat]);
+  }, [videoChat, audioChat, chatsData, dispatch, user.payload.user]);
 
   useEffect(() => {
     if (newChat?.chat) {
@@ -136,6 +147,9 @@ const PushNotes = () => {
     }
   };
 
+  const createAudioOffer = () => {
+    setAudioChat(true);
+  };
   const createOffer = () => {
     setVideoChat(true);
   };
@@ -557,7 +571,7 @@ const PushNotes = () => {
                         <div className="call d-flex gap-3 align-items-center">
                           <button
                             className="btn btn-sm btn-danger"
-                            onClick={createOffer}
+                            onClick={createAudioOffer}
                           >
                             <i className="ti ti-phone"></i>
                           </button>
@@ -729,6 +743,14 @@ const PushNotes = () => {
                 {videoChat && (
                   <VideoChat
                     setVideoChat={setVideoChat}
+                    chatUser={chatUser}
+                    user={user?.payload?.user}
+                    socket={socket}
+                  />
+                )}
+                {audioChat && (
+                  <AudioChat
+                    setAudioChat={setAudioChat}
                     chatUser={chatUser}
                     user={user?.payload?.user}
                     socket={socket}
