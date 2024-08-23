@@ -187,7 +187,7 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
     });
 
     // Create a missed call chat message
-    createChat({ chat: "Missed call", receiverId: chatUser?._id });
+    createChat({ chat: "Vide missed call", receiverId: chatUser?._id });
 
     // Clean up resources
   };
@@ -452,14 +452,22 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
               <i className="ti ti-phone-off" />
             </button>
           ) : (
-            !incomingCall && <div className="d-flex gap-2">
-              <button onClick={createOffer} className="btn btn-sm btn-success">
-                <i className="ti ti-phone"></i>
-              </button>
-               <button onClick={handleCancel} className="btn btn-sm btn-danger">
-                Cancel
-              </button>
-            </div>
+            !incomingCall && (
+              <div className="d-flex gap-2">
+                <button
+                  onClick={createOffer}
+                  className="btn btn-sm btn-success"
+                >
+                  <i className="ti ti-phone"></i>
+                </button>
+                <button
+                  onClick={handleCancel}
+                  className="btn btn-sm btn-danger"
+                >
+                  Cancel
+                </button>
+              </div>
+            )
           )}
         </div>
       </div>

@@ -16,7 +16,7 @@ const PopupModal = ({ id, title, children,style }) => {
 
         {/* Modal */}
         <div className="modal fade" id={id} tabIndex="-1" aria-hidden="true">
-          <div style={{style}} className="modal-dialog" role="document">
+          <div style={style?{style}:{minWidth:"600px"}} className="modal-dialog" role="document">
             <div className="modal-content">
                 
               <div className="modal-header">

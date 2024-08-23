@@ -12,21 +12,21 @@ const DataTable = ({
 }) => {
   const { data: lgData } = useMeQuery();
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(20); // Default rows per page
+  const [rowsPerPage, setRowsPerPage] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortColumn, setSortColumn] = useState("");
   const [sortDirection, setSortDirection] = useState("asc");
   const [tableMenu, setTableMenu] = useState(false);
   const [rowId, setRowId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
-  const [activeDropdown, setActiveDropdown] = useState(null); // State to track active dropdown
+  const [activeDropdown, setActiveDropdown] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(
     Array(data.length).fill(false)
   );
   const [visibleColumns, setVisibleColumns] = useState(
-    columns.slice(0, 5).map((column) => column.field) // Show only first 5 columns by default
+    columns.slice(0, 5).map((column) => column.field)
   );
-  const [truncate, setTruncate] = useState(false); // State to track truncation
+  const [truncate, setTruncate] = useState(false);
   const tableRef = useRef();
   // Toggle truncation based on checkbox change
   const handleTruncate = (e) => {
@@ -325,7 +325,9 @@ const DataTable = ({
                       ) : column.render ? (
                         column.render(row)
                       ) : (
-                        <Link to={`/${tableName}/${row?._id}`}>{row[column.field]}</Link>
+                        <Link to={`/${tableName}/${row?._id}`}>
+                          {row[column.field]}
+                        </Link>
                       )}
                     </td>
                   ))}
@@ -341,7 +343,7 @@ const DataTable = ({
                   >
                     <i className="ti ti-dots-vertical ti-md"></i>
                   </button>
-          
+
                   {dropdownOpen[rowIndex] ? (
                     <div className="dropdown-menu show">
                       {lgData?.payload?.user?.curd.includes("read") && (

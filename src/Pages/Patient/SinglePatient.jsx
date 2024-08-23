@@ -100,7 +100,9 @@ const SinglePatient = () => {
     <div className="table-content" ref={componentRef}>
       <ReactToPrint
         trigger={() => (
-          <span className="btn btn-primary hide-on-print">Patient Profile</span>
+          <span className="btn btn-primary hide-on-print">
+            <i className="ti ti-user-check ti-xs me-2" /> Patient Profile
+          </span>
         )}
         content={() => componentRef.current}
         documentTitle="Patient"
@@ -362,7 +364,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="checkbox"
@@ -372,7 +374,7 @@ const SinglePatient = () => {
                           checked={formData?.ethnicity?.includes(
                             "No, not of Hispanic, Latino/a, or Spanish origin"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "11px", dispaly: "inline-block" }}
@@ -388,7 +390,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -414,7 +416,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -440,7 +442,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -464,7 +466,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -490,7 +492,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -516,7 +518,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -576,7 +578,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -602,7 +604,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -628,7 +630,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -652,7 +654,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -676,7 +678,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -700,7 +702,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -724,7 +726,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -748,7 +750,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -772,7 +774,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -796,7 +798,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -820,7 +822,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -846,7 +848,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -870,7 +872,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -896,7 +898,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -922,7 +924,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -948,7 +950,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -988,7 +990,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1014,7 +1016,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1040,7 +1042,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1066,7 +1068,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1092,7 +1094,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1118,7 +1120,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1144,7 +1146,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1154,7 +1156,7 @@ const SinglePatient = () => {
                           checked={formData?.paymentSources?.includes(
                             "Title programs (for example, Title III, V, or XX)"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "11px", dispaly: "inline-block" }}
@@ -1170,7 +1172,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1180,7 +1182,7 @@ const SinglePatient = () => {
                           checked={formData?.paymentSources?.includes(
                             "Other government (for example, TriCare, VA)"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "11px", dispaly: "inline-block" }}
@@ -1196,7 +1198,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1206,7 +1208,7 @@ const SinglePatient = () => {
                           checked={formData?.paymentSources?.includes(
                             "Private insurance"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "11px", dispaly: "inline-block" }}
@@ -1222,7 +1224,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1232,7 +1234,7 @@ const SinglePatient = () => {
                           checked={formData?.paymentSources?.includes(
                             "Private HMO/managed care"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "11px", dispaly: "inline-block" }}
@@ -1248,7 +1250,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1258,7 +1260,7 @@ const SinglePatient = () => {
                           checked={formData?.paymentSources?.includes(
                             "Self-pay"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "11px", dispaly: "inline-block" }}
@@ -1274,7 +1276,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1284,7 +1286,7 @@ const SinglePatient = () => {
                           checked={formData?.paymentSources?.includes(
                             "Other (specify)"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "11px", dispaly: "inline-block" }}
@@ -1300,7 +1302,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1310,7 +1312,7 @@ const SinglePatient = () => {
                           checked={formData?.paymentSources?.includes(
                             "Unknown"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "11px", dispaly: "inline-block" }}
@@ -1442,7 +1444,7 @@ const SinglePatient = () => {
                         checked={formData?.transportation?.includes(
                           "Yes, it has kept me from medical appointments or from getting my medications"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="transportationMedicalAppointments"
@@ -1468,7 +1470,7 @@ const SinglePatient = () => {
                         checked={formData?.transportation?.includes(
                           "Yes, it has kept me from non-medical meetings, appointments, work, or from getting things that I need"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="transportationNonMedical"
@@ -1492,7 +1494,7 @@ const SinglePatient = () => {
                         name="transportation"
                         value="No"
                         checked={formData?.transportation?.includes("No")}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="transportationNo"
@@ -1517,7 +1519,7 @@ const SinglePatient = () => {
                         checked={formData?.transportation?.includes(
                           "Patient unable to respond"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="transportationUnableToRespond"
@@ -1542,7 +1544,7 @@ const SinglePatient = () => {
                         checked={formData?.transportation?.includes(
                           "Patient declines to respond"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="transportationDeclines"
@@ -1567,7 +1569,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1577,7 +1579,7 @@ const SinglePatient = () => {
                           checked={formData?.inpatientFacilityDischargedFrom?.includes(
                             "Long-term nursing facility (NF)"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="longTermNursingFacility"
@@ -1592,7 +1594,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1602,7 +1604,7 @@ const SinglePatient = () => {
                           checked={formData?.inpatientFacilityDischargedFrom?.includes(
                             "Skilled nursing facility (SNF/TCU)"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="skilledNursingFacility"
@@ -1617,7 +1619,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1627,7 +1629,7 @@ const SinglePatient = () => {
                           checked={formData?.inpatientFacilityDischargedFrom?.includes(
                             "Short-stay acute hospital (IPPS)"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="shortStayAcuteHospital"
@@ -1642,7 +1644,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1652,7 +1654,7 @@ const SinglePatient = () => {
                           checked={formData?.inpatientFacilityDischargedFrom?.includes(
                             "Long-term care hospital (LTCH)"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="longTermCareHospital"
@@ -1667,7 +1669,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1677,7 +1679,7 @@ const SinglePatient = () => {
                           checked={formData?.inpatientFacilityDischargedFrom?.includes(
                             "Inpatient rehabilitation hospital or unit (IRF)"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="inpatientRehabilitationHospital"
@@ -1692,7 +1694,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1702,7 +1704,7 @@ const SinglePatient = () => {
                           checked={formData?.inpatientFacilityDischargedFrom?.includes(
                             "Psychiatric hospital or unit"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="psychiatricHospital"
@@ -1717,7 +1719,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -1727,7 +1729,7 @@ const SinglePatient = () => {
                           checked={formData?.inpatientFacilityDischargedFrom?.includes(
                             "Other (specify)"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="otherInpatientFacility"
@@ -1762,7 +1764,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -1770,7 +1772,7 @@ const SinglePatient = () => {
                           name="emergentCare"
                           value="0"
                           checked={formData?.emergentCare === "0"}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="emergentCareNo"
@@ -1785,7 +1787,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -1793,7 +1795,7 @@ const SinglePatient = () => {
                           name="emergentCare"
                           value="1"
                           checked={formData?.emergentCare === "1"}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="emergentCareYesWithoutAdmission"
@@ -1809,7 +1811,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -1817,7 +1819,7 @@ const SinglePatient = () => {
                           name="emergentCare"
                           value="2"
                           checked={formData?.emergentCare === "2"}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="emergentCareYesWithAdmission"
@@ -1833,7 +1835,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -1841,7 +1843,7 @@ const SinglePatient = () => {
                           name="emergentCare"
                           value="UK"
                           checked={formData?.emergentCare === "UK"}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="emergentCareUnknown"
@@ -1875,7 +1877,7 @@ const SinglePatient = () => {
                         name="reasonForEmergentCare"
                         value="1"
                         checked={formData?.reasonForEmergentCare?.includes("1")}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="reasonImproperMedication"
@@ -1902,7 +1904,7 @@ const SinglePatient = () => {
                         checked={formData?.reasonForEmergentCare?.includes(
                           "10"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="reasonHypoHyperglycemia"
@@ -1927,7 +1929,7 @@ const SinglePatient = () => {
                         checked={formData?.reasonForEmergentCare?.includes(
                           "19"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -1953,7 +1955,7 @@ const SinglePatient = () => {
                         checked={formData?.reasonForEmergentCare?.includes(
                           "UK"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -1979,7 +1981,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -1989,7 +1991,7 @@ const SinglePatient = () => {
                           checked={
                             formData?.inpatientFacilityAdmittedTo === "1"
                           }
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="admittedToHospital"
@@ -2004,7 +2006,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2014,7 +2016,7 @@ const SinglePatient = () => {
                           checked={
                             formData?.inpatientFacilityAdmittedTo === "2"
                           }
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="admittedToRehabilitationFacility"
@@ -2029,7 +2031,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2039,7 +2041,7 @@ const SinglePatient = () => {
                           checked={
                             formData?.inpatientFacilityAdmittedTo === "3"
                           }
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="admittedToNursingHome"
@@ -2054,7 +2056,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2064,7 +2066,7 @@ const SinglePatient = () => {
                           checked={
                             formData?.inpatientFacilityAdmittedTo === "4"
                           }
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="admittedToHospice"
@@ -2079,7 +2081,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2089,7 +2091,7 @@ const SinglePatient = () => {
                           checked={
                             formData?.inpatientFacilityAdmittedTo === "NA"
                           }
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="noInpatientFacility"
@@ -2113,7 +2115,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2121,7 +2123,7 @@ const SinglePatient = () => {
                           name="dischargeDisposition"
                           value="1"
                           checked={formData?.dischargeDisposition === "1"}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="remainedInCommunityWithoutServices"
@@ -2138,7 +2140,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2146,7 +2148,7 @@ const SinglePatient = () => {
                           name="dischargeDisposition"
                           value="2"
                           checked={formData?.dischargeDisposition === "2"}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="remainedInCommunityWithServices"
@@ -2162,7 +2164,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2170,7 +2172,7 @@ const SinglePatient = () => {
                           name="dischargeDisposition"
                           value="3"
                           checked={formData?.dischargeDisposition === "3"}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="transferredToNonInstitutionalHospice"
@@ -2185,7 +2187,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2193,7 +2195,7 @@ const SinglePatient = () => {
                           name="dischargeDisposition"
                           value="4"
                           checked={formData?.dischargeDisposition === "4"}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="movedToGeographicLocationNotServed"
@@ -2209,7 +2211,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2217,7 +2219,7 @@ const SinglePatient = () => {
                           name="dischargeDisposition"
                           value="UK"
                           checked={formData?.dischargeDisposition === "UK"}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "11px", dispaly: "inline-block" }}
@@ -2244,7 +2246,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2252,7 +2254,7 @@ const SinglePatient = () => {
                           name="medicationListProvided"
                           value="1"
                           checked={formData?.medicationListProvided === "1"}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="medicationListProvidedYes"
@@ -2268,7 +2270,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2276,7 +2278,7 @@ const SinglePatient = () => {
                           name="medicationListProvided"
                           value="0"
                           checked={formData?.medicationListProvided === "0"}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="medicationListProvidedNo"
@@ -2292,7 +2294,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2300,7 +2302,7 @@ const SinglePatient = () => {
                           name="medicationListProvided"
                           value="2"
                           checked={formData?.medicationListProvided === "2"}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="medicationListProvidedNA"
@@ -2338,7 +2340,7 @@ const SinglePatient = () => {
                         checked={formData?.routeMedicationListTransmission?.includes(
                           "Electronic Health Record"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="routeMedicationListTransmissionEHR"
@@ -2363,7 +2365,7 @@ const SinglePatient = () => {
                         checked={formData?.routeMedicationListTransmission?.includes(
                           "Health Information Exchange"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="routeMedicationListTransmissionHIE"
@@ -2388,7 +2390,7 @@ const SinglePatient = () => {
                         checked={formData?.routeMedicationListTransmission?.includes(
                           "Verbal"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="routeMedicationListTransmissionVerbal"
@@ -2414,7 +2416,7 @@ const SinglePatient = () => {
                         checked={formData?.routeMedicationListTransmission?.includes(
                           "Paper-based"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="routeMedicationListTransmissionPaper"
@@ -2439,7 +2441,7 @@ const SinglePatient = () => {
                         checked={formData?.routeMedicationListTransmission?.includes(
                           "Other Methods"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="routeMedicationListTransmissionOther"
@@ -2464,7 +2466,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2474,7 +2476,7 @@ const SinglePatient = () => {
                           checked={
                             formData?.medicationListProvidedToPatient === "Yes"
                           }
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="medicationListProvidedToPatientYes"
@@ -2490,7 +2492,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
@@ -2500,7 +2502,7 @@ const SinglePatient = () => {
                           checked={
                             formData?.medicationListProvidedToPatient === "No"
                           }
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="medicationListProvidedToPatientNo"
@@ -2526,7 +2528,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -2536,7 +2538,7 @@ const SinglePatient = () => {
                           checked={formData?.routeMedicationListTransmissionToPatient?.includes(
                             "Electronic Health Record"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="routeMedicationListTransmissionToPatientEHR"
@@ -2552,7 +2554,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -2562,7 +2564,7 @@ const SinglePatient = () => {
                           checked={formData?.routeMedicationListTransmissionToPatient?.includes(
                             "Health Information Exchange"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="routeMedicationListTransmissionToPatientHIE"
@@ -2578,7 +2580,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -2588,7 +2590,7 @@ const SinglePatient = () => {
                           checked={formData?.routeMedicationListTransmissionToPatient?.includes(
                             "Verbal"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="routeMedicationListTransmissionToPatientVerbal"
@@ -2605,7 +2607,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -2615,7 +2617,7 @@ const SinglePatient = () => {
                           checked={formData?.routeMedicationListTransmissionToPatient?.includes(
                             "Paper-based"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="routeMedicationListTransmissionToPatientPaperBased"
@@ -2631,7 +2633,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="checkbox"
@@ -2641,7 +2643,7 @@ const SinglePatient = () => {
                           checked={formData?.routeMedicationListTransmissionToPatient?.includes(
                             "Other Methods"
                           )}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           htmlFor="routeMedicationListTransmissionToPatientOther"
@@ -2698,7 +2700,7 @@ const SinglePatient = () => {
                         name="hearing"
                         value="0"
                         checked={formData?.hearing === "0"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="hearingAdequate"
@@ -2723,7 +2725,7 @@ const SinglePatient = () => {
                         name="hearing"
                         value="1"
                         checked={formData?.hearing === "1"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="hearingMinimalDifficulty"
@@ -2748,7 +2750,7 @@ const SinglePatient = () => {
                         name="hearing"
                         value="2"
                         checked={formData?.hearing === "2"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="hearingModerateDifficulty"
@@ -2773,7 +2775,7 @@ const SinglePatient = () => {
                         name="hearing"
                         value="3"
                         checked={formData?.hearing === "3"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="hearingHighlyImpaired"
@@ -2809,7 +2811,7 @@ const SinglePatient = () => {
                         name="vision"
                         value="0"
                         checked={formData?.vision === "0"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="visionAdequate"
@@ -2834,7 +2836,7 @@ const SinglePatient = () => {
                         name="vision"
                         value="1"
                         checked={formData?.vision === "1"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="visionImpaired"
@@ -2859,7 +2861,7 @@ const SinglePatient = () => {
                         name="vision"
                         value="2"
                         checked={formData?.vision === "2"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="visionModeratelyImpaired"
@@ -2884,7 +2886,7 @@ const SinglePatient = () => {
                         name="vision"
                         value="3"
                         checked={formData?.vision === "3"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="visionHighlyImpaired"
@@ -2909,7 +2911,7 @@ const SinglePatient = () => {
                         name="vision"
                         value="4"
                         checked={formData?.vision === "4"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="visionSeverelyImpaired"
@@ -2946,7 +2948,7 @@ const SinglePatient = () => {
                         name="healthLiteracy"
                         value="0"
                         checked={formData?.healthLiteracy === "0"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="healthLiteracyNever"
@@ -2970,7 +2972,7 @@ const SinglePatient = () => {
                         name="healthLiteracy"
                         value="1"
                         checked={formData?.healthLiteracy === "1"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="healthLiteracyRarely"
@@ -2994,7 +2996,7 @@ const SinglePatient = () => {
                         name="healthLiteracy"
                         value="2"
                         checked={formData?.healthLiteracy === "2"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="healthLiteracySometimes"
@@ -3018,7 +3020,7 @@ const SinglePatient = () => {
                         name="healthLiteracy"
                         value="3"
                         checked={formData?.healthLiteracy === "3"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="healthLiteracyOften"
@@ -3042,7 +3044,7 @@ const SinglePatient = () => {
                         name="healthLiteracy"
                         value="4"
                         checked={formData?.healthLiteracy === "4"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="healthLiteracyAlways"
@@ -3066,7 +3068,7 @@ const SinglePatient = () => {
                         name="healthLiteracy"
                         value="7"
                         checked={formData?.healthLiteracy === "7"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="healthLiteracyDeclines"
@@ -3090,7 +3092,7 @@ const SinglePatient = () => {
                         name="healthLiteracy"
                         value="8"
                         checked={formData?.healthLiteracy === "8"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="healthLiteracyUnable"
@@ -3147,7 +3149,7 @@ const SinglePatient = () => {
                         name="interviewConducted"
                         value="0"
                         checked={formData?.interviewConducted === "0"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="interviewConductedNo"
@@ -3171,7 +3173,7 @@ const SinglePatient = () => {
                         name="interviewConducted"
                         value="1"
                         checked={formData?.interviewConducted === "1"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="interviewConductedYes"
@@ -3200,7 +3202,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="repetitionOfThreeWordsNone"
                         name="repetitionOfThreeWords"
                         value="0"
@@ -3223,7 +3225,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="repetitionOfThreeWordsOne"
                         name="repetitionOfThreeWords"
                         value="1"
@@ -3246,7 +3248,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="repetitionOfThreeWordsTwo"
                         name="repetitionOfThreeWords"
                         value="2"
@@ -3269,7 +3271,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="repetitionOfThreeWordsThree"
                         name="repetitionOfThreeWords"
                         value="3"
@@ -3310,7 +3312,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="temporalOrientationYear0"
                             name="temporalOrientationYear"
                             value="0"
@@ -3333,7 +3335,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="temporalOrientationYear1"
                             name="temporalOrientationYear"
                             value="1"
@@ -3356,7 +3358,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="temporalOrientationYear2"
                             name="temporalOrientationYear"
                             value="2"
@@ -3379,7 +3381,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="temporalOrientationYear3"
                             name="temporalOrientationYear"
                             value="3"
@@ -3411,7 +3413,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="temporalOrientationMonth0"
                             name="temporalOrientationMonth"
                             value="0"
@@ -3434,7 +3436,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="temporalOrientationMonth1"
                             name="temporalOrientationMonth"
                             value="1"
@@ -3457,7 +3459,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="temporalOrientationMonth2"
                             name="temporalOrientationMonth"
                             value="2"
@@ -3489,7 +3491,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="temporalOrientationDay0"
                             name="temporalOrientationDay"
                             value="0"
@@ -3512,7 +3514,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="temporalOrientationDay1"
                             name="temporalOrientationDay"
                             value="1"
@@ -3557,7 +3559,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="recallSock0"
                             name="recallSock"
                             value="0"
@@ -3580,7 +3582,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="recallSock1"
                             name="recallSock"
                             value="1"
@@ -3603,7 +3605,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="recallSock2"
                             name="recallSock"
                             value="2"
@@ -3635,7 +3637,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="recallBlue0"
                             name="recallBlue"
                             value="0"
@@ -3658,7 +3660,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="recallBlue1"
                             name="recallBlue"
                             value="1"
@@ -3681,7 +3683,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="recallBlue2"
                             name="recallBlue"
                             value="2"
@@ -3713,7 +3715,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="recallBed0"
                             name="recallBed"
                             value="0"
@@ -3736,7 +3738,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="recallBed1"
                             name="recallBed"
                             value="1"
@@ -3759,7 +3761,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="recallBed2"
                             name="recallBed"
                             value="2"
@@ -3818,7 +3820,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="acuteOnset0"
                             name="acuteOnset"
                             value="0"
@@ -3841,7 +3843,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="acuteOnset1"
                             name="acuteOnset"
                             value="1"
@@ -3873,7 +3875,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="inattention0"
                             name="inattention"
                             value="0"
@@ -3896,7 +3898,7 @@ const SinglePatient = () => {
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="inattention1"
                             name="inattention"
                             value="1"
@@ -3927,11 +3929,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           id="disorganizedThinking0"
                           name="disorganizedThinking"
                           value="0"
@@ -3950,11 +3952,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           id="disorganizedThinking1"
                           name="disorganizedThinking"
                           value="1"
@@ -3982,11 +3984,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           id="alteredConsciousness0"
                           name="alteredConsciousness"
                           value="0"
@@ -4005,11 +4007,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           id="alteredConsciousness1"
                           name="alteredConsciousness"
                           value="1"
@@ -4045,7 +4047,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="cognitiveFunctioning0"
                         name="cognitiveFunctioning"
                         value="0"
@@ -4069,7 +4071,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="cognitiveFunctioning1"
                         name="cognitiveFunctioning"
                         value="1"
@@ -4093,7 +4095,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="cognitiveFunctioning2"
                         name="cognitiveFunctioning"
                         value="2"
@@ -4118,7 +4120,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="cognitiveFunctioning3"
                         name="cognitiveFunctioning"
                         value="3"
@@ -4143,7 +4145,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="cognitiveFunctioning4"
                         name="cognitiveFunctioning"
                         value="4"
@@ -4177,7 +4179,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="whenConfused0"
                         name="whenConfused"
                         value="0"
@@ -4201,7 +4203,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="whenConfused1"
                         name="whenConfused"
                         value="1"
@@ -4225,7 +4227,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="whenConfused2"
                         name="whenConfused"
                         value="2"
@@ -4249,7 +4251,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="whenConfused3"
                         name="whenConfused"
                         value="3"
@@ -4273,7 +4275,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="whenConfused4"
                         name="whenConfused"
                         value="4"
@@ -4307,7 +4309,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="whenAnxious0"
                         name="whenAnxious"
                         value="0"
@@ -4331,7 +4333,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="whenAnxious1"
                         name="whenAnxious"
                         value="1"
@@ -4355,7 +4357,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="whenAnxious2"
                         name="whenAnxious"
                         value="2"
@@ -4379,7 +4381,7 @@ const SinglePatient = () => {
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         id="whenAnxious3"
                         name="whenAnxious"
                         value="3"
@@ -4730,7 +4732,7 @@ const SinglePatient = () => {
                       className="form-check"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         id="memoryDeficit"
                         name="memoryDeficit"
@@ -4756,7 +4758,7 @@ const SinglePatient = () => {
                       className="form-check"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         id="impairedDecisionMaking"
                         name="impairedDecisionMaking"
@@ -4780,7 +4782,7 @@ const SinglePatient = () => {
                       className="form-check"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         id="verbalDisruption"
                         name="verbalDisruption"
@@ -4803,7 +4805,7 @@ const SinglePatient = () => {
                       className="form-check"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         id="physicalAggression"
                         name="physicalAggression"
@@ -4828,7 +4830,7 @@ const SinglePatient = () => {
                       className="form-check"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         id="disruptiveBehavior"
                         name="disruptiveBehavior"
@@ -4851,7 +4853,7 @@ const SinglePatient = () => {
                       className="form-check"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         id="delusionalBehavior"
                         name="delusionalBehavior"
@@ -4873,7 +4875,7 @@ const SinglePatient = () => {
                       className="form-check"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         id="noneOfTheAbove"
                         name="noneOfTheAbove"
@@ -4905,11 +4907,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           id="frequencyNever"
                           name="disruptiveBehaviorFrequency"
                           value="0"
@@ -4930,11 +4932,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           id="frequencyLessThanOnceAMonth"
                           name="disruptiveBehaviorFrequency"
                           value="1"
@@ -4955,11 +4957,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           id="frequencyOnceAMonth"
                           name="disruptiveBehaviorFrequency"
                           value="2"
@@ -4980,11 +4982,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           id="frequencySeveralTimesEachMonth"
                           name="disruptiveBehaviorFrequency"
                           value="3"
@@ -5005,11 +5007,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           id="frequencySeveralTimesAWeek"
                           name="disruptiveBehaviorFrequency"
                           value="4"
@@ -5030,11 +5032,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check"
+                        className="form-check d-flex flex-wrap"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           id="frequencyAtLeastDaily"
                           name="disruptiveBehaviorFrequency"
                           value="5"
@@ -5083,7 +5085,7 @@ const SinglePatient = () => {
                       <div className="form-check">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="A01"
                           checked={formData?.livingArrangement?.includes("A01")}
@@ -5098,7 +5100,7 @@ const SinglePatient = () => {
                       <div className="form-check">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="A02"
                           checked={formData?.livingArrangement?.includes("A02")}
@@ -5113,7 +5115,7 @@ const SinglePatient = () => {
                       <div className="form-check">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="A03"
                           checked={formData?.livingArrangement?.includes("A03")}
@@ -5128,7 +5130,7 @@ const SinglePatient = () => {
                       <div className="form-check">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="A04"
                           checked={formData?.livingArrangement?.includes("A04")}
@@ -5143,7 +5145,7 @@ const SinglePatient = () => {
                       <div className="form-check">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="A05"
                           checked={formData?.livingArrangement?.includes("A05")}
@@ -5158,7 +5160,7 @@ const SinglePatient = () => {
                       <div className="form-check">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="B06"
                           checked={formData?.livingArrangement?.includes("B06")}
@@ -5173,7 +5175,7 @@ const SinglePatient = () => {
                       <div className="form-check">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="B07"
                           checked={formData?.livingArrangement?.includes("B07")}
@@ -5188,7 +5190,7 @@ const SinglePatient = () => {
                       <div className="form-check">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="B08"
                           checked={formData?.livingArrangement?.includes("B08")}
@@ -5203,7 +5205,7 @@ const SinglePatient = () => {
                       <div className="form-check">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="B09"
                           checked={formData?.livingArrangement?.includes("B09")}
@@ -5219,7 +5221,7 @@ const SinglePatient = () => {
                       <div className="form-check">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="B10"
                           checked={formData?.livingArrangement?.includes("B10")}
@@ -5232,10 +5234,10 @@ const SinglePatient = () => {
                           Available
                         </label>
                       </div>
-                      <div className="form-check d-flex align-items-cener gap-1">
+                      <div className="form-check d-flex align-items-center gap-1">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="C11"
                           checked={formData?.livingArrangement?.includes("C11")}
@@ -5248,10 +5250,10 @@ const SinglePatient = () => {
                           clock
                         </label>
                       </div>
-                      <div className="form-check d-flex align-items-cener gap-1">
+                      <div className="form-check d-flex align-items-center gap-1">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="C12"
                           checked={formData?.livingArrangement?.includes("C12")}
@@ -5263,10 +5265,10 @@ const SinglePatient = () => {
                           Patient lives in congregate situation, Regular Daytime
                         </label>
                       </div>
-                      <div className="form-check d-flex align-items-cener gap-1">
+                      <div className="form-check d-flex align-items-center gap-1">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="C13"
                           checked={formData?.livingArrangement?.includes("C13")}
@@ -5279,10 +5281,10 @@ const SinglePatient = () => {
                           Nighttime
                         </label>
                       </div>
-                      <div className="form-check d-flex align-items-cener gap-1">
+                      <div className="form-check d-flex align-items-center gap-1">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="C14"
                           checked={formData?.livingArrangement?.includes("C14")}
@@ -5295,10 +5297,10 @@ const SinglePatient = () => {
                           Occasional/Short-Term Assistance
                         </label>
                       </div>
-                      <div className="form-check d-flex align-items-cener gap-1">
+                      <div className="form-check d-flex align-items-center gap-1">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="livingArrangement"
                           value="C15"
                           checked={formData?.livingArrangement?.includes("C15")}
@@ -5327,10 +5329,10 @@ const SinglePatient = () => {
                     >
                       a. ADL assistance
                     </label>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="adlAssistance"
                         value="0"
                         checked={formData?.adlAssistance === "0"}
@@ -5342,10 +5344,10 @@ const SinglePatient = () => {
                         No assistance needed
                       </label>
                     </div>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="adlAssistance"
                         value="1"
                         checked={formData?.adlAssistance === "1"}
@@ -5357,10 +5359,10 @@ const SinglePatient = () => {
                         Non-agency caregiver(s) currently provide assistance
                       </label>
                     </div>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="adlAssistance"
                         value="2"
                         checked={formData?.adlAssistance === "2"}
@@ -5373,10 +5375,10 @@ const SinglePatient = () => {
                         services
                       </label>
                     </div>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="adlAssistance"
                         value="3"
                         checked={formData?.adlAssistance === "3"}
@@ -5390,10 +5392,10 @@ const SinglePatient = () => {
                         assistance
                       </label>
                     </div>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="adlAssistance"
                         value="4"
                         checked={formData?.adlAssistance === "4"}
@@ -5416,10 +5418,10 @@ const SinglePatient = () => {
                     >
                       d. Medical procedures/treatments
                     </label>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="medicalProceduresAssistance"
                         value="0"
                         checked={formData?.medicalProceduresAssistance === "0"}
@@ -5431,10 +5433,10 @@ const SinglePatient = () => {
                         No assistance needed
                       </label>
                     </div>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="medicalProceduresAssistance"
                         value="1"
                         checked={formData?.medicalProceduresAssistance === "1"}
@@ -5446,10 +5448,10 @@ const SinglePatient = () => {
                         Non-agency caregiver(s) currently provide assistance
                       </label>
                     </div>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="medicalProceduresAssistance"
                         value="2"
                         checked={formData?.medicalProceduresAssistance === "2"}
@@ -5462,10 +5464,10 @@ const SinglePatient = () => {
                         services
                       </label>
                     </div>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="medicalProceduresAssistance"
                         value="3"
                         checked={formData?.medicalProceduresAssistance === "3"}
@@ -5479,10 +5481,10 @@ const SinglePatient = () => {
                         assistance
                       </label>
                     </div>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="medicalProceduresAssistance"
                         value="4"
                         checked={formData?.medicalProceduresAssistance === "4"}
@@ -5504,10 +5506,10 @@ const SinglePatient = () => {
                     >
                       f. Supervision and safety (due to cognitive impairment)
                     </label>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="supervisionSafetyAssistance"
                         value="0"
                         checked={formData?.supervisionSafetyAssistance === "0"}
@@ -5519,10 +5521,10 @@ const SinglePatient = () => {
                         No assistance needed
                       </label>
                     </div>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="supervisionSafetyAssistance"
                         value="1"
                         checked={formData?.supervisionSafetyAssistance === "1"}
@@ -5534,10 +5536,10 @@ const SinglePatient = () => {
                         Non-agency caregiver(s) currently provide assistance
                       </label>
                     </div>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="supervisionSafetyAssistance"
                         value="2"
                         checked={formData?.supervisionSafetyAssistance === "2"}
@@ -5550,10 +5552,10 @@ const SinglePatient = () => {
                         services
                       </label>
                     </div>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="supervisionSafetyAssistance"
                         value="3"
                         checked={formData?.supervisionSafetyAssistance === "3"}
@@ -5567,10 +5569,10 @@ const SinglePatient = () => {
                         assistance
                       </label>
                     </div>
-                    <div className="form-check d-flex align-items-cener gap-1">
+                    <div className="form-check d-flex align-items-center gap-1">
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="supervisionSafetyAssistance"
                         value="4"
                         checked={formData?.supervisionSafetyAssistance === "4"}
@@ -5621,12 +5623,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="grooming"
                         value="0"
                         checked={formData?.grooming === "0"}
@@ -5639,12 +5641,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="grooming"
                         value="1"
                         checked={formData?.grooming === "1"}
@@ -5657,12 +5659,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="grooming"
                         value="2"
                         checked={formData?.grooming === "2"}
@@ -5675,12 +5677,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="grooming"
                         value="3"
                         checked={formData?.grooming === "3"}
@@ -5703,12 +5705,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="upperBodyDressing"
                         value="0"
                         checked={formData?.upperBodyDressing === "0"}
@@ -5721,12 +5723,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="upperBodyDressing"
                         value="1"
                         checked={formData?.upperBodyDressing === "1"}
@@ -5739,12 +5741,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="upperBodyDressing"
                         value="2"
                         checked={formData?.upperBodyDressing === "2"}
@@ -5757,12 +5759,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="upperBodyDressing"
                         value="3"
                         checked={formData?.upperBodyDressing === "3"}
@@ -5785,12 +5787,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="lowerBodyDressing"
                         value="0"
                         checked={formData?.lowerBodyDressing === "0"}
@@ -5803,12 +5805,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="lowerBodyDressing"
                         value="1"
                         checked={formData?.lowerBodyDressing === "1"}
@@ -5821,12 +5823,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="lowerBodyDressing"
                         value="2"
                         checked={formData?.lowerBodyDressing === "2"}
@@ -5839,12 +5841,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="lowerBodyDressing"
                         value="3"
                         checked={formData?.lowerBodyDressing === "3"}
@@ -5868,12 +5870,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="bathing"
                         value="0"
                         checked={formData?.bathing === "0"}
@@ -5886,12 +5888,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="bathing"
                         value="1"
                         checked={formData?.bathing === "1"}
@@ -5904,12 +5906,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="bathing"
                         value="2"
                         checked={formData?.bathing === "2"}
@@ -5922,12 +5924,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="bathing"
                         value="3"
                         checked={formData?.bathing === "3"}
@@ -5940,12 +5942,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="bathing"
                         value="4"
                         checked={formData?.bathing === "4"}
@@ -5958,12 +5960,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="bathing"
                         value="5"
                         checked={formData?.bathing === "5"}
@@ -5977,12 +5979,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="bathing"
                         value="6"
                         checked={formData?.bathing === "6"}
@@ -6005,12 +6007,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="toiletTransferring"
                         value="0"
                         checked={formData?.toiletTransferring === "0"}
@@ -6023,12 +6025,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="toiletTransferring"
                         value="1"
                         checked={formData?.toiletTransferring === "1"}
@@ -6041,12 +6043,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="toiletTransferring"
                         value="2"
                         checked={formData?.toiletTransferring === "2"}
@@ -6059,12 +6061,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="toiletTransferring"
                         value="3"
                         checked={formData?.toiletTransferring === "3"}
@@ -6078,12 +6080,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="toiletTransferring"
                         value="4"
                         checked={formData?.toiletTransferring === "4"}
@@ -6106,12 +6108,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="toiletingHygiene"
                         value="0"
                         checked={formData?.toiletingHygiene === "0"}
@@ -6124,12 +6126,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="toiletingHygiene"
                         value="1"
                         checked={formData?.toiletingHygiene === "1"}
@@ -6142,12 +6144,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="toiletingHygiene"
                         value="2"
                         checked={formData?.toiletingHygiene === "2"}
@@ -6160,12 +6162,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="toiletingHygiene"
                         value="3"
                         checked={formData?.toiletingHygiene === "3"}
@@ -6189,12 +6191,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="transferring"
                         value="0"
                         checked={formData?.transferring === "0"}
@@ -6207,12 +6209,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="transferring"
                         value="1"
                         checked={formData?.transferring === "1"}
@@ -6225,12 +6227,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="transferring"
                         value="2"
                         checked={formData?.transferring === "2"}
@@ -6243,12 +6245,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="transferring"
                         value="3"
                         checked={formData?.transferring === "3"}
@@ -6261,12 +6263,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="transferring"
                         value="4"
                         checked={formData?.transferring === "4"}
@@ -6279,12 +6281,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="transferring"
                         value="5"
                         checked={formData?.transferring === "5"}
@@ -6307,12 +6309,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="ambulationLocomotion"
                         value="0"
                         checked={formData?.ambulationLocomotion === "0"}
@@ -6325,12 +6327,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="ambulationLocomotion"
                         value="1"
                         checked={formData?.ambulationLocomotion === "1"}
@@ -6343,12 +6345,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="ambulationLocomotion"
                         value="2"
                         checked={formData?.ambulationLocomotion === "2"}
@@ -6361,12 +6363,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="ambulationLocomotion"
                         value="3"
                         checked={formData?.ambulationLocomotion === "3"}
@@ -6379,12 +6381,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="ambulationLocomotion"
                         value="4"
                         checked={formData?.ambulationLocomotion === "4"}
@@ -6397,12 +6399,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="ambulationLocomotion"
                         value="5"
                         checked={formData?.ambulationLocomotion === "5"}
@@ -6415,12 +6417,12 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       {" "}
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="ambulationLocomotion"
                         value="6"
                         checked={formData?.ambulationLocomotion === "6"}
@@ -6470,7 +6472,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6478,7 +6480,7 @@ const SinglePatient = () => {
                               name="gg0100.selfCare"
                               value="3"
                               checked={formData?.gg0100?.selfCare === "3"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6493,7 +6495,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6501,7 +6503,7 @@ const SinglePatient = () => {
                               name="gg0100.selfCare"
                               value="2"
                               checked={formData?.gg0100?.selfCare === "2"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6516,7 +6518,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6524,7 +6526,7 @@ const SinglePatient = () => {
                               name="gg0100.selfCare"
                               value="1"
                               checked={formData?.gg0100?.selfCare === "1"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6539,7 +6541,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6547,7 +6549,7 @@ const SinglePatient = () => {
                               name="gg0100.selfCare"
                               value="8"
                               checked={formData?.gg0100?.selfCare === "8"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6562,7 +6564,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6570,7 +6572,7 @@ const SinglePatient = () => {
                               name="gg0100.selfCare"
                               value="9"
                               checked={formData?.gg0100?.selfCare === "9"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6598,7 +6600,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6606,7 +6608,7 @@ const SinglePatient = () => {
                               name="gg0100.indoorMobility"
                               value="3"
                               checked={formData?.gg0100?.indoorMobility === "3"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6621,7 +6623,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6629,7 +6631,7 @@ const SinglePatient = () => {
                               name="gg0100.indoorMobility"
                               value="2"
                               checked={formData?.gg0100?.indoorMobility === "2"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6644,7 +6646,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6652,7 +6654,7 @@ const SinglePatient = () => {
                               name="gg0100.indoorMobility"
                               value="1"
                               checked={formData?.gg0100?.indoorMobility === "1"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6667,7 +6669,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6675,7 +6677,7 @@ const SinglePatient = () => {
                               name="gg0100.indoorMobility"
                               value="8"
                               checked={formData?.gg0100?.indoorMobility === "8"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6690,7 +6692,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6698,7 +6700,7 @@ const SinglePatient = () => {
                               name="gg0100.indoorMobility"
                               value="9"
                               checked={formData?.gg0100?.indoorMobility === "9"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6726,7 +6728,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6734,7 +6736,7 @@ const SinglePatient = () => {
                               name="gg0100.stairs"
                               value="3"
                               checked={formData?.gg0100?.stairs === "3"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6749,7 +6751,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6757,7 +6759,7 @@ const SinglePatient = () => {
                               name="gg0100.stairs"
                               value="2"
                               checked={formData?.gg0100?.stairs === "2"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6772,7 +6774,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6780,7 +6782,7 @@ const SinglePatient = () => {
                               name="gg0100.stairs"
                               value="1"
                               checked={formData?.gg0100?.stairs === "1"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6795,7 +6797,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6803,7 +6805,7 @@ const SinglePatient = () => {
                               name="gg0100.stairs"
                               value="8"
                               checked={formData?.gg0100?.stairs === "8"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6818,7 +6820,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6826,7 +6828,7 @@ const SinglePatient = () => {
                               name="gg0100.stairs"
                               value="9"
                               checked={formData?.gg0100?.stairs === "9"}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6854,7 +6856,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6864,7 +6866,7 @@ const SinglePatient = () => {
                               checked={
                                 formData?.gg0100?.functionalCognition === "3"
                               }
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6879,7 +6881,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6889,7 +6891,7 @@ const SinglePatient = () => {
                               checked={
                                 formData?.gg0100?.functionalCognition === "2"
                               }
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6904,7 +6906,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6915,7 +6917,7 @@ const SinglePatient = () => {
                                 formData?.gg0100?.functionalCognition === "1"
                               }
                               // onChange={(e) => handleInputChange(e)}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6930,7 +6932,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6941,7 +6943,7 @@ const SinglePatient = () => {
                                 formData?.gg0100?.functionalCognition === "8"
                               }
                               // onChange={(e) => handleInputChange(e)}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6956,7 +6958,7 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
@@ -6967,7 +6969,7 @@ const SinglePatient = () => {
                                 formData?.gg0100?.functionalCognition === "9"
                               }
                               // onChange={(e) => handleInputChange(e)}
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                             />
                             <label
                               className="form-check-label"
@@ -6994,10 +6996,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           id="gg0110.manualWheelchair"
                           name="gg0110.manualWheelchair"
@@ -7019,10 +7021,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           id="gg0110.motorizedWheelchair"
                           name="gg0110.motorizedWheelchair"
@@ -7046,10 +7048,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           id="gg0110.mechanicalLift"
                           name="gg0110.mechanicalLift"
@@ -7071,10 +7073,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           id="gg0110.walker"
                           name="gg0110.walker"
@@ -7096,10 +7098,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           id="gg0110.orthoticsProsthetics"
                           name="gg0110.orthoticsProsthetics"
@@ -7123,10 +7125,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           id="gg0110.noneOfTheAbove"
                           name="gg0110.noneOfTheAbove"
@@ -7163,7 +7165,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check d-flex align-items-cener gap-1"
+                              className="form-check d-flex align-items-center gap-1"
                             >
                               <input
                                 type="radio"
@@ -7171,7 +7173,7 @@ const SinglePatient = () => {
                                 name="gg0130.eating"
                                 value="06"
                                 checked={formData?.gg0130?.eating === "06"}
-                                className="form-check-input"
+                                className="form-check-input d-inline-block"
                               />
                               <label
                                 className="form-check-label"
@@ -7186,7 +7188,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check d-flex align-items-cener gap-1"
+                              className="form-check d-flex align-items-center gap-1"
                             >
                               <input
                                 type="radio"
@@ -7194,7 +7196,7 @@ const SinglePatient = () => {
                                 name="gg0130.eating"
                                 value="05"
                                 checked={formData?.gg0130?.eating === "05"}
-                                className="form-check-input"
+                                className="form-check-input d-inline-block"
                               />
                               <label
                                 className="form-check-label"
@@ -7209,7 +7211,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check d-flex align-items-cener gap-1"
+                              className="form-check d-flex align-items-center gap-1"
                             >
                               <input
                                 type="radio"
@@ -7217,7 +7219,7 @@ const SinglePatient = () => {
                                 name="gg0130.eating"
                                 value="04"
                                 checked={formData?.gg0130?.eating === "04"}
-                                className="form-check-input"
+                                className="form-check-input d-inline-block"
                               />
                               <label
                                 className="form-check-label"
@@ -7232,7 +7234,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check d-flex align-items-cener gap-1"
+                              className="form-check d-flex align-items-center gap-1"
                             >
                               <input
                                 type="radio"
@@ -7240,7 +7242,7 @@ const SinglePatient = () => {
                                 name="gg0130.eating"
                                 value="03"
                                 checked={formData?.gg0130?.eating === "03"}
-                                className="form-check-input"
+                                className="form-check-input d-inline-block"
                               />
                               <label
                                 className="form-check-label"
@@ -7255,7 +7257,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check d-flex align-items-cener gap-1"
+                              className="form-check d-flex align-items-center gap-1"
                             >
                               <input
                                 type="radio"
@@ -7263,7 +7265,7 @@ const SinglePatient = () => {
                                 name="gg0130.eating"
                                 value="02"
                                 checked={formData?.gg0130?.eating === "02"}
-                                className="form-check-input"
+                                className="form-check-input d-inline-block"
                               />
                               <label
                                 className="form-check-label"
@@ -7278,7 +7280,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check d-flex align-items-cener gap-1"
+                              className="form-check d-flex align-items-center gap-1"
                             >
                               <input
                                 type="radio"
@@ -7286,7 +7288,7 @@ const SinglePatient = () => {
                                 name="gg0130.eating"
                                 value="01"
                                 checked={formData?.gg0130?.eating === "01"}
-                                className="form-check-input"
+                                className="form-check-input d-inline-block"
                               />
                               <label
                                 className="form-check-label"
@@ -7301,7 +7303,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check d-flex align-items-cener gap-1"
+                              className="form-check d-flex align-items-center gap-1"
                             >
                               <input
                                 type="radio"
@@ -7309,7 +7311,7 @@ const SinglePatient = () => {
                                 name="gg0130.eating"
                                 value="07"
                                 checked={formData?.gg0130?.eating === "07"}
-                                className="form-check-input"
+                                className="form-check-input d-inline-block"
                               />
                               <label
                                 className="form-check-label"
@@ -7324,7 +7326,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check d-flex align-items-cener gap-1"
+                              className="form-check d-flex align-items-center gap-1"
                             >
                               <input
                                 type="radio"
@@ -7332,7 +7334,7 @@ const SinglePatient = () => {
                                 name="gg0130.eating"
                                 value="09"
                                 checked={formData?.gg0130?.eating === "09"}
-                                className="form-check-input"
+                                className="form-check-input d-inline-block"
                               />
                               <label
                                 className="form-check-label"
@@ -7347,7 +7349,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check d-flex align-items-cener gap-1"
+                              className="form-check d-flex align-items-center gap-1"
                             >
                               <input
                                 type="radio"
@@ -7355,7 +7357,7 @@ const SinglePatient = () => {
                                 name="gg0130.eating"
                                 value="10"
                                 checked={formData?.gg0130?.eating === "10"}
-                                className="form-check-input"
+                                className="form-check-input d-inline-block"
                               />
                               <label
                                 className="form-check-label"
@@ -7370,7 +7372,7 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check d-flex align-items-cener gap-1"
+                              className="form-check d-flex align-items-center gap-1"
                             >
                               <input
                                 type="radio"
@@ -7378,7 +7380,7 @@ const SinglePatient = () => {
                                 name="gg0130.eating"
                                 value="88"
                                 checked={formData?.gg0130?.eating === "88"}
-                                className="form-check-input"
+                                className="form-check-input d-inline-block"
                               />
                               <label
                                 className="form-check-label"
@@ -7493,10 +7495,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.rollLeftRight.06"
                           name="gg0170.rollLeftRight"
@@ -7516,10 +7518,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.rollLeftRight.05"
                           name="gg0170.rollLeftRight"
@@ -7539,10 +7541,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.rollLeftRight.04"
                           name="gg0170.rollLeftRight"
@@ -7562,10 +7564,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.rollLeftRight.03"
                           name="gg0170.rollLeftRight"
@@ -7585,10 +7587,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.rollLeftRight.02"
                           name="gg0170.rollLeftRight"
@@ -7608,10 +7610,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.rollLeftRight.01"
                           name="gg0170.rollLeftRight"
@@ -7631,10 +7633,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.rollLeftRight.07"
                           name="gg0170.rollLeftRight"
@@ -7654,10 +7656,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.rollLeftRight.09"
                           name="gg0170.rollLeftRight"
@@ -7677,10 +7679,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.rollLeftRight.10"
                           name="gg0170.rollLeftRight"
@@ -7700,10 +7702,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.rollLeftRight.88"
                           name="gg0170.rollLeftRight"
@@ -7736,10 +7738,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToLying.06"
                           name="gg0170.sitToLying"
@@ -7759,10 +7761,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToLying.05"
                           name="gg0170.sitToLying"
@@ -7782,10 +7784,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToLying.04"
                           name="gg0170.sitToLying"
@@ -7805,10 +7807,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToLying.03"
                           name="gg0170.sitToLying"
@@ -7828,10 +7830,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToLying.02"
                           name="gg0170.sitToLying"
@@ -7851,10 +7853,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToLying.01"
                           name="gg0170.sitToLying"
@@ -7874,10 +7876,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToLying.07"
                           name="gg0170.sitToLying"
@@ -7897,10 +7899,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToLying.09"
                           name="gg0170.sitToLying"
@@ -7920,10 +7922,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToLying.10"
                           name="gg0170.sitToLying"
@@ -7943,10 +7945,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToLying.88"
                           name="gg0170.sitToLying"
@@ -7979,10 +7981,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.lyingToSitting.06"
                           name="gg0170.lyingToSitting"
@@ -8002,10 +8004,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.lyingToSitting.05"
                           name="gg0170.lyingToSitting"
@@ -8025,10 +8027,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.lyingToSitting.04"
                           name="gg0170.lyingToSitting"
@@ -8048,10 +8050,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.lyingToSitting.03"
                           name="gg0170.lyingToSitting"
@@ -8071,10 +8073,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.lyingToSitting.02"
                           name="gg0170.lyingToSitting"
@@ -8094,10 +8096,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.lyingToSitting.01"
                           name="gg0170.lyingToSitting"
@@ -8117,10 +8119,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.lyingToSitting.07"
                           name="gg0170.lyingToSitting"
@@ -8140,10 +8142,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.lyingToSitting.09"
                           name="gg0170.lyingToSitting"
@@ -8163,10 +8165,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.lyingToSitting.10"
                           name="gg0170.lyingToSitting"
@@ -8186,10 +8188,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.lyingToSitting.88"
                           name="gg0170.lyingToSitting"
@@ -8223,10 +8225,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToStand.06"
                           name="gg0170.sitToStand"
@@ -8246,10 +8248,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToStand.05"
                           name="gg0170.sitToStand"
@@ -8269,10 +8271,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToStand.04"
                           name="gg0170.sitToStand"
@@ -8292,10 +8294,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToStand.03"
                           name="gg0170.sitToStand"
@@ -8315,10 +8317,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToStand.02"
                           name="gg0170.sitToStand"
@@ -8338,10 +8340,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToStand.01"
                           name="gg0170.sitToStand"
@@ -8361,10 +8363,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToStand.07"
                           name="gg0170.sitToStand"
@@ -8384,10 +8386,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToStand.09"
                           name="gg0170.sitToStand"
@@ -8407,10 +8409,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToStand.10"
                           name="gg0170.sitToStand"
@@ -8430,10 +8432,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           id="gg0170.sitToStand.88"
                           name="gg0170.sitToStand"
@@ -8471,10 +8473,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.chairBedToChair.06"
                               name="gg0170.chairBedToChair"
@@ -8496,10 +8498,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.chairBedToChair.05"
                               name="gg0170.chairBedToChair"
@@ -8521,10 +8523,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.chairBedToChair.04"
                               name="gg0170.chairBedToChair"
@@ -8546,10 +8548,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.chairBedToChair.03"
                               name="gg0170.chairBedToChair"
@@ -8571,10 +8573,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.chairBedToChair.02"
                               name="gg0170.chairBedToChair"
@@ -8596,10 +8598,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.chairBedToChair.01"
                               name="gg0170.chairBedToChair"
@@ -8621,10 +8623,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.chairBedToChair.07"
                               name="gg0170.chairBedToChair"
@@ -8646,10 +8648,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.chairBedToChair.09"
                               name="gg0170.chairBedToChair"
@@ -8671,10 +8673,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.chairBedToChair.10"
                               name="gg0170.chairBedToChair"
@@ -8696,10 +8698,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.chairBedToChair.88"
                               name="gg0170.chairBedToChair"
@@ -8734,10 +8736,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.toiletTransfer.06"
                               name="gg0170.toiletTransfer"
@@ -8759,10 +8761,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.toiletTransfer.05"
                               name="gg0170.toiletTransfer"
@@ -8784,10 +8786,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.toiletTransfer.04"
                               name="gg0170.toiletTransfer"
@@ -8809,10 +8811,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.toiletTransfer.03"
                               name="gg0170.toiletTransfer"
@@ -8834,10 +8836,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.toiletTransfer.02"
                               name="gg0170.toiletTransfer"
@@ -8859,10 +8861,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.toiletTransfer.01"
                               name="gg0170.toiletTransfer"
@@ -8884,10 +8886,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.toiletTransfer.07"
                               name="gg0170.toiletTransfer"
@@ -8909,10 +8911,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.toiletTransfer.09"
                               name="gg0170.toiletTransfer"
@@ -8934,10 +8936,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.toiletTransfer.10"
                               name="gg0170.toiletTransfer"
@@ -8959,10 +8961,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               id="gg0170.toiletTransfer.88"
                               name="gg0170.toiletTransfer"
@@ -9018,7 +9020,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1600-0"
@@ -9026,7 +9028,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="0"
                         checked={formData?.m1600 === "0"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9042,7 +9044,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1600-1"
@@ -9050,7 +9052,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="1"
                         checked={formData?.m1600 === "1"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9066,7 +9068,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1600-NA"
@@ -9074,7 +9076,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="NA"
                         checked={formData?.m1600 === "NA"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9090,7 +9092,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1600-UK"
@@ -9098,7 +9100,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="UK"
                         checked={formData?.m1600 === "UK"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         disabled
                       />
                       <label
@@ -9125,7 +9127,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1610-0"
@@ -9133,7 +9135,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="0"
                         checked={formData?.m1610 === "0"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9150,7 +9152,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1610-1"
@@ -9158,7 +9160,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="1"
                         checked={formData?.m1610 === "1"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9174,7 +9176,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1610-2"
@@ -9182,7 +9184,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="2"
                         checked={formData?.m1610 === "2"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9210,7 +9212,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1620-0"
@@ -9218,7 +9220,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="0"
                         checked={formData?.m1620 === "0"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9234,7 +9236,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1620-1"
@@ -9242,7 +9244,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="1"
                         checked={formData?.m1620 === "1"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9258,7 +9260,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1620-2"
@@ -9266,7 +9268,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="2"
                         checked={formData?.m1620 === "2"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9282,7 +9284,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1620-3"
@@ -9290,7 +9292,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="3"
                         checked={formData?.m1620 === "3"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9306,7 +9308,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1620-4"
@@ -9314,7 +9316,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="4"
                         checked={formData?.m1620 === "4"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9330,7 +9332,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1620-5"
@@ -9338,7 +9340,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="5"
                         checked={formData?.m1620 === "5"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9354,7 +9356,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1620-NA"
@@ -9362,7 +9364,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="NA"
                         checked={formData?.m1620 === "NA"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9378,7 +9380,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1620-UK"
@@ -9386,7 +9388,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="UK"
                         checked={formData?.m1620 === "UK"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         disabled
                       />
                       <label
@@ -9414,7 +9416,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1630-0"
@@ -9422,7 +9424,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="0"
                         checked={formData?.m1630 === "0"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9438,7 +9440,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1630-1"
@@ -9446,7 +9448,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="1"
                         checked={formData?.m1630 === "1"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9464,7 +9466,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="m1630-2"
@@ -9472,7 +9474,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="2"
                         checked={formData?.m1630 === "2"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9520,7 +9522,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="primaryDiagnosis1"
@@ -9530,7 +9532,7 @@ const SinglePatient = () => {
                         checked={formData?.primaryDiagnosis?.includes(
                           "Diagnosis1"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="primaryDiagnosis1"
@@ -9545,7 +9547,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="primaryDiagnosis2"
@@ -9555,7 +9557,7 @@ const SinglePatient = () => {
                         checked={formData?.primaryDiagnosis?.includes(
                           "Diagnosis2"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="primaryDiagnosis2"
@@ -9578,7 +9580,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="primaryDiagnosisRating0"
@@ -9586,7 +9588,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="0"
                         checked={formData?.primaryDiagnosisRating === "0"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="primaryDiagnosisRating0"
@@ -9601,7 +9603,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="primaryDiagnosisRating1"
@@ -9609,7 +9611,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="1"
                         checked={formData?.primaryDiagnosisRating === "1"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="primaryDiagnosisRating1"
@@ -9642,7 +9644,7 @@ const SinglePatient = () => {
                               <div className="form-check " key={rating}>
                                 <input
                                   type="radio"
-                                  className="form-check-input"
+                                  className="form-check-input d-inline-block"
                                   name={`otherDiagnosisRating${index}`}
                                   value={rating}
                                   checked={
@@ -9680,7 +9682,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="pvd"
@@ -9688,7 +9690,7 @@ const SinglePatient = () => {
                         type="checkbox"
                         value="pvd"
                         checked={formData?.comorbidities?.includes("pvd")}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9705,7 +9707,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="dm"
@@ -9713,7 +9715,7 @@ const SinglePatient = () => {
                         type="checkbox"
                         value="dm"
                         checked={formData?.comorbidities?.includes("dm")}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9729,7 +9731,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="none"
@@ -9737,7 +9739,7 @@ const SinglePatient = () => {
                         type="checkbox"
                         value="none"
                         checked={formData?.comorbidities?.includes("none")}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9784,7 +9786,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="falls"
@@ -9794,7 +9796,7 @@ const SinglePatient = () => {
                         checked={formData?.riskForHospitalization?.includes(
                           "falls"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9812,7 +9814,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="weightLoss"
@@ -9822,7 +9824,7 @@ const SinglePatient = () => {
                         checked={formData?.riskForHospitalization?.includes(
                           "weightLoss"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9840,7 +9842,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="hospitalizations"
@@ -9850,7 +9852,7 @@ const SinglePatient = () => {
                         checked={formData?.riskForHospitalization?.includes(
                           "hospitalizations"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="hospitalizations"
@@ -9867,7 +9869,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="emergencyVisits"
@@ -9877,7 +9879,7 @@ const SinglePatient = () => {
                         checked={formData?.riskForHospitalization?.includes(
                           "emergencyVisits"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="emergencyVisits"
@@ -9894,7 +9896,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="declineInStatus"
@@ -9904,7 +9906,7 @@ const SinglePatient = () => {
                         checked={formData?.riskForHospitalization?.includes(
                           "declineInStatus"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="declineInStatus"
@@ -9921,7 +9923,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="complianceDifficulty"
@@ -9931,7 +9933,7 @@ const SinglePatient = () => {
                         checked={formData?.riskForHospitalization?.includes(
                           "complianceDifficulty"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="complianceDifficulty"
@@ -9948,7 +9950,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="medications"
@@ -9958,7 +9960,7 @@ const SinglePatient = () => {
                         checked={formData?.riskForHospitalization?.includes(
                           "medications"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -9975,7 +9977,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="exhaustion"
@@ -9985,7 +9987,7 @@ const SinglePatient = () => {
                         checked={formData?.riskForHospitalization?.includes(
                           "exhaustion"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -10002,7 +10004,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="otherRisks"
@@ -10012,7 +10014,7 @@ const SinglePatient = () => {
                         checked={formData?.riskForHospitalization?.includes(
                           "otherRisks"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -10029,7 +10031,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="none"
@@ -10039,7 +10041,7 @@ const SinglePatient = () => {
                         checked={formData?.riskForHospitalization?.includes(
                           "none"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "11px" }}
@@ -10080,7 +10082,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           id={`painEffectOnSleep-${value}`}
@@ -10088,7 +10090,7 @@ const SinglePatient = () => {
                           type="radio"
                           value={value}
                           checked={formData?.painEffectOnSleep === value}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "12px" }}
@@ -10129,7 +10131,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           id={`painInterferenceWithTherapy-${value}`}
@@ -10139,7 +10141,7 @@ const SinglePatient = () => {
                           checked={
                             formData?.painInterferenceWithTherapy === value
                           }
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "12px" }}
@@ -10176,7 +10178,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           id={`painInterferenceWithActivities-${value}`}
@@ -10186,7 +10188,7 @@ const SinglePatient = () => {
                           checked={
                             formData?.painInterferenceWithActivities === value
                           }
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "12px" }}
@@ -10219,7 +10221,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           id={`fallsSinceSOCROC-${value}`}
@@ -10227,7 +10229,7 @@ const SinglePatient = () => {
                           type="radio"
                           value={value}
                           checked={formData?.fallsSinceSOCROC === value}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "12px" }}
@@ -10265,7 +10267,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             id={`fallsDetails-${value}`}
@@ -10273,7 +10275,7 @@ const SinglePatient = () => {
                             type="radio"
                             value={value}
                             checked={formData?.fallsDetails === value}
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                           />
                           <label
                             style={{ fontSize: "12px" }}
@@ -10329,7 +10331,7 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           id={`shortOfBreath-${value}`}
@@ -10337,7 +10339,7 @@ const SinglePatient = () => {
                           type="radio"
                           value={value}
                           checked={formData?.shortOfBreath === value}
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                         />
                         <label
                           style={{ fontSize: "12px" }}
@@ -10411,7 +10413,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="onAdmission-parenteralIVFeeding"
@@ -10421,7 +10423,7 @@ const SinglePatient = () => {
                         checked={formData?.nutritionalApproachesOnAdmission?.includes(
                           "parenteralIVFeeding"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "12px" }}
@@ -10438,7 +10440,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="onAdmission-feedingTube"
@@ -10448,7 +10450,7 @@ const SinglePatient = () => {
                         checked={formData?.nutritionalApproachesOnAdmission?.includes(
                           "feedingTube"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "12px" }}
@@ -10465,7 +10467,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="onAdmission-mechanicallyAlteredDiet"
@@ -10475,7 +10477,7 @@ const SinglePatient = () => {
                         checked={formData?.nutritionalApproachesOnAdmission?.includes(
                           "mechanicallyAlteredDiet"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "12px" }}
@@ -10493,7 +10495,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="onAdmission-therapeuticDiet"
@@ -10503,7 +10505,7 @@ const SinglePatient = () => {
                         checked={formData?.nutritionalApproachesOnAdmission?.includes(
                           "therapeuticDiet"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "12px" }}
@@ -10521,7 +10523,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="onAdmission-none"
@@ -10531,7 +10533,7 @@ const SinglePatient = () => {
                         checked={formData?.nutritionalApproachesOnAdmission?.includes(
                           "none"
                         )}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         style={{ fontSize: "12px" }}
@@ -10561,7 +10563,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             id="last7Days-parenteralIVFeeding"
@@ -10571,7 +10573,7 @@ const SinglePatient = () => {
                             checked={formData?.nutritionalApproachesLast7Days?.includes(
                               "parenteralIVFeeding"
                             )}
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                           />
                           <label
                             style={{ fontSize: "12px" }}
@@ -10588,7 +10590,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             id="last7Days-feedingTube"
@@ -10598,7 +10600,7 @@ const SinglePatient = () => {
                             checked={formData?.nutritionalApproachesLast7Days?.includes(
                               "feedingTube"
                             )}
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                           />
                           <label
                             style={{ fontSize: "12px" }}
@@ -10615,7 +10617,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             id="last7Days-mechanicallyAlteredDiet"
@@ -10625,7 +10627,7 @@ const SinglePatient = () => {
                             checked={formData?.nutritionalApproachesLast7Days?.includes(
                               "mechanicallyAlteredDiet"
                             )}
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                           />
                           <label
                             style={{ fontSize: "12px" }}
@@ -10643,7 +10645,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             id="last7Days-therapeuticDiet"
@@ -10653,7 +10655,7 @@ const SinglePatient = () => {
                             checked={formData?.nutritionalApproachesLast7Days?.includes(
                               "therapeuticDiet"
                             )}
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                           />
                           <label
                             style={{ fontSize: "12px" }}
@@ -10671,7 +10673,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             id="last7Days-none"
@@ -10681,7 +10683,7 @@ const SinglePatient = () => {
                             checked={formData?.nutritionalApproachesLast7Days?.includes(
                               "none"
                             )}
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                           />
                           <label
                             style={{ fontSize: "12px" }}
@@ -10707,7 +10709,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             id="atDischarge-parenteralIVFeeding"
@@ -10717,7 +10719,7 @@ const SinglePatient = () => {
                             checked={formData?.nutritionalApproachesAtDischarge?.includes(
                               "parenteralIVFeeding"
                             )}
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                           />
                           <label
                             style={{ fontSize: "12px" }}
@@ -10734,7 +10736,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             id="atDischarge-feedingTube"
@@ -10744,7 +10746,7 @@ const SinglePatient = () => {
                             checked={formData?.nutritionalApproachesAtDischarge?.includes(
                               "feedingTube"
                             )}
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                           />
                           <label
                             style={{ fontSize: "12px" }}
@@ -10761,7 +10763,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             id="atDischarge-mechanicallyAlteredDiet"
@@ -10771,7 +10773,7 @@ const SinglePatient = () => {
                             checked={formData?.nutritionalApproachesAtDischarge?.includes(
                               "mechanicallyAlteredDiet"
                             )}
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                           />
                           <label
                             style={{ fontSize: "12px" }}
@@ -10789,7 +10791,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             id="atDischarge-therapeuticDiet"
@@ -10799,7 +10801,7 @@ const SinglePatient = () => {
                             checked={formData?.nutritionalApproachesAtDischarge?.includes(
                               "therapeuticDiet"
                             )}
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                           />
                           <label
                             style={{ fontSize: "12px" }}
@@ -10817,7 +10819,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             id="atDischarge-none"
@@ -10827,7 +10829,7 @@ const SinglePatient = () => {
                             checked={formData?.nutritionalApproachesAtDischarge?.includes(
                               "none"
                             )}
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                           />
                           <label
                             style={{ fontSize: "12px" }}
@@ -10857,7 +10859,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="feedingOrEating0"
@@ -10865,7 +10867,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="0"
                         checked={formData?.feedingOrEating === "0"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="feedingOrEating0"
@@ -10880,7 +10882,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="feedingOrEating1"
@@ -10888,7 +10890,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="1"
                         checked={formData?.feedingOrEating === "1"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="feedingOrEating1"
@@ -10911,7 +10913,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="feedingOrEating2"
@@ -10919,7 +10921,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="2"
                         checked={formData?.feedingOrEating === "2"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="feedingOrEating2"
@@ -10935,7 +10937,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="feedingOrEating3"
@@ -10943,7 +10945,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="3"
                         checked={formData?.feedingOrEating === "3"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="feedingOrEating3"
@@ -10960,7 +10962,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="feedingOrEating4"
@@ -10968,7 +10970,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="4"
                         checked={formData?.feedingOrEating === "4"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="feedingOrEating4"
@@ -10984,7 +10986,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         id="feedingOrEating5"
@@ -10992,7 +10994,7 @@ const SinglePatient = () => {
                         type="radio"
                         value="5"
                         checked={formData?.feedingOrEating === "5"}
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                       />
                       <label
                         htmlFor="feedingOrEating5"
@@ -11040,11 +11042,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1306"
                         value="0"
                         checked={formData?.m1306 === "0"}
@@ -11062,11 +11064,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1306"
                         value="1"
                         checked={formData?.m1306 === "1"}
@@ -11092,11 +11094,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1307"
                         value="1"
                         checked={formData?.m1307 === "1"}
@@ -11114,11 +11116,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1307"
                         value="2"
                         checked={formData?.m1307 === "2"}
@@ -11147,11 +11149,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1307"
                         value="NA"
                         checked={formData?.m1307 === "NA"}
@@ -11313,11 +11315,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1322"
                         value="0"
                         checked={formData?.m1322 === "0"}
@@ -11335,11 +11337,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1322"
                         value="1"
                         checked={formData?.m1322 === "1"}
@@ -11357,11 +11359,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1322"
                         value="2"
                         checked={formData?.m1322 === "2"}
@@ -11379,11 +11381,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1322"
                         value="3"
                         checked={formData?.m1322 === "3"}
@@ -11401,11 +11403,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1322"
                         value="4"
                         checked={formData?.m1322 === "4"}
@@ -11436,11 +11438,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1324"
                         value="1"
                         checked={formData?.m1324 === "1"}
@@ -11458,11 +11460,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1324"
                         value="2"
                         checked={formData?.m1324 === "2"}
@@ -11480,11 +11482,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1324"
                         value="3"
                         checked={formData?.m1324 === "3"}
@@ -11502,11 +11504,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1324"
                         value="4"
                         checked={formData?.m1324 === "4"}
@@ -11524,11 +11526,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1324"
                         value="NA"
                         checked={formData?.m1324 === "NA"}
@@ -11555,11 +11557,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1330"
                         value="0"
                         checked={formData?.m1330 === "0"}
@@ -11577,11 +11579,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1330"
                         value="1"
                         checked={formData?.m1330 === "1"}
@@ -11600,11 +11602,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1330"
                         value="2"
                         checked={formData?.m1330 === "2"}
@@ -11622,11 +11624,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1330"
                         value="3"
                         checked={formData?.m1330 === "3"}
@@ -11654,11 +11656,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1332"
                         value="1"
                         checked={formData?.m1332 === "1"}
@@ -11676,11 +11678,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1332"
                         value="2"
                         checked={formData?.m1332 === "2"}
@@ -11698,11 +11700,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1332"
                         value="3"
                         checked={formData?.m1332 === "3"}
@@ -11720,11 +11722,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1332"
                         value="4"
                         checked={formData?.m1332 === "4"}
@@ -11750,11 +11752,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1334"
                         value="1"
                         checked={formData?.m1334 === "1"}
@@ -11772,11 +11774,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1334"
                         value="2"
                         checked={formData?.m1334 === "2"}
@@ -11794,11 +11796,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1334"
                         value="3"
                         checked={formData?.m1334 === "3"}
@@ -11823,11 +11825,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1340"
                         value="0"
                         checked={formData?.m1340 === "0"}
@@ -11845,11 +11847,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1340"
                         value="1"
                         checked={formData?.m1340 === "1"}
@@ -11868,11 +11870,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1340"
                         value="2"
                         checked={formData?.m1340 === "2"}
@@ -11899,11 +11901,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1342"
                         value="0"
                         checked={formData?.m1342 === "0"}
@@ -11921,11 +11923,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1342"
                         value="1"
                         checked={formData?.m1342 === "1"}
@@ -11943,11 +11945,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1342"
                         value="2"
                         checked={formData?.m1342 === "2"}
@@ -11965,11 +11967,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="m1342"
                         value="3"
                         checked={formData?.m1342 === "3"}
@@ -12018,7 +12020,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <label
                         style={{ fontSize: "12px" }}
@@ -12028,7 +12030,7 @@ const SinglePatient = () => {
                       </label>
                       <div className="form-check form-check-inline">
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           checked={
                             formData?.highRiskDrugs?.antipsychotic?.isTaking
@@ -12043,7 +12045,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="form-check form-check-inline">
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           checked={
                             formData?.highRiskDrugs?.antipsychotic
@@ -12065,7 +12067,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <label
                         style={{ fontSize: "12px" }}
@@ -12075,7 +12077,7 @@ const SinglePatient = () => {
                       </label>
                       <div className="form-check form-check-inline">
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           checked={
                             formData?.highRiskDrugs?.anticoagulant?.isTaking
@@ -12090,7 +12092,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="form-check form-check-inline">
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           checked={
                             formData?.highRiskDrugs?.anticoagulant
@@ -12112,7 +12114,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <label
                         style={{ fontSize: "12px" }}
@@ -12122,7 +12124,7 @@ const SinglePatient = () => {
                       </label>
                       <div className="form-check form-check-inline">
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           checked={
                             formData?.highRiskDrugs?.antibiotic?.isTaking
@@ -12137,7 +12139,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="form-check form-check-inline">
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           checked={
                             formData?.highRiskDrugs?.antibiotic?.indicationNoted
@@ -12158,7 +12160,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <label
                         style={{ fontSize: "12px" }}
@@ -12168,7 +12170,7 @@ const SinglePatient = () => {
                       </label>
                       <div className="form-check form-check-inline">
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           checked={formData?.highRiskDrugs?.opioid?.isTaking}
                         />
@@ -12181,7 +12183,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="form-check form-check-inline">
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           checked={
                             formData?.highRiskDrugs?.opioid.indicationNoted
@@ -12202,7 +12204,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <label
                         style={{ fontSize: "12px" }}
@@ -12212,7 +12214,7 @@ const SinglePatient = () => {
                       </label>
                       <div className="form-check form-check-inline">
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           checked={
                             formData?.highRiskDrugs?.antiplatelet?.isTaking
@@ -12227,7 +12229,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="form-check form-check-inline">
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           checked={
                             formData?.highRiskDrugs?.antiplatelet
@@ -12249,7 +12251,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <label
                         style={{ fontSize: "12px" }}
@@ -12259,7 +12261,7 @@ const SinglePatient = () => {
                       </label>
                       <div className="form-check form-check-inline">
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           checked={
                             formData?.highRiskDrugs?.hypoglycemic?.isTaking
@@ -12274,7 +12276,7 @@ const SinglePatient = () => {
                       </div>
                       <div className="form-check form-check-inline">
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           checked={
                             formData?.highRiskDrugs?.hypoglycemic
@@ -12296,7 +12298,7 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <label
                         style={{ fontSize: "12px" }}
@@ -12306,7 +12308,7 @@ const SinglePatient = () => {
                       </label>
                       <div className="form-check form-check-inline">
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="checkbox"
                           checked={formData?.highRiskDrugs?.none?.isTaking}
                         />
@@ -12333,11 +12335,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="drugRegimenReview"
                         value="0"
                         checked={formData?.drugRegimenReview === "0"}
@@ -12355,11 +12357,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="drugRegimenReview"
                         value="1"
                         checked={formData?.drugRegimenReview === "1"}
@@ -12377,11 +12379,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="drugRegimenReview"
                         value="9"
                         checked={formData?.drugRegimenReview === "9"}
@@ -12410,11 +12412,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="medicationFollowUp"
                         value="0"
                         checked={formData?.medicationFollowUp === "0"}
@@ -12432,11 +12434,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="medicationFollowUp"
                         value="1"
                         checked={formData?.medicationFollowUp === "1"}
@@ -12464,11 +12466,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="medicationIntervention"
                         value="0"
                         checked={formData?.medicationIntervention === "0"}
@@ -12486,11 +12488,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="medicationIntervention"
                         value="1"
                         checked={formData?.medicationIntervention === "1"}
@@ -12508,11 +12510,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="medicationIntervention"
                         value="9"
                         checked={formData?.medicationIntervention === "9"}
@@ -12541,11 +12543,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="highRiskDrugEducation"
                         value="0"
                         checked={formData?.highRiskDrugEducation === "0"}
@@ -12563,11 +12565,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="highRiskDrugEducation"
                         value="1"
                         checked={formData?.highRiskDrugEducation === "1"}
@@ -12585,11 +12587,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="highRiskDrugEducation"
                         value="NA"
                         checked={formData?.highRiskDrugEducation === "NA"}
@@ -12619,11 +12621,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="managementOralMedications"
                         value="0"
                         checked={formData?.managementOralMedications === "0"}
@@ -12641,11 +12643,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="managementOralMedications"
                         value="1"
                         checked={formData?.managementOralMedications === "1"}
@@ -12664,11 +12666,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="managementOralMedications"
                         value="2"
                         checked={formData?.managementOralMedications === "2"}
@@ -12686,11 +12688,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="managementOralMedications"
                         value="3"
                         checked={formData?.managementOralMedications === "3"}
@@ -12709,11 +12711,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="managementOralMedications"
                         value="NA"
                         checked={formData?.managementOralMedications === "NA"}
@@ -12740,11 +12742,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="managementInjectableMedications"
                         value="0"
                         checked={
@@ -12764,11 +12766,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="managementInjectableMedications"
                         value="1"
                         checked={
@@ -12789,11 +12791,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="managementInjectableMedications"
                         value="2"
                         checked={
@@ -12813,11 +12815,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="managementInjectableMedications"
                         value="3"
                         checked={
@@ -12838,11 +12840,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="managementInjectableMedications"
                         value="NA"
                         checked={
@@ -12893,10 +12895,10 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         value="chemotherapy"
                         name="specialTreatmentsAdmission"
@@ -12917,10 +12919,10 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         value="radiation"
                         name="specialTreatmentsAdmission"
@@ -12943,10 +12945,10 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         name="specialTreatmentsAdmission"
                         value="noneOfTheAbove"
@@ -12980,10 +12982,10 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         value="chemotherapy"
                         name="specialTreatmentsDischarge"
@@ -13005,10 +13007,10 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         value="radiation"
                         name="specialTreatmentsDischarge"
@@ -13032,10 +13034,10 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         value="noneOfTheAbove"
                         name="specialTreatmentsDischarge"
@@ -13068,11 +13070,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="covidVaccinationUpToDate"
                         value="0"
                         checked={formData?.covidVaccinationUpToDate === "0"}
@@ -13090,11 +13092,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="covidVaccinationUpToDate"
                         value="1"
                         checked={formData?.covidVaccinationUpToDate === "1"}
@@ -13121,11 +13123,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="influenzaVaccinePeriod"
                         value="0"
                         checked={formData?.influenzaVaccinePeriod === "0"}
@@ -13143,11 +13145,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="influenzaVaccinePeriod"
                         value="1"
                         checked={formData?.influenzaVaccinePeriod === "1"}
@@ -13175,11 +13177,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="influenzaVaccineReceived"
                           value="1"
                           checked={formData?.influenzaVaccineReceived === "1"}
@@ -13198,11 +13200,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="influenzaVaccineReceived"
                           value="2"
                           checked={formData?.influenzaVaccineReceived === "2"}
@@ -13221,11 +13223,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="influenzaVaccineReceived"
                           value="3"
                           checked={formData?.influenzaVaccineReceived === "3"}
@@ -13243,11 +13245,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="influenzaVaccineReceived"
                           value="4"
                           checked={formData?.influenzaVaccineReceived === "4"}
@@ -13265,11 +13267,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="influenzaVaccineReceived"
                           value="5"
                           checked={formData?.influenzaVaccineReceived === "5"}
@@ -13288,11 +13290,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="influenzaVaccineReceived"
                           value="6"
                           checked={formData?.influenzaVaccineReceived === "6"}
@@ -13311,11 +13313,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="influenzaVaccineReceived"
                           value="7"
                           checked={formData?.influenzaVaccineReceived === "7"}
@@ -13334,11 +13336,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="influenzaVaccineReceived"
                           value="8"
                           checked={formData?.influenzaVaccineReceived === "8"}
@@ -13394,11 +13396,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="fallsPrevention"
                         value="0"
                         checked={formData?.fallsPrevention === "0"}
@@ -13416,11 +13418,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="fallsPrevention"
                         value="1"
                         checked={formData?.fallsPrevention === "1"}
@@ -13438,11 +13440,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="fallsPrevention"
                         value="NA"
                         checked={formData?.fallsPrevention === "NA"}
@@ -13470,11 +13472,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="depressionIntervention"
                         value="0"
                         checked={formData?.depressionIntervention === "0"}
@@ -13492,11 +13494,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="depressionIntervention"
                         value="1"
                         checked={formData?.depressionIntervention === "1"}
@@ -13514,11 +13516,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="depressionIntervention"
                         value="NA"
                         checked={formData?.depressionIntervention === "NA"}
@@ -13545,11 +13547,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="painIntervention"
                         value="0"
                         checked={formData?.painIntervention === "0"}
@@ -13567,11 +13569,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="painIntervention"
                         value="1"
                         checked={formData?.painIntervention === "1"}
@@ -13589,11 +13591,11 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
                         type="radio"
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         name="painIntervention"
                         value="NA"
                         checked={formData?.painIntervention === "NA"}
@@ -13622,11 +13624,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="pressureUlcerPrevention"
                           value="0"
                           checked={formData?.pressureUlcerPrevention === "0"}
@@ -13644,11 +13646,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="pressureUlcerPrevention"
                           value="1"
                           checked={formData?.pressureUlcerPrevention === "1"}
@@ -13666,11 +13668,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="pressureUlcerPrevention"
                           value="NA"
                           checked={formData?.pressureUlcerPrevention === "NA"}
@@ -13698,11 +13700,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="pressureUlcerTreatment"
                           value="0"
                           checked={formData?.pressureUlcerTreatment === "0"}
@@ -13720,11 +13722,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="pressureUlcerTreatment"
                           value="1"
                           checked={formData?.pressureUlcerTreatment === "1"}
@@ -13742,11 +13744,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="pressureUlcerTreatment"
                           value="NA"
                           checked={formData?.pressureUlcerTreatment === "NA"}
@@ -14317,7 +14319,7 @@ const SinglePatient = () => {
                         <div className="form-check col-md-2">
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="deliveryMethodAxxessPhysicianPortal"
                             name="deliveryMethod"
                             value="AxxessPhysicianPortal"
@@ -14337,7 +14339,7 @@ const SinglePatient = () => {
                         <div className="form-check col-md-2">
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="deliveryMethodEmail"
                             name="deliveryMethod"
                             value="Email"
@@ -14356,7 +14358,7 @@ const SinglePatient = () => {
                         <div className="form-check col-md-2">
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="deliveryMethodPhone"
                             name="deliveryMethod"
                             value="Phone"
@@ -14375,7 +14377,7 @@ const SinglePatient = () => {
                         <div className="form-check col-md-2">
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="deliveryMethodFax"
                             name="deliveryMethod"
                             value="Fax"
@@ -14394,7 +14396,7 @@ const SinglePatient = () => {
                         <div className="form-check col-md-2">
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="deliveryMethodCourier"
                             name="deliveryMethod"
                             value="Courier"
@@ -14413,7 +14415,7 @@ const SinglePatient = () => {
                         <div className="form-check col-md-2">
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             id="deliveryMethodOther"
                             name="deliveryMethod"
                             value="Other"
@@ -14468,11 +14470,11 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                             key={service}
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="checkbox"
                               id={service}
                               name="serviceRequired"
@@ -14519,7 +14521,7 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                           key={dme}
                         >
                           <input
@@ -14528,7 +14530,7 @@ const SinglePatient = () => {
                             name="dmeNeeded"
                             value={dme}
                             checked={formClinicalData?.dmeNeeded?.includes(dme)}
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                           />
                           <label
                             style={{ fontSize: "10px" }}
@@ -14932,10 +14934,10 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             type="radio"
                             name="primaryRelationship"
                             id={`relationship${relationship}`}
@@ -15038,10 +15040,10 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             type="radio"
                             name="primaryRelationship"
                             id={`relationship${relationship}`}
@@ -15088,10 +15090,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           name="primaryRepresentative"
                           id="primaryLegalRep"
@@ -15115,10 +15117,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           name="primaryRepresentative"
                           id="primaryPatientRep"
@@ -15262,10 +15264,10 @@ const SinglePatient = () => {
                                   margin: 0,
                                   padding: "0px 0px 0px auto",
                                 }}
-                                className="form-check d-flex align-items-cener gap-1"
+                                className="form-check d-flex align-items-center gap-1"
                               >
                                 <input
-                                  className="form-check-input"
+                                  className="form-check-input d-inline-block"
                                   type="radio"
                                   name={`additionalRelationship-${index}`}
                                   id={`additionalRelationship-${index}-${relationship}`}
@@ -15313,10 +15315,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               name={`additionalRepresentative-${index}`}
                               id={`additionalLegalRep-${index}`}
@@ -15340,10 +15342,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               name={`additionalRepresentative-${index}`}
                               id={`additionalPatientRep-${index}`}
@@ -15369,10 +15371,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="checkbox"
                               id={`additionalSameAsPatientAddress-${index}`}
                               checked={contact?.sameAsPatientAddress}
@@ -15491,10 +15493,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               name="representativeContacted"
                               id={`representativeContacted-${option.value}`}
@@ -15527,10 +15529,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               name="legalRepresentativeOption"
                               id="legalRepOption1"
@@ -15555,10 +15557,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               name="legalRepresentativeOption"
                               id="legalRepOption2"
@@ -15587,10 +15589,10 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               type="radio"
                               name="legalRepresentativeOption"
                               id="legalRepOption3"
@@ -15622,10 +15624,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           name="patientSelectedRepresentativeOption"
                           id="patientSelectedOption1"
@@ -15650,10 +15652,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           name="patientSelectedRepresentativeOption"
                           id="patientSelectedOption2"
@@ -15679,10 +15681,10 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           type="radio"
                           name="patientSelectedRepresentativeOption"
                           id="patientSelectedOption3"
@@ -15710,10 +15712,10 @@ const SinglePatient = () => {
                         margin: 0,
                         padding: "0px 0px 0px auto",
                       }}
-                      className="form-check d-flex align-items-cener gap-1"
+                      className="form-check d-flex align-items-center gap-1"
                     >
                       <input
-                        className="form-check-input"
+                        className="form-check-input d-inline-block"
                         type="checkbox"
                         id="doNotContactCAHPS"
                         checked={formContactData?.doNotContactCAHPS}
@@ -15766,10 +15768,10 @@ const SinglePatient = () => {
                                 margin: 0,
                                 padding: "0px 0px 0px auto",
                               }}
-                              className="form-check d-flex align-items-cener gap-1"
+                              className="form-check d-flex align-items-center gap-1"
                             >
                               <input
-                                className="form-check-input"
+                                className="form-check-input d-inline-block"
                                 type="radio"
                                 name="reasonForNoContact"
                                 id={`reasonForNoContact-${option.value}`}
@@ -15810,10 +15812,10 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             type="checkbox"
                             id="alternateCAHPSContact"
                             checked={formContactData?.alternateCAHPSContact}
@@ -15912,10 +15914,10 @@ const SinglePatient = () => {
                                             margin: 0,
                                             padding: "0px 0px 0px auto",
                                           }}
-                                          className="form-check d-flex align-items-cener gap-1"
+                                          className="form-check d-flex align-items-center gap-1"
                                         >
                                           <input
-                                            className="form-check-input"
+                                            className="form-check-input d-inline-block"
                                             type="radio"
                                             name="relationship"
                                             id={`relationship-${option.value}`}
@@ -16423,11 +16425,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="faceToFaceEvaluation"
                           id="faceToFaceEvaluationNA"
                           value="N/A"
@@ -16449,11 +16451,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="faceToFaceEvaluation"
                           id="faceToFaceEvaluationDate"
                           value="Date of Face-to-Face Visit"
@@ -16483,11 +16485,11 @@ const SinglePatient = () => {
                           margin: 0,
                           padding: "0px 0px 0px auto",
                         }}
-                        className="form-check d-flex align-items-cener gap-1"
+                        className="form-check d-flex align-items-center gap-1"
                       >
                         <input
                           type="radio"
-                          className="form-check-input"
+                          className="form-check-input d-inline-block"
                           name="faceToFaceEvaluation"
                           id="faceToFaceEvaluation30Days"
                           value="Face-to-Face to be completed within 30days"
@@ -16563,11 +16565,11 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             name="attendingPhysician"
                             id={`attendingPhysician-${option.value}`}
                             value={option.value}
@@ -16658,11 +16660,11 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             name="communityLiaison"
                             id={`communityLiaison-${option.value}`}
                             value={option.value}
@@ -16709,11 +16711,11 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             name="internalReferralSource"
                             id={`internalReferralSource-${option.value}`}
                             value={option.value}
@@ -16754,11 +16756,11 @@ const SinglePatient = () => {
                               margin: 0,
                               padding: "0px 0px 0px auto",
                             }}
-                            className="form-check d-flex align-items-cener gap-1"
+                            className="form-check d-flex align-items-center gap-1"
                           >
                             <input
                               type="radio"
-                              className="form-check-input"
+                              className="form-check-input d-inline-block"
                               name="facilityReferralSource"
                               id={`facilityReferralSource-${option.value}`}
                               value={option.value}
@@ -16808,11 +16810,11 @@ const SinglePatient = () => {
                             margin: 0,
                             padding: "0px 0px 0px auto",
                           }}
-                          className="form-check d-flex align-items-cener gap-1"
+                          className="form-check d-flex align-items-center gap-1"
                         >
                           <input
                             type="radio"
-                            className="form-check-input"
+                            className="form-check-input d-inline-block"
                             name="typeOfInpatientAdmission"
                             id={`typeOfInpatientAdmission-${option.value}`}
                             value={option.value}

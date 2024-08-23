@@ -185,7 +185,7 @@ const AudioChat = ({ chatUser, user, setAudioChat }) => {
     });
 
     // Create a missed call chat message
-    createChat({ chat: "Missed call", receiverId: chatUser?._id });
+    createChat({ chat: "audio Missed call", receiverId: chatUser?._id });
 
     // Clean up resources
   };
