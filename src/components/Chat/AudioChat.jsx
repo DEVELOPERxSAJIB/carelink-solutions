@@ -254,10 +254,10 @@ const AudioChat = ({ chatUser, user, setAudioChat }) => {
     callingAudio.pause();
     endCallAudio.play();
   }, [setAudioChat]);
-  const handleCancel =()=>{
-    setAudioChat(false)
+  const handleCancel = () => {
+    setAudioChat(false);
     callingAudio.pause();
-  }
+  };
   const handleCallDecline = useCallback(() => {
     setIncomingCall(null);
     callingAudio.pause();
@@ -329,8 +329,8 @@ const AudioChat = ({ chatUser, user, setAudioChat }) => {
             className="d-flex bg-primary align-items-center gap-3 justify-content-between  bg-primary shadow w-100 text-light flex-wrap p-2"
           >
             <span className="mt-3 text-success text-capitalize mb-0 pb-0">
-              <span className="text-white">{incomingCall?.firstName}</span>
-                is calling...
+              <span className="text-white">{incomingCall?.firstName} </span>
+              is calling...
             </span>
             <div className="d-flex gap-3 align-items-center  ml-auto">
               <button
@@ -417,14 +417,22 @@ const AudioChat = ({ chatUser, user, setAudioChat }) => {
               <i className="ti ti-phone-off" />
             </button>
           ) : (
-            !incomingCall && <div className="d-flex gap-2"><button onClick={createOffer} className="btn btn-sm btn-success">
-            <i className="ti ti-phone"></i>
-          </button>
-            <button onClick={handleCancel} className="btn btn-sm btn-danger">
-            Cancel
-          </button>
-          </div>
-          
+            !incomingCall && (
+              <div className="d-flex gap-2">
+                <button
+                  onClick={createOffer}
+                  className="btn btn-sm btn-success"
+                >
+                  <i className="ti ti-phone"></i>
+                </button>
+                <button
+                  onClick={handleCancel}
+                  className="btn btn-sm btn-danger"
+                >
+                  Cancel
+                </button>
+              </div>
+            )
           )}
         </div>
       </div>

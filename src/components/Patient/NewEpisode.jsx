@@ -150,6 +150,7 @@ const NewEpisode = ({
             name="primaryPhysician"
             id=""
           >
+            <option value="">select physician</option>
             <optgroup label="Patient own physician">
               <option value={patientPhysician?.payload?.physician?._id}>
                 {patientPhysician?.payload?.physician?.firstName}
@@ -205,7 +206,6 @@ const NewEpisode = ({
           <button type="submit" className="btn btn-primary">
             Save
           </button>
-        
         </div>
       </form>
     </div>

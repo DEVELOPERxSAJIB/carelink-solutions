@@ -45,8 +45,14 @@ const pagesOption = [
   { label: "Category", value: "/category" },
   { label: "ADS Location", value: "/ads-location" },
   { label: "List of Activity Log", value: "/list-of-activity-log" },
-  { label: "Add Group Activity Documentation", value: "/add-group-activity-documentation" },
-  { label: "View Group Documentation Log", value: "/view-group-documentation-log" },
+  {
+    label: "Add Group Activity Documentation",
+    value: "/add-group-activity-documentation",
+  },
+  {
+    label: "View Group Documentation Log",
+    value: "/view-group-documentation-log",
+  },
   { label: "ADS Configuration", value: "/ads-configuration" },
   { label: "Attendance Sheet", value: "/attendance-sheet" },
   { label: "Reports", value: "/reports" },
@@ -85,13 +91,20 @@ const pagesOption = [
   { label: "Pharmacy", value: "/pharmacy" },
   { label: "Contacts", value: "/contacts" },
   { label: "Create Contacts", value: "/create-contacts" },
-  { label: "Create Emergency Preparedness", value: "/create-emergency-preparedness" },
+  {
+    label: "Create Emergency Preparedness",
+    value: "/create-emergency-preparedness",
+  },
   { label: "Emergency Preparedness", value: "/emergency-preparedness" },
   { label: "Advance Directives", value: "/advance-directives" },
   { label: "Create Advance Directives", value: "/create-advance-directives" },
-  { label: "Create Referral Information", value: "/create-referral-information" },
+  {
+    label: "Create Referral Information",
+    value: "/create-referral-information",
+  },
   { label: "Referral Information", value: "/referral-information" },
   { label: "User Activation", value: "/user-activation/:token" },
+  { label: "Nurse", value: "/nurse" },
 ];
 
 export default pagesOption;

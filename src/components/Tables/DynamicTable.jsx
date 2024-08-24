@@ -245,7 +245,7 @@ const DataTable = ({
           className="w-100 text-primary font-bold d-flex align-items-center justify-content-start gap-2 my-2"
           htmlFor=""
         >
-          Expend table row
+        { truncate ? "Truncate" : "Not Truncate" }
           <input
             type="checkbox"
             className="form-check-input"

@@ -91,11 +91,12 @@ const generateMonthRows = (dates, setSelectedDate, selectDate) => {
       {week.map((day, i) => (
         <td
           onClick={() =>
-            day && setSelectedDate((prev) => [...prev, day?.toString()])
+            day &&
+            setSelectedDate((prev) => [...prev, day?.toLocaleDateString()])
           }
           className={`border p-1 cursor-pointer ${
-            selectDate?.includes(day?.toString())
-              ? "bg-primary text-white d-flex justify-content-center align-items-center"
+            selectDate?.includes(day?.toLocaleDateString())
+              ? "bg-primary text-white text-center justify-content-center align-items-center"
               : " justify-content-center align-items-center"
           }`}
           key={i}

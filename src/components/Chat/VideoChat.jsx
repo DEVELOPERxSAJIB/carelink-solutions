@@ -343,7 +343,7 @@ const VideoChat = ({ chatUser, user, setVideoChat }) => {
             className="d-flex bg-primary align-items-center gap-3 justify-content-between  bg-primary shadow w-100 text-light flex-wrap p-2"
           >
             <span className="mt-3 text-success text-capitalize mb-0 pb-0">
-              <span className="text-white">{incomingCall?.firstName}</span>
+              <span className="text-white">{incomingCall?.firstName} </span>
               is calling...
             </span>
             <div className="d-flex gap-3 align-items-center  ml-auto">

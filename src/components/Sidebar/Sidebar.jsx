@@ -131,6 +131,30 @@ const Sidebar = ({ userRole, permissions }) => {
       ],
     },
     {
+      title: "Nurse",
+      href: "/nurse",
+      // roles: [
+      //   "superadmin",
+      //   "admin",
+      //   "provider",
+      //   "coadmin",
+      //   "supportadministrator",
+      //   "healthcareprofessional",
+      //   "compliance",
+      // ],
+      icon: (
+        <i className="menu-icon tf-icons ti ti-user-plus menu-toggle-icon d-xl-block align-middle"></i>
+      ),
+      subMenu: [
+        // { title: "My Nurse", href: "/nurse", icon: "" },
+        // {
+        //   title: "Provider-audit-review",
+        //   href: "/provider-audit-review",
+        //   icon: "",
+        // },
+      ],
+    },
+    {
       title: "Business Community",
       href: "",
       // roles: [

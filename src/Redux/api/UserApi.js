@@ -38,6 +38,10 @@ export const UserApi = rootApi.injectEndpoints({
       query: () => `auth/supportadministrators`,
       providesTags: (result, error, _id) => [{ type: "User", id: _id }],
     }),
+    getAllNurses: builder.query({
+      query: () => `auth/nurses`,
+      providesTags: (result, error, _id) => [{ type: "User", id: _id }],
+    }),
     getAllHealthcareProfessional: builder.query({
       query: () => `auth/healthcareprofessionals`,
       providesTags: (result, error, _id) => [{ type: "User", id: _id }],
@@ -238,6 +242,7 @@ export const {
   useGetAllAdminQuery,
   useGetAllCaregiverQuery,
   useGetAllPatientQuery,
+  useGetAllNursesQuery,
   useGetAllProviderQuery,
   useGetAllCoadminQuery,
   useGetAllGuardianQuery,

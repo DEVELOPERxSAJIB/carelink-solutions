@@ -97,6 +97,7 @@ import SinglePatient from './../Pages/Patient/SinglePatient';
 import MyProfile from '../Pages/Profiles/MyProfile';
 import Settings from '../Pages/Profiles/Settings';
 import PatientProfile from '../Pages/Profiles/PatientProfile';
+import Nurse from './../Pages/Nurse/Nurse';
 
 const privateRouter = [
   {
@@ -121,6 +122,10 @@ const privateRouter = [
           {
             path: "/payroll",
             element: <Payroll />,
+          },
+          {
+            path: "/nurse",
+            element: <Nurse />,
           },
           {
             path: "/change-password",
