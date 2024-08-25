@@ -45,7 +45,7 @@ const PushNotes = () => {
 
   useEffect(() => {
     // socket.current = io("ws://localhost:5050");
-     socket.current=io('wss://carelinks-server.onrender.com');
+    socket.current = io("wss://carelinks-server.onrender.com");
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
     socket?.current?.on("offer", ({ type }) => {
@@ -61,7 +61,7 @@ const PushNotes = () => {
       setAudioChat(false);
     });
     socket?.current?.on("call-decline", ({ userData, offer }) => {
-      console.log(offer)
+      console.log(offer);
       setVideoChat(false);
       setAudioChat(false);
     });

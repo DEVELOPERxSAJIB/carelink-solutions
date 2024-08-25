@@ -33,6 +33,8 @@ const DynamicCalendar = ({
   endDate,
   selectDate,
   setSelectedDate,
+  activeDate,
+  setActiveDate,
 }) => {
   const calendar = generateCalendar(startDate, endDate);
   return (
@@ -58,7 +60,12 @@ const DynamicCalendar = ({
               </tr>
             </thead>
             <tbody>
-              {generateMonthRows(month.dates, setSelectedDate, selectDate)}
+              {generateMonthRows(
+                month.dates,
+                setSelectedDate,
+                selectDate,
+                activeDate
+              )}
             </tbody>
           </table>
         </div>
@@ -67,7 +74,7 @@ const DynamicCalendar = ({
   );
 };
 
-const generateMonthRows = (dates, setSelectedDate, selectDate) => {
+const generateMonthRows = (dates, setSelectedDate, selectDate, activeDate) => {
   const rows = [];
   let week = new Array(7).fill(null);
   let dayIndex = 0;
@@ -95,9 +102,11 @@ const generateMonthRows = (dates, setSelectedDate, selectDate) => {
             setSelectedDate((prev) => [...prev, day?.toLocaleDateString()])
           }
           className={`border p-1 cursor-pointer ${
-            selectDate?.includes(day?.toLocaleDateString())
+            (Array.isArray(activeDate) ? activeDate : [activeDate])
+              .concat(Array.isArray(selectDate) ? selectDate : [selectDate])
+              .includes(day?.toLocaleDateString())
               ? "bg-primary text-white text-center justify-content-center align-items-center"
-              : " justify-content-center align-items-center"
+              : "justify-content-center align-items-center"
           }`}
           key={i}
         >

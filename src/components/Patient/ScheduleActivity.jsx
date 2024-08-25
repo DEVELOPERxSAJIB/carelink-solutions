@@ -3,12 +3,17 @@ import { format } from "date-fns";
 import PopupModal from "./../Models/PopupModel";
 import NewEpisode from "./NewEpisode";
 import { useGetEpisodeByPatientIdQuery } from "../../Redux/api/EpisodeApi";
+import {
+  useGetScheduleByPatientIdQuery,
+  useDeleteScheduleMutation,
+} from "../../Redux/api/ScheduleApi";
 
 import DynamicCalendar from "./DynamicCalandar";
 import "react-calendar/dist/Calendar.css";
 import DataTable from "./../Tables/DynamicTable";
 import PageHeader from "./../FormElement/PageHeader";
 import Nursing from "./Nursing";
+import { showToast } from "./../../utils/Toastify";
 
 const ScheduleActivity = ({
   startOfCareDate,
@@ -25,9 +30,14 @@ const ScheduleActivity = ({
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [selectDate, setSelectedDate] = useState([]);
+  const [activeDate, setActiveDate] = useState([]);
   const [scheduler, setScheduler] = useState("nursing");
   const { data: patientEpisodes } = useGetEpisodeByPatientIdQuery(patientId);
- 
+  const { data: schedules, refetch } =
+    useGetScheduleByPatientIdQuery(patientId);
+  const [deleteSchedule, { data: deleteDate, isSuccess: isDeleteSuccess }] =
+    useDeleteScheduleMutation();
+
   useEffect(() => {
     if (patientEpisodes?.payload?.episode) {
       setEpisodes(patientEpisodes.payload.episode);
@@ -46,14 +56,28 @@ const ScheduleActivity = ({
     setSelectedEndDate(new Date(selectedEpisode.episodeEndDate));
   };
 
-  const onDelete = () => {};
-  const onEdit = () => {};
+  const onDelete = (row) => {
+    deleteSchedule(row._id);
+  };
+  const onEdit = (row) => {
+    console.log(row);
+  };
   const columns = [
-    { field: "task", header: "Task", type: "string" },
-    { field: "scheduledDate", header: "Scheduled Date", type: "date" },
-    { field: "assignedTo", header: "Assigned To", type: "string" },
-    { field: "status", header: "Status", type: "string" },
+    { field: "visitType", header: "Task" },
+    { field: "date", header: "scheduledDate" },
+    { field: "status", header: "Status" },
   ];
+  useEffect(() => {
+    const allSchedule = schedules?.payload?.schedule?.map((item) => item.date);
+    setActiveDate(allSchedule);
+  }, [schedules?.payload?.schedule]);
+
+  useEffect(() => {
+    if (isDeleteSuccess) {
+      showToast("success", deleteDate?.message);
+      refetch();
+    }
+  }, [isDeleteSuccess, deleteDate?.message, refetch]);
   return (
     <div className="w-100 mt-4 d-flex gap-3 flex-column align-items-center justify-content-start">
       <div className="d-flex w-100 gap-3 align-items-center justify-content-start flex-wrap">
@@ -101,6 +125,8 @@ const ScheduleActivity = ({
       <div className="row w-100">
         {selectedStartDate && selectedEndDate && (
           <DynamicCalendar
+            activeDate={activeDate}
+            setActiveDate={setActiveDate}
             selectDate={selectDate}
             setSelectedDate={setSelectedDate}
             startDate={selectedStartDate}
@@ -169,14 +195,21 @@ const ScheduleActivity = ({
 
       <div className="row w-100">
         {scheduler === "nursing" && (
-          <Nursing selectDate={selectDate} setSelectedDate={setSelectedDate} />
+          <Nursing
+            selectDate={selectDate}
+            setSelectedDate={setSelectedDate}
+            patientId={patientId}
+            selectedStartDate={selectedStartDate}
+            selectedEndDate={selectedEndDate}
+            patientName={`${patientFirstName} ${patientLastName}`}
+          />
         )}
       </div>
       <div className="row w-100">
         <PageHeader title="Scheduler" back={false} />
         <DataTable
           columns={columns}
-          data={[]}
+          data={schedules?.payload?.schedule ?? []}
           tableName="Scheduler"
           onDelete={onDelete}
           onEdit={onEdit}

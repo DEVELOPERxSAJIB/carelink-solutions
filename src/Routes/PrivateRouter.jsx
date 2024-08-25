@@ -98,6 +98,7 @@ import MyProfile from '../Pages/Profiles/MyProfile';
 import Settings from '../Pages/Profiles/Settings';
 import PatientProfile from '../Pages/Profiles/PatientProfile';
 import Nurse from './../Pages/Nurse/Nurse';
+import NurseSinglePage from './../Pages/Nurse/NurseSinglePage';
 
 const privateRouter = [
   {
@@ -150,6 +151,10 @@ const privateRouter = [
           {
             path: "/sub-users",
             element: <SubUsers />,
+          },
+          {
+            path: "/Scheduler/:id",
+            element: <NurseSinglePage />,
           },
           {
             path: "/billing",

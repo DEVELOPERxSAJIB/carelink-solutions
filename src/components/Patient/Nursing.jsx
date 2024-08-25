@@ -1,19 +1,30 @@
-// selectDate
-// setSelectedDateimport { useGetAllNursesQuery } from "../../Redux/api/UserApi";
-
 import { useState } from "react";
 import { useGetAllNursesQuery } from "../../Redux/api/UserApi";
+import { useCreateScheduleMutation } from "../../Redux/api/ScheduleApi";
 import { useEffect } from "react";
-const Nursing = ({ selectDate, setSelectedDate }) => {
+import { showToast } from "./../../utils/Toastify";
+const Nursing = ({
+  selectDate,
+  setSelectedDate,
+  patientId,
+  selectedStartDate,
+  selectedEndDate,
+  patientName,
+}) => {
   const [duty, setDuty] = useState([
     {
       visitType: "",
       userId: "",
       date: "",
+      patientId: "",
+      episode: "",
+      patientName: "",
     },
   ]);
 
   const { data: nurses } = useGetAllNursesQuery();
+  const [createSchedule, { data, error, isSuccess }] =
+    useCreateScheduleMutation();
 
   const handleRemove = (indexNum) => {
     setSelectedDate(selectDate?.filter((_, index) => index !== indexNum));
@@ -21,7 +32,7 @@ const Nursing = ({ selectDate, setSelectedDate }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(duty);
+    createSchedule(duty);
   };
 
   const handleOnChange = (e, index) => {
@@ -33,20 +44,14 @@ const Nursing = ({ selectDate, setSelectedDate }) => {
     );
   };
   // Initialize or update duty when selectDate changes
-  // Initialize or update duty when selectDate changes
   useEffect(() => {
     if (selectDate) {
       setDuty((prevDuty) => {
-        // Create a map from existing duties to match entries by date
         const dutyMap = new Map(prevDuty.map((d) => [d.date, d]));
-
-        // Update existing duties or add new ones
         const updatedDuty = selectDate.map((date) => {
           if (dutyMap.has(date)) {
-            // Return existing duty if it exists
             return dutyMap.get(date);
           } else {
-            // Create new duty if it does not exist
             return { visitType: "", userId: "", date };
           }
         });
@@ -55,8 +60,28 @@ const Nursing = ({ selectDate, setSelectedDate }) => {
       });
     }
   }, [selectDate]);
+  useEffect(() => {
+    setDuty((prevDuty) =>
+      prevDuty.map((dutyItem) => ({
+        ...dutyItem,
+        patientId,
+        patientName,
+        episode: `${selectedStartDate} ${selectedEndDate}`,
+      }))
+    );
+  }, [patientId, selectDate]);
+  useEffect(() => {
+    if (error) {
+      showToast("error", error.data.message);
+    }
+    if (isSuccess) {
+      showToast("success", data.message);
+      setSelectedDate([]);
+    }
+  }, [isSuccess, error]);
+
   return (
-    <form onSubmit={onSubmit} className="bg-light">
+    <form onSubmit={onSubmit} className="bg-light w-100">
       <table className="table table-stripped table-bordered">
         <thead>
           <tr>
@@ -307,12 +332,12 @@ const Nursing = ({ selectDate, setSelectedDate }) => {
                     />
                   </td>
                   <td className="cursor-pointer">
-                    <button
+                    <a
                       className="btn btn-danger"
                       onClick={() => handleRemove(index)}
                     >
                       <ti className="ti ti-trash"></ti>
-                    </button>
+                    </a>
                   </td>
                 </tr>
               );

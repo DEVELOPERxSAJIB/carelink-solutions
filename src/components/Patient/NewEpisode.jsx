@@ -41,14 +41,9 @@ const NewEpisode = ({
       patientId,
     };
     createEpisode(newEpisode);
-    // console.log("Episode saved:", newEpisode);
-    // // Add your save logic here (e.g., send data to the server)
+    // Add your save logic here (e.g., send data to the server)
   };
 
-  const handleCancel = () => {
-    // Add your cancel logic here (e.g., clear form or navigate away)
-    console.log("Episode creation canceled.");
-  };
   useEffect(() => {
     if (error) {
       showToast("error", error?.data?.message);
