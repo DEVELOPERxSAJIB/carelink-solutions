@@ -39,7 +39,7 @@ const Navbar = () => {
   const handleClose = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
       setIsSetSearch(false);
-      document.documentElement.classList.toggle("");
+      document.documentElement.classList.toggle("your-class-name"); // Replace "your-class-name" with the actual class name you want to toggle
     }
   };
 
@@ -116,11 +116,7 @@ const Navbar = () => {
             </a>
             <ul className="dropdown-menu dropdown-menu-end dropdown-styles">
               <li>
-                <a
-                  className="dropdown-item"
-                  href="#"
-                  data-theme="light"
-                >
+                <a className="dropdown-item" href="#" data-theme="light">
                   <span className="align-middle">
                     <i className="ti ti-sun ti-md me-3" />
                     Light
@@ -128,11 +124,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a
-                  className="dropdown-item"
-                  href="#"
-                  data-theme="dark"
-                >
+                <a className="dropdown-item" href="#" data-theme="dark">
                   <span className="align-middle">
                     <i className="ti ti-moon-stars ti-md me-3" />
                     Dark
@@ -140,11 +132,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a
-                  className="dropdown-item"
-                  href="#"
-                  data-theme="system"
-                >
+                <a className="dropdown-item" href="#" data-theme="system">
                   <span className="align-middle">
                     <i className="ti ti-device-desktop-analytics ti-md me-3" />
                     System
@@ -331,16 +319,10 @@ const Navbar = () => {
                         <small className="text-muted">1h ago</small>
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
-                        <a
-                          href="#"
-                          className="dropdown-notifications-read"
-                        >
+                        <a href="#" className="dropdown-notifications-read">
                           <span className="badge badge-dot" />
                         </a>
-                        <a
-                          href="#"
-                          className="dropdown-notifications-archive"
-                        >
+                        <a href="#" className="dropdown-notifications-archive">
                           <span className="ti ti-x" />
                         </a>
                       </div>
@@ -363,16 +345,10 @@ const Navbar = () => {
                         <small className="text-muted">12hr ago</small>
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
-                        <a
-                          href="#"
-                          className="dropdown-notifications-read"
-                        >
+                        <a href="#" className="dropdown-notifications-read">
                           <span className="badge badge-dot" />
                         </a>
-                        <a
-                          href="#"
-                          className="dropdown-notifications-archive"
-                        >
+                        <a href="#" className="dropdown-notifications-archive">
                           <span className="ti ti-x" />
                         </a>
                       </div>
@@ -397,16 +373,10 @@ const Navbar = () => {
                         <small className="text-muted">1h ago</small>
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
-                        <a
-                          href="#"
-                          className="dropdown-notifications-read"
-                        >
+                        <a href="#" className="dropdown-notifications-read">
                           <span className="badge badge-dot" />
                         </a>
-                        <a
-                          href="#"
-                          className="dropdown-notifications-archive"
-                        >
+                        <a href="#" className="dropdown-notifications-archive">
                           <span className="ti ti-x" />
                         </a>
                       </div>
@@ -431,16 +401,10 @@ const Navbar = () => {
                         <small className="text-muted">1 day ago</small>
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
-                        <a
-                          href="#"
-                          className="dropdown-notifications-read"
-                        >
+                        <a href="#" className="dropdown-notifications-read">
                           <span className="badge badge-dot" />
                         </a>
-                        <a
-                          href="#"
-                          className="dropdown-notifications-archive"
-                        >
+                        <a href="#" className="dropdown-notifications-archive">
                           <span className="ti ti-x" />
                         </a>
                       </div>
@@ -467,16 +431,10 @@ const Navbar = () => {
                         <small className="text-muted">2 days ago</small>
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
-                        <a
-                          href="#"
-                          className="dropdown-notifications-read"
-                        >
+                        <a href="#" className="dropdown-notifications-read">
                           <span className="badge badge-dot" />
                         </a>
-                        <a
-                          href="#"
-                          className="dropdown-notifications-archive"
-                        >
+                        <a href="#" className="dropdown-notifications-archive">
                           <span className="ti ti-x" />
                         </a>
                       </div>
@@ -501,16 +459,10 @@ const Navbar = () => {
                         <small className="text-muted">3 days ago</small>
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
-                        <a
-                          href="#"
-                          className="dropdown-notifications-read"
-                        >
+                        <a href="#" className="dropdown-notifications-read">
                           <span className="badge badge-dot" />
                         </a>
-                        <a
-                          href="#"
-                          className="dropdown-notifications-archive"
-                        >
+                        <a href="#" className="dropdown-notifications-archive">
                           <span className="ti ti-x" />
                         </a>
                       </div>
@@ -535,16 +487,10 @@ const Navbar = () => {
                         <small className="text-muted">4 days ago</small>
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
-                        <a
-                          href="#"
-                          className="dropdown-notifications-read"
-                        >
+                        <a href="#" className="dropdown-notifications-read">
                           <span className="badge badge-dot" />
                         </a>
-                        <a
-                          href="#"
-                          className="dropdown-notifications-archive"
-                        >
+                        <a href="#" className="dropdown-notifications-archive">
                           <span className="ti ti-x" />
                         </a>
                       </div>
@@ -569,16 +515,10 @@ const Navbar = () => {
                         <small className="text-muted">5 days ago</small>
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
-                        <a
-                          href="#"
-                          className="dropdown-notifications-read"
-                        >
+                        <a href="#" className="dropdown-notifications-read">
                           <span className="badge badge-dot" />
                         </a>
-                        <a
-                          href="#"
-                          className="dropdown-notifications-archive"
-                        >
+                        <a href="#" className="dropdown-notifications-archive">
                           <span className="ti ti-x" />
                         </a>
                       </div>
@@ -601,16 +541,10 @@ const Navbar = () => {
                         <small className="text-muted">5 days ago</small>
                       </div>
                       <div className="flex-shrink-0 dropdown-notifications-actions">
-                        <a
-                          href="#"
-                          className="dropdown-notifications-read"
-                        >
+                        <a href="#" className="dropdown-notifications-read">
                           <span className="badge badge-dot" />
                         </a>
-                        <a
-                          href="#"
-                          className="dropdown-notifications-archive"
-                        >
+                        <a href="#" className="dropdown-notifications-archive">
                           <span className="ti ti-x" />
                         </a>
                       </div>
@@ -693,7 +627,8 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/profile-settings"
+                <Link
+                  to="/profile-settings"
                   className="dropdown-item"
                   href="pages-account-settings-account.html"
                 >
