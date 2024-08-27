@@ -1,14 +1,15 @@
-
 import { useGetScheduleByIdQuery } from "../../Redux/api/ScheduleApi";
 import { useParams } from "react-router-dom";
-import TenDaySummaryCaseConference from '../../components/Patient/visitType/TenDaySummaryCaseConference';
+import TenDaySummaryCaseConference from "../../components/Patient/visitType/TenDaySummaryCaseConference";
+import LvnOrLpn from "./../../components/Patient/visitType/LvnOrLpn";
 const NurseSinglePage = () => {
   const { id } = useParams();
   const { data } = useGetScheduleByIdQuery(id);
-  console.log(data)
+  console.log(data);
   // const {visitType} = data?.payload?.schedule
-  return <div>
-    {/* <select
+  return (
+    <div>
+      {/* <select
                       value={duty[index]?.visitType || ""}
                       onChange={(e) => handleOnChange(e, index)}
                       className="form-select "
@@ -200,10 +201,23 @@ const NurseSinglePage = () => {
                         Wound Vac-Removal
                       </option>
                     </select> */}
-   {data?.payload?.schedule?.visitType==="10 Day Summary/Case Conference" && <TenDaySummaryCaseConference data={data?.payload?.schedule} />}
-   {data?.payload?.schedule?.visitType==="30 Day Summary/Case Conference" && <TenDaySummaryCaseConference data={data?.payload?.schedule} />}
-   {data?.payload?.schedule?.visitType==="60 Day Summary/Case Conference" && <TenDaySummaryCaseConference data={data?.payload?.schedule} />}
-  </div>;
+      {data?.payload?.schedule?.visitType ===
+        "10 Day Summary/Case Conference" && (
+        <TenDaySummaryCaseConference data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType ===
+        "30 Day Summary/Case Conference" && (
+        <TenDaySummaryCaseConference data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType ===
+        "60 Day Summary/Case Conference" && (
+        <TenDaySummaryCaseConference data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "LVN/LPN Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+    </div>
+  );
 };
 
 export default NurseSinglePage;

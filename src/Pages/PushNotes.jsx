@@ -61,7 +61,7 @@ const PushNotes = () => {
       setAudioChat(false);
     });
     socket?.current?.on("call-decline", ({ userData, offer }) => {
-      console.log(offer)
+      console.log(offer);
       setVideoChat(false);
       setAudioChat(false);
     });
