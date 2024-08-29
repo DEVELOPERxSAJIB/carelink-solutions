@@ -247,21 +247,21 @@ const LvnOrLpn = ({ data }) => {
 
   const handleChangeRate = (e) => {
     const { name, value } = e.target;
-  const [type, position] = name.split('.').slice(1); // Extract type (e.g., "apical") and position (e.g., "lying")
+    const [type, position] = name.split(".").slice(1); // Extract type (e.g., "apical") and position (e.g., "lying")
 
-  // Update state with new value for the specific position under the type
-  setFormData(prevState => ({
-    ...prevState,
-    pulseRate: {
-      ...prevState.pulseRate,
-      [type]: {
-        ...prevState.pulseRate[type],
-        [position]: value // Update the specific position with the new value
-      }
-    }
-  }));
+    // Update state with new value for the specific position under the type
+    setFormData((prevState) => ({
+      ...prevState,
+      pulseRate: {
+        ...prevState.pulseRate,
+        [type]: {
+          ...prevState.pulseRate[type],
+          [position]: value, // Update the specific position with the new value
+        },
+      },
+    }));
   };
-  
+
   const handleInputChange = (e) => {
     const { name, value, type, checked, options } = e.target;
     setFormData((prevData) => ({
@@ -348,10 +348,25 @@ const LvnOrLpn = ({ data }) => {
     }
   }, [isSuccess, error, lvnOrLpnData, refetch]);
   useEffect(() => {
-    if(getData?.payload?.record){
-      setFormData(getData?.payload?.record);
+    if (getData?.payload?.record) {
+      let updateData = { ...getData.payload.record };
+
+      // Convert the dates to the correct format
+      if (updateData.visitDate) {
+        updateData.visitDate = new Date(updateData.visitDate).toISOString().split("T")[0];
+      }
+      if (updateData.physicianLastVisitDate) {
+        updateData.physicianLastVisitDate = new Date(updateData.physicianLastVisitDate).toISOString().split("T")[0];
+      }
+      if (updateData.signatureDate) {
+        updateData.signatureDate = new Date(updateData.signatureDate).toISOString().split("T")[0];
+      }
+
+      // Set the updated data to the form data state
+      setFormData(updateData);
     }
   }, [getData?.payload?.record]);
+
 
   return (
     <form onSubmit={handleSubmit} className="create-patient-form card">
@@ -381,7 +396,11 @@ const LvnOrLpn = ({ data }) => {
         <div className="row mt-5">
           <PageHeader title={data.visitType} />
         </div>
-
+        <div className="row mt-5 w-100 text-center">
+          <p className="fs-4 text-capitalize text-black font-bolder">
+            {data?.patientName}
+          </p>
+        </div>
         {/* visit type and other  */}
         <div className="row">
           <div className="col-md-12 bg-secondary text-center mb-5">

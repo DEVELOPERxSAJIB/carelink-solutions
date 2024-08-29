@@ -134,7 +134,6 @@ const TenDaySummaryCaseConference = ({ data }) => {
     if (update?.sentDate) {
       update.sentDate = update.sentDate.split("T")[0];
     }
-
     // Format the dates in the electronicSignature array
     if (Array.isArray(update?.electronicSignature)) {
       update.electronicSignature = update.electronicSignature.map(
@@ -144,7 +143,6 @@ const TenDaySummaryCaseConference = ({ data }) => {
         })
       );
     }
-
     // Update the formData state with the modified data
     setFormData(update);
     }
@@ -166,6 +164,9 @@ const TenDaySummaryCaseConference = ({ data }) => {
       <div className="card-header">
         <PageHeader title={data?.visitType} />
       </div>
+      <div className="row mt-5 w-100 text-center">
+          <p className="fs-4 text-capitalize text-black font-bolder">{data?.patientName}</p>
+        </div>
       <div className="card-body">
         <form onSubmit={handleSubmit}>
           {/* Patient Details Section */}

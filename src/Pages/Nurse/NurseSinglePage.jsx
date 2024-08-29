@@ -2,6 +2,7 @@ import { useGetScheduleByIdQuery } from "../../Redux/api/ScheduleApi";
 import { useParams } from "react-router-dom";
 import TenDaySummaryCaseConference from "../../components/Patient/visitType/TenDaySummaryCaseConference";
 import LvnOrLpn from "./../../components/Patient/visitType/LvnOrLpn";
+import ChangeOnFocus from "./../../components/Patient/visitType/ChangeOnFocus";
 const NurseSinglePage = () => {
   const { id } = useParams();
   const { data } = useGetScheduleByIdQuery(id);
@@ -215,6 +216,9 @@ const NurseSinglePage = () => {
       )}
       {data?.payload?.schedule?.visitType === "LVN/LPN Visit" && (
         <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Change In Focus (SN)" && (
+        <ChangeOnFocus data={data?.payload?.schedule} />
       )}
     </div>
   );
