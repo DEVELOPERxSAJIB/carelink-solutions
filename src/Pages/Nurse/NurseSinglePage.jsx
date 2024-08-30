@@ -228,6 +228,9 @@ const NurseSinglePage = () => {
       {data?.payload?.schedule?.visitType === "Coordination Of Care" && (
         <CoordinationOfCare data={data?.payload?.schedule} />
       )}
+      {data?.payload?.schedule?.visitType === "Foley Cath Change" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
     </div>
   );
 };
