@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import TenDaySummaryCaseConference from "../../components/Patient/visitType/TenDaySummaryCaseConference";
 import LvnOrLpn from "./../../components/Patient/visitType/LvnOrLpn";
 import ChangeOnFocus from "./../../components/Patient/visitType/ChangeOnFocus";
+import CommunicationNote from './../../components/Patient/visitType/CommunicationNote';
+import CoordinationOfCare from './../../components/Patient/visitType/CoordinationOfCare';
 const NurseSinglePage = () => {
   const { id } = useParams();
   const { data } = useGetScheduleByIdQuery(id);
@@ -219,6 +221,12 @@ const NurseSinglePage = () => {
       )}
       {data?.payload?.schedule?.visitType === "Change In Focus (SN)" && (
         <ChangeOnFocus data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Communication Note" && (
+        <CommunicationNote data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Coordination Of Care" && (
+        <CoordinationOfCare data={data?.payload?.schedule} />
       )}
     </div>
   );
