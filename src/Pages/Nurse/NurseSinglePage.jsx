@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import TenDaySummaryCaseConference from "../../components/Patient/visitType/TenDaySummaryCaseConference";
 import LvnOrLpn from "./../../components/Patient/visitType/LvnOrLpn";
 import ChangeOnFocus from "./../../components/Patient/visitType/ChangeOnFocus";
-import CommunicationNote from './../../components/Patient/visitType/CommunicationNote';
-import CoordinationOfCare from './../../components/Patient/visitType/CoordinationOfCare';
+import CommunicationNote from "./../../components/Patient/visitType/CommunicationNote";
+import CoordinationOfCare from "./../../components/Patient/visitType/CoordinationOfCare";
 const NurseSinglePage = () => {
   const { id } = useParams();
   const { data } = useGetScheduleByIdQuery(id);
@@ -231,6 +231,22 @@ const NurseSinglePage = () => {
       {data?.payload?.schedule?.visitType === "Foley Cath Change" && (
         <LvnOrLpn data={data?.payload?.schedule} />
       )}
+      {data?.payload?.schedule?.visitType === "Hi Tech LVN Hourly" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Hi Tech LVN Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Hi Tech RN Hourly" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Hi Tech RN Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "LVN Hourly" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      
     </div>
   );
 };
