@@ -152,6 +152,7 @@ const Nursing = ({
                       <option value="Hi Tech RN Hourly">
                         Hi Tech RN Hourly
                       </option>
+
                       <option value="Hi Tech RN Visit">Hi Tech RN Visit</option>
                       <option value="LVN Hourly">LVN Hourly</option>
                       <option value="LVN/LPN Supervisory Visit" version="2">
@@ -285,11 +286,92 @@ const Nursing = ({
                       <option value="SN Resumption of Care (Non-OASIS)">
                         SN Resumption of Care (Non-OASIS)
                       </option>
+                      <option value="SN PICC/Midline Placement Visit">
+                        SN PICC/Midline Placement Visit
+                      </option>
+                      <option value="SN DC Planning Visit">
+                        SN DC Planning Visit
+                      </option>
+                      <option value="SN BMP Visit">SN BMP Visit</option>
+                      <option value="SN CBC Visit">SN CBC Visit</option>
+                      <option value="SN DC Visit">SN DC Visit</option>
+                      <option value="SN B12 Injection Visit">
+                        SN B12 Injection Visit
+                      </option>
+                      <option value="SN Diabetic Daily Visit">
+                        SN Diabetic Daily Visit
+                      </option>
+                      <option value="SN Evaluation Visit">
+                      SN Evaluation Visit
+                      </option>
+                      <option value="SN Foley Labs Visit">
+                      SN Foley Labs Visit
+                      </option>
                       <option value="SOC Summary/Case Conference" version="1">
                         SOC Summary/Case Conference
                       </option>
+                      <option value="SN Foley Change Visit" version="1">
+                        SN Foley Change Visit
+                      </option>
+                      <option value="SN Haldol Injection Visit" version="1">
+                      SN Haldol Injection Visit
+                      </option>
+                      <option value="SN Injection Visit" version="1">
+                      SN Injection Visit
+                      </option>
+                      <option value="SN Injection/Labs Visit" version="1">
+                      SN Injection/Labs Visit
+                      </option>
+                      <option value="SN Insulin AM Visit" version="1">
+                      SN Insulin AM Visit
+                      </option>
+                      <option value="SN Insulin HS Visit" version="1">
+                      SN Insulin HS Visit
+                      </option>
+                      <option value="SN Insulin Noon Visit" version="1">
+                      SN Insulin Noon Visit
+                      </option>
+                      <option value="SN Insulin PM Visit" version="1">
+                      SN Insulin PM Visit
+                      </option>
+                      <option value="SN Labs Visit" version="1">
+                      SN Labs Visit
+                      </option>
+                      <option value="SN Management & Evaluation Visit" version="1">
+                      SN Management & Evaluation Visit
+                      </option>
+                      <option value="SN Observation & Assessment Visit" version="1">
+                      SN Observation & Assessment Visit
+                      </option>
+                      <option value="SN PRN Visit" version="1">
+                      SN PRN Visit
+                      </option>
+                      <option value="SN Management & Evaluation Visit" version="1">
+                      SN Management & Evaluation Visit
+                      </option>
+                      <option value="SN Teaching/Training Visit" version="1">
+                      SN Teaching/Training Visit
+                      </option>
                       <option value="Supervisory Visit (SN)">
                         Supervisory Visit (SN)
+                      </option>
+                      <option value="SN with Aide Supervision Visit">
+                        SN with Aide Supervision Visit
+                      </option>
+                      <option value="SN Wound Care Visit">
+                        SN Wound Care Visit
+                      </option>
+                      <option value="SN PRN Foley Change Visit">
+                        SN PRN Foley Change Visit
+                      </option>
+                      <option value="SN PRN VP for CMP Visit">
+                        SN PRN VP for CMP Visit
+                      </option>
+                      <option value="PT w/ INR">
+                      PT w/ INR
+                      </option>
+                      <option value="PT w/ INR PRN">
+                      PT w/ INR PRN
                       </option>
                       <option value="Telehealth Encounter">
                         Telehealth Encounter

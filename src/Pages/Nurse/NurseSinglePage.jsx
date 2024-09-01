@@ -5,6 +5,7 @@ import LvnOrLpn from "./../../components/Patient/visitType/LvnOrLpn";
 import ChangeOnFocus from "./../../components/Patient/visitType/ChangeOnFocus";
 import CommunicationNote from "./../../components/Patient/visitType/CommunicationNote";
 import CoordinationOfCare from "./../../components/Patient/visitType/CoordinationOfCare";
+import HHACarePlan from './../../components/Patient/visitType/HHACarePlan';
 const NurseSinglePage = () => {
   const { id } = useParams();
   const { data } = useGetScheduleByIdQuery(id);
@@ -245,6 +246,119 @@ const NurseSinglePage = () => {
       )}
       {data?.payload?.schedule?.visitType === "LVN Hourly" && (
         <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Skilled Nurse Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Skilled Nurse Visit AM" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Skilled Nurse Visit PM" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN DC Planning Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+
+      {data?.payload?.schedule?.visitType === "SN Home Infusion SD Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType ===
+        "Skilled Nurse/Home Infusion/SD" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType ===
+        "Skilled Nurse/Home Infusion/SD - Additional" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType ===
+        "SN PICC/Midline Placement Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN B12 Injection Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN BMP Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN CBC Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN DC Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Diabetic Daily Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Evaluation Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Foley Labs Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Foley Change Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Haldol Injection Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Injection Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Injection/Labs Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Insulin AM Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Insulin HS Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Insulin Noon Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Insulin PM Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Labs Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Management & Evaluation Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Observation & Assessment Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN PRN Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Management & Evaluation Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN with Aide Supervision Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN Wound Care Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN PRN Foley Change Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      
+      {data?.payload?.schedule?.visitType === "SN Teaching/Training Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "SN PRN VP for CMP Visit" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "PT w/ INR" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "PT w/ INR PRN" && (
+        <LvnOrLpn data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "HHA Care Plan" && (
+        <HHACarePlan data={data?.payload?.schedule} />
       )}
       
     </div>
