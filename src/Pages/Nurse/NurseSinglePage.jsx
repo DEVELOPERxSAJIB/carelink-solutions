@@ -5,7 +5,8 @@ import LvnOrLpn from "./../../components/Patient/visitType/LvnOrLpn";
 import ChangeOnFocus from "./../../components/Patient/visitType/ChangeOnFocus";
 import CommunicationNote from "./../../components/Patient/visitType/CommunicationNote";
 import CoordinationOfCare from "./../../components/Patient/visitType/CoordinationOfCare";
-import HHACarePlan from './../../components/Patient/visitType/HHACarePlan';
+import HHACarePlan from "./../../components/Patient/visitType/HHACarePlan";
+import NonOASISDischarge from "./../../components/Patient/visitType/NonOASISDischarge";
 const NurseSinglePage = () => {
   const { id } = useParams();
   const { data } = useGetScheduleByIdQuery(id);
@@ -323,19 +324,23 @@ const NurseSinglePage = () => {
       {data?.payload?.schedule?.visitType === "SN Labs Visit" && (
         <LvnOrLpn data={data?.payload?.schedule} />
       )}
-      {data?.payload?.schedule?.visitType === "SN Management & Evaluation Visit" && (
+      {data?.payload?.schedule?.visitType ===
+        "SN Management & Evaluation Visit" && (
         <LvnOrLpn data={data?.payload?.schedule} />
       )}
-      {data?.payload?.schedule?.visitType === "SN Observation & Assessment Visit" && (
+      {data?.payload?.schedule?.visitType ===
+        "SN Observation & Assessment Visit" && (
         <LvnOrLpn data={data?.payload?.schedule} />
       )}
       {data?.payload?.schedule?.visitType === "SN PRN Visit" && (
         <LvnOrLpn data={data?.payload?.schedule} />
       )}
-      {data?.payload?.schedule?.visitType === "SN Management & Evaluation Visit" && (
+      {data?.payload?.schedule?.visitType ===
+        "SN Management & Evaluation Visit" && (
         <LvnOrLpn data={data?.payload?.schedule} />
       )}
-      {data?.payload?.schedule?.visitType === "SN with Aide Supervision Visit" && (
+      {data?.payload?.schedule?.visitType ===
+        "SN with Aide Supervision Visit" && (
         <LvnOrLpn data={data?.payload?.schedule} />
       )}
       {data?.payload?.schedule?.visitType === "SN Wound Care Visit" && (
@@ -344,7 +349,7 @@ const NurseSinglePage = () => {
       {data?.payload?.schedule?.visitType === "SN PRN Foley Change Visit" && (
         <LvnOrLpn data={data?.payload?.schedule} />
       )}
-      
+
       {data?.payload?.schedule?.visitType === "SN Teaching/Training Visit" && (
         <LvnOrLpn data={data?.payload?.schedule} />
       )}
@@ -360,7 +365,9 @@ const NurseSinglePage = () => {
       {data?.payload?.schedule?.visitType === "HHA Care Plan" && (
         <HHACarePlan data={data?.payload?.schedule} />
       )}
-      
+      {data?.payload?.schedule?.visitType === "Non-OASIS Discharge" && (
+        <NonOASISDischarge data={data?.payload?.schedule} />
+      )}
     </div>
   );
 };
