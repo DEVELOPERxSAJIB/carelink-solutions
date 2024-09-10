@@ -125,7 +125,7 @@ const TenDaySummaryCaseConference = ({ data }) => {
     if (error) {
       showToast("error", error?.data?.message);
     }
-  }, [isCreateSuccess, error,refetch]);
+  }, [isCreateSuccess, error,refetch,createData?.message]);
   useEffect(() => {
     if(getData?.payload?.record){
       const update = { ...getData?.payload?.record };

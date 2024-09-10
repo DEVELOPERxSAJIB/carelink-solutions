@@ -7,6 +7,7 @@ import CommunicationNote from "./../../components/Patient/visitType/Communicatio
 import CoordinationOfCare from "./../../components/Patient/visitType/CoordinationOfCare";
 import HHACarePlan from "./../../components/Patient/visitType/HHACarePlan";
 import NonOASISDischarge from "./../../components/Patient/visitType/NonOASISDischarge";
+import CaregiverForm from './../../components/Patient/visitType/CareGiverWorkSheet';
 const NurseSinglePage = () => {
   const { id } = useParams();
   const { data } = useGetScheduleByIdQuery(id);
@@ -206,9 +207,9 @@ const NurseSinglePage = () => {
                         Wound Vac-Removal
                       </option>
                     </select> */}
-      {data?.payload?.schedule?.visitType ===
+      {/* {data?.payload?.schedule?.visitType ===
         "10 Day Summary/Case Conference" && (
-        <TenDaySummaryCaseConference data={data?.payload?.schedule} />
+        <CaregiverForm data={data?.payload?.schedule} />
       )}
       {data?.payload?.schedule?.visitType ===
         "30 Day Summary/Case Conference" && (
@@ -367,6 +368,30 @@ const NurseSinglePage = () => {
       )}
       {data?.payload?.schedule?.visitType === "Non-OASIS Discharge" && (
         <NonOASISDischarge data={data?.payload?.schedule} />
+      )} */}
+      {/* //   Person Care
+// Hand /Foot Care
+// Nutrition
+// Eliminations
+// Activity
+// Homemaking */}
+      {data?.payload?.schedule?.visitType === "Person Care" && (
+        <CaregiverForm data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Hand /Foot Care" && (
+        <CaregiverForm data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Nutrition" && (
+        <CaregiverForm data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Eliminations" && (
+        <CaregiverForm data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Activity" && (
+        <CaregiverForm data={data?.payload?.schedule} />
+      )}
+      {data?.payload?.schedule?.visitType === "Homemaking" && (
+        <CaregiverForm data={data?.payload?.schedule} />
       )}
     </div>
   );

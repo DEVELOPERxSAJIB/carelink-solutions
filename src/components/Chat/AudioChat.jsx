@@ -284,8 +284,8 @@ const AudioChat = ({ chatUser, user, setAudioChat }) => {
     callingAudio.pause();
   });
   useEffect(() => {
-    socket.current = io("ws://localhost:5050");
-    //  socket.current = io('wss://carelinks-server.onrender.com');
+    // socket.current = io("ws://localhost:5050");
+     socket.current = io('wss://carelinks-server.onrender.com');
     socket?.current?.on("connect", () => {
       console.log("Connected to socket server");
     });
