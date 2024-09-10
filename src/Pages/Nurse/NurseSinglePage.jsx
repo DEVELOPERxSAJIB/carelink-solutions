@@ -207,7 +207,7 @@ const NurseSinglePage = () => {
                         Wound Vac-Removal
                       </option>
                     </select> */}
-      {/* {data?.payload?.schedule?.visitType ===
+      {data?.payload?.schedule?.visitType ===
         "10 Day Summary/Case Conference" && (
         <CaregiverForm data={data?.payload?.schedule} />
       )}
@@ -368,13 +368,8 @@ const NurseSinglePage = () => {
       )}
       {data?.payload?.schedule?.visitType === "Non-OASIS Discharge" && (
         <NonOASISDischarge data={data?.payload?.schedule} />
-      )} */}
-      {/* //   Person Care
-// Hand /Foot Care
-// Nutrition
-// Eliminations
-// Activity
-// Homemaking */}
+      )}
+
       {data?.payload?.schedule?.visitType === "Person Care" && (
         <CaregiverForm data={data?.payload?.schedule} />
       )}
