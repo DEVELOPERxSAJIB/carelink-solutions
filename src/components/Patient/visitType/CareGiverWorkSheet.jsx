@@ -123,7 +123,11 @@ const CaregiverForm = ({ data }) => {
       <div className="row mt-5">
         <PageHeader title={data.visitType} />
       </div>
-
+      <div className="row mt-5 w-100 text-center">
+          <p className="fs-4 text-capitalize text-black font-bolder">
+            {data?.patientName}
+          </p>
+        </div>
       {/* Services with Days of the Week */}
       <table className="table table-bordered">
         <thead>
