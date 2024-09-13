@@ -17,6 +17,8 @@ const Navbar = () => {
     document.documentElement.classList.toggle("layout-menu-expanded");
   };
 
+  console.log(data?.payload?.user?.avatar?.url)
+
   const searchRef = useRef();
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
@@ -231,7 +233,7 @@ const Navbar = () => {
                       <i className="ti ti-settings ti-26px text-heading" />
                     </span>
                     <a
-                      href="pages-account-settings-account.html"
+                      href=""
                       className="stretched-link"
                     >
                       Setting
@@ -308,7 +310,7 @@ const Navbar = () => {
                     <div className="d-flex">
                       <div className="flex-shrink-0 me-3">
                         <div className="avatar">
-                          <img src={avatar} alt className="rounded-circle" />
+                          <img style={{width:"100%",height:"100%"}} src={data?.payload?.user?.avatar?.url?data?.payload?.user?.avatar?.url:avatar} alt className="rounded-circle" />
                         </div>
                       </div>
                       <div className="flex-grow-1">
@@ -358,11 +360,7 @@ const Navbar = () => {
                     <div className="d-flex">
                       <div className="flex-shrink-0 me-3">
                         <div className="avatar">
-                          <img
-                            src="../../assets/img/avatars/2.png"
-                            alt
-                            className="rounded-circle"
-                          />
+                        <img className="w-100 h-100" src={data?.payload?.user?.avatar?.url?data?.payload?.user?.avatar?.url:avatar} alt className="rounded-circle" />
                         </div>
                       </div>
                       <div className="flex-grow-1">
@@ -414,11 +412,7 @@ const Navbar = () => {
                     <div className="d-flex">
                       <div className="flex-shrink-0 me-3">
                         <div className="avatar">
-                          <img
-                            src="../../assets/img/avatars/9.png"
-                            alt
-                            className="rounded-circle"
-                          />
+                        <img style={{width:"100%",height:"100%"}} src={data?.payload?.user?.avatar?.url?data?.payload?.user?.avatar?.url:avatar} alt className="rounded-circle" />
                         </div>
                       </div>
                       <div className="flex-grow-1">
@@ -472,11 +466,7 @@ const Navbar = () => {
                     <div className="d-flex">
                       <div className="flex-shrink-0 me-3">
                         <div className="avatar">
-                          <img
-                            src="../../assets/img/avatars/5.png"
-                            alt
-                            className="rounded-circle"
-                          />
+                        <img style={{width:"100%",height:"100%"}} src={data?.payload?.user?.avatar?.url?data?.payload?.user?.avatar?.url:avatar} alt className="rounded-circle" />
                         </div>
                       </div>
                       <div className="flex-grow-1">
@@ -500,11 +490,7 @@ const Navbar = () => {
                     <div className="d-flex">
                       <div className="flex-shrink-0 me-3">
                         <div className="avatar">
-                          <img
-                            src="../../assets/img/avatars/6.png"
-                            alt
-                            className="rounded-circle"
-                          />
+                        <img style={{width:"100%",height:"100%"}} src={data?.payload?.user?.avatar?.url?data?.payload?.user?.avatar?.url:avatar} alt className="rounded-circle" />
                         </div>
                       </div>
                       <div className="flex-grow-1">
@@ -571,16 +557,7 @@ const Navbar = () => {
               data-bs-toggle="dropdown"
             >
               <div className="avatar avatar-online">
-                <img
-                  src={
-                    avatar
-                      ? avatar
-                      : "https://static.vecteezy.com/system/resources/previews/007/069/364/original/3d-user-icon-in-a-minimalistic-style-user-symbol-for-your-website-design-logo-app-ui-vector.jpg"
-                  }
-                  alt={"User Avatar"}
-                  className="h-full rounded-circle"
-                  style={{ objectFit: "cover" }}
-                />
+              <img style={{width:"100%",height:"100%"}} src={data?.payload?.user?.avatar?.url?data?.payload?.user?.avatar?.url:avatar} alt className="rounded-circle" />
               </div>
             </a>
 
@@ -598,7 +575,7 @@ const Navbar = () => {
                   <div className="d-flex align-items-center">
                     <div className="flex-shrink-0 me-2">
                       <div className="avatar avatar-online">
-                        <img src={avatar} alt className="rounded-circle" />
+                      <img style={{width:"100%",height:"100%"}} src={data?.payload?.user?.avatar?.url?data?.payload?.user?.avatar?.url:avatar} alt className="rounded-circle" />
                       </div>
                     </div>
                     <div className="flex-grow-1">

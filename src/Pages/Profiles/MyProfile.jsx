@@ -10,6 +10,7 @@ const MyProfile = () => {
   const {
     firstName,
     lastName,
+    avatar,
     role,
     phone,
     address1,
@@ -60,10 +61,10 @@ const MyProfile = () => {
                 </div>
                 <div className="user-profile-header d-flex flex-column flex-lg-row text-sm-start text-center mb-5">
                   <div className="flex-shrink-0 border-2 mt-n2 mx-sm-0 mx-auto">
-                    <img
-                      src={avater}
+                    <img style={{width:"100px",height:"100px"}}
+                      src={avatar?.url?avatar?.url:avater}
                       alt="user image"
-                      className="d-block h-auto ms-0 ms-sm-6 rounded user-profile-img"
+                      className="d-block ms-0 ms-sm-6 rounded user-profile-img"
                     />
                   </div>
                   <div className="flex-grow-1 mt-3 mt-lg-5">

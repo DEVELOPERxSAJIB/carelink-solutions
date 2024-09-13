@@ -17,7 +17,6 @@ import DatePicker from "react-datepicker";
 import { useGetAllCaregiverQuery, useMeQuery } from "../Redux/api/UserApi";
 import { showToast } from "./../utils/Toastify";
 
-
 const MenuItemTimeSheet = () => {
   const { data: lgData } = useMeQuery();
   const [editId, setEditId] = useState("");
@@ -210,15 +209,13 @@ const MenuItemTimeSheet = () => {
     updateError?.data?.message,
   ]);
 
-  
   useEffect(() => {
-    const data = formatTimeZone(location)
+    const data = formatTimeZone(location);
     setFormData((prev) => ({
       ...prev,
-      clockInLocation : `${location?.city} ${location?.region} ${location?.country} ${data}`
-    }))
-  }, [location])
-
+      clockInLocation: `${location?.city} ${location?.region} ${location?.country} ${data}`,
+    }));
+  }, [location]);
 
   if (isLoading || isDeleteLoading) return <AuthLoader />;
 

@@ -1,5 +1,9 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { useMeQuery, useUpdateUserMutation } from "../../Redux/api/UserApi";
+import CountySelect from "./../../components/FormElement/CountySelect";
+import StateSelect from "./../../components/FormElement/StateSelect";
+import CitySelect from "./../../components/FormElement/CitySelect";
+import { showToast } from "./../../utils/Toastify";
 const Settings = () => {
   const [show, setShow] = useState({
     oldPassword: false,
@@ -7,6 +11,14 @@ const Settings = () => {
     confirmNewPassword: false,
   });
 
+  const { data: meData } = useMeQuery();
+  const [updateUser, { data: userData, isSuccess, error }] =
+    useUpdateUserMutation();
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [city, setCity] = useState("");
+  const [county, setCounty] = useState("");
+  const [state, setState] = useState("");
   const handleShowOldPassword = () => {
     setShow({ ...show, oldPassword: !show.oldPassword });
   };
@@ -22,6 +34,15 @@ const Settings = () => {
     oldPassword: "",
     newPassword: "",
     confirmNewPassword: "",
+    city: "",
+    county: "",
+    email: "",
+    address: "",
+    phone: "",
+    gender: "male",
+    firstName: "",
+    lastName: "",
+    zip: "",
   });
 
   // replace name with value
@@ -32,20 +53,48 @@ const Settings = () => {
     }));
   };
 
+  const handleImageChange = (e) => {
+    console.log(e.target.files);
+    setPreview(URL.createObjectURL(e.target.files[0]));
+    setImage(e.target.files[0]);
+  };
   // submit form
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      oldPassword: input.oldPassword,
-      newPassword: input.newPassword,
-      confirmNewPassword: input.confirmNewPassword,
-    };
+    const form_data = new FormData();
+    form_data.append("oldPassword", input.oldPassword);
+    form_data.append("newPassword", input.newPassword);
+    form_data.append("confirmNewPassword", input.confirmNewPassword);
+    form_data.append("email", input.email);
+    form_data.append("address", input.address);
+    form_data.append("phone", input.phone);
+    form_data.append("gender", input.gender);
+    form_data.append("firstName", input.firstName);
+    form_data.append("lastName", input.lastName);
+    form_data.append("zip", input.zip);
+    form_data.append("city", city);
+    form_data.append("state", state);
+    form_data.append("county", county);
+    form_data.append("userAvatar", image);
 
-    console.log(data);
+    updateUser({ userData: form_data, userId: meData?.payload?.user?._id });
   };
-
   const [activeTab, setActiveTab] = useState("pills-account");
-
+  useEffect(() => {
+    setInput({ ...meData?.payload?.user });
+    setCity(meData?.payload?.user?.city);
+    setPreview(meData?.payload?.user?.avatar?.url);
+    setState(meData?.payload?.user?.state);
+    setCounty(meData?.payload?.user?.county);
+  }, [meData]);
+  useEffect(() => {
+    if (isSuccess) {
+      showToast("success", userData?.message);
+    }
+    if (error) {
+      showToast("error", error?.data?.message);
+    }
+  }, [isSuccess, userData, error]);
   return (
     <>
       <div className="container-xxl flex-grow-1 container-p-y">
@@ -111,7 +160,9 @@ const Settings = () => {
                     <div className="d-flex align-items-start align-items-sm-center gap-4">
                       <img
                         src={
-                          "https://static.vecteezy.com/system/resources/previews/007/069/364/original/3d-user-icon-in-a-minimalistic-style-user-symbol-for-your-website-design-logo-app-ui-vector.jpg"
+                          preview
+                            ? preview
+                            : "https://static.vecteezy.com/system/resources/previews/007/069/364/original/3d-user-icon-in-a-minimalistic-style-user-symbol-for-your-website-design-logo-app-ui-vector.jpg"
                         }
                         alt="user-avatar"
                         className="d-block w-px-100 h-px-100 rounded"
@@ -131,18 +182,19 @@ const Settings = () => {
                           <i className="ti ti-upload d-block d-sm-none" />
                           <input
                             type="file"
+                            onChange={handleImageChange}
                             id="upload"
                             className="account-file-input"
                             hidden
                           />
                         </label>
-                        <button
-                          type="button"
+                        <span
+                          onClick={() => setPreview(null)}
                           className="btn btn-label-secondary account-image-reset mb-3"
                         >
                           <i className="ti ti-refresh-dot d-block d-sm-none" />
                           <span className="d-none d-sm-block">Reset</span>
-                        </button>
+                        </span>
                         <div className="text-muted">
                           Allowed JPG, GIF or PNG. Max size of 800K
                         </div>
@@ -157,15 +209,29 @@ const Settings = () => {
                       <div className="row">
                         <div className="mb-3 col-md-6">
                           <label htmlFor="firstName" className="form-label">
-                            Name
+                            First Name
                           </label>
                           <input
                             className="form-control"
                             type="text"
                             id="firstName"
                             placeholder="Enter your name"
-                            name="name"
-                            value={input.name}
+                            name="firstName"
+                            value={input.firstName}
+                            onChange={handleInputChange}
+                          />
+                        </div>
+                        <div className="mb-3 col-md-6">
+                          <label htmlFor="lastName" className="form-label">
+                            Last Name
+                          </label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            id="lastName"
+                            placeholder="Enter your name"
+                            name="lastName"
+                            value={input.lastName}
                             onChange={handleInputChange}
                           />
                         </div>
@@ -193,8 +259,8 @@ const Settings = () => {
                             id="organization"
                             className="form-control"
                             placeholder="Enter you mobie number"
-                            name="mobile"
-                            value={input.mobile}
+                            name="phone"
+                            value={input.phone}
                             onChange={handleInputChange}
                           />
                         </div>
@@ -217,32 +283,24 @@ const Settings = () => {
                             <option value="others">Others</option>
                           </select>
                         </div>
-                        <div className="mb-3 col-md-6">
-                          <label htmlFor="street" className="form-label">
-                            Street
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="street"
-                            placeholder="Enter your address"
-                            name="street"
-                            value={input.street}
-                            onChange={handleInputChange}
-                          />
-                        </div>
+
                         <div className="mb-3 col-md-6">
                           <label htmlFor="state" className="form-label">
                             City
                           </label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            id="state"
-                            placeholder="Enter your city"
-                            name="city"
-                            value={input.city}
-                            onChange={handleInputChange}
+                          <CitySelect
+                            stateCode={state}
+                            selectedCity={city}
+                            setSelectedCity={setCity}
+                          />
+                        </div>
+                        <div className="mb-3 col-md-6">
+                          <label htmlFor="state" className="form-label">
+                            State
+                          </label>
+                          <StateSelect
+                            selectedState={state}
+                            setSelectedState={setState}
                           />
                         </div>
                         <div className="mb-3 col-md-6">
@@ -252,37 +310,22 @@ const Settings = () => {
                           <input
                             type="text"
                             className="form-control"
-                            id="zipCode"
-                            name="postalCode"
-                            value={input.postalCode}
+                            id="zip"
+                            name="zip"
+                            value={input.zip}
                             onChange={handleInputChange}
                           />
                         </div>
                         <div className="mb-3 col-md-6">
-                          <label className="form-label" htmlFor="country">
-                            Country
+                          <label className="form-label" htmlFor="county">
+                            County
                           </label>
 
-                          <select
-                            className="select2 form-select"
-                            name="country"
-                            id="country"
-                            value={input.country}
-                            onChange={handleInputChange}
-                          >
-                            <option disabled value={""}>
-                              - select a country -
-                            </option>
-                            {/* {countriesList.map((data) => {
-                    return (
-                      <>
-                        <option key={data.name} value={data.name}>
-                          {data.name}
-                        </option>
-                      </>
-                    );
-                  })} */}
-                          </select>
+                          <CountySelect
+                            selectedState={state}
+                            selectedCounty={county}
+                            setSelectedCounty={setCounty}
+                          />
                         </div>
                       </div>
                       <div className="mt-2">
@@ -296,7 +339,6 @@ const Settings = () => {
                     </form>
                   </div>
                 </div>
-
               </div>
 
               {/* Second Tab */}

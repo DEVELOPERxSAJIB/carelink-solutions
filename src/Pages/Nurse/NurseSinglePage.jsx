@@ -209,7 +209,7 @@ const NurseSinglePage = () => {
                     </select> */}
       {data?.payload?.schedule?.visitType ===
         "10 Day Summary/Case Conference" && (
-        <CaregiverForm data={data?.payload?.schedule} />
+        <TenDaySummaryCaseConference data={data?.payload?.schedule} />
       )}
       {data?.payload?.schedule?.visitType ===
         "30 Day Summary/Case Conference" && (

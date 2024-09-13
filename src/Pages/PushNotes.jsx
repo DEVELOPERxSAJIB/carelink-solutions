@@ -1,7 +1,11 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import avatar from "../../src/assets/img/avatars/7.png";
-import { useGetAllUsersQuery, useMeQuery } from "../Redux/api/UserApi";
+import {
+  useGetAllUsersQuery,
+  useMeQuery,
+  useGetUserByIdQuery,
+} from "../Redux/api/UserApi";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { getChatState, setChatData } from "./../Redux/slices/ChatSlic";
@@ -34,6 +38,7 @@ const PushNotes = () => {
   const emojiClose = useRef(null);
 
   const { chatsData } = useSelector(getChatState);
+
   const { data: user } = useMeQuery();
   const { data: users } = useGetAllUsersQuery();
   const { data: chats, refetch } = useGetAllChatsQuery(chatUser?._id);
@@ -42,10 +47,11 @@ const PushNotes = () => {
   );
   const [createChat, { data: newChat, isSuccess: isNewChatSuccess }] =
     useCreateChatMutation();
-
+  const { data: receivedData } = useGetUserByIdQuery(chatUser?._id);
+  console.log(receivedData);
   useEffect(() => {
     // socket.current = io("ws://localhost:5050");
-     socket.current=io('wss://carelinks-server.onrender.com');
+    //  socket.current=io('wss://carelinks-server.onrender.com');
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
     socket?.current?.on("offer", ({ type }) => {
@@ -121,6 +127,7 @@ const PushNotes = () => {
       form_data.append("chat", chat);
       form_data.append("receiverId", activeChat._id);
       form_data.append("chat-image", chatImage);
+      form_data.append("avatar", user?.payload?.user?.avatar?.url);
 
       createChat(form_data);
       setChat("");
@@ -190,7 +197,15 @@ const PushNotes = () => {
             >
               <div className="chat-sidebar-left-user sidebar-header d-flex flex-column justify-content-center align-items-center flex-wrap px-6 pt-12">
                 <div className="avatar avatar-xl avatar-online chat-sidebar-avatar">
-                  <img src={avatar} alt="Avatar" className="rounded-circle" />
+                  <img
+                    src={
+                      user?.payload?.user?.avatar?.url
+                        ? user?.payload?.user?.avatar?.url
+                        : avatar
+                    }
+                    alt="Avatar"
+                    className="rounded-circle"
+                  />
                 </div>
                 <h5 className="mt-4 mb-0">John Doe</h5>
                 <span>Admin</span>
@@ -346,7 +361,11 @@ const PushNotes = () => {
                   >
                     <img
                       className="user-avatar rounded-circle cursor-pointer"
-                      src={avatar}
+                      src={
+                        user?.payload?.user?.avatar?.url
+                          ? user?.payload?.user?.avatar?.url
+                          : avatar
+                      }
                       alt="Avatar"
                     />
                   </div>
@@ -387,6 +406,7 @@ const PushNotes = () => {
                   {filteredChattedUsers?.length > 0 ? (
                     <>
                       {filteredChattedUsers?.map((item, index) => {
+                        console.log(item);
                         return (
                           <li
                             key={index}
@@ -405,7 +425,11 @@ const PushNotes = () => {
                                 }`}
                               >
                                 <img
-                                  src={avatar}
+                                  src={
+                                    item?.userInfo?.avatar.url
+                                      ? item?.userInfo?.avatar.url
+                                      : avatar
+                                  }
                                   alt="Avatar"
                                   className="rounded-circle"
                                 />
@@ -459,7 +483,11 @@ const PushNotes = () => {
                           <a className="d-flex align-items-center">
                             <div className="flex-shrink-0 avatar">
                               <img
-                                src={avatar}
+                                src={
+                                  item?.userInfo?.avatar?.url
+                                    ? item?.userInfo?.avatar?.url
+                                    : avatar
+                                }
                                 alt="Avatar"
                                 className="rounded-circle"
                               />
@@ -515,7 +543,11 @@ const PushNotes = () => {
                             }`}
                           >
                             <img
-                              src={avatar}
+                              src={
+                                chatUser?.avatar?.url
+                                  ? chatUser?.avatar?.url
+                                  : avatar
+                              }
                               alt="Avatar"
                               className="rounded-circle"
                               data-bs-toggle="sidebar"
@@ -627,11 +659,29 @@ const PushNotes = () => {
                                   </div>
                                   <div className="user-avatar flex-shrink-0 ms-4">
                                     <div className="avatar avatar-sm">
-                                      <img
-                                        src={avatar}
-                                        alt="Avatar"
-                                        className="rounded-circle"
-                                      />
+                                      {item?.senderId !== chatUser?._id ? (
+                                        <img
+                                          src={
+                                            user?.payload?.user?.avatar?.url
+                                              ? user?.payload?.user?.avatar?.url
+                                              : avatar
+                                          }
+                                          alt="Avatar"
+                                          className="rounded-circle"
+                                        />
+                                      ) : (
+                                        <img
+                                          src={
+                                            receivedData?.payload?.user?.avatar
+                                              ?.url
+                                              ? receivedData?.payload?.user
+                                                  ?.avatar?.url
+                                              : avatar
+                                          }
+                                          alt="Avatar"
+                                          className="rounded-circle"
+                                        />
+                                      )}
                                     </div>
                                   </div>
                                 </div>
