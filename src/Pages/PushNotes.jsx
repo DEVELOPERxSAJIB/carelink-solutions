@@ -51,7 +51,7 @@ const PushNotes = () => {
   console.log(receivedData);
   useEffect(() => {
     // socket.current = io("ws://localhost:5050");
-    //  socket.current=io('wss://carelinks-server.onrender.com');
+     socket.current=io('wss://carelinks-server.onrender.com');
     socket?.current?.emit("setActiveUser", user?.payload?.user);
     socket?.current?.on("getActiveUser", (data) => setActiveUser(data));
     socket?.current?.on("offer", ({ type }) => {
